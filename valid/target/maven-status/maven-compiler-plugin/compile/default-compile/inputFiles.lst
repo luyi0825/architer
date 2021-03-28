@@ -1,0 +1,9 @@
+/home/luyi/workspace/product/valid/src/main/java/com/ly/core/valid/ListValue.java
+/home/luyi/workspace/product/valid/src/main/java/com/ly/core/valid/AbstractListValueValidator.java
+/home/luyi/workspace/product/valid/src/main/java/com/ly/core/valid/ListValueValidatorForString.java
+/home/luyi/workspace/product/valid/src/main/java/com/ly/core/valid/group/DeleteGroup.java
+/home/luyi/workspace/product/valid/src/main/java/com/ly/core/valid/group/UpdateGroup.java
+/home/luyi/workspace/product/valid/src/main/java/com/ly/core/valid/group/QueryGroup.java
+/home/luyi/workspace/product/valid/src/main/java/com/ly/core/valid/group/AddAndUpdateGroup.java
+/home/luyi/workspace/product/valid/src/main/java/com/ly/core/valid/group/AddGroup.java
+/home/luyi/workspace/product/valid/src/main/java/com/ly/core/valid/ListValueValidatorForNumber.java

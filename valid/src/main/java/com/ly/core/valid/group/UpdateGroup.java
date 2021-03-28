@@ -1,7 +1,7 @@
-package com.ly.core.valid;
+package com.ly.core.valid.group;
 
 /**
- * 描述:参数校验update组
+ * 参数校验update组
  *
  * @author luyi
  * @date 2020/12/20 上午12:46

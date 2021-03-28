@@ -7,19 +7,11 @@
         <groupId>com.ly.core</groupId>
         <version>1.0.0</version>
     </parent>
-    <artifactId>valid</artifactId>
-    <name>valid</name>
-    <description>数据校验</description>
+    <artifactId>cache</artifactId>
+    <name>cache</name>
+    <description>数据缓存</description>
     <packaging>jar</packaging>
     <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>6.1.2.Final</version>
-        </dependency>
+
     </dependencies>
 </project>

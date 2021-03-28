@@ -4,6 +4,7 @@ package com.ly.core.valid;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ObjectUtils;
 
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
@@ -18,9 +19,12 @@ import java.util.Set;
  */
 public abstract class AbstractListValueValidator<T> implements ConstraintValidator<ListValue, T> {
 
-
     protected Set<String> valueSet;
 
+    /**
+     * 初始化调用
+     * @param constraintAnnotation 对应的值
+     */
     @Override
     public void initialize(ListValue constraintAnnotation) {
         //判断value不能为空
