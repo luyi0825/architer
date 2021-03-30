@@ -1,0 +1,10 @@
+/.idea/
+target
+node_modules
+*.iml
+package-lock.json
+*.js.map
+*.css.map
+##排除log文件
+*.log
+# 本地配置文件
