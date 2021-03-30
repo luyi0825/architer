@@ -1,10 +1,10 @@
-package com.ly.core.valid.vo;
+package com.lz.core.valid.vo;
 
 
-import com.ly.core.valid.ListValue;
-import com.ly.core.valid.group.AddAndUpdateGroup;
-import com.ly.core.valid.group.AddGroup;
-import com.ly.core.valid.group.UpdateGroup;
+import com.lz.core.valid.ListValue;
+import com.lz.core.valid.group.AddAndUpdateGroup;
+import com.lz.core.valid.group.AddGroup;
+import com.lz.core.valid.group.UpdateGroup;
 import lombok.Data;
 
 import javax.validation.constraints.*;

@@ -1,8 +1,8 @@
-package com.ly.core.valid.controller;
+package com.lz.core.valid.controller;
 
-import com.ly.core.valid.group.AddGroup;
+import com.lz.core.valid.group.AddGroup;
 
-import com.ly.core.valid.vo.User;
+import com.lz.core.valid.vo.User;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.annotation.Validated;

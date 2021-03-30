@@ -1,4 +1,4 @@
-package com.ly.core.valid;
+package com.lz.core.valid;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

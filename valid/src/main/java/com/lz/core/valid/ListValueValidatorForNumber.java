@@ -1,4 +1,4 @@
-package com.ly.core.valid;
+package com.lz.core.valid;
 
 /**
  * 描述:ListValue 注解的校验器 -- 数值
