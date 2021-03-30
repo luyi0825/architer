@@ -16,11 +16,16 @@
         <commons-lang3.version>3.11</commons-lang3.version>
         <mybatis-plus.version>3.4.1</mybatis-plus.version>
         <lombok.version>1.18.16</lombok.version>
+        <easyexcel.verion>2.2.8</easyexcel.verion>
+        <jsoup.verion>1.13.1</jsoup.verion>
+        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
+        <spring-context.version>5.2.5.RELEASE</spring-context.version>
     </properties>
 
 
     <modules>
         <module>valid</module>
+        <module>excel</module>
     </modules>
 
     <dependencies>
@@ -37,6 +42,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.verion}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -64,9 +74,23 @@
                 <artifactId>hibernate-validator</artifactId>
                 <version>5.2.4.Final</version>
             </dependency>
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${jsoup.verion}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring-context.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
 
 
 </project>

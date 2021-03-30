@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.ly.core.cache.local.config.LocalCacheConfig
