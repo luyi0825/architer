@@ -4,8 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>parent</artifactId>
-        <groupId>com.ly.core</groupId>
+        <groupId>com.lz.core</groupId>
         <version>1.0.0</version>
+        <relativePath>../../product</relativePath>
     </parent>
     <artifactId>valid</artifactId>
     <name>valid</name>

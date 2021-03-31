@@ -8,7 +8,7 @@
         <version>2.2.6.RELEASE</version>
         <relativePath/>
     </parent>
-    <groupId>com.ly.core</groupId>
+    <groupId>com.lz.core</groupId>
     <artifactId>zzz-test-service</artifactId>
     <version>1.0.0</version>
     <name>zzz-test-service</name>
@@ -19,7 +19,7 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.ly.core</groupId>
+            <groupId>com.lz.core</groupId>
             <artifactId>valid</artifactId>
             <version>${project.version}</version>
         </dependency>
