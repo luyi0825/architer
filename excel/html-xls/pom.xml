@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>excel</artifactId>
-        <groupId>com.ly.core</groupId>
+        <artifactId>excel-parent</artifactId>
+        <groupId>com.lz.core</groupId>
         <version>1.0.0</version>
         <relativePath>../../excel</relativePath>
     </parent>
@@ -12,7 +12,6 @@
     <name>html-excel</name>
     <packaging>jar</packaging>
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
@@ -27,14 +26,9 @@
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>2.2.6.RELEASE</version>
-            <scope>compile</scope>
         </dependency>
+
     </dependencies>
 </project>

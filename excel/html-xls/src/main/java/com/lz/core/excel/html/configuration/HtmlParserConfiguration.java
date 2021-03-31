@@ -1,10 +1,14 @@
 package com.lz.core.excel.html.configuration;
 
 import com.lz.core.excel.html.parser.DefaultHtmlParser;
+import com.lz.core.excel.html.parser.DefaultHtmlStyleParser;
 import com.lz.core.excel.html.parser.HtmlParser;
+import com.lz.core.excel.html.parser.HtmlStyleParser;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 /**
  * @author luyi
@@ -15,7 +19,14 @@ public class HtmlParserConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public HtmlParser htmlParser() {
-        return new DefaultHtmlParser(null);
+    public DefaultHtmlStyleParser defaultHtmlStyleParser() {
+        return new DefaultHtmlStyleParser();
+    }
+
+
+    @Bean
+    @ConditionalOnMissingBean
+    public HtmlParser htmlParser(List<HtmlStyleParser> htmlStyleParsers) {
+        return new DefaultHtmlParser(htmlStyleParsers);
     }
 }
