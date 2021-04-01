@@ -74,18 +74,27 @@ public class DefaultHtmlParser implements HtmlParser {
                 // 处理表头
                 colElements = tr.getElementsByTag("th");
             }
-            List<XlsCell> colXlsCells = new ArrayList<>(colElements.size());
-            this.parseColElements(colElements, mergeCellList, colXlsCells, rowNum);
-            //为空的列忽略
+            int currentRowNum = rowNum.get();
+
+            List<XlsCell> colXlsCells = this.parseColElements(colElements, mergeCellList, rowNum);
+
             if (!CollectionUtils.isEmpty(colXlsCells)) {
                 xlsCells.add(colXlsCells);
+            }
+            // 说明行都被合并了
+            int preMergeRow = rowNum.get() - currentRowNum;
+            //先前都被合并的行补充空数据
+            while (preMergeRow > 0) {
+                xlsCells.add(new ArrayList<>());
+                preMergeRow--;
             }
             rowNum.addAndGet(1);
         }
         return xlsCells;
     }
 
-    private void parseColElements(List<Element> colElements, List<XlsCell> mergeCellList, List<XlsCell> colXlsCells, AtomicInteger rowNum) {
+    private List<XlsCell> parseColElements(List<Element> colElements, List<XlsCell> mergeCellList, AtomicInteger rowNum) {
+        List<XlsCell> colXlsCells = new ArrayList<>(colElements.size());
         AtomicInteger colIndex = new AtomicInteger(-1);
         int rowIndex = rowNum.get();
         boolean merge = false;
@@ -107,6 +116,7 @@ public class DefaultHtmlParser implements HtmlParser {
             int minEndRow = getMinEndRow(colXlsCells);
             rowNum.set(minEndRow);
         }
+        return colXlsCells;
     }
 
     /**
@@ -115,7 +125,6 @@ public class DefaultHtmlParser implements HtmlParser {
      * @author luyi
      */
     private XlsCell buildXlsCell(Element element, AtomicInteger colIndex, int rowIndex) {
-
         // 解析单元格class属性
         String cellClass = element.attr("class");
         //忽略
@@ -174,8 +183,6 @@ public class DefaultHtmlParser implements HtmlParser {
     }
 
 
-
-
     @Override
     public String reBuildHtml(String html) {
         return html;
@@ -201,7 +208,8 @@ public class DefaultHtmlParser implements HtmlParser {
             return false;
         }
         //对隐藏列跳过
-        return cellClass.contains("hidden") || cellClass.contains("undisplay") || cellClass.contains("hide");
+        return cellClass.contains("hidden") || cellClass.contains("undisplay") || cellClass.contains("hide")
+                || cellClass.contains("rowHeader");
     }
 
     /**

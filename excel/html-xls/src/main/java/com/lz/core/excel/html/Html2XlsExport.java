@@ -27,9 +27,9 @@ public class Html2XlsExport {
 
     public void export(HtmlSheet htmlSheet, OutputStream outputStream) {
         List<List<XlsCell>> xlsCellList = htmlParser.parse(htmlSheet);
-        EasyExcel.write(outputStream).sheet("test")
-                .registerWriteHandler(new CellMergeStrategy(xlsCellList)).doWrite(xlsCellList);
-
+        EasyExcel.write(outputStream).sheet(htmlSheet.getSheetName()).registerConverter(new XlsCellConverter())
+                .registerWriteHandler(new CellMergeStrategy(xlsCellList))
+                .doWrite(xlsCellList);
 
     }
 
