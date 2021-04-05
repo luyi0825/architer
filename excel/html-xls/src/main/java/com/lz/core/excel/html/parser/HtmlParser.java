@@ -4,6 +4,7 @@ package com.lz.core.excel.html.parser;
 import com.alibaba.excel.util.StringUtils;
 import com.lz.core.excel.html.entity.HtmlSheet;
 import com.lz.core.excel.html.entity.XlsCell;
+import com.lz.core.excel.html.entity.XlsSheet;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -27,7 +28,7 @@ public interface HtmlParser {
      * @param htmlSheet sheet的html信息
      * @return xls单元格对象集合
      */
-    List<List<XlsCell>> parse(HtmlSheet htmlSheet);
+    XlsSheet parse(HtmlSheet htmlSheet);
 
 
     /**

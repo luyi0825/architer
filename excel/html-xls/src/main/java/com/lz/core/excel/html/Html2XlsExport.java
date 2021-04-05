@@ -5,6 +5,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.lz.core.excel.html.entity.HtmlSheet;
 import com.lz.core.excel.html.entity.XlsCell;
+import com.lz.core.excel.html.entity.XlsSheet;
 import com.lz.core.excel.html.parser.HtmlParser;
 import org.apache.poi.sl.usermodel.Sheet;
 import org.slf4j.Logger;
@@ -26,10 +27,10 @@ public class Html2XlsExport {
     private HtmlParser htmlParser;
 
     public void export(HtmlSheet htmlSheet, OutputStream outputStream) {
-        List<List<XlsCell>> xlsCellList = htmlParser.parse(htmlSheet);
+        XlsSheet xlsSheet = htmlParser.parse(htmlSheet);
         EasyExcel.write(outputStream).sheet(htmlSheet.getSheetName()).registerConverter(new XlsCellConverter())
-                .registerWriteHandler(new CellMergeStrategy(xlsCellList))
-                .doWrite(xlsCellList);
+                .registerWriteHandler(new CellMergeStrategy(xlsSheet.getMergeCells()))
+                .doWrite(xlsSheet.getCellList());
 
     }
 

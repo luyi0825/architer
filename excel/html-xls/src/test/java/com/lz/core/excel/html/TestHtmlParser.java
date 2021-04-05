@@ -3,6 +3,7 @@ package com.lz.core.excel.html;
 import com.lz.core.excel.html.emun.HtmlType;
 import com.lz.core.excel.html.entity.HtmlSheet;
 import com.lz.core.excel.html.entity.XlsCell;
+import com.lz.core.excel.html.entity.XlsSheet;
 import com.lz.core.excel.html.parser.HtmlParser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,7 +50,7 @@ public class TestHtmlParser {
         HtmlSheet htmlSheet = new HtmlSheet();
         htmlSheet.setHtml(result.toString());
         htmlSheet.setHtmlType(HtmlType.DEFAULT.getType());
-        List<List<XlsCell>> xlsCellList = htmlParser.parse(htmlSheet);
-        System.out.println(xlsCellList);
+        XlsSheet sheet = htmlParser.parse(htmlSheet);
+        System.out.println(sheet);
     }
 }

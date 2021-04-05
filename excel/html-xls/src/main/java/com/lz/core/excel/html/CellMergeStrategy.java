@@ -18,47 +18,38 @@ import java.util.List;
  */
 public class CellMergeStrategy implements CellWriteHandler {
 
-    private List<List<XlsCell>> xlsCellList;
+    private List<XlsCell> mergeList;
 
     private volatile boolean merge;
 
-    public CellMergeStrategy(List<List<XlsCell>> xlsCellList) {
-        this.xlsCellList = xlsCellList;
+    public CellMergeStrategy(List<XlsCell> mergeList) {
+        this.mergeList = mergeList;
     }
 
     @Override
     public void beforeCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Row row, Head head, Integer columnIndex, Integer relativeRowIndex, Boolean isHead) {
-        System.out.println("beforeCellCreate");
+
     }
 
     @Override
     public void afterCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Cell cell, Head head, Integer relativeRowIndex, Boolean isHead) {
-        System.out.println("afterCellCreate");
-        System.out.println(cell.getStringCellValue());
     }
 
     @Override
     public void afterCellDataConverted(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, CellData cellData, Cell cell, Head head, Integer relativeRowIndex, Boolean isHead) {
-
-        System.out.println("afterCellDataConverted");
     }
 
     @Override
     public void afterCellDispose(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, List<CellData> cellDataList, Cell cell, Head head, Integer relativeRowIndex, Boolean isHead) {
-        System.out.println(relativeRowIndex);
         if (!merge) {
-            xlsCellList.forEach(xlsCells -> {
-                xlsCells.forEach(xlsCell -> {
-                    if (xlsCell.getColspan() > 1 || xlsCell.getRowspan() > 1) {
-                        System.out.println(xlsCell);
-                        CellRangeAddress cellRangeAddress = new CellRangeAddress(xlsCell.getStartRow(), xlsCell.getEndRow(), xlsCell.getStartCol(), xlsCell.getEndCol());
-                        writeSheetHolder.getSheet().addMergedRegion(cellRangeAddress);
-                    }
-                    merge = true;
-                });
+            mergeList.forEach(xlsCell -> {
+                if (xlsCell.getColspan() > 1 || xlsCell.getRowspan() > 1) {
+                    System.out.println(xlsCell);
+                    CellRangeAddress cellRangeAddress = new CellRangeAddress(xlsCell.getStartRow(), xlsCell.getEndRow(), xlsCell.getStartCol(), xlsCell.getEndCol());
+                    writeSheetHolder.getSheet().addMergedRegion(cellRangeAddress);
+                }
+                merge = true;
             });
         }
-        System.out.println("afterCellDispose");
-
     }
 }

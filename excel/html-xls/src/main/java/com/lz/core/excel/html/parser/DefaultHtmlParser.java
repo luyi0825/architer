@@ -3,6 +3,7 @@ package com.lz.core.excel.html.parser;
 
 import com.lz.core.excel.html.entity.HtmlSheet;
 import com.lz.core.excel.html.entity.XlsCell;
+import com.lz.core.excel.html.entity.XlsSheet;
 import com.lz.core.excel.html.exception.HtmlTypeException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -46,11 +47,11 @@ public class DefaultHtmlParser implements HtmlParser {
     /**
      * 解析
      *
-     * @param htmlSheet
-     * @return
+     * @param htmlSheet html对应的sheet信息
+     * @return excel对应的xlsSheet信息
      */
     @Override
-    public List<List<XlsCell>> parse(HtmlSheet htmlSheet) {
+    public XlsSheet parse(HtmlSheet htmlSheet) {
         //重新构建html
         String html = reBuildHtml(htmlSheet.getHtml());
         Document doc = Jsoup.parse(html);
@@ -61,8 +62,13 @@ public class DefaultHtmlParser implements HtmlParser {
         return parseRowElements(trElements);
     }
 
-
-    public List<List<XlsCell>> parseRowElements(Elements trElements) {
+    /**
+     * 解析行
+     *
+     * @param trElements 行信息
+     * @return xls的sheet信息
+     */
+    public XlsSheet parseRowElements(Elements trElements) {
         List<List<XlsCell>> xlsCells = new ArrayList<>();
         //合并的单元格
         List<XlsCell> mergeCellList = new ArrayList<>();
@@ -75,9 +81,7 @@ public class DefaultHtmlParser implements HtmlParser {
                 colElements = tr.getElementsByTag("th");
             }
             int currentRowNum = rowNum.get();
-
             List<XlsCell> colXlsCells = this.parseColElements(colElements, mergeCellList, rowNum);
-
             if (!CollectionUtils.isEmpty(colXlsCells)) {
                 xlsCells.add(colXlsCells);
             }
@@ -90,9 +94,17 @@ public class DefaultHtmlParser implements HtmlParser {
             }
             rowNum.addAndGet(1);
         }
-        return xlsCells;
+        return new XlsSheet(xlsCells, mergeCellList);
     }
 
+    /**
+     * 解析列
+     *
+     * @param colElements   列信息
+     * @param mergeCellList 合并的单元格
+     * @param rowNum        行号
+     * @return 该列的Cell信息
+     */
     private List<XlsCell> parseColElements(List<Element> colElements, List<XlsCell> mergeCellList, AtomicInteger rowNum) {
         List<XlsCell> colXlsCells = new ArrayList<>(colElements.size());
         AtomicInteger colIndex = new AtomicInteger(-1);
@@ -188,14 +200,6 @@ public class DefaultHtmlParser implements HtmlParser {
         return html;
     }
 
-    /**
-     * 描述：解析excel 样式
-     *
-     * @param element 需要解析的节点
-     * @param xlsCell 解析的cell信息
-     * @author luyi
-     * @date 2021/3/17
-     */
 
     /**
      * 描述：忽略这个cell
