@@ -26,6 +26,7 @@
     <modules>
         <module>valid</module>
         <module>excel</module>
+        <module>thread-pool</module>
     </modules>
 
     <dependencies>
@@ -93,7 +94,6 @@
                 <artifactId>hibernate-validator</artifactId>
                 <version>6.1.2.Final</version>
             </dependency>
-
 
             <dependency>
                 <groupId>org.jsoup</groupId>
