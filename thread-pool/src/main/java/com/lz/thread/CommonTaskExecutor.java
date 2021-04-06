@@ -19,13 +19,11 @@ import java.util.concurrent.ThreadPoolExecutor;
  *
  * @author luyi
  */
-@Component
 public class CommonTaskExecutor extends ThreadPoolTaskExecutor {
 
     private TaskExecutorProperties taskExecutorProperties;
 
-    @Autowired
-    public void setTaskExecutorProperties(TaskExecutorProperties taskExecutorProperties) {
+    public CommonTaskExecutor(TaskExecutorProperties taskExecutorProperties) {
         this.taskExecutorProperties = taskExecutorProperties;
     }
 
