@@ -16,9 +16,10 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(TaskExecutorProperties.class)
 public class ThreadConfiguration {
 
+
     @Bean
     @ConditionalOnClass
-    public CommonTaskExecutor commonTaskExecutor() {
-        return new CommonTaskExecutor();
+    public CommonTaskExecutor commonTaskExecutor(TaskExecutorProperties taskExecutorProperties) {
+        return new CommonTaskExecutor(taskExecutorProperties);
     }
 }
