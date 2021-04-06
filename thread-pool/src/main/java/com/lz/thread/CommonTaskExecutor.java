@@ -52,11 +52,14 @@ public class CommonTaskExecutor extends ThreadPoolTaskExecutor {
      */
     private RejectedExecutionHandler getRejectedExecutionHandler(RejectedHandler rejectedHandler) {
         switch (rejectedHandler) {
+            case callerRunsPolicy:
+                return new ThreadPoolExecutor.CallerRunsPolicy();
             case abortPolicy:
                 return new ThreadPoolExecutor.AbortPolicy();
             case discardPolicy:
                 return new ThreadPoolExecutor.DiscardPolicy();
-            //@TODO 整合其他的拒绝策略
+            case discardOldestPolicy:
+                return new ThreadPoolExecutor.DiscardOldestPolicy();
             default:
                 throw new IllegalArgumentException("rejectedHandler配置有误！");
         }
