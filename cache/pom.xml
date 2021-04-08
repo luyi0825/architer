@@ -10,8 +10,8 @@
     <artifactId>cache</artifactId>
     <name>cache</name>
     <description>数据缓存</description>
-    <packaging>jar</packaging>
-    <dependencies>
-
-    </dependencies>
+    <packaging>pom</packaging>
+    <modules>
+        <module>local-cache</module>
+    </modules>
 </project>
