@@ -1,40 +1,39 @@
 package com.lz.core.boot;
 
+
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
-import org.springframework.util.ClassUtils;
-import org.springframework.util.SystemPropertyUtils;
+import org.springframework.util.*;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author luyi
- * @date 2021/1/8
  * 构建项目的moule->扫描包，得到每个模块的模块配置类
+ * 可以通过set方法修改默认的scanPackages和resourcePattern
  */
+@Slf4j
 public class MoulesBuilder {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MoulesBuilder.class);
 
     /**
      * 扫描的包
      */
-    private final static String[] SCAN_PACKAGES = new String[]{"com.ly.**"};
+    private String[] scanPackages = new String[]{"com.lz.**"};
 
     /**
-     * 后缀，只扫描class
+     * 资源模式
      */
-    private final static String DEFAULT_RESOURCE_PATTERN = "*Module.class";
+    private String resourcePattern = "*Module.class";
 
 
     /**
@@ -43,25 +42,11 @@ public class MoulesBuilder {
      */
     public Class<?>[] buildMoules(Class<?>... sources) {
         Set<Class<?>> moduleClass = new HashSet<>();
-        loadModuleClass(SCAN_PACKAGES, moduleClass, null);
+        loadModuleClass(getScanPackages(), moduleClass);
         if (ArrayUtils.isNotEmpty(sources)) {
             moduleClass.addAll(Arrays.asList(sources));
         }
         return moduleClass.toArray(new Class[0]);
-    }
-
-    /**
-     * @param sources 启动配置类
-     * @return 所有的启动配置类
-     */
-
-    public String[] buildMoules(String... sources) {
-        Set<String> moduleClass = new HashSet<>();
-        if (ArrayUtils.isNotEmpty(sources)) {
-            moduleClass.addAll(Arrays.asList(sources));
-        }
-        loadModuleClass(SCAN_PACKAGES, null, moduleClass);
-        return moduleClass.toArray(new String[0]);
     }
 
     /**
@@ -74,39 +59,99 @@ public class MoulesBuilder {
      * </p>
      *
      * @param scanPackages 扫描的包
-     * @param moduleClass1 扫描的类-对应class
-     * @param moduleClass2 扫描的类-对应String
+     * @param moduleClass  扫描的类-对应class
      */
-    private void loadModuleClass(String[] scanPackages, Set<Class<?>> moduleClass1, Set<String> moduleClass2) {
+    private void loadModuleClass(String[] scanPackages, Set<Class<?>> moduleClass) {
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(resourcePatternResolver);
         for (String basePackage : scanPackages) {
-            if (StringUtils.isBlank(basePackage)) {
+            if (!StringUtils.isEmpty(basePackage)) {
                 continue;
             }
-            String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
-                    ClassUtils.convertClassNameToResourcePath(SystemPropertyUtils.resolvePlaceholders(basePackage)) + "/" + DEFAULT_RESOURCE_PATTERN;
-            try {
-                Resource[] resources = resourcePatternResolver.getResources(packageSearchPath);
-                for (Resource resource : resources) {
-                    //检查resource，这里的resource都是class
-                    MetadataReader metadataReader = metadataReaderFactory.getMetadataReader(resource);
-                    if (metadataReader != null) {
-                        String className = metadataReader.getClassMetadata().getClassName();
-                        Class<?> clazz = this.getClass().getClassLoader().loadClass(className);
-                        if (moduleClass1 != null) {
-                            moduleClass1.add(clazz);
-                        }
-                        if (moduleClass2 != null) {
-                            moduleClass2.add(className);
-                        }
-                        LOGGER.info("加载模块："+className);
-                    }
-                }
-            } catch (Exception e) {
-                //转换异常
-                throw new RuntimeException("扫描启动类失败",e);
+            //构建路径位置模式
+            String locationPattern = this.buildLocationPattern(basePackage);
+            Set<Class<?>> resources = this.parseResourcePattern(locationPattern, metadataReaderFactory, resourcePatternResolver);
+            if (!CollectionUtils.isEmpty(resources)) {
+                moduleClass.addAll(resources);
             }
         }
+    }
+
+    /**
+     * 解析resourcePattern
+     *
+     * @param locationPattern         路径模式
+     * @param metadataReaderFactory   元数据读取工厂
+     * @param resourcePatternResolver 资源模式解析器
+     */
+    private Set<Class<?>> parseResourcePattern(String locationPattern, MetadataReaderFactory metadataReaderFactory, ResourcePatternResolver resourcePatternResolver) {
+        Set<Class<?>> resourceSet;
+        try {
+            Resource[] resources = resourcePatternResolver.getResources(locationPattern);
+            if (ArrayUtils.isEmpty(resources)) {
+                //没有直接返回
+                return null;
+            }
+            resourceSet = new HashSet<>(resources.length);
+            for (Resource resource : resources) {
+                //检查resource，这里的resource都是class
+                MetadataReader metadataReader = metadataReaderFactory.getMetadataReader(resource);
+                if (metadataReader != null) {
+                    String className = metadataReader.getClassMetadata().getClassName();
+                    Class<?> clazz = this.getClass().getClassLoader().loadClass(className);
+                    Moule moule = clazz.getAnnotation(Moule.class);
+                    if (moule != null) {
+                        resourceSet.add(clazz);
+                        //TODO 日志打印不生效 -log.info("load moule:{0}-{1}-{2}",moule.name(),moule.caption(),className);
+                    }
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException("扫描启动类失败", e);
+        }
+        return resourceSet;
+    }
+
+    /**
+     * 构建路径位置模式
+     */
+    private String buildLocationPattern(String basePackage) {
+        return ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
+                ClassUtils.convertClassNameToResourcePath(SystemPropertyUtils.resolvePlaceholders(basePackage)) +
+                "/" +
+                getResourcePattern();
+    }
+
+
+    /**
+     * 设置包扫描范围
+     *
+     * @param scanPackages 包扫描范围
+     * @return 模块构建器
+     */
+    public MoulesBuilder setScanPackages(String[] scanPackages) {
+        Assert.notEmpty(scanPackages, "scanPackages is null");
+        this.scanPackages = scanPackages;
+        return this;
+    }
+
+    /**
+     * 设置资源形式，一般为class，默认为：*Module.class
+     *
+     * @param resourcePattern 资源形式
+     * @return 模块构建器
+     */
+    public MoulesBuilder setResourcePattern(String resourcePattern) {
+        Assert.notNull(resourcePattern, "resourcePattern not null");
+        this.resourcePattern = resourcePattern;
+        return this;
+    }
+
+    public String[] getScanPackages() {
+        return scanPackages;
+    }
+
+    public String getResourcePattern() {
+        return resourcePattern;
     }
 }
