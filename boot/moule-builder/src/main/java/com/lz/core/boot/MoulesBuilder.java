@@ -24,7 +24,6 @@ import java.util.Set;
 @Slf4j
 public class MoulesBuilder {
 
-
     /**
      * 扫描的包
      */
@@ -102,7 +101,7 @@ public class MoulesBuilder {
                     Moule moule = clazz.getAnnotation(Moule.class);
                     if (moule != null) {
                         resourceSet.add(clazz);
-                        //TODO 日志打印不生效 -log.info("load moule:{0}-{1}-{2}",moule.name(),moule.caption(),className);
+                        log.info("load moule:{}-{}-{}",moule.name(),moule.caption(),className);
                     }
                 }
             }
