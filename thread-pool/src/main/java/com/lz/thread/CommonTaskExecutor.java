@@ -1,9 +1,8 @@
 package com.lz.thread;
 
 import com.lz.thread.properties.TaskExecutorProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.stereotype.Component;
+
 
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -21,7 +20,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public class CommonTaskExecutor extends ThreadPoolTaskExecutor {
 
-    private TaskExecutorProperties taskExecutorProperties;
+    private final TaskExecutorProperties taskExecutorProperties;
 
     public CommonTaskExecutor(TaskExecutorProperties taskExecutorProperties) {
         this.taskExecutorProperties = taskExecutorProperties;
@@ -29,6 +28,7 @@ public class CommonTaskExecutor extends ThreadPoolTaskExecutor {
 
     @Override
     public void initialize() {
+        //@TODO 校验自义定配置的是否正确
         //核心线程
         this.setCorePoolSize(taskExecutorProperties.getCorePoolSize());
         //最大的线程
