@@ -1,6 +1,7 @@
 package com.lz.core.cache.common.annotation;
 
-import com.lz.core.cache.common.Lock;
+
+import com.lz.core.cache.common.enums.Lock;
 
 import java.lang.annotation.Documented;
 
@@ -12,7 +13,6 @@ import java.lang.annotation.Documented;
  * @date 2020/12/26
  */
 @Documented
-
 public @interface DeleteCache {
     /**
      * 缓存名称

@@ -1,6 +1,7 @@
 package com.lz.core.cache.common.annotation;
 
-import com.lz.core.cache.common.Lock;
+
+import com.lz.core.cache.common.enums.Lock;
 
 /**
  * 缓存
