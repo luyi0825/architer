@@ -1,19 +1,20 @@
 package com.lz.core.cache.redis;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.lz.core.cache.process.CacheProcess;
-import com.lz.core.cache.common.utils.CacheUtils;
+
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lz.core.cache.common.CacheConstants;
+import com.lz.core.cache.common.CacheProcess;
+import com.lz.core.cache.common.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.Collection;
+
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -24,28 +25,28 @@ import java.util.concurrent.locks.Lock;
  */
 @Component
 @Slf4j
-public class RedisCacheCacheProcessImpl extends CacheProcess implements Ordered {
+public class RedisCacheCacheProcessImpl implements Ordered, CacheProcess {
 
 
     @Autowired
-    private RedisService redisService;
+    private StringRedisService stringRedisService;
     @Autowired
     private RedissonClient redissonClient;
 
 
     @Override
-    public boolean supportBefore(Method method) {
-        return true;
+    public String getCacheKey(Method method, Object... args) {
+        return null;
     }
 
     @Override
-    public Object processCache(ProceedingJoinPoint jp) throws Throwable {
-        String cacheKey = getCacheKey(jp);
-        Object cacheValue = redisService.get(cacheKey);
+    public Object process(Object target, Method method, Object[] args) {
+        String cacheKey = getCacheKey(method, args);
+        Object cacheValue = stringRedisService.get(cacheKey);
         if (cacheValue == null) {
-            cacheValue = this.getData(jp, cacheKey);
+            cacheValue = this.getData(target, method, args, cacheKey);
         }
-        return convertJsonValue(jp, cacheValue);
+        return jsonValueConvert(cacheValue);
     }
 
     /**
@@ -54,46 +55,50 @@ public class RedisCacheCacheProcessImpl extends CacheProcess implements Ordered 
      * @author luyi
      * @date 2020/12/26 上午1:11
      */
-    private Object convertJsonValue(ProceedingJoinPoint jp, Object value) throws IllegalAccessException, InstantiationException {
-        MethodSignature methodSignature = (MethodSignature) jp.getSignature();
-        //方法返回的参数类型
-        Class<?> returnType = methodSignature.getMethod().getReturnType();
+    private Object jsonValueConvert(Object value) {
         //放入的假的缓存值，直接返回null
         if (CacheConstants.CACHE_NOT_EXIST.equals(value)) {
             return null;
         }
-        //说明查询数据库获取的值
+        //从数据库中获取的值
         if (!(value instanceof String)) {
             return value;
         }
+        Method method = null;
+        Class<?> returnType = method.getReturnType();
 
-        //集合
-        if (Collection.class.isAssignableFrom(returnType) || returnType.newInstance() instanceof Collection) {
-            return JSONArray.parseArray((String) value, returnType);
+        if (returnType instanceof Object) {
+
         }
-        return JSON.parseObject((String) value, returnType);
+        ObjectMapper objectMapper = new ObjectMapper();
+        // JavaType listType = objectMapper.getTypeFactory().constructParametricType(returnType, clazz);
+
+        //需要将jsonString 反序列化
+        //  return JsonUtils.readValue(value, returnType.getClass());
+        return null;
     }
 
-    public Object getData(ProceedingJoinPoint jp, String cacheKey) throws Throwable {
+    public Object getData(Object target, Method method, Object[] args, String cacheKey) {
         Lock lock = redissonClient.getLock(cacheKey + ".lock");
-
         //加分布式锁
         lock.lock();
         try {
             //再次判断缓存中是否有值
-            String cacheValue = redisService.get(cacheKey);
+            String cacheValue = stringRedisService.get(cacheKey);
             if (cacheValue == null) {
-                Object value = jp.proceed();
+                //反射调用方法
+                Object value = method.invoke(target, args);
                 if (value == null) {
                     //缓存不存在，放0,防止缓存穿透
-                    redisService.set(cacheKey, CacheConstants.CACHE_NOT_EXIST, 30 * 60);
+                    stringRedisService.set(cacheKey, CacheConstants.CACHE_NOT_EXIST, 30 * 60);
                 } else {
-                    redisService.set(cacheKey, CacheUtils.toJsonString(value), 30 * 60);
+                    stringRedisService.set(cacheKey, JsonUtils.toJsonString(value), 30 * 60);
                 }
                 return value;
             }
             return cacheValue;
-
+        } catch (Exception e) {
+            throw new RuntimeException("获取数据失败", e);
         } finally {
             //释放分布式锁
             lock.unlock();

@@ -1,4 +1,4 @@
-package com.lz.core.cache.redis;
+package com.lz.core.cache.common;
 
 /**
  * 描述:缓存的常量

@@ -2,6 +2,7 @@ package com.lz.core.cache.common;
 
 
 import com.lz.core.cache.common.annotation.CustomEnableCaching;
+import com.lz.core.cache.common.aspectj.AspectjConfiguration;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.AdviceModeImportSelector;
 
@@ -35,7 +36,8 @@ public class CacheConfigurationSelector extends AdviceModeImportSelector<CustomE
     }
 
     private String[] getAspectJImports() {
-        return null;
+
+        return new String[]{AspectjConfiguration.class.getName()};
     }
 
     @Override

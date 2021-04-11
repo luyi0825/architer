@@ -1,49 +1,31 @@
-package com.lz.core.cache.redis;///**
+package com.lz.core.cache.redis;
 
 
-import com.alibaba.fastjson.JSON;
-import com.lz.core.cache.common.utils.CacheUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.lz.core.cache.common.CacheConstants;
+import com.lz.core.cache.common.utils.JsonUtils;
+import lombok.NonNull;
 import org.springframework.data.redis.core.*;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
 /**
- * Redis工具类
+ * Redis工具类--处理字符串类型
  * <p>
  * 注意，过期的时间单位都是秒
  *
  * @author luyi
  * @date 2020-12-24
  */
-@Component
-public class RedisService {
-    private static Logger logger = LoggerFactory.getLogger(RedisService.class);
+public class StringRedisService {
 
-    public RedisService() {
-        logger.info("init RedisService");
+    private final StringRedisTemplate redisTemplate;
+    private final ValueOperations<String, String> valueOperations;
+
+    @NonNull
+    public StringRedisService(StringRedisTemplate redisTemplate) {
+        this.redisTemplate = redisTemplate;
+        valueOperations = redisTemplate.opsForValue();
     }
-
-
-    @Autowired
-    private StringRedisTemplate redisTemplate;
-
-    //@Autowired(required = false)
-    //private RedisTemplate<String, Object> redisTemplate;
-    @Autowired(required = false)
-    private ValueOperations<String, String> valueOperations;
-    @Autowired(required = false)
-    private HashOperations<String, String, Object> hashOperations;
-    @Autowired(required = false)
-    private ListOperations<String, Object> listOperations;
-    @Autowired(required = false)
-    private SetOperations<String, Object> setOperations;
-    @Autowired(required = false)
-    private ZSetOperations<String, Object> zSetOperations;
-
 
     /**
      * 描述:向redis中放入值:永不过期
@@ -53,9 +35,8 @@ public class RedisService {
      * @author luyi
      * @date 2020/12/24 下午11:18
      */
-    public boolean set(String key, Object value) {
-        redisTemplate.opsForValue().set(key, CacheUtils.toJsonString(value));
-        return true;
+    public void set(String key, Object value) {
+        valueOperations.set(key, JsonUtils.toJsonString(value));
     }
 
     /**
@@ -72,7 +53,7 @@ public class RedisService {
         if (expire <= 0) {
             throw new IllegalArgumentException("expire必须大于0");
         }
-        redisTemplate.opsForValue().set(key,CacheUtils.toJsonString(value), expire, TimeUnit.SECONDS);
+        valueOperations.set(key, JsonUtils.toJsonString(value), expire, TimeUnit.SECONDS);
     }
 
     /**
@@ -84,7 +65,7 @@ public class RedisService {
      * @date 2020/12/24 下午11:34
      */
     public boolean setIfNotExist(String key, Object value) {
-        return redisTemplate.opsForValue().setIfAbsent(key,CacheUtils.toJsonString(value));
+        return valueOperations.setIfAbsent(key, JsonUtils.toJsonString(value));
     }
 
     /**
@@ -100,7 +81,7 @@ public class RedisService {
         if (expire < 0) {
             throw new IllegalArgumentException("expire必须大于0");
         }
-        return redisTemplate.opsForValue().setIfAbsent(key,CacheUtils.toJsonString(value), expire, TimeUnit.SECONDS);
+        return valueOperations.setIfAbsent(key, JsonUtils.toJsonString(value), expire, TimeUnit.SECONDS);
     }
 
     /**
@@ -113,8 +94,9 @@ public class RedisService {
      * @author luyi
      * @date 2020/12/24 下午11:34
      */
+    @NonNull
     public boolean setIfExist(String key, Object value, long expire) {
-        return redisTemplate.opsForValue().setIfPresent(key,CacheUtils.toJsonString(value), expire, TimeUnit.SECONDS);
+        return valueOperations.setIfPresent(key, JsonUtils.toJsonString(value), expire, TimeUnit.SECONDS);
 
     }
 
@@ -122,7 +104,7 @@ public class RedisService {
     //*************************************get**************************************************/
 
     public String getAndSet(String key, Object value) {
-        return this.redisTemplate.opsForValue().getAndSet(key,CacheUtils.toJsonString(value));
+        return valueOperations.getAndSet(key, JsonUtils.toJsonString(value));
     }
 
     /**
@@ -134,11 +116,11 @@ public class RedisService {
      * @TODO 没有值的时候，验证下是返回null还是-2
      */
     public String get(String key) {
-        return redisTemplate.opsForValue().get(key);
+        return valueOperations.get(key);
     }
 
     public String get(String key, long expire) {
-        String value = redisTemplate.opsForValue().get(key);
+        String value = valueOperations.get(key);
         //缓存中有值的时候才设置过期的时间
         if (value != null) {
             redisTemplate.expire(key, expire, TimeUnit.SECONDS);
@@ -168,14 +150,18 @@ public class RedisService {
 
     public <T> T get(String key, Class<T> clazz) {
         String value = valueOperations.get(key);
-        return value == null ? null : fromJson(value, clazz);
+        return value == null ? null : JsonUtils.readValue(value, clazz);
     }
 
-
+    /**
+     * 上升
+     * @param key 缓存的key
+     * @param value 上升的值
+     * @return 上升后的值
+     */
     public long increment(String key, long value) {
-        return redisTemplate.opsForValue().increment(key, value);
+        return valueOperations.increment(key, value);
     }
-
 
     /**
      * 描述:删除缓存
@@ -186,14 +172,5 @@ public class RedisService {
     public void delete(String key) {
         redisTemplate.delete(key);
     }
-
-
-    /**
-     * JSON数据，转成Object
-     */
-    private <T> T fromJson(String json, Class<T> clazz) {
-        return JSON.parseObject(json, clazz);
-    }
-
 
 }

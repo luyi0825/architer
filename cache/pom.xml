@@ -6,6 +6,7 @@
         <artifactId>parent</artifactId>
         <groupId>com.lz.core</groupId>
         <version>1.0.0</version>
+        <relativePath>../../product</relativePath>
     </parent>
     <artifactId>cache</artifactId>
     <name>cache</name>

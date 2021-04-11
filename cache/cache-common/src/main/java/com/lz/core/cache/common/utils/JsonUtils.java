@@ -64,6 +64,23 @@ public class JsonUtils {
      * @param <T>   实体类型
      * @return 反序列化后的list
      */
+    public static <T> Object readValue(String value, Class<?> typeClass, Class<T> clazz) {
+        JavaType listType = OBJECT_MAPPER.getTypeFactory().constructParametricType(typeClass, clazz);
+        try {
+            return OBJECT_MAPPER.readValue(value, listType);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("反序列化失败", e);
+        }
+    }
+
+    /**
+     * 将Json字符串反序列化成list
+     *
+     * @param value 需要反序列化的字符串
+     * @param clazz list中的实体
+     * @param <T>   实体类型
+     * @return 反序列化后的list
+     */
     public static <T> List<T> readListValue(String value, Class<T> clazz) {
         JavaType listType = OBJECT_MAPPER.getTypeFactory().constructParametricType(List.class, clazz);
         try {
