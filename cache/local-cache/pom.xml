@@ -7,9 +7,9 @@
        <version>1.0.0</version>
    </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>local-cache-starter</artifactId>
+    <artifactId>local-cache</artifactId>
     <version>1.0.0</version>
-    <name>local-cache-starter</name>
+    <name>cache-local</name>
     <description>Demo project for Spring Boot</description>
     <packaging>jar</packaging>
     <dependencies>

@@ -8,7 +8,7 @@
         <version>1.0.0</version>
     </parent>
     <artifactId>redis-cache</artifactId>
-    <name>redis-cache</name>
+    <name>cache-redis</name>
 
     <dependencies>
         <dependency>
