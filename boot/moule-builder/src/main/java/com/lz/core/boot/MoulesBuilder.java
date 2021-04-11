@@ -1,7 +1,7 @@
 package com.lz.core.boot;
 
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -21,7 +21,7 @@ import java.util.Set;
  * 构建项目的moule->扫描包，得到每个模块的模块配置类
  * 可以通过set方法修改默认的scanPackages和resourcePattern
  */
-@Slf4j
+@Log4j2
 public class MoulesBuilder {
 
     /**
