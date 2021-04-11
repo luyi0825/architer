@@ -6,11 +6,11 @@
         <artifactId>boot</artifactId>
         <groupId>com.lz.core</groupId>
         <version>1.0.0</version>
-        <relativePath>../moule-builder</relativePath>
+        <relativePath>../../boot</relativePath>
     </parent>
     <artifactId>moule-builder</artifactId>
     <name>moule-builder</name>
-    <description>Demo project for Spring Boot</description>
+    <description>模块构建</description>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
