@@ -12,6 +12,8 @@
     <description>数据缓存</description>
     <packaging>pom</packaging>
     <modules>
+        <module>cache-common</module>
         <module>local-cache</module>
+        <module>redis-cache</module>
     </modules>
 </project>
