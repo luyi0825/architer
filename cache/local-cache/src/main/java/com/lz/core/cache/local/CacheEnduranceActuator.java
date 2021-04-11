@@ -1,7 +1,8 @@
 package com.lz.core.cache.local;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.log4j.Log4j2;
 
 import java.io.*;
 
@@ -11,9 +12,9 @@ import java.io.*;
  * @author luyi
  * @date 2021/3/10
  */
+@Log4j2
 public class CacheEnduranceActuator {
 
-    private Logger logger = LoggerFactory.getLogger(CacheEnduranceActuator.class);
 
     /**
      * 描述：从本地读取缓存
@@ -47,10 +48,9 @@ public class CacheEnduranceActuator {
             os.writeObject(localCache);
             return true;
         } catch (Exception e) {
-            logger.error("缓存持久化失败", e);
+            log.error("缓存持久化失败", e);
         }
         return false;
-
     }
 
 
