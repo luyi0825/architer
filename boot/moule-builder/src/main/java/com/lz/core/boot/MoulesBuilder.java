@@ -64,7 +64,7 @@ public class MoulesBuilder {
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(resourcePatternResolver);
         for (String basePackage : scanPackages) {
-            if (!StringUtils.isEmpty(basePackage)) {
+            if (StringUtils.isEmpty(basePackage)) {
                 continue;
             }
             //构建路径位置模式
@@ -98,10 +98,10 @@ public class MoulesBuilder {
                 if (metadataReader != null) {
                     String className = metadataReader.getClassMetadata().getClassName();
                     Class<?> clazz = this.getClass().getClassLoader().loadClass(className);
-                    Moule moule = clazz.getAnnotation(Moule.class);
-                    if (moule != null) {
+                    Module module = clazz.getAnnotation(Module.class);
+                    if (module != null) {
                         resourceSet.add(clazz);
-                        log.info("load moule:{}-{}-{}",moule.name(),moule.caption(),className);
+                        log.info("load moule:{}-{}-{}", module.name(), module.caption(),className);
                     }
                 }
             }

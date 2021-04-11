@@ -21,7 +21,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 @Configuration
 @ComponentScan
-public @interface Moule {
+public @interface Module {
     /**
      * 模块名称（英文）
      */

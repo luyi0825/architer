@@ -8,8 +8,8 @@
         <version>1.0.0</version>
         <relativePath>../../boot</relativePath>
     </parent>
-    <artifactId>moule-builder</artifactId>
-    <name>moule-builder</name>
+    <artifactId>module-builder</artifactId>
+    <name>boot-module-builder</name>
     <description>模块构建</description>
     <packaging>jar</packaging>
     <dependencies>
@@ -26,6 +26,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+
 
     </dependencies>
 
