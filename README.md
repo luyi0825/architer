@@ -5,7 +5,7 @@
 ## boot
 
 启动相关
-### moule-builder 
+### module-builder 
 
 模块构建，扫表子模块用  
 
