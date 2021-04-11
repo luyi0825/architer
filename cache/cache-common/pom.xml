@@ -11,7 +11,7 @@
     <artifactId>cache-common</artifactId>
     <name>cache-common</name>
     <description>缓存公共代码</description>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -29,7 +29,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
