@@ -1,6 +1,7 @@
 package com.lz.core.cache.common.annotation;
 
 
+import com.lz.core.cache.common.enums.CacheType;
 import com.lz.core.cache.common.enums.Lock;
 
 /**
@@ -17,6 +18,11 @@ public @interface Caching {
      * ps:不写的话默认为缓存前缀+类型+方法名称+（参数）
      */
     String cacheName() default "";
+
+    /**
+     * 缓存类型：默认查询
+     */
+    CacheType cacheType() default CacheType.GET;
 
     /**
      * 缓存随机失效时间
@@ -42,7 +48,7 @@ public @interface Caching {
     /**
      * 缓存前缀
      * 默认为包名+类名
-     *
+     * <p>
      * 比如:query(String id),我们可以定义前缀为com.test,那么缓存的key就为com.test::{id的值}
      */
     String cachePrefix() default "";
