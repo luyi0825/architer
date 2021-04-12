@@ -25,6 +25,7 @@ public interface CacheProcess {
     /**
      * 处理缓存
      *
+     * @param target 处理的对象
      * @param method 拦截的方法
      * @param args   请求参数
      * @return 处理后的返回值
