@@ -36,8 +36,7 @@ public class CacheConfigurationSelector extends AdviceModeImportSelector<CustomE
     }
 
     private String[] getAspectJImports() {
-
-        return new String[]{AspectjConfiguration.class.getName()};
+        return new String[]{CacheConfiguration.class.getName(), AspectjConfiguration.class.getName()};
     }
 
     @Override

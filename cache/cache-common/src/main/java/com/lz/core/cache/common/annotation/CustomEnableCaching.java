@@ -1,6 +1,7 @@
 package com.lz.core.cache.common.annotation;
 
 import com.lz.core.cache.common.CacheConfigurationSelector;
+import com.lz.core.cache.common.enums.KeyStrategy;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Import;
 
@@ -26,5 +27,8 @@ public @interface CustomEnableCaching {
      */
     AdviceMode mode() default AdviceMode.PROXY;
 
-
+    /**
+     * key 生成策略
+     */
+    KeyStrategy KEY_STRATEGY() default KeyStrategy.PACKAGE_MIX;
 }

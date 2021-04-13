@@ -17,7 +17,6 @@ public class CacheAspectj {
 
     private final CacheProcess cacheProcess;
 
-
     public CacheAspectj(CacheProcess cacheProcess) {
         this.cacheProcess = cacheProcess;
     }
@@ -29,12 +28,12 @@ public class CacheAspectj {
      * @return
      * @throws Throwable
      */
-    @Around(value = "@annotation(com.ly.core.cache.anntion.Caching)")
+    @Around(value = "@annotation(com.lz.core.cache.anntion.Caching)")
     public Object cached(ProceedingJoinPoint jp) {
         MethodSignature methodSignature = (MethodSignature) jp.getSignature();
         Method method = methodSignature.getMethod();
         Object target = jp.getTarget();
-        return cacheProcess.process(target,method, jp.getArgs());
+        return cacheProcess.process(target, method, jp.getArgs());
     }
 
 
