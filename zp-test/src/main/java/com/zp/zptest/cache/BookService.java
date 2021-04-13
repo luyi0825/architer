@@ -2,11 +2,13 @@ package com.zp.zptest.cache;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.stereotype.Component;
 
 /**
  * @author zhoupei
  * @create 2021/4/13
  **/
+@Component
 public class BookService {
 
     @Cacheable("book")
@@ -18,17 +20,5 @@ public class BookService {
             e.printStackTrace();
         }
         return new Book(isbn,"111");
-    }
-
-    public static void main(String[] args) {
-        BookService bookService = new BookService();
-        System.out.println(bookService.getByIsbn("123"));//,"颈椎病康复指南"
-        System.out.println(bookService.getByIsbn("123"));
-        System.out.println(bookService.getByIsbn("345")); //,"眼保健操步骤")
-        System.out.println(bookService.getByIsbn("123"));
-        System.out.println(bookService.getByIsbn("345"));
-        System.out.println(bookService.getByIsbn("345"));
-        System.out.println(bookService.getByIsbn("345"));
-        System.out.println(bookService.getByIsbn("123"));
     }
 }
