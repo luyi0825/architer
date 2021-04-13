@@ -28,7 +28,7 @@ public class CacheAspectj {
      * @return
      * @throws Throwable
      */
-    @Around(value = "@annotation(com.lz.core.cache.anntion.Caching)")
+    @Around(value = "@annotation(com.lz.core.cache.common.annotation.Caching)")
     public Object cached(ProceedingJoinPoint jp) {
         MethodSignature methodSignature = (MethodSignature) jp.getSignature();
         Method method = methodSignature.getMethod();
