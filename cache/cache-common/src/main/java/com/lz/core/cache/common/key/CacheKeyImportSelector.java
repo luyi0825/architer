@@ -1,8 +1,6 @@
-package com.lz.core.cache.common;
+package com.lz.core.cache.common.key;
 
-import com.lz.core.cache.common.aspectj.AspectjConfiguration;
 import com.lz.core.cache.common.enums.KeyStrategy;
-import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.core.annotation.AnnotationAttributes;

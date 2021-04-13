@@ -1,7 +1,7 @@
 package com.lz.core.cache.common.annotation;
 
 import com.lz.core.cache.common.CacheAdviceImportSelector;
-import com.lz.core.cache.common.CacheKeyImportSelector;
+import com.lz.core.cache.common.key.CacheKeyImportSelector;
 import com.lz.core.cache.common.enums.KeyStrategy;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Import;

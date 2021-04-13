@@ -1,4 +1,4 @@
-package com.lz.core.cache.common;
+package com.lz.core.cache.common.key;
 
 import java.lang.reflect.Method;
 
