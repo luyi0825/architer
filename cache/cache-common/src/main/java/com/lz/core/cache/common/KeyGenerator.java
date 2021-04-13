@@ -4,12 +4,10 @@ import java.lang.reflect.Method;
 
 /**
  * @author luyi
- * key 生成器
+ * 缓存key 生成器
  */
-public class KeyGenerator {
+public interface KeyGenerator {
 
-    public String getKey(Method method, Object[] args) {
-        return null;
-    }
+    String getKey(Method method, Object[] args);
 
 }
