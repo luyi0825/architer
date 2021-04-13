@@ -18,14 +18,6 @@ public class XlsCell {
      */
     private String text;
     /**
-     * 开始列
-     */
-    private int startCol;
-    /**
-     * 结束列
-     */
-    private int endCol;
-    /**
      * 开始行
      */
     private int startRow;
@@ -33,6 +25,15 @@ public class XlsCell {
      * 结束行
      */
     private int endRow;
+    /**
+     * 开始列
+     */
+    private int startCol;
+    /**
+     * 结束列
+     */
+    private int endCol;
+
     /**
      * 边框
      */
@@ -59,10 +60,10 @@ public class XlsCell {
     public String toString() {
         return "XlsCell{" +
                 "text='" + text + '\'' +
-                ", startCol=" + startCol +
-                ", endCol=" + endCol +
                 ", startRow=" + startRow +
                 ", endRow=" + endRow +
+                ", startCol=" + startCol +
+                ", endCol=" + endCol +
                 ", cellBorder=" + cellBorder +
                 ", levelAlign=" + levelAlign +
                 ", valign=" + valign +
