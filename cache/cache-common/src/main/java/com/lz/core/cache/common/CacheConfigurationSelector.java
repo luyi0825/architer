@@ -32,7 +32,7 @@ public class CacheConfigurationSelector extends AdviceModeImportSelector<CustomE
     }
 
     private String[] getProxyImports() {
-        return null;
+        return  new String[]{ProxyConfiguration.class.getName()};
     }
 
     private String[] getAspectJImports() {
