@@ -10,17 +10,18 @@ import java.util.function.Predicate;
 
 
 /**
- * 缓存配置选择器
- * <p>模仿的spring中的缓存配置解析器
+ * 缓存切面导入选择器
+ * <p>模仿的spring的CachingConfigurationSelector
  *
  * @author luyi
  * @see org.springframework.cache.annotation.CachingConfigurationSelector
  * </p>
  * @see com.lz.core.cache.common.annotation.CustomEnableCaching
  */
-public class CacheConfigurationSelector extends AdviceModeImportSelector<CustomEnableCaching> {
+public class CacheAdviceImportSelector extends AdviceModeImportSelector<CustomEnableCaching> {
+
     @Override
-    protected String[] selectImports(AdviceMode adviceMode) {
+    public String[] selectImports(AdviceMode adviceMode) {
         switch (adviceMode) {
             case PROXY:
                 return getProxyImports();
@@ -32,7 +33,7 @@ public class CacheConfigurationSelector extends AdviceModeImportSelector<CustomE
     }
 
     private String[] getProxyImports() {
-        return  new String[]{ProxyConfiguration.class.getName()};
+        return new String[]{ProxyConfiguration.class.getName()};
     }
 
     private String[] getAspectJImports() {
@@ -41,6 +42,6 @@ public class CacheConfigurationSelector extends AdviceModeImportSelector<CustomE
 
     @Override
     public Predicate<String> getExclusionFilter() {
-        return null;
+        return super.getExclusionFilter();
     }
 }
