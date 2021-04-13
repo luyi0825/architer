@@ -1,4 +1,4 @@
-package com.ly.core.cache.redis;
+package com.lz.core.cache.redis;
 
 import org.junit.Test;
 

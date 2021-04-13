@@ -1,4 +1,4 @@
-package com.ly.core.cache.common;
+package com.lz.core.cache.common;
 
 import com.lz.core.cache.common.annotation.CustomEnableCaching;
 import org.springframework.boot.SpringApplication;
