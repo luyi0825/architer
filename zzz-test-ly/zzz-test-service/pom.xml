@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>com.lz.core</groupId>
-            <artifactId>cache-common</artifactId>
+            <artifactId>redis-cache</artifactId>
             <version>1.0.0</version>
         </dependency>
 
