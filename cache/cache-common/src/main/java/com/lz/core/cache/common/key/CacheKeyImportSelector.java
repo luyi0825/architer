@@ -1,5 +1,6 @@
 package com.lz.core.cache.common.key;
 
+import com.lz.core.cache.common.annotation.CustomEnableCaching;
 import com.lz.core.cache.common.enums.KeyStrategy;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.GenericTypeResolver;
@@ -30,8 +31,7 @@ public class CacheKeyImportSelector implements ImportSelector {
      */
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-        Class<?> annType = GenericTypeResolver.resolveTypeArgument(getClass(), CacheKeyImportSelector.class);
-        Assert.state(annType != null, "Unresolvable type argument for AdviceModeImportSelector");
+        Class<?> annType = CustomEnableCaching.class;
         AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(annType.getName(), false));
         if (attributes == null) {
             throw new IllegalArgumentException(String.format(
@@ -47,7 +47,8 @@ public class CacheKeyImportSelector implements ImportSelector {
     }
 
     private String[] selectKeyStrategyImports(KeyStrategy keyStrategy) {
-        return null;
+        //选择key策略
+        return new String[]{};
     }
 
 

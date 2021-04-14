@@ -31,5 +31,5 @@ public @interface CustomEnableCaching {
     /**
      * key 生成策略
      */
-    KeyStrategy KEY_STRATEGY() default KeyStrategy.PACKAGE_MIX;
+    KeyStrategy keyStrategy() default KeyStrategy.PACKAGE_MIX;
 }

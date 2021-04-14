@@ -52,6 +52,4 @@ public @interface Caching {
      * 比如:query(String id),我们可以定义前缀为com.test,那么缓存的key就为com.test::{id的值}
      */
     String cachePrefix() default "";
-
-
 }
