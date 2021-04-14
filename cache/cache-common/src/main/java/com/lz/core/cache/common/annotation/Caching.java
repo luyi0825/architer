@@ -28,7 +28,7 @@ public @interface Caching {
      * 缓存随机失效时间
      * ps:主要用户解决缓存雪崩，同一时刻大量缓存数据失效，大量请求到达数据库
      */
-    long randomExpireTime();
+    long randomExpireTime() default -1;
 
     /**
      * 缓存失效时间
