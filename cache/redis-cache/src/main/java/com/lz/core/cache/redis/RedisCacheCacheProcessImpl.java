@@ -1,15 +1,14 @@
 package com.lz.core.cache.redis;
 
 
-import com.fasterxml.jackson.databind.JavaType;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lz.core.cache.common.BaseCacheProcess;
 import com.lz.core.cache.common.CacheConstants;
-import com.lz.core.cache.common.CacheProcess;
 import com.lz.core.cache.common.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
@@ -25,19 +24,19 @@ import java.util.concurrent.locks.Lock;
  */
 @Component
 @Slf4j
-public class RedisCacheCacheProcessImpl implements Ordered, CacheProcess {
+public class RedisCacheCacheProcessImpl extends BaseCacheProcess implements Ordered {
 
 
-    @Autowired
+    public RedisCacheCacheProcessImpl() {
+        System.out.println("inti RedisCacheCacheProcessImpl");
+    }
+
     private StringRedisService stringRedisService;
-    @Autowired
+
     private RedissonClient redissonClient;
 
 
-    @Override
-    public String getCacheKey(Method method, Object... args) {
-        return null;
-    }
+
 
     @Override
     public Object process(Object target, Method method, Object[] args) {
@@ -46,7 +45,7 @@ public class RedisCacheCacheProcessImpl implements Ordered, CacheProcess {
         if (cacheValue == null) {
             cacheValue = this.getData(target, method, args, cacheKey);
         }
-        return jsonValueConvert(cacheValue);
+        return jsonValueConvert(method,cacheValue);
     }
 
     /**
@@ -55,7 +54,7 @@ public class RedisCacheCacheProcessImpl implements Ordered, CacheProcess {
      * @author luyi
      * @date 2020/12/26 上午1:11
      */
-    private Object jsonValueConvert(Object value) {
+    private Object jsonValueConvert(Method method,Object value) {
         //放入的假的缓存值，直接返回null
         if (CacheConstants.CACHE_NOT_EXIST.equals(value)) {
             return null;
@@ -64,18 +63,16 @@ public class RedisCacheCacheProcessImpl implements Ordered, CacheProcess {
         if (!(value instanceof String)) {
             return value;
         }
-        Method method = null;
         Class<?> returnType = method.getReturnType();
 
-        if (returnType instanceof Object) {
-
-        }
-        ObjectMapper objectMapper = new ObjectMapper();
+        return value;
+        //@TODO 反序列处理
+       // ObjectMapper objectMapper = new ObjectMapper();
         // JavaType listType = objectMapper.getTypeFactory().constructParametricType(returnType, clazz);
 
         //需要将jsonString 反序列化
         //  return JsonUtils.readValue(value, returnType.getClass());
-        return null;
+        //return null;
     }
 
     public Object getData(Object target, Method method, Object[] args, String cacheKey) {
@@ -105,6 +102,15 @@ public class RedisCacheCacheProcessImpl implements Ordered, CacheProcess {
         }
     }
 
+    @Autowired
+    public void setStringRedisService(StringRedisService stringRedisService) {
+        this.stringRedisService = stringRedisService;
+    }
+
+    @Autowired
+    public void setRedissonClient(RedissonClient redissonClient) {
+        this.redissonClient = redissonClient;
+    }
 
     /**
      * 小的在前边

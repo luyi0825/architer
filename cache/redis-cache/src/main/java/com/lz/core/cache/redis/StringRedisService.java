@@ -5,6 +5,7 @@ import com.lz.core.cache.common.CacheConstants;
 import com.lz.core.cache.common.utils.JsonUtils;
 import lombok.NonNull;
 import org.springframework.data.redis.core.*;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @author luyi
  * @date 2020-12-24
  */
+@Component
 public class StringRedisService {
 
     private final StringRedisTemplate redisTemplate;
