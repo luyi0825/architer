@@ -24,6 +24,12 @@
 
         <dependency>
             <groupId>com.lz.core</groupId>
+            <artifactId>cache-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lz.core</groupId>
             <artifactId>valid</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -36,6 +42,7 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
+            <version>2.2.6.RELEASE</version>
         </dependency>
 
     </dependencies>
