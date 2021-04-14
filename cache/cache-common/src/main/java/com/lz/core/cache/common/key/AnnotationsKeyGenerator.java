@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
  */
 public class AnnotationsKeyGenerator implements KeyGenerator {
     @Override
-    public String getKey(Method method, Object[] args) {
+    public String getKey(Object target, Method method, Object[] args) {
         return null;
     }
 }
