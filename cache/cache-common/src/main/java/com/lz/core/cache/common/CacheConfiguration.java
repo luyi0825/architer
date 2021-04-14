@@ -12,9 +12,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CacheConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean
-    public CacheProcess cacheProcess() {
-        return new DefaultCacheProcess();
-    }
+
 }

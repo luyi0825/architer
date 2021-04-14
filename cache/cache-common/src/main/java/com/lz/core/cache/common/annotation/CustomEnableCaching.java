@@ -1,6 +1,7 @@
 package com.lz.core.cache.common.annotation;
 
 import com.lz.core.cache.common.CacheAdviceImportSelector;
+import com.lz.core.cache.common.CacheConfiguration;
 import com.lz.core.cache.common.key.CacheKeyImportSelector;
 import com.lz.core.cache.common.enums.KeyStrategy;
 import org.springframework.context.annotation.AdviceMode;
@@ -16,7 +17,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({CacheAdviceImportSelector.class, CacheKeyImportSelector.class})
+@Import({CacheAdviceImportSelector.class, CacheKeyImportSelector.class, CacheConfiguration.class})
 public @interface CustomEnableCaching {
     /**
      * 指示与基于标准Java接口的代理相反，是否要创建基于子类（CGLIB）的代理。默认为false。仅当mode()设置为AdviceMode.PROXY时适用。

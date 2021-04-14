@@ -10,10 +10,11 @@ public interface KeyGenerator {
     /**
      * 得到key
      *
+     * @param target 对象
      * @param method 方法
      * @param args   参数
      * @return 缓存的key
      */
-    String getKey(Method method, Object[] args);
+    String getKey(Object target, Method method, Object[] args);
 
 }
