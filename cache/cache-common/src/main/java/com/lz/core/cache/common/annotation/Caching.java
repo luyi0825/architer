@@ -4,6 +4,8 @@ package com.lz.core.cache.common.annotation;
 import com.lz.core.cache.common.enums.CacheType;
 import com.lz.core.cache.common.enums.Lock;
 
+import java.lang.annotation.*;
+
 /**
  * 缓存
  * 1.所有的时间单位都是秒
@@ -12,6 +14,9 @@ import com.lz.core.cache.common.enums.Lock;
  * @author luyi
  * @date 2020/12/17
  */
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
 public @interface Caching {
     /**
      * 描述：缓存名称
