@@ -1,4 +1,5 @@
-package com.lz.core;
+package com.lz.core.test;
+
 
 import com.lz.core.boot.MoulesBuilder;
 import com.lz.core.cache.common.annotation.CustomEnableCaching;

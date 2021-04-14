@@ -1,4 +1,4 @@
-package com.lz.core.cache;
+package com.lz.core.test.cache;
 
 import com.lz.core.cache.common.annotation.Caching;
 import org.springframework.stereotype.Service;
