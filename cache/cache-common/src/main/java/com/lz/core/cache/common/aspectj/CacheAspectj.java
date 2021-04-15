@@ -1,6 +1,9 @@
 package com.lz.core.cache.common.aspectj;
 
 import com.lz.core.cache.common.CacheProcess;
+import com.lz.core.cache.common.annotation.Cacheable;
+import com.lz.core.cache.common.annotation.DeleteCache;
+import com.lz.core.cache.common.annotation.PutCache;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -45,21 +48,26 @@ public class CacheAspectj {
 
 
     @Around("cachingPointcut()")
-    public Object caching(ProceedingJoinPoint jp) {
-        MethodSignature methodSignature = (MethodSignature) jp.getSignature();
-        Method method = methodSignature.getMethod();
-        Object target = jp.getTarget();
-        return cacheProcess.process(target, method, jp.getArgs());
+    public Object cacheable(ProceedingJoinPoint jp) {
+        return handler(jp, Cacheable.class);
     }
 
     @Around("putCachePointcut()")
     public Object putCaching(ProceedingJoinPoint jp) {
-        return null;
+        return handler(jp, PutCache.class);
     }
 
     @Around("deleteCachePointcut()")
     public Object deleteCache(ProceedingJoinPoint jp) {
-        return null;
+        return handler(jp, DeleteCache.class);
+    }
+
+
+    public Object handler(ProceedingJoinPoint proceedingJoinPoint, Class<?> clazz) {
+        MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
+        Method method = methodSignature.getMethod();
+        Object target = proceedingJoinPoint.getTarget();
+        return cacheProcess.process(target, method, proceedingJoinPoint.getArgs(), clazz);
     }
 
 

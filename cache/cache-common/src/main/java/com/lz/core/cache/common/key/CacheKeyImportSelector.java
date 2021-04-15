@@ -22,7 +22,6 @@ public class CacheKeyImportSelector implements ImportSelector {
      */
     private static final String KEY_STRATEGY = "keyStrategy";
 
-
     /**
      * 选择导入
      *
@@ -33,12 +32,10 @@ public class CacheKeyImportSelector implements ImportSelector {
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
         Class<?> annType = CustomEnableCaching.class;
         AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(annType.getName(), false));
-        if (attributes == null) {
-            throw new IllegalArgumentException(String.format(
-                    "@%s is not present on importing class '%s' as expected",
-                    annType.getSimpleName(), importingClassMetadata.getClassName()));
-        }
         KeyStrategy keyStrategy = attributes.getEnum(KEY_STRATEGY);
+        if (keyStrategy == KeyStrategy.NONE) {
+            throw new IllegalArgumentException("KeyStrategy is none");
+        }
         String[] imports = selectKeyStrategyImports(keyStrategy);
         if (imports == null) {
             throw new IllegalArgumentException("Unknown keyStrategy: " + keyStrategy);

@@ -1,7 +1,6 @@
 package com.lz.core.cache.redis;
 
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lz.core.cache.common.BaseCacheProcess;
 import com.lz.core.cache.common.CacheConstants;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.concurrent.locks.Lock;
@@ -36,16 +36,14 @@ public class RedisCacheCacheProcessImpl extends BaseCacheProcess implements Orde
     private RedissonClient redissonClient;
 
 
-
-
     @Override
-    public Object process(Object target, Method method, Object[] args) {
-        String cacheKey = getCacheKey(method, args);
+    public Object process(Object target, Method method, Object[] args, Class<?> annotation) {
+        String cacheKey = getCacheKey(target, method, args, annotation);
         Object cacheValue = stringRedisService.get(cacheKey);
         if (cacheValue == null) {
             cacheValue = this.getData(target, method, args, cacheKey);
         }
-        return jsonValueConvert(method,cacheValue);
+        return jsonValueConvert(method, cacheValue);
     }
 
     /**
@@ -54,7 +52,7 @@ public class RedisCacheCacheProcessImpl extends BaseCacheProcess implements Orde
      * @author luyi
      * @date 2020/12/26 上午1:11
      */
-    private Object jsonValueConvert(Method method,Object value) {
+    private Object jsonValueConvert(Method method, Object value) {
         //放入的假的缓存值，直接返回null
         if (CacheConstants.CACHE_NOT_EXIST.equals(value)) {
             return null;
@@ -67,7 +65,7 @@ public class RedisCacheCacheProcessImpl extends BaseCacheProcess implements Orde
 
         return value;
         //@TODO 反序列处理
-       // ObjectMapper objectMapper = new ObjectMapper();
+        // ObjectMapper objectMapper = new ObjectMapper();
         // JavaType listType = objectMapper.getTypeFactory().constructParametricType(returnType, clazz);
 
         //需要将jsonString 反序列化

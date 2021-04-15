@@ -4,6 +4,8 @@ package com.lz.core.cache.common.enums;
  * @author luyi
  * key的策略，判断是通过参数还是注解拼接key
  * 这个字段只影响::后边的部分
+ *
+ *<li>如果</li>
  */
 public enum KeyStrategy {
     /**

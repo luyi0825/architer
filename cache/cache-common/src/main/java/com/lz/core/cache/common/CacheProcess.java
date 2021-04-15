@@ -1,5 +1,6 @@
 package com.lz.core.cache.common;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
@@ -15,8 +16,7 @@ public interface CacheProcess {
      * @param args   请求参数
      * @return key
      */
-
-    String getCacheKey(Method method, Object... args);
+    String getCacheKey(Object target, Method method, Object[] args, Class<?> annotation);
 
     /**
      * 处理缓存
@@ -26,6 +26,6 @@ public interface CacheProcess {
      * @param args   请求参数
      * @return 处理后的返回值
      */
-    Object process(Object target, Method method, Object[] args);
+    Object process(Object target, Method method, Object[] args, Class<?> annotation);
 
 }

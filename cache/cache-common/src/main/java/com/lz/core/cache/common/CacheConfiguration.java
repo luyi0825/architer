@@ -1,6 +1,8 @@
 package com.lz.core.cache.common;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+
+import com.lz.core.cache.common.key.DefaultKeyGenerator;
+import com.lz.core.cache.common.key.KeyGenerator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,5 +14,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CacheConfiguration {
 
+    @Bean
+    @ConditionalOnMissingBean
+    public KeyGenerator keyGenerator() {
+        return new DefaultKeyGenerator();
+    }
 
 }
