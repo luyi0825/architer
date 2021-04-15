@@ -48,22 +48,22 @@ public class CacheAspectj {
 
 
     @Around("cachingPointcut()")
-    public Object cacheable(ProceedingJoinPoint jp) {
+    public Object cacheable(ProceedingJoinPoint jp) throws NoSuchFieldException, IllegalAccessException {
         return handler(jp, Cacheable.class);
     }
 
     @Around("putCachePointcut()")
-    public Object putCaching(ProceedingJoinPoint jp) {
+    public Object putCaching(ProceedingJoinPoint jp) throws NoSuchFieldException, IllegalAccessException {
         return handler(jp, PutCache.class);
     }
 
     @Around("deleteCachePointcut()")
-    public Object deleteCache(ProceedingJoinPoint jp) {
+    public Object deleteCache(ProceedingJoinPoint jp) throws NoSuchFieldException, IllegalAccessException {
         return handler(jp, DeleteCache.class);
     }
 
 
-    public Object handler(ProceedingJoinPoint proceedingJoinPoint, Class<?> clazz) {
+    public Object handler(ProceedingJoinPoint proceedingJoinPoint, Class<?> clazz) throws NoSuchFieldException, IllegalAccessException {
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         Method method = methodSignature.getMethod();
         Object target = proceedingJoinPoint.getTarget();

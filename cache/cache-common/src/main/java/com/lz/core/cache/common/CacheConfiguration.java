@@ -20,4 +20,10 @@ public class CacheConfiguration {
         return new DefaultKeyGenerator();
     }
 
+    @Bean
+    @ConditionalOnMissingBean
+    public CacheProcess cacheProcess(){
+        return new DefaultCacheProcess();
+    }
+
 }

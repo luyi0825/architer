@@ -10,10 +10,11 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 /**
  * @author luyi
- * 缓存key 生成器
+ * 默认缓存key 生成器
  */
 public class DefaultKeyGenerator implements KeyGenerator {
 
@@ -23,13 +24,13 @@ public class DefaultKeyGenerator implements KeyGenerator {
 
 
     @Override
-    public String getKey(Object target, Method method, Object[] args, Class<Annotation> annotation) {
+    public String getKey(Object target, Method method, Object[] args, Class<?> annotation) {
         String cachePrefix = getKeyPrefix(target, method, annotation);
         if (args == null) {
             return cachePrefix;
         }
-        String cacheSuffix = this.getCacheSuffix(args);
-        if (StringUtils.isEmpty(cacheSuffix)) {
+        String cacheSuffix = this.getCacheSuffix(method, args);
+        if (!StringUtils.isEmpty(cacheSuffix)) {
             return cachePrefix + "::" + cacheSuffix;
         }
         return cachePrefix;
@@ -41,22 +42,27 @@ public class DefaultKeyGenerator implements KeyGenerator {
      * @author luyi
      * @date 2021/4/15
      */
-    private String getCacheSuffix(Object[] args) {
-        StringBuilder builder = new StringBuilder();
-        Method method = null;
+    private String getCacheSuffix(Method method, Object[] args) {
+        StringJoiner joiner = new StringJoiner("_");
         Annotation[][] annotations = method.getParameterAnnotations();
         int i = 0;
         for (Annotation[] annotation : annotations) {
             if (annotation.length > 0) {
-                builder.append(Objects.toString(args[i], "#"));
-                builder.append("_");
+                joiner.add(Objects.toString(args[i], "#"));
+            }
+            i++;
+        }
+        int length = joiner.length();
+        if (length == 0) {
+            for (Object arg : args) {
+                joiner.add(Objects.toString(arg, "#"));
             }
         }
         //太长了就采用加密的方式缩短key
-        if (builder.length() > MAX_KEY_SUFFIX_SIZE) {
-            DigestUtils.md5Digest(builder.toString().getBytes(StandardCharsets.UTF_8));
+        if (joiner.length() > MAX_KEY_SUFFIX_SIZE) {
+            DigestUtils.md5Digest(joiner.toString().getBytes(StandardCharsets.UTF_8));
         }
-        return builder.toString();
+        return joiner.toString();
     }
 
 
@@ -67,7 +73,7 @@ public class DefaultKeyGenerator implements KeyGenerator {
      * @author luyi
      * @date 2021/4/15
      */
-    private String getKeyPrefix(Object target, Method method, Class<Annotation> annotation) {
+    private String getKeyPrefix(Object target, Method method, Class annotation) {
         String cachePrefix = null;
         Annotation cacheAnnotation = method.getAnnotation(annotation);
         try {
@@ -75,6 +81,7 @@ public class DefaultKeyGenerator implements KeyGenerator {
             cachePrefix = (String) field.get(target);
         } catch (NoSuchFieldException | IllegalAccessException exception) {
             //TODO
+            //exception.printStackTrace();
         }
         if (StringUtils.isEmpty(cachePrefix)) {
             cachePrefix = target.getClass().getName() + "." + method.getName();
