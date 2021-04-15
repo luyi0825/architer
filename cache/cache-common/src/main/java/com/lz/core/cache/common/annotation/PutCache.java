@@ -1,24 +1,19 @@
 package com.lz.core.cache.common.annotation;
 
-
 import com.lz.core.cache.common.enums.Lock;
 
 import java.lang.annotation.*;
 
 /**
- * 删除缓存
- *
  * @author luyi
- * @date 2020/12/26
  */
-@Target({ElementType.METHOD})
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface DeleteCache {
+public @interface PutCache {
+
     /**
-     * 缓存名称
-     *
      * @see Cacheable#cacheName()
      */
     String cacheName() default "";
@@ -29,16 +24,12 @@ public @interface DeleteCache {
     String cachePrefix() default "";
 
     /**
-     * 锁的类型，比如删除锁的时候是否允许查询接口读取数据
-     *
      * @see Cacheable#lock()
      */
     Lock lock() default Lock.none;
 
     /**
-     * 是否异步
+     * @see Cacheable#async() ()
      */
     boolean async() default false;
-
-
 }

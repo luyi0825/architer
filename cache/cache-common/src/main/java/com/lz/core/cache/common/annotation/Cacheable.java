@@ -1,33 +1,30 @@
 package com.lz.core.cache.common.annotation;
 
 
-import com.lz.core.cache.common.enums.CacheType;
 import com.lz.core.cache.common.enums.Lock;
 
 import java.lang.annotation.*;
 
+
 /**
- * 缓存
+ * 缓存数据，缓存中有的时候，就从缓存中取值，没有就将换回结果放入缓存中
  * 1.所有的时间单位都是秒
  * 2.缓存的key为缓存前缀加上缓存名称
  *
  * @author luyi
  * @date 2020/12/17
  */
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Caching {
+@Inherited
+public @interface Cacheable {
+
     /**
      * 描述：缓存名称
      * ps:不写的话默认为缓存前缀+类型+方法名称+（参数）
      */
     String cacheName() default "";
-
-    /**
-     * 缓存类型：默认查询
-     */
-    CacheType cacheType() default CacheType.GET;
 
     /**
      * 缓存随机失效时间
@@ -57,4 +54,9 @@ public @interface Caching {
      * 比如:query(String id),我们可以定义前缀为com.test,那么缓存的key就为com.test::{id的值}
      */
     String cachePrefix() default "";
+
+    /**
+     * 是否异步
+     */
+    boolean async() default false;
 }
