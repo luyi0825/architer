@@ -1,10 +1,5 @@
 package com.lz.core.cache.common;
 
-import com.lz.core.cache.common.utils.JsonUtils;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.util.StringUtils;
-
 import java.lang.reflect.Method;
 
 /**
@@ -20,6 +15,7 @@ public interface CacheProcess {
      * @param args   请求参数
      * @return key
      */
+
     String getCacheKey(Method method, Object... args);
 
     /**
