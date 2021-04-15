@@ -30,6 +30,7 @@
         <module>cache</module>
         <module>boot</module>
         <module>log</module>
+        <module>authority</module>
     </modules>
 
     <dependencies>
