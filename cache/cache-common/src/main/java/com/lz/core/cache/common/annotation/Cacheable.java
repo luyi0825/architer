@@ -1,6 +1,7 @@
 package com.lz.core.cache.common.annotation;
 
 
+import com.lz.core.cache.common.enums.KeyStrategy;
 import com.lz.core.cache.common.enums.Lock;
 
 import java.lang.annotation.*;
@@ -22,7 +23,7 @@ public @interface Cacheable {
 
     /**
      * 描述：缓存名称
-     * ps:不写的话默认为缓存前缀+类型+方法名称+（参数）
+     * ps:不写的话默认为缓存前缀::方法名称+（参数）
      */
     String cacheName() default "";
 
@@ -49,7 +50,7 @@ public @interface Cacheable {
 
     /**
      * 缓存前缀
-     * 默认为包名+类名
+     * 默认为包名+类名+方法名称
      * <p>
      * 比如:query(String id),我们可以定义前缀为com.test,那么缓存的key就为com.test::{id的值}
      */
@@ -59,4 +60,9 @@ public @interface Cacheable {
      * 是否异步
      */
     boolean async() default false;
+
+    /**
+     * key的策略
+     */
+    KeyStrategy keyStrategy() default KeyStrategy.NONE;
 }

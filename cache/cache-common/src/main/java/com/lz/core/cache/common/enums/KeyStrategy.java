@@ -2,34 +2,23 @@ package com.lz.core.cache.common.enums;
 
 /**
  * @author luyi
- * a_b：a表示前缀的策略，b表示后缀标识
- * 混合模式有注解就用注解，没有注解采用参数
+ * key的策略，判断是通过参数还是注解拼接key
+ * 这个字段只影响::后边的部分
  */
 public enum KeyStrategy {
     /**
-     * 都采用注解
+     * 注解
+     *
+     * @see com.lz.core.cache.common.annotation.CacheKey
      */
-    ANNOTATIONS(),
+    ANNOTATION(),
+    /**
+     * 参数
+     */
+    PARAM,
+    /**
+     * 没有，给Cacheable、PutCache,DeleteCache做默认值
+     */
+    NONE
 
-    /**
-     * 注解+参数
-     */
-    ANNOTATION_PARAM,
-
-    /**
-     * 注解+混合
-     */
-    ANNOTATION_MIX,
-    /**
-     * 包+注解
-     */
-    PACKAGE_ANNOTATION(),
-    /**
-     * 包+参数
-     */
-    PACKAGE_PARAM(),
-    /**
-     * 包+混合
-     */
-    PACKAGE_MIX()
 }

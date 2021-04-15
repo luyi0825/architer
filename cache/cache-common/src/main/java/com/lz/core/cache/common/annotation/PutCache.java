@@ -1,5 +1,6 @@
 package com.lz.core.cache.common.annotation;
 
+import com.lz.core.cache.common.enums.KeyStrategy;
 import com.lz.core.cache.common.enums.Lock;
 
 import java.lang.annotation.*;
@@ -32,4 +33,6 @@ public @interface PutCache {
      * @see Cacheable#async() ()
      */
     boolean async() default false;
+
+    KeyStrategy keyStrategy() default KeyStrategy.NONE;
 }

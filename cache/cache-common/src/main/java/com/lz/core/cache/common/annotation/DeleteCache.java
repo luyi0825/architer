@@ -1,6 +1,7 @@
 package com.lz.core.cache.common.annotation;
 
 
+import com.lz.core.cache.common.enums.KeyStrategy;
 import com.lz.core.cache.common.enums.Lock;
 
 import java.lang.annotation.*;
@@ -39,6 +40,11 @@ public @interface DeleteCache {
      * 是否异步
      */
     boolean async() default false;
+
+    /**
+     * key的策略
+     */
+    KeyStrategy keyStrategy() default KeyStrategy.NONE;
 
 
 }
