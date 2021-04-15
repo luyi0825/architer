@@ -29,6 +29,7 @@
         <module>thread-pool</module>
         <module>cache</module>
         <module>boot</module>
+        <module>log</module>
     </modules>
 
     <dependencies>
