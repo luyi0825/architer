@@ -2,9 +2,7 @@ package com.lz.core.cache.common.aspectj;
 
 import com.lz.core.cache.common.CacheProcess;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
@@ -25,24 +23,43 @@ public class CacheAspectj {
     }
 
     /**
-     * 缓存caching切点
+     * caching切点
      */
-    @Pointcut("@annotation(com.lz.core.cache.common.annotation.Caching)")
+    @Pointcut("@annotation(com.lz.core.cache.common.annotation.Cacheable)")
     public void cachingPointcut() {
     }
 
     /**
-     * 拦截缓存注解
-     *
-     * @param jp 切点信息
-     * @return 缓存数据
+     * 放置putCache切点
      */
+    @Pointcut("@annotation(com.lz.core.cache.common.annotation.PutCache)")
+    public void putCachePointcut() {
+    }
+
+    /**
+     * 删除deleteCache切点
+     */
+    @Pointcut("@annotation(com.lz.core.cache.common.annotation.DeleteCache)")
+    public void deleteCachePointcut() {
+    }
+
+
     @Around("cachingPointcut()")
     public Object caching(ProceedingJoinPoint jp) {
         MethodSignature methodSignature = (MethodSignature) jp.getSignature();
         Method method = methodSignature.getMethod();
         Object target = jp.getTarget();
         return cacheProcess.process(target, method, jp.getArgs());
+    }
+
+    @Around("putCachePointcut()")
+    public Object putCaching(ProceedingJoinPoint jp) {
+        return null;
+    }
+
+    @Around("deleteCachePointcut()")
+    public Object deleteCache(ProceedingJoinPoint jp) {
+        return null;
     }
 
 
