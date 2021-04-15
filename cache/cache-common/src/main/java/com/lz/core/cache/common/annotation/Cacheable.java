@@ -2,7 +2,7 @@ package com.lz.core.cache.common.annotation;
 
 
 import com.lz.core.cache.common.enums.KeyStrategy;
-import com.lz.core.cache.common.enums.Lock;
+import com.lz.core.cache.common.enums.LockType;
 
 import java.lang.annotation.*;
 
@@ -46,7 +46,7 @@ public @interface Cacheable {
      * *我们需要到缓存的时候是否需要加锁
      * </li>
      */
-    Lock lock() default Lock.none;
+    LockType lock() default LockType.none;
 
     /**
      * 缓存前缀

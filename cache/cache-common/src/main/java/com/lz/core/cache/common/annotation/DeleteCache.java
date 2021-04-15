@@ -2,7 +2,7 @@ package com.lz.core.cache.common.annotation;
 
 
 import com.lz.core.cache.common.enums.KeyStrategy;
-import com.lz.core.cache.common.enums.Lock;
+import com.lz.core.cache.common.enums.LockType;
 
 import java.lang.annotation.*;
 
@@ -34,7 +34,7 @@ public @interface DeleteCache {
      *
      * @see Cacheable#lock()
      */
-    Lock lock() default Lock.none;
+    LockType lock() default LockType.none;
 
     /**
      * 是否异步
