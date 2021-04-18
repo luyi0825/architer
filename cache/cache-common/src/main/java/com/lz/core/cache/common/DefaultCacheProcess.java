@@ -74,7 +74,7 @@ public class DefaultCacheProcess implements CacheProcess {
     /**
      * 通过缓存注解得到对应的锁
      */
-    protected Lock getLock(String key, LockType lockType) throws NoSuchFieldException, IllegalAccessException {
+    protected Lock getLock(String key, LockType lockType) {
 
         if (lockType == LockType.none) {
             return null;
