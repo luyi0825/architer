@@ -1,14 +1,14 @@
-package com.lz.core.cache.common;
+package com.lz.core.cache.common.operation;
 
 import com.lz.core.cache.common.annotation.Cacheable;
 import lombok.Data;
 
 /**
+ * @see com.lz.core.cache.common.annotation.PutCache 对应
  * @author luyi
- * 对应Cacheable
  */
 @Data
-public class CacheableCacheOperation extends CacheOperation {
+public class PutCacheOperation extends CacheOperation {
     /**
      * @see Cacheable#randomExpireTime()
      */
@@ -20,5 +20,4 @@ public class CacheableCacheOperation extends CacheOperation {
      * @see Cacheable#expireTime()
      */
     private long expireTime;
-
 }

@@ -1,4 +1,4 @@
-package com.lz.core.cache.common;
+package com.lz.core.cache.common.operation;
 
 import com.lz.core.cache.common.annotation.Cacheable;
 import com.lz.core.cache.common.enums.KeyStrategy;
@@ -13,7 +13,7 @@ import java.lang.annotation.Annotation;
  * @see org.springframework.cache.interceptor.CacheOperation 参考的这个类
  */
 @Data
-public class CacheOperation {
+public abstract class CacheOperation {
     /**
      * 名称（注解的名称）
      */
@@ -43,6 +43,4 @@ public class CacheOperation {
      * @see Cacheable#keyStrategy()
      */
     private KeyStrategy keyStrategy;
-
-
 }
