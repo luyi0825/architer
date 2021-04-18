@@ -29,6 +29,12 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>com.lz.core</groupId>
+            <artifactId>utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
     </dependencies>
 
     <!--    <build>-->

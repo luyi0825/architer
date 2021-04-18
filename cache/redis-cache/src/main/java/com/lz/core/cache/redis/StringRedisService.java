@@ -2,7 +2,7 @@ package com.lz.core.cache.redis;
 
 
 import com.lz.core.cache.common.Constants;
-import com.lz.core.cache.common.utils.JsonUtils;
+import com.lz.core.utils.JsonUtils;
 import lombok.NonNull;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
