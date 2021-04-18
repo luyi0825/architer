@@ -62,7 +62,7 @@ public @interface Cacheable {
     boolean async() default false;
 
     /**
-     * key的策略
+     * key的策略,在是参数的时候，定义这个值，我们可以不用扫描注解，从而加快程序速度
      */
     KeyStrategy keyStrategy() default KeyStrategy.NONE;
 }
