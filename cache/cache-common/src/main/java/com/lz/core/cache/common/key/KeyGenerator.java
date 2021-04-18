@@ -1,9 +1,7 @@
 package com.lz.core.cache.common.key;
 
-import com.lz.core.cache.common.CacheOperation;
-import com.lz.core.cache.common.enums.KeyStrategy;
+import com.lz.core.cache.common.operation.CacheOperation;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
