@@ -3,8 +3,10 @@ package com.lz.core.cache.common;
 
 import com.lz.core.cache.common.annotation.CustomEnableCaching;
 import com.lz.core.cache.common.aspectj.AspectjConfiguration;
+import com.lz.core.cache.common.proxy.ProxyConfiguration;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.AdviceModeImportSelector;
+import org.springframework.context.annotation.AutoProxyRegistrar;
 
 import java.util.function.Predicate;
 
@@ -33,7 +35,7 @@ public class CacheAdviceImportSelector extends AdviceModeImportSelector<CustomEn
     }
 
     private String[] getProxyImports() {
-        return new String[]{ProxyConfiguration.class.getName()};
+        return new String[]{ProxyConfiguration.class.getName(), AutoProxyRegistrar.class.getName()};
     }
 
     /**
