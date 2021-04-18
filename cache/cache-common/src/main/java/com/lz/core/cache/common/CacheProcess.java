@@ -1,6 +1,7 @@
 package com.lz.core.cache.common;
 
-import java.lang.annotation.Annotation;
+import com.lz.core.cache.common.operation.CacheOperation;
+
 import java.lang.reflect.Method;
 import java.util.Collection;
 
