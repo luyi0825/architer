@@ -28,8 +28,8 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisAnnotationCacheOperation redisAnnotationCacheOperation() {
-        return new RedisAnnotationCacheOperation();
+    public RedisCacheOperationService redisAnnotationCacheOperation() {
+        return new RedisCacheOperationService();
     }
 
 }

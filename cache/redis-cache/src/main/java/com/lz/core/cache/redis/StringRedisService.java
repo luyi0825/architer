@@ -1,7 +1,7 @@
 package com.lz.core.cache.redis;
 
 
-import com.lz.core.cache.common.CacheConstants;
+import com.lz.core.cache.common.Constants;
 import com.lz.core.cache.common.utils.JsonUtils;
 import lombok.NonNull;
 import org.springframework.data.redis.core.*;
@@ -137,7 +137,7 @@ public class StringRedisService {
      * @date 2020/12/24 下午11:52
      */
     public <T> T getAndSetExpire(String key, Class<T> clazz, long expire) {
-        if (expire != CacheConstants.NEVER_EXPIRE && expire <= 0) {
+        if (expire != Constants.NEVER_EXPIRE && expire <= 0) {
             throw new IllegalArgumentException("expire的值不合法");
         }
         T value = get(key, clazz);

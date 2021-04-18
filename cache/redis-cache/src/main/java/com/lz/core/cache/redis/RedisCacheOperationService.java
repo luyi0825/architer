@@ -1,13 +1,13 @@
 package com.lz.core.cache.redis;
 
-import com.lz.core.cache.common.AnnotationCacheOperation;
+import com.lz.core.cache.common.CacheOperationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * redis注解缓存操作
  * @author luyi
  */
-public class RedisAnnotationCacheOperation implements AnnotationCacheOperation {
+public class RedisCacheOperationService implements CacheOperationService {
 
     private StringRedisService stringRedisService;
 
