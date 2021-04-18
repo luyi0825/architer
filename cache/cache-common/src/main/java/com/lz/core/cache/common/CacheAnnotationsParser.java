@@ -4,6 +4,10 @@ package com.lz.core.cache.common;
 import com.lz.core.cache.common.annotation.DeleteCache;
 import com.lz.core.cache.common.annotation.PutCache;
 import com.lz.core.cache.common.annotation.Cacheable;
+import com.lz.core.cache.common.operation.CacheOperation;
+import com.lz.core.cache.common.operation.CacheableOperation;
+import com.lz.core.cache.common.operation.DeleteCacheOperation;
+import com.lz.core.cache.common.operation.PutCacheOperation;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.lang.Nullable;
@@ -112,8 +116,8 @@ public class CacheAnnotationsParser {
     /**
      * 解析@Cacheable解析
      */
-    private CacheableCacheOperation parseCacheableAnnotation(AnnotatedElement annotatedElement, Cacheable cacheable) {
-        CacheableCacheOperation operation = new CacheableCacheOperation();
+    private CacheableOperation parseCacheableAnnotation(AnnotatedElement annotatedElement, Cacheable cacheable) {
+        CacheableOperation operation = new CacheableOperation();
         operation.setName(annotatedElement.toString());
         operation.setCachePrefix(cacheable.cachePrefix());
         operation.setCacheName(cacheable.cacheName());
@@ -125,6 +129,4 @@ public class CacheAnnotationsParser {
         operation.setAnnotation(cacheable);
         return operation;
     }
-
-
 }
