@@ -2,9 +2,9 @@ package com.lz.core.cache.common;
 
 /**
  * @author luyi
- * 注解缓存操作
+ * 注解缓存操作service接口层
  */
-public interface AnnotationCacheOperation {
+public interface CacheOperationService {
 
     /**
      * 得到缓存
