@@ -16,6 +16,7 @@ import java.util.concurrent.locks.Lock;
 /**
  * @author luyi
  * 缓存处理抽象类
+ * @TODO 当一个类存在多个注解怎么处理
  */
 public class DefaultCacheProcess implements CacheProcess {
 
