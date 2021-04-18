@@ -6,7 +6,7 @@ package com.lz.core.cache.common.enums;
  * @author luyi
  * @date 2020/12/26 下午5:38
  */
-public enum Lock {
+public enum LockType {
     /**
      *重入锁
      * 读锁
@@ -22,7 +22,7 @@ public enum Lock {
 
     private String lockName;
 
-     Lock(String lockName) {
+     LockType(String lockName) {
         this.lockName = lockName;
     }
 

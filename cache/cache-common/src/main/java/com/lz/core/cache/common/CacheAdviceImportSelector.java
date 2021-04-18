@@ -26,7 +26,7 @@ public class CacheAdviceImportSelector extends AdviceModeImportSelector<CustomEn
             case PROXY:
                 return getProxyImports();
             case ASPECTJ:
-                return getAspectJImports();
+                return getAspectjImports();
             default:
                 return null;
         }
@@ -36,8 +36,11 @@ public class CacheAdviceImportSelector extends AdviceModeImportSelector<CustomEn
         return new String[]{ProxyConfiguration.class.getName()};
     }
 
-    private String[] getAspectJImports() {
-        return new String[]{CacheConfiguration.class.getName(), AspectjConfiguration.class.getName()};
+    /**
+     * 得到Aspectj需要导入的类
+     */
+    private String[] getAspectjImports() {
+        return new String[]{AspectjConfiguration.class.getName()};
     }
 
     @Override

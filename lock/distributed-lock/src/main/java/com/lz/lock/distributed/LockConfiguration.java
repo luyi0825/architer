@@ -1,12 +1,4 @@
-/**
- * Copyright (c) 2016-2019 人人开源 All rights reserved.
- * <p>
- * https://www.renren.io
- * <p>
- * 版权所有，侵权必究！
- */
-
-package com.lz.core.cache.redis.config;
+package com.lz.lock.distributed;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -14,14 +6,8 @@ import org.redisson.config.Config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * Redis配置
- *
- * @author Mark sunlightcs@gmail.com
- */
 @Configuration
-public class RedisConfig {
-
+public class LockConfiguration {
     /**
      * 描述:配置单节点redission
      *
@@ -32,8 +18,11 @@ public class RedisConfig {
     public RedissonClient redissonClient() {
         Config config = new Config();
         config.useSingleServer().setAddress("redis://localhost:6379");
-        RedissonClient redisson = Redisson.create(config);
-        return redisson;
+        return Redisson.create(config);
     }
 
+    @Bean
+    public LockService lockService() {
+        return new DistributedLock();
+    }
 }

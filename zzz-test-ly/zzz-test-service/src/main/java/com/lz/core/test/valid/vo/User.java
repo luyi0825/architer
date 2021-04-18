@@ -1,4 +1,4 @@
-package com.lz.core.valid.vo;
+package com.lz.core.test.valid.vo;
 
 
 import com.lz.core.valid.ListValue;

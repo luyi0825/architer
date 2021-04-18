@@ -1,10 +1,13 @@
 package com.lz.core.cache.common.aspectj;
 
 import com.lz.core.cache.common.CacheProcess;
+import com.lz.core.cache.common.annotation.Cacheable;
+import com.lz.core.cache.common.annotation.DeleteCache;
+import com.lz.core.cache.common.annotation.PutCache;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 
@@ -13,6 +16,7 @@ import java.lang.reflect.Method;
  * @date 2020-12-20
  */
 @Aspect
+@Component
 public class CacheAspectj {
 
     private final CacheProcess cacheProcess;
@@ -22,18 +26,48 @@ public class CacheAspectj {
     }
 
     /**
-     * 拦截缓存注解
-     *
-     * @param jp
-     * @return
-     * @throws Throwable
+     * caching切点
      */
-    @Around(value = "@annotation(com.lz.core.cache.common.annotation.Caching)")
-    public Object cached(ProceedingJoinPoint jp) {
-        MethodSignature methodSignature = (MethodSignature) jp.getSignature();
+    @Pointcut("@annotation(com.lz.core.cache.common.annotation.Cacheable)")
+    public void cachingPointcut() {
+    }
+
+    /**
+     * 放置putCache切点
+     */
+    @Pointcut("@annotation(com.lz.core.cache.common.annotation.PutCache)")
+    public void putCachePointcut() {
+    }
+
+    /**
+     * 删除deleteCache切点
+     */
+    @Pointcut("@annotation(com.lz.core.cache.common.annotation.DeleteCache)")
+    public void deleteCachePointcut() {
+    }
+
+
+    @Around("cachingPointcut()")
+    public Object cacheable(ProceedingJoinPoint jp) throws NoSuchFieldException, IllegalAccessException {
+        return handler(jp, Cacheable.class);
+    }
+
+    @Around("putCachePointcut()")
+    public Object putCaching(ProceedingJoinPoint jp) throws NoSuchFieldException, IllegalAccessException {
+        return handler(jp, PutCache.class);
+    }
+
+    @Around("deleteCachePointcut()")
+    public Object deleteCache(ProceedingJoinPoint jp) throws NoSuchFieldException, IllegalAccessException {
+        return handler(jp, DeleteCache.class);
+    }
+
+
+    public Object handler(ProceedingJoinPoint proceedingJoinPoint, Class<?> clazz) throws NoSuchFieldException, IllegalAccessException {
+        MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         Method method = methodSignature.getMethod();
-        Object target = jp.getTarget();
-        return cacheProcess.process(target, method, jp.getArgs());
+        Object target = proceedingJoinPoint.getTarget();
+        return cacheProcess.process(target, method, proceedingJoinPoint.getArgs(), clazz);
     }
 
 

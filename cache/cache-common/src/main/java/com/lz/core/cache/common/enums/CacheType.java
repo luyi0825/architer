@@ -7,10 +7,7 @@ package com.lz.core.cache.common.enums;
  * @date 2021/4/12
  */
 public enum CacheType {
-    /**
-     * 更新
-     */
-    UPDATE(),
+
     /**
      * 删除
      */

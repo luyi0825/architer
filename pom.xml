@@ -18,8 +18,8 @@
         <lombok.version>1.18.16</lombok.version>
         <easyexcel.verion>2.2.8</easyexcel.verion>
         <jsoup.verion>1.13.1</jsoup.verion>
-        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
-        <spring-context.version>5.2.5.RELEASE</spring-context.version>
+        <spring.boot.version>2.3.6.RELEASE</spring.boot.version>
+        <spring-context.version>5.2.11.RELEASE</spring-context.version>
     </properties>
 
 
@@ -29,6 +29,9 @@
         <module>thread-pool</module>
         <module>cache</module>
         <module>boot</module>
+        <module>log</module>
+        <module>authority</module>
+        <module>lock</module>
     </modules>
 
     <dependencies>
@@ -59,7 +62,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>5.2.5.RELEASE</version>
+            <version>5.2.11.RELEASE</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -75,11 +78,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.verion}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
