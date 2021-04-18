@@ -1,11 +1,11 @@
 package com.lz.core.cache.common.key;
 
 
+import com.lz.core.cache.common.CacheOperation;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 
@@ -24,8 +24,8 @@ public class DefaultKeyGenerator implements KeyGenerator {
 
 
     @Override
-    public String getKey(Object target, Method method, Object[] args, Class<?> annotation) {
-        String cachePrefix = getKeyPrefix(target, method, annotation);
+    public String getKey(Object target, Method method, Object[] args, CacheOperation cacheOperation) {
+        String cachePrefix = getKeyPrefix(target, method, cacheOperation);
         if (args == null) {
             return cachePrefix;
         }
@@ -73,16 +73,8 @@ public class DefaultKeyGenerator implements KeyGenerator {
      * @author luyi
      * @date 2021/4/15
      */
-    private String getKeyPrefix(Object target, Method method, Class annotation) {
-        String cachePrefix = null;
-        Annotation cacheAnnotation = method.getAnnotation(annotation);
-        try {
-            Field field = cacheAnnotation.getClass().getField(CACHE_PREFIX);
-            cachePrefix = (String) field.get(target);
-        } catch (NoSuchFieldException | IllegalAccessException exception) {
-            //TODO
-            //exception.printStackTrace();
-        }
+    private String getKeyPrefix(Object target, Method method, CacheOperation cacheOperation) {
+        String cachePrefix = cacheOperation.getCachePrefix();
         if (StringUtils.isEmpty(cachePrefix)) {
             cachePrefix = target.getClass().getName() + "." + method.getName();
         }
