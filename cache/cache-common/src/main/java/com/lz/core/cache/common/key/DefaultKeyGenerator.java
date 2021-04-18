@@ -1,7 +1,7 @@
 package com.lz.core.cache.common.key;
 
 
-import com.lz.core.cache.common.CacheOperation;
+import com.lz.core.cache.common.operation.CacheOperation;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
@@ -18,9 +18,13 @@ import java.util.StringJoiner;
  */
 public class DefaultKeyGenerator implements KeyGenerator {
 
-    private final static String CACHE_PREFIX = "cachePrefix";
+    /**
+     * 前后缀的分割符号
+     */
+    private  String separator="::";
 
     private static final int MAX_KEY_SUFFIX_SIZE = 16;
+
 
 
     @Override
@@ -31,7 +35,7 @@ public class DefaultKeyGenerator implements KeyGenerator {
         }
         String cacheSuffix = this.getCacheSuffix(method, args);
         if (!StringUtils.isEmpty(cacheSuffix)) {
-            return cachePrefix + "::" + cacheSuffix;
+            return cachePrefix + getSeparator() + cacheSuffix;
         }
         return cachePrefix;
     }
@@ -79,5 +83,13 @@ public class DefaultKeyGenerator implements KeyGenerator {
             cachePrefix = target.getClass().getName() + "." + method.getName();
         }
         return cachePrefix;
+    }
+
+    public String getSeparator() {
+        return separator;
+    }
+
+    public void setSeparator(String separator) {
+        this.separator = separator;
     }
 }
