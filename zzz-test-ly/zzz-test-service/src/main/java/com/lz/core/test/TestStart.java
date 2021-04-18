@@ -11,7 +11,7 @@ import org.springframework.context.annotation.AdviceMode;
  * @author luyi
  */
 @SpringBootApplication
-@CustomEnableCaching(mode = AdviceMode.ASPECTJ)
+@CustomEnableCaching(mode = AdviceMode.PROXY)
 public class TestStart {
     public static void main(String[] args) {
         Class<?>[] classes = new MoulesBuilder().buildMoules(TestStart.class);
