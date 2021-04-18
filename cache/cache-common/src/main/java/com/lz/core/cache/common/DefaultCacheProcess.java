@@ -9,8 +9,8 @@ import com.lz.lock.distributed.LockService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -20,37 +20,50 @@ import java.util.concurrent.locks.Lock;
 public class DefaultCacheProcess implements CacheProcess {
 
     private KeyGenerator keyGenerator;
-    private AnnotationCacheOperation cacheOperation;
+    private CacheOperationService operationSource;
     private LockService lockService;
 
+
     @Override
-    public Object process(Object target, Method method, Object[] args, Class annotationClass) throws NoSuchFieldException, IllegalAccessException {
-        String key = keyGenerator.getKey(target, method, args, annotationClass);
-        Annotation annotation = method.getAnnotation(annotationClass);
-        Lock lock = this.getLock(annotation, key);
-        if (lock == null) {
-            return cacheOperate(key, target, method, args, annotation);
-        }
-        lock.lock();
+    public Object process(Object target, Method method, Object[] args, Collection<CacheOperation> cacheOperations) {
         try {
-            return cacheOperate(key, target, method, args, annotation);
-        } finally {
-            lock.unlock();
+            for (CacheOperation operation : cacheOperations) {
+                String key = keyGenerator.getKey(target, method, args, operation);
+                Lock lock = this.getLock(key, operation.getLock());
+                if (lock == null) {
+                    return cacheOperate(key, target, method, args, operation);
+                }
+                lock.lock();
+                try {
+                    return cacheOperate(key, target, method, args, operation);
+                } finally {
+                    lock.unlock();
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("cache process error", e);
         }
+        return null;
     }
 
-    protected Object cacheOperate(String key, Object target, Method method, Object[] args, Annotation annotation) {
+    /**
+     * 缓存操作
+     *
+     * @return method方法的返回值
+     */
+    protected Object cacheOperate(String key, Object target, Method method, Object[] args, CacheOperation operation) {
         Object value;
+        Annotation annotation = operation.getAnnotation();
         if (annotation instanceof DeleteCache) {
             value = invoke(target, method, args);
-            cacheOperation.deleteCache(key);
+            operationSource.deleteCache(key);
         } else if (annotation instanceof PutCache) {
             value = invoke(target, method, args);
-            cacheOperation.putCache(key, value);
+            operationSource.putCache(key, value);
         } else if (annotation instanceof Cacheable) {
-            value = cacheOperation.getCache(key);
+            value = operationSource.getCache(key);
             if (value == null) {
-                value = cacheOperation.putCache(key, invoke(target, method, args));
+                value = operationSource.putCache(key, invoke(target, method, args));
             }
         } else {
             throw new IllegalArgumentException("annotationClass not match");
@@ -59,19 +72,10 @@ public class DefaultCacheProcess implements CacheProcess {
     }
 
     /**
-     * 得到锁
+     * 通过缓存注解得到对应的锁
      */
-    protected Lock getLock(Annotation annotation, String key) throws NoSuchFieldException, IllegalAccessException {
-        if (true) {
-            return null;
-        }
-        //@TODO 获取注解的属性值
-        Field[] fields = annotation.annotationType().getClass().getFields();
-        annotation.annotationType().getFields();
-        Field field = annotation.getClass().getField("lock");
-        System.out.println(annotation.getClass().getFields());
+    protected Lock getLock(String key, LockType lockType) throws NoSuchFieldException, IllegalAccessException {
 
-        LockType lockType = (LockType) field.get(annotation);
         if (lockType == LockType.none) {
             return null;
         }
@@ -88,6 +92,9 @@ public class DefaultCacheProcess implements CacheProcess {
         }
     }
 
+    /**
+     * 反射invoke,得到值
+     */
     public Object invoke(Object target, Method method, Object[] args) {
         try {
             return method.invoke(target, args);
@@ -96,14 +103,14 @@ public class DefaultCacheProcess implements CacheProcess {
         }
     }
 
-    @Autowired
+    @Autowired(required = false)
     public void setKeyGenerator(KeyGenerator keyGenerator) {
         this.keyGenerator = keyGenerator;
     }
 
     @Autowired
-    public void setCacheOperation(AnnotationCacheOperation cacheOperation) {
-        this.cacheOperation = cacheOperation;
+    public void setCacheOperation(CacheOperationService operationSource) {
+        this.operationSource = operationSource;
     }
 
     @Autowired(required = false)
