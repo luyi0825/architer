@@ -52,6 +52,9 @@ public class StringRedisService {
      * @date 2020/12/24 下午11:18
      */
     public void set(String key, Object value, long expire) {
+        if (expire == Constants.NEVER_EXPIRE) {
+            this.set(key, value);
+        }
         if (expire <= 0) {
             throw new IllegalArgumentException("expire必须大于0");
         }
@@ -157,7 +160,8 @@ public class StringRedisService {
 
     /**
      * 上升
-     * @param key 缓存的key
+     *
+     * @param key   缓存的key
      * @param value 上升的值
      * @return 上升后的值
      */
