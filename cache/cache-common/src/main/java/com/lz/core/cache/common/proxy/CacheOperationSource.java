@@ -1,6 +1,6 @@
 package com.lz.core.cache.common.proxy;
 
-import com.lz.core.cache.common.CacheOperation;
+import com.lz.core.cache.common.operation.CacheOperation;
 import org.springframework.lang.Nullable;
 
 import java.lang.reflect.Method;

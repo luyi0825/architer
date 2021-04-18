@@ -1,6 +1,6 @@
 package com.lz.core.cache.common.proxy;
 
-import com.lz.core.cache.common.CacheOperation;
+import com.lz.core.cache.common.operation.CacheOperation;
 import com.lz.core.cache.common.CacheProcess;
 import com.lz.core.cache.common.CacheAnnotationsParser;
 import org.aopalliance.intercept.MethodInterceptor;
