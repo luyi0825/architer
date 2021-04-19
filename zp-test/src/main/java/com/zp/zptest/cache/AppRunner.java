@@ -23,11 +23,11 @@ public class AppRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         logger.info(".... Fetching books");
-        logger.info("isbn-1234 -->" + bookService.getByIsbn("isbn-1234"));
-        logger.info("isbn-1234 -->" + bookService.getByIsbn("isbn-1234"));
-        logger.info("isbn-1234 -->" + bookService.getByIsbn("isbn-234"));
-        logger.info("isbn-1234 -->" + bookService.getByIsbn("isbn-1234"));
-        logger.info("isbn-1234 -->" + bookService.getByIsbn("isbn-234"));
-        logger.info("isbn-1234 -->" + bookService.getByIsbn("isbn-234"));
+        logger.info("isbn-1234 -->" + bookService.getByIsbn("isbn-1111"));
+        logger.info("isbn-1234 -->" + bookService.getByIsbn("isbn-1111"));
+        logger.info("isbn-1234 -->" + bookService.getByIsbn("isbn-12"));
+        logger.info("isbn-1234 -->" + bookService.getByIsbn("isbn-12"));
+        logger.info("isbn-1234 -->" + bookService.getByIsbn("isbn-12"));
+        logger.info("isbn-1234 -->" + bookService.getByIsbn("isbn-12"));
     }
 }
