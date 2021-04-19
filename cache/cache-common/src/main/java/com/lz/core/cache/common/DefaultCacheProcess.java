@@ -27,7 +27,7 @@ public class DefaultCacheProcess implements CacheProcess {
             for (CacheOperation operation : cacheOperations) {
                 for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
                     if(cacheOperationHandler.match(operation.getAnnotation())){
-                        cacheOperationHandler.handler(target, method, args, operation);
+                        return cacheOperationHandler.handler(target, method, args, operation);
                     }
                 }
             }
