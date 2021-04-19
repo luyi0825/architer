@@ -8,9 +8,10 @@ import java.lang.reflect.Method;
 
 /**
  * 对应PutCacheOperation
+ *
  * @author luyi
  */
-public class PutCacheOperationHandler extends CacheOperationHandler{
+public class PutCacheOperationHandler extends CacheOperationHandler {
     @Override
     public boolean match(Annotation operationAnnotation) {
         return operationAnnotation instanceof PutCache;
@@ -18,8 +19,8 @@ public class PutCacheOperationHandler extends CacheOperationHandler{
 
     @Override
     protected Object executeCacheHandler(String key, Object target, Method method, Object[] args, CacheOperation operation) {
-       Object value = invoke(target, method, args);
-        cacheManager.putCache(key, value,getKeyExpireTime(operation));
+        Object value = invoke(target, method, args);
+        cacheManager.putCache(key, value, getKeyExpireTime(operation));
         return value;
     }
 
@@ -31,8 +32,6 @@ public class PutCacheOperationHandler extends CacheOperationHandler{
      */
     private Long getKeyExpireTime(CacheOperation operation) {
         PutCacheOperation putCacheOperation = (PutCacheOperation) operation;
-      return  KeyExpireUtils.getExpireTime(putCacheOperation.getExpireTime(),putCacheOperation.getRandomExpireTime());
-
-
+        return KeyExpireUtils.getExpireTime(putCacheOperation.getExpireTime(), putCacheOperation.getRandomExpireTime());
     }
 }

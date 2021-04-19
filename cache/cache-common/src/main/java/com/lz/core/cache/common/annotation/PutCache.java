@@ -25,6 +25,17 @@ public @interface PutCache {
     String cachePrefix() default "";
 
     /**
+     * @see Cacheable#randomExpireTime()
+     */
+    long randomExpireTime() default -1;
+
+    /**
+     *
+     * @see Cacheable#expireTime()
+     */
+    long expireTime() default 30 * 60;
+
+    /**
      * @see Cacheable#lock()
      */
     LockType lock() default LockType.none;

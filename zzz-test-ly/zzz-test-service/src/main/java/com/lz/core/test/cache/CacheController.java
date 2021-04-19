@@ -25,8 +25,8 @@ public class CacheController {
     }
 
     @RequestMapping("/put/{id}")
-    public void put(@PathVariable String id) {
-        cacheService.put(id);
+    public String put(@PathVariable String id) {
+       return cacheService.put(id);
     }
 
     @RequestMapping("/delete/{id}")
