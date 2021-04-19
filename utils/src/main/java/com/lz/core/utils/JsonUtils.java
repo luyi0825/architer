@@ -34,6 +34,9 @@ public class JsonUtils {
      */
     public static String toJsonString(Object object) {
         try {
+            if (object instanceof String) {
+                return object.toString();
+            }
             return OBJECT_MAPPER.writeValueAsString(object);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("序列化失败", e);
