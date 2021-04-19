@@ -1,4 +1,4 @@
-package com.lz.lock.distributed;
+package com.lz.lock;
 
 import java.util.concurrent.locks.Lock;
 

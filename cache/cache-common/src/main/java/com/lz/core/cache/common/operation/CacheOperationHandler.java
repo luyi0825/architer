@@ -3,7 +3,7 @@ package com.lz.core.cache.common.operation;
 import com.lz.core.cache.common.CacheManager;
 import com.lz.core.cache.common.enums.LockType;
 import com.lz.core.cache.common.key.KeyGenerator;
-import com.lz.lock.distributed.LockService;
+import com.lz.lock.LockService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.annotation.Annotation;
@@ -24,7 +24,7 @@ public abstract class CacheOperationHandler {
 
     @Autowired(required = false)
     private KeyGenerator keyGenerator;
-    @Autowired
+    @Autowired(required = false)
     private LockService lockService;
 
     public CacheOperationHandler() {

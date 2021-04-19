@@ -1,8 +1,11 @@
 package com.lz.lock.distributed;
 
+import com.lz.lock.LockService;
+
 import java.util.concurrent.locks.Lock;
 
-public class DistributedLock implements LockService{
+public class DistributedLock implements LockService {
+
     @Override
     public Lock getReadLock(String lock) {
         return null;
