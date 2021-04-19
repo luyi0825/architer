@@ -42,6 +42,13 @@ public @interface DeleteCache {
     boolean async() default false;
 
     /**
+     * true表示在方法直接删除缓存
+     * false 表示在方法执行之后删除
+     */
+    boolean before() default false;
+
+
+    /**
      * key的策略
      */
     KeyStrategy keyStrategy() default KeyStrategy.NONE;

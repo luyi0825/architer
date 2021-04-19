@@ -6,7 +6,7 @@ package com.lz.core.cache.common;
  * @author luyi
  * @date 2020/12/24 下午11:20
  */
-public class CacheConstants {
+public class Constants {
     /**
      * 缓存不过期
      */

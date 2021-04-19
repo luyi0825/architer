@@ -32,6 +32,7 @@
         <module>log</module>
         <module>authority</module>
         <module>lock</module>
+        <module>utils</module>
     </modules>
 
     <dependencies>

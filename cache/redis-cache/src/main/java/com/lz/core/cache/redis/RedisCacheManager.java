@@ -1,13 +1,14 @@
 package com.lz.core.cache.redis;
 
-import com.lz.core.cache.common.AnnotationCacheOperation;
+import com.lz.core.cache.common.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * redis注解缓存操作
+ *
  * @author luyi
  */
-public class RedisAnnotationCacheOperation implements AnnotationCacheOperation {
+public class RedisCacheManager implements CacheManager {
 
     private StringRedisService stringRedisService;
 
@@ -18,8 +19,8 @@ public class RedisAnnotationCacheOperation implements AnnotationCacheOperation {
     }
 
     @Override
-    public Object putCache(String key, Object value) {
-        stringRedisService.set(key, value);
+    public Object putCache(String key, Object value, long expireTime) {
+        stringRedisService.set(key, value, expireTime);
         return value;
     }
 

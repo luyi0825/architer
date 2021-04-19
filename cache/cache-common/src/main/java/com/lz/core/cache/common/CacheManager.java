@@ -2,9 +2,10 @@ package com.lz.core.cache.common;
 
 /**
  * @author luyi
- * 注解缓存操作
+ * 注解缓存操作service接口层
  */
-public interface AnnotationCacheOperation {
+public interface CacheManager {
+
 
     /**
      * 得到缓存
@@ -19,9 +20,10 @@ public interface AnnotationCacheOperation {
      *
      * @param key   缓存的key
      * @param value 需要缓存的值
+     * @param expireTime 过期的时间/s
      * @return 同value
      */
-    Object putCache(String key, Object value);
+    Object putCache(String key, Object value,long expireTime);
 
     /**
      * 删除缓存的值

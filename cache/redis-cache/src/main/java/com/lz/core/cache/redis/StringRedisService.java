@@ -1,8 +1,8 @@
 package com.lz.core.cache.redis;
 
 
-import com.lz.core.cache.common.CacheConstants;
-import com.lz.core.cache.common.utils.JsonUtils;
+import com.lz.core.cache.common.Constants;
+import com.lz.core.utils.JsonUtils;
 import lombok.NonNull;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
@@ -52,6 +52,9 @@ public class StringRedisService {
      * @date 2020/12/24 下午11:18
      */
     public void set(String key, Object value, long expire) {
+        if (expire == Constants.NEVER_EXPIRE) {
+            this.set(key, value);
+        }
         if (expire <= 0) {
             throw new IllegalArgumentException("expire必须大于0");
         }
@@ -137,7 +140,7 @@ public class StringRedisService {
      * @date 2020/12/24 下午11:52
      */
     public <T> T getAndSetExpire(String key, Class<T> clazz, long expire) {
-        if (expire != CacheConstants.NEVER_EXPIRE && expire <= 0) {
+        if (expire != Constants.NEVER_EXPIRE && expire <= 0) {
             throw new IllegalArgumentException("expire的值不合法");
         }
         T value = get(key, clazz);
@@ -157,7 +160,8 @@ public class StringRedisService {
 
     /**
      * 上升
-     * @param key 缓存的key
+     *
+     * @param key   缓存的key
      * @param value 上升的值
      * @return 上升后的值
      */

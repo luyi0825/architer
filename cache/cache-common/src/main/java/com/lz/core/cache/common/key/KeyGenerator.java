@@ -1,8 +1,7 @@
 package com.lz.core.cache.common.key;
 
-import com.lz.core.cache.common.enums.KeyStrategy;
+import com.lz.core.cache.common.operation.CacheOperation;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
@@ -21,7 +20,7 @@ public interface KeyGenerator {
      * @param args       参数
      * @return 缓存的key
      */
-    String getKey(Object target, Method method, Object[] args, Class<?> annotation);
+    String getKey(Object target, Method method, Object[] args, CacheOperation annotation);
 
 
 }

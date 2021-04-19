@@ -1,5 +1,6 @@
 package com.lz.core.cache.common.aspectj;
 
+import com.lz.core.cache.common.CacheAnnotationsParser;
 import com.lz.core.cache.common.CacheProcess;
 import com.lz.core.cache.common.annotation.Cacheable;
 import com.lz.core.cache.common.annotation.DeleteCache;
@@ -14,6 +15,7 @@ import java.lang.reflect.Method;
 /**
  * @author luyi
  * @date 2020-12-20
+ * @TODO 判断多个缓存注解会怎么样
  */
 @Aspect
 @Component
@@ -21,8 +23,11 @@ public class CacheAspectj {
 
     private final CacheProcess cacheProcess;
 
-    public CacheAspectj(CacheProcess cacheProcess) {
+    private final CacheAnnotationsParser cacheAnnotationsParser;
+
+    public CacheAspectj(CacheProcess cacheProcess, CacheAnnotationsParser cacheAnnotationsParser) {
         this.cacheProcess = cacheProcess;
+        this.cacheAnnotationsParser = cacheAnnotationsParser;
     }
 
     /**
@@ -48,26 +53,26 @@ public class CacheAspectj {
 
 
     @Around("cachingPointcut()")
-    public Object cacheable(ProceedingJoinPoint jp) throws NoSuchFieldException, IllegalAccessException {
-        return handler(jp, Cacheable.class);
+    public Object cacheable(ProceedingJoinPoint jp) {
+        return handler(jp);
     }
 
     @Around("putCachePointcut()")
-    public Object putCaching(ProceedingJoinPoint jp) throws NoSuchFieldException, IllegalAccessException {
-        return handler(jp, PutCache.class);
+    public Object putCaching(ProceedingJoinPoint jp) {
+        return handler(jp);
     }
 
     @Around("deleteCachePointcut()")
-    public Object deleteCache(ProceedingJoinPoint jp) throws NoSuchFieldException, IllegalAccessException {
-        return handler(jp, DeleteCache.class);
+    public Object deleteCache(ProceedingJoinPoint jp) {
+        return handler(jp);
     }
 
 
-    public Object handler(ProceedingJoinPoint proceedingJoinPoint, Class<?> clazz) throws NoSuchFieldException, IllegalAccessException {
+    public Object handler(ProceedingJoinPoint proceedingJoinPoint) {
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
         Method method = methodSignature.getMethod();
         Object target = proceedingJoinPoint.getTarget();
-        return cacheProcess.process(target, method, proceedingJoinPoint.getArgs(), clazz);
+        return cacheProcess.process(target, method, proceedingJoinPoint.getArgs(), cacheAnnotationsParser.parse(method));
     }
 
 

@@ -1,5 +1,6 @@
 package com.lz.core.cache.common.aspectj;
 
+import com.lz.core.cache.common.CacheAnnotationsParser;
 import com.lz.core.cache.common.CacheProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -15,8 +16,15 @@ public class AspectjConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
+    public CacheAnnotationsParser cacheAnnotationsParser() {
+        return new CacheAnnotationsParser();
+    }
+
+
+    @Bean
+    @ConditionalOnMissingBean
     @Autowired(required = false)
-    public CacheAspectj cacheAspectj(CacheProcess cacheProcess) {
-        return new CacheAspectj(cacheProcess);
+    public CacheAspectj cacheAspectj(CacheProcess cacheProcess, CacheAnnotationsParser cacheAnnotationsParser) {
+        return new CacheAspectj(cacheProcess, cacheAnnotationsParser);
     }
 }
