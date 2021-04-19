@@ -8,7 +8,7 @@ import org.springframework.context.annotation.AdviceMode;
 
 
 //@EnableCaching
-@CustomEnableCaching(mode = AdviceMode.PROXY)
+@CustomEnableCaching(mode = AdviceMode.ASPECTJ)
 @SpringBootApplication
 public class ZpTestApplication {
 
