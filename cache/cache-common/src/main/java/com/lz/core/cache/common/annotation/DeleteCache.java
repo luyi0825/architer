@@ -1,8 +1,8 @@
 package com.lz.core.cache.common.annotation;
 
 
-import com.lz.core.cache.common.enums.KeyStrategy;
 import com.lz.core.cache.common.enums.LockType;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 
@@ -18,16 +18,20 @@ import java.lang.annotation.*;
 @Inherited
 public @interface DeleteCache {
     /**
-     * 缓存名称
-     *
-     * @see Cacheable#cacheName()
+     * @see Cacheable#value()
      */
-    String cacheName() default "";
+    @AliasFor("cacheNames")
+    String value() default "";
 
     /**
      * @see Cacheable#cachePrefix()
      */
     String cachePrefix() default "";
+
+    /**
+     * @see Cacheable#spElKey()
+     */
+    String spElKey() default "";
 
     /**
      * 锁的类型，比如删除锁的时候是否允许查询接口读取数据
@@ -46,12 +50,5 @@ public @interface DeleteCache {
      * false 表示在方法执行之后删除
      */
     boolean before() default false;
-
-
-    /**
-     * key的策略
-     */
-    KeyStrategy keyStrategy() default KeyStrategy.NONE;
-
 
 }

@@ -1,8 +1,8 @@
 package com.lz.core.cache.common.annotation;
 
 
-import com.lz.core.cache.common.enums.KeyStrategy;
 import com.lz.core.cache.common.enums.LockType;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 
@@ -22,16 +22,35 @@ import java.lang.annotation.*;
 public @interface Cacheable {
 
     /**
-     * 描述：缓存名称
-     * ps:不写的话默认为缓存前缀::方法名称+（参数）
+     * 缓存名称
+     * 1.当value不为“”，那么缓存的key就为value
+     * 2.当value不为“”:
+     * <p>缓存前缀存在的时候，缓存名称为缓存前缀+缓存分割符号+参数值</p>
+     * <p>否则，就用spElKey生成key</p>
+     * 不写的话默认为缓存前缀::方法名称+（参数）
      */
-    String cacheName() default "";
+    @AliasFor("cacheNames")
+    String value() default "";
+
+    /**
+     * 缓存前缀
+     * 默认为包名+类名+方法名称
+     * <p>
+     * 比如:query(String id),我们可以定义前缀为com.test,那么缓存的key就为com.test::{id的值}
+     */
+    String cachePrefix() default "";
+
+    /**
+     * Spring Expression Language (SpEL) expression for computing the key dynamically.
+     */
+    String spElKey() default "";
 
     /**
      * 缓存随机失效时间
      * ps:主要用户解决缓存雪崩，同一时刻大量缓存数据失效，大量请求到达数据库
      */
     long randomExpireTime() default -1;
+
 
     /**
      * 缓存失效时间
@@ -49,20 +68,8 @@ public @interface Cacheable {
     LockType lock() default LockType.none;
 
     /**
-     * 缓存前缀
-     * 默认为包名+类名+方法名称
-     * <p>
-     * 比如:query(String id),我们可以定义前缀为com.test,那么缓存的key就为com.test::{id的值}
-     */
-    String cachePrefix() default "";
-
-    /**
      * 是否异步
      */
     boolean async() default false;
 
-    /**
-     * key的策略,在是参数的时候，定义这个值，我们可以不用扫描注解，从而加快程序速度
-     */
-    KeyStrategy keyStrategy() default KeyStrategy.NONE;
 }

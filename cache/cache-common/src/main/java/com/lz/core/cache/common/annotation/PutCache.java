@@ -1,7 +1,7 @@
 package com.lz.core.cache.common.annotation;
 
-import com.lz.core.cache.common.enums.KeyStrategy;
 import com.lz.core.cache.common.enums.LockType;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 
@@ -15,9 +15,10 @@ import java.lang.annotation.*;
 public @interface PutCache {
 
     /**
-     * @see Cacheable#cacheName()
+     * @see Cacheable#value()
      */
-    String cacheName() default "";
+    @AliasFor("cacheNames")
+    String value() default "";
 
     /**
      * @see Cacheable#cachePrefix()
@@ -25,12 +26,16 @@ public @interface PutCache {
     String cachePrefix() default "";
 
     /**
+     * @see Cacheable#spElKey()
+     */
+    String spElKey() default "";
+
+    /**
      * @see Cacheable#randomExpireTime()
      */
     long randomExpireTime() default -1;
 
     /**
-     *
      * @see Cacheable#expireTime()
      */
     long expireTime() default 30 * 60;
@@ -41,9 +46,8 @@ public @interface PutCache {
     LockType lock() default LockType.none;
 
     /**
-     * @see Cacheable#async() ()
+     * @see Cacheable#async()
      */
     boolean async() default false;
 
-    KeyStrategy keyStrategy() default KeyStrategy.NONE;
 }
