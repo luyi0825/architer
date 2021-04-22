@@ -18,6 +18,11 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
             <version>${spring.boot.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.lz.core</groupId>
+            <artifactId>redis-cache</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
