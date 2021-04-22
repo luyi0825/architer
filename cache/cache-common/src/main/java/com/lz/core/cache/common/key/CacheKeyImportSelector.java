@@ -1,12 +1,9 @@
 package com.lz.core.cache.common.key;
 
 import com.lz.core.cache.common.annotation.CustomEnableCaching;
-import com.lz.core.cache.common.enums.KeyStrategy;
 import org.springframework.context.annotation.ImportSelector;
-import org.springframework.core.GenericTypeResolver;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.util.Assert;
 
 import java.util.function.Predicate;
 
@@ -32,18 +29,14 @@ public class CacheKeyImportSelector implements ImportSelector {
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
         Class<?> annType = CustomEnableCaching.class;
         AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(annType.getName(), false));
-        KeyStrategy keyStrategy = attributes.getEnum(KEY_STRATEGY);
-        if (keyStrategy == KeyStrategy.NONE) {
-            throw new IllegalArgumentException("KeyStrategy is none");
-        }
-        String[] imports = selectKeyStrategyImports(keyStrategy);
+        String[] imports = selectKeyStrategyImports();
         if (imports == null) {
-            throw new IllegalArgumentException("Unknown keyStrategy: " + keyStrategy);
+            throw new IllegalArgumentException("Unknown keyStrategy: ");
         }
         return imports;
     }
 
-    private String[] selectKeyStrategyImports(KeyStrategy keyStrategy) {
+    private String[] selectKeyStrategyImports() {
         //选择key策略
         return new String[]{};
     }

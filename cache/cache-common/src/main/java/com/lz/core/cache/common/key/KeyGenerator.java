@@ -1,8 +1,6 @@
 package com.lz.core.cache.common.key;
 
-import com.lz.core.cache.common.operation.CacheOperation;
-
-import java.lang.reflect.Method;
+import com.lz.core.cache.common.operation.CacheOperationMetadata;
 
 /**
  * @author luyi
@@ -20,7 +18,7 @@ public interface KeyGenerator {
      * @param args       参数
      * @return 缓存的key
      */
-    String getKey(Object target, Method method, Object[] args, CacheOperation annotation);
+    String getKey(CacheOperationMetadata cacheOperationMetadata);
 
 
 }

@@ -18,10 +18,9 @@ import java.lang.annotation.*;
 @Inherited
 public @interface DeleteCache {
     /**
-     * @see Cacheable#value()
+     * @see Cacheable#cacheName()
      */
-    @AliasFor("cacheNames")
-    String value() default "";
+    String cacheName() default "";
 
     /**
      * @see Cacheable#cachePrefix()
@@ -29,9 +28,9 @@ public @interface DeleteCache {
     String cachePrefix() default "";
 
     /**
-     * @see Cacheable#spElKey()
+     * @see Cacheable#spElSuffix()
      */
-    String spElKey() default "";
+    String spElSuffix() default "";
 
     /**
      * 锁的类型，比如删除锁的时候是否允许查询接口读取数据

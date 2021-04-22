@@ -1,0 +1,17 @@
+package com.lz.core.test.cache;
+
+import lombok.Data;
+
+/**
+ * @author luyi
+ */
+@Data
+public class User {
+    private String name;
+    private int age;
+
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}

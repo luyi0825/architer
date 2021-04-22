@@ -21,7 +21,7 @@ import java.util.Set;
 
 /**
  * @author luyi
- * 缓存注解解析
+ * 缓存注解解析,解析方法有哪些缓存操作的注解
  */
 public class CacheAnnotationsParser {
 
@@ -92,6 +92,7 @@ public class CacheAnnotationsParser {
         putCacheOperation.setName(annotatedElement.toString());
         putCacheOperation.setCachePrefix(cachePut.cachePrefix());
         putCacheOperation.setCacheName(cachePut.cacheName());
+        putCacheOperation.setSpElSuffix(cachePut.spElSuffix());
         putCacheOperation.setLock(cachePut.lock());
         putCacheOperation.setAsync(cachePut.async());
         putCacheOperation.setExpireTime(cachePut.expireTime());
@@ -110,7 +111,7 @@ public class CacheAnnotationsParser {
         deleteCacheOperation.setCacheName(deleteCache.cacheName());
         deleteCacheOperation.setLock(deleteCache.lock());
         deleteCacheOperation.setAsync(deleteCache.async());
-        deleteCacheOperation.setKeyStrategy(deleteCache.keyStrategy());
+        deleteCacheOperation.setSpElSuffix(deleteCache.spElSuffix());
         deleteCacheOperation.setAnnotation(deleteCache);
         return deleteCacheOperation;
     }
@@ -125,7 +126,7 @@ public class CacheAnnotationsParser {
         operation.setCacheName(cacheable.cacheName());
         operation.setLock(cacheable.lock());
         operation.setAsync(cacheable.async());
-        operation.setKeyStrategy(cacheable.keyStrategy());
+        operation.setSpElSuffix(cacheable.spElSuffix());
         operation.setExpireTime(cacheable.expireTime());
         operation.setRandomExpireTime(cacheable.randomExpireTime());
         operation.setAnnotation(cacheable);

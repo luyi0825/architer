@@ -15,10 +15,9 @@ import java.lang.annotation.*;
 public @interface PutCache {
 
     /**
-     * @see Cacheable#value()
+     * @see Cacheable#cacheName()
      */
-    @AliasFor("cacheNames")
-    String value() default "";
+    String cacheName() default "";
 
     /**
      * @see Cacheable#cachePrefix()
@@ -26,9 +25,9 @@ public @interface PutCache {
     String cachePrefix() default "";
 
     /**
-     * @see Cacheable#spElKey()
+     * @see Cacheable#spElSuffix()
      */
-    String spElKey() default "";
+    String spElSuffix() default "";
 
     /**
      * @see Cacheable#randomExpireTime()

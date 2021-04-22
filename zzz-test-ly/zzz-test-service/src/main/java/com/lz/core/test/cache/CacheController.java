@@ -21,17 +21,22 @@ public class CacheController {
 
     @RequestMapping("/get/{id}")
     public String get(@PathVariable String id) {
-        return cacheService.getXxx(id);
+        return cacheService.getXxx(id, null);
     }
 
     @RequestMapping("/put/{id}")
     public String put(@PathVariable String id) {
-       return cacheService.put(id);
+        return cacheService.put(id);
     }
 
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable String id) {
         cacheService.delete(id);
         return "true";
+    }
+
+    @RequestMapping("update/{username}")
+    public User update(@PathVariable String username) {
+        return cacheService.updateUser(new User(username, 666));
     }
 }

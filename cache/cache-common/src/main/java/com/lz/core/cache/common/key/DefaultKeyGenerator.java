@@ -2,10 +2,10 @@ package com.lz.core.cache.common.key;
 
 
 import com.lz.core.cache.common.operation.CacheOperation;
+import com.lz.core.cache.common.operation.CacheOperationMetadata;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 
@@ -18,27 +18,38 @@ import java.util.StringJoiner;
  */
 public class DefaultKeyGenerator implements KeyGenerator {
 
+    private ElExpressionKeyParser elExpressionKeyParser = new ElExpressionKeyParser();
+
     /**
      * 前后缀的分割符号
      */
-    private  String separator="::";
+    private String separator = "::";
 
     private static final int MAX_KEY_SUFFIX_SIZE = 16;
 
 
-
     @Override
-    public String getKey(Object target, Method method, Object[] args, CacheOperation cacheOperation) {
-        String cachePrefix = getKeyPrefix(target, method, cacheOperation);
-        if (args == null) {
+    public String getKey(CacheOperationMetadata metadata) {
+        CacheOperation cacheOperation = metadata.getCacheOperation();
+        if (!StringUtils.isEmpty(cacheOperation.getCacheName())) {
+            return cacheOperation.getCacheName();
+        }
+        String cachePrefix = getKeyPrefix(metadata.getTarget(), metadata.getTargetMethod(), cacheOperation);
+        if (metadata.getArgs() == null) {
             return cachePrefix;
         }
-        String cacheSuffix = this.getCacheSuffix(method, args);
+        String cacheSuffix = "";
+        if (StringUtils.isEmpty(cacheOperation.getSpElSuffix())) {
+            cacheSuffix = this.getCacheSuffix(metadata.getTargetMethod(), metadata.getArgs(), cacheOperation);
+        } else {
+            cacheSuffix = elExpressionKeyParser.generateKey(metadata, cacheOperation.getSpElSuffix());
+        }
         if (!StringUtils.isEmpty(cacheSuffix)) {
             return cachePrefix + getSeparator() + cacheSuffix;
         }
         return cachePrefix;
     }
+
 
     /**
      * 描述：得到缓存后缀
@@ -46,16 +57,8 @@ public class DefaultKeyGenerator implements KeyGenerator {
      * @author luyi
      * @date 2021/4/15
      */
-    private String getCacheSuffix(Method method, Object[] args) {
+    private String getCacheSuffix(Method method, Object[] args, CacheOperation cacheOperation) {
         StringJoiner joiner = new StringJoiner("_");
-        Annotation[][] annotations = method.getParameterAnnotations();
-        int i = 0;
-        for (Annotation[] annotation : annotations) {
-            if (annotation.length > 0) {
-                joiner.add(Objects.toString(args[i], "#"));
-            }
-            i++;
-        }
         int length = joiner.length();
         if (length == 0) {
             for (Object arg : args) {
@@ -80,10 +83,11 @@ public class DefaultKeyGenerator implements KeyGenerator {
     private String getKeyPrefix(Object target, Method method, CacheOperation cacheOperation) {
         String cachePrefix = cacheOperation.getCachePrefix();
         if (StringUtils.isEmpty(cachePrefix)) {
-            cachePrefix = target.getClass().getName() + "." + method.getName();
+            cachePrefix = target.getClass().getName();
         }
         return cachePrefix;
     }
+
 
     public String getSeparator() {
         return separator;

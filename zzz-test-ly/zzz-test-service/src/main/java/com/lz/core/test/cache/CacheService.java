@@ -11,10 +11,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class CacheService {
 
-    @Cacheable
-    public String getXxx(String id) {
+    @Cacheable(spElSuffix = "#id#xxx")
+    public String getXxx(String id, String xxx) {
         System.out.println("查询数据库");
         return "xxx" + id;
+    }
+
+    //@PutCache(spElSuffix = "#user.name + '_' +#user.age")
+    @PutCache(spElSuffix = "#targetClass")
+    public User updateUser(User user) {
+        return user;
     }
 
     @DeleteCache

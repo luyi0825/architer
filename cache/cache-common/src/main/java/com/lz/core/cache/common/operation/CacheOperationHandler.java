@@ -42,21 +42,18 @@ public abstract class CacheOperationHandler {
     /**
      * 开始处理
      *
-     * @param method    注解的方法
-     * @param target    目标对象
-     * @param operation 缓存注解对应实体解析
-     * @param args      方法参数
      * @return 处理后的结果值，这个值就是缓存注解方法对应的返回值
      */
-    public final Object handler(Object target, Method method, Object[] args, CacheOperation operation) {
-        String key = keyGenerator.getKey(target, method, args, operation);
-        Lock lock = this.getLock(key, operation.getLock());
+    public final Object handler(CacheOperationMetadata metadata) {
+
+        String key = keyGenerator.getKey(metadata);
+        Lock lock = this.getLock(key, metadata.getCacheOperation().getLock());
         if (lock == null) {
-            return executeCacheHandler(key, target, method, args, operation);
+            return executeCacheHandler(key, metadata.getTarget(), metadata.getTargetMethod(), metadata.getArgs(), metadata.getCacheOperation());
         }
         lock.lock();
         try {
-            return executeCacheHandler(key, target, method, args, operation);
+            return executeCacheHandler(key, metadata.getTarget(), metadata.getTargetMethod(), metadata.getArgs(), metadata.getCacheOperation());
         } finally {
             lock.unlock();
         }

@@ -1,6 +1,7 @@
 package com.lz.core.cache.common;
 
 
+import com.lz.core.cache.common.operation.CacheOperationMetadata;
 import com.lz.core.cache.common.operation.CacheOperation;
 import com.lz.core.cache.common.operation.CacheOperationHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,9 @@ public class DefaultCacheProcess implements CacheProcess {
         try {
             for (CacheOperation operation : cacheOperations) {
                 for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
-                    if(cacheOperationHandler.match(operation.getAnnotation())){
-                        return cacheOperationHandler.handler(target, method, args, operation);
+                    if (cacheOperationHandler.match(operation.getAnnotation())) {
+                        CacheOperationMetadata cacheOperationMetadata = new CacheOperationMetadata(operation, target, method, args);
+                        return cacheOperationHandler.handler(cacheOperationMetadata);
                     }
                 }
             }
@@ -36,7 +38,6 @@ public class DefaultCacheProcess implements CacheProcess {
         }
         return null;
     }
-
 
 
     @Autowired(required = false)
