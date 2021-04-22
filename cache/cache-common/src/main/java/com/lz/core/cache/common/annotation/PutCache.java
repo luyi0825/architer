@@ -20,14 +20,14 @@ public @interface PutCache {
     String cacheName() default "";
 
     /**
-     * @see Cacheable#cachePrefix()
+     * @see Cacheable#prefix()
      */
-    String cachePrefix() default "";
+    String prefix() default "";
 
     /**
-     * @see Cacheable#spElSuffix()
+     * @see Cacheable#suffix()
      */
-    String spElSuffix() default "";
+    String suffix() default "";
 
     /**
      * @see Cacheable#randomExpireTime()

@@ -10,8 +10,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
-import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -27,23 +27,16 @@ public class ElExpressionKeyParser {
 
     @Nullable
     protected String generateKey(CacheOperationMetadata cacheOperationMetadata, String expression) {
-        EvaluationContext evaluationContext = createEvaluationContext(cacheOperationMetadata.getTargetMethod(), cacheOperationMetadata.getArgs());
-
+        EvaluationContext evaluationContext = createEvaluationContext(cacheOperationMetadata);
         Expression ex = getExpression(keyCache, cacheOperationMetadata.getMethodKey(), expression);
-        System.out.println(ex.getValue(evaluationContext));
-        return null;
+        return Objects.requireNonNull(ex.getValue(evaluationContext)).toString();
     }
 
 
-    private EvaluationContext createEvaluationContext(Method method, @Nullable Object[] args) {
-        CacheExpressionRootObject rootObject = new CacheExpressionRootObject(args);
-        CacheEvaluationContext evaluationContext = new CacheEvaluationContext(
-                rootObject, method, args, new DefaultParameterNameDiscoverer());
-
-//        if (beanFactory != null) {
-//            evaluationContext.setBeanResolver(new BeanFactoryResolver(beanFactory));
-//        }
-        return evaluationContext;
+    private EvaluationContext createEvaluationContext(CacheOperationMetadata metadata) {
+        CacheExpressionRootObject rootObject = new CacheExpressionRootObject(metadata.getTargetMethod(), metadata.getArgs(), metadata.getTarget(), metadata.getTargetClass());
+        return new CacheEvaluationContext(
+                rootObject, metadata.getTargetMethod(), metadata.getArgs(), new DefaultParameterNameDiscoverer());
     }
 
     protected Expression getExpression(Map<ExpressionKey, Expression> cache,

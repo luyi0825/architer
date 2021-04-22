@@ -90,9 +90,9 @@ public class CacheAnnotationsParser {
     private CacheOperation parsePutCacheAnnotation(AnnotatedElement annotatedElement, PutCache cachePut) {
         PutCacheOperation putCacheOperation = new PutCacheOperation();
         putCacheOperation.setName(annotatedElement.toString());
-        putCacheOperation.setCachePrefix(cachePut.cachePrefix());
+        putCacheOperation.setPrefix(cachePut.prefix());
         putCacheOperation.setCacheName(cachePut.cacheName());
-        putCacheOperation.setSpElSuffix(cachePut.spElSuffix());
+        putCacheOperation.setSuffix(cachePut.suffix());
         putCacheOperation.setLock(cachePut.lock());
         putCacheOperation.setAsync(cachePut.async());
         putCacheOperation.setExpireTime(cachePut.expireTime());
@@ -107,11 +107,11 @@ public class CacheAnnotationsParser {
     private CacheOperation parseDeleteCacheAnnotation(AnnotatedElement annotatedElement, DeleteCache deleteCache) {
         DeleteCacheOperation deleteCacheOperation = new DeleteCacheOperation();
         deleteCacheOperation.setName(annotatedElement.toString());
-        deleteCacheOperation.setCachePrefix(deleteCache.cachePrefix());
+        deleteCacheOperation.setPrefix(deleteCache.prefix());
         deleteCacheOperation.setCacheName(deleteCache.cacheName());
         deleteCacheOperation.setLock(deleteCache.lock());
         deleteCacheOperation.setAsync(deleteCache.async());
-        deleteCacheOperation.setSpElSuffix(deleteCache.spElSuffix());
+        deleteCacheOperation.setSuffix(deleteCache.suffix());
         deleteCacheOperation.setAnnotation(deleteCache);
         return deleteCacheOperation;
     }
@@ -122,11 +122,11 @@ public class CacheAnnotationsParser {
     private CacheableOperation parseCacheableAnnotation(AnnotatedElement annotatedElement, Cacheable cacheable) {
         CacheableOperation operation = new CacheableOperation();
         operation.setName(annotatedElement.toString());
-        operation.setCachePrefix(cacheable.cachePrefix());
+        operation.setPrefix(cacheable.prefix());
         operation.setCacheName(cacheable.cacheName());
         operation.setLock(cacheable.lock());
         operation.setAsync(cacheable.async());
-        operation.setSpElSuffix(cacheable.spElSuffix());
+        operation.setSuffix(cacheable.suffix());
         operation.setExpireTime(cacheable.expireTime());
         operation.setRandomExpireTime(cacheable.randomExpireTime());
         operation.setAnnotation(cacheable);

@@ -24,26 +24,19 @@ public @interface Cacheable {
     /**
      * 缓存名称
      * 1.当value不为“”，那么缓存的key就为value
-     * 2.当value不为“”:缓存名称为缓存前缀+缓存分割符号+参数值
-     * <p>否则，就用spElKey生成key</p>
-     * 不写的话默认为缓存前缀::方法名称+（参数）
+     * 2.当value不为“”:缓存名称为缓存前缀+缓存分割符号+缓存后缀
      */
     String cacheName() default "";
 
     /**
-     * 缓存前缀
-     * 默认为类的全名，其他的自己定义
+     * 缓存前缀,支持SpEL
      */
-    String cachePrefix() default "";
+    String prefix() default "";
 
     /**
-     * Spring Expression Language (SpEL) expression for computing the key dynamically.
-     * 缓存后缀
-     * 如果为空，默认为参数值拼接
-     * 如果不为空，根据spEl表达式解析值，凭借参数
+     * 缓存后缀  支持SpEL
      */
-    String spElSuffix() default "";
-
+    String suffix() default "";
 
     /**
      * 缓存随机失效时间

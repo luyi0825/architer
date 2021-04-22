@@ -28,16 +28,16 @@ public class CacheOperation {
 
     private LockType lock;
 
-    private String cachePrefix;
+    private String prefix;
     /**
      * @see Cacheable#async()
      */
     private boolean async;
 
     /**
-     * @see Cacheable#spElSuffix()
+     * @see Cacheable#suffix()
      */
-    private String spElSuffix;
+    private String suffix;
 
 
 }

@@ -39,10 +39,10 @@ public class DefaultKeyGenerator implements KeyGenerator {
             return cachePrefix;
         }
         String cacheSuffix = "";
-        if (StringUtils.isEmpty(cacheOperation.getSpElSuffix())) {
+        if (StringUtils.isEmpty(cacheOperation.getSuffix())) {
             cacheSuffix = this.getCacheSuffix(metadata.getTargetMethod(), metadata.getArgs(), cacheOperation);
         } else {
-            cacheSuffix = elExpressionKeyParser.generateKey(metadata, cacheOperation.getSpElSuffix());
+            cacheSuffix = elExpressionKeyParser.generateKey(metadata, cacheOperation.getSuffix());
         }
         if (!StringUtils.isEmpty(cacheSuffix)) {
             return cachePrefix + getSeparator() + cacheSuffix;
@@ -81,7 +81,7 @@ public class DefaultKeyGenerator implements KeyGenerator {
      * @date 2021/4/15
      */
     private String getKeyPrefix(Object target, Method method, CacheOperation cacheOperation) {
-        String cachePrefix = cacheOperation.getCachePrefix();
+        String cachePrefix = cacheOperation.getPrefix();
         if (StringUtils.isEmpty(cachePrefix)) {
             cachePrefix = target.getClass().getName();
         }

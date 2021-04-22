@@ -2,11 +2,13 @@ package com.lz.core.test.cache;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author luyi
  */
 @Data
-public class User {
+public class User implements Serializable {
     private String name;
     private int age;
 

@@ -23,14 +23,14 @@ public @interface DeleteCache {
     String cacheName() default "";
 
     /**
-     * @see Cacheable#cachePrefix()
+     * @see Cacheable#prefix()
      */
-    String cachePrefix() default "";
+    String prefix() default "";
 
     /**
-     * @see Cacheable#spElSuffix()
+     * @see Cacheable#suffix()
      */
-    String spElSuffix() default "";
+    String suffix() default "";
 
     /**
      * 锁的类型，比如删除锁的时候是否允许查询接口读取数据
