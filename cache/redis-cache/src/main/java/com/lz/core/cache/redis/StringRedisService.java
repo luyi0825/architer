@@ -4,11 +4,7 @@ package com.lz.core.cache.redis;
 import com.lz.core.cache.common.Constants;
 import com.lz.core.utils.JsonUtils;
 import lombok.NonNull;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.core.*;
-import org.springframework.stereotype.Component;
-
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,16 +15,12 @@ import java.util.concurrent.TimeUnit;
  * @author luyi
  * @date 2020-12-24
  */
-@Component
 public class StringRedisService {
-
-    @Autowired
-    private RedisCacheManager redisCacheManager;
 
     private final RedisTemplate<String, Object> redisTemplate;
     private final ValueOperations<String, Object> valueOperations;
 
-    @NonNull
+
     public StringRedisService(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
         valueOperations = redisTemplate.opsForValue();
@@ -126,7 +118,6 @@ public class StringRedisService {
      * @TODO 没有值的时候，验证下是返回null还是-2
      */
     public Object get(String key) {
-
         return valueOperations.get(key);
     }
 
@@ -151,7 +142,6 @@ public class StringRedisService {
             throw new IllegalArgumentException("expire的值不合法");
         }
         T value = get(key, clazz);
-
         if (value == null) {
             return null;
         }
