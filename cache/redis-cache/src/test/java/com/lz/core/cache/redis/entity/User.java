@@ -1,4 +1,4 @@
-package com.lz.core.cache.redis;
+package com.lz.core.cache.redis.entity;
 
 import lombok.Data;
 
