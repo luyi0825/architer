@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     //@Cacheable(prefix = "'test'", suffix = "#id",lock = LockType.reentrant)
     //@Cacheable(prefix = "#root.method.returnType.name", suffix = "#id", lock = LockType.reentrant, randomExpireTime = 60 * 60 * 24)
-    @Cacheable(prefix = "#root.method.returnType.name", suffix = "#id", lock = LockType.reentrant, expireTime = 60)
+    //@Cacheable(prefix = "#root.method.returnType.name", suffix = "#id", lock = LockType.reentrant, expireTime = 60)
     @Override
     public User findById(@NonNull Long id) {
         User user = new User("name" + id, 666);
