@@ -2,6 +2,10 @@ package com.lz.core.cache.common.key;
 
 import java.lang.reflect.Method;
 
+/**
+ * @author luyi
+ * 缓存表达式的根对象（spEl支持的语法都在这个里边）
+ */
 public class CacheExpressionRootObject {
     private final Method method;
 
