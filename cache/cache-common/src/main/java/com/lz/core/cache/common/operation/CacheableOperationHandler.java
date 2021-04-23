@@ -1,7 +1,6 @@
 package com.lz.core.cache.common.operation;
 
-import com.lz.core.cache.common.CacheManager;
-import com.lz.core.cache.common.Constants;
+
 import com.lz.core.cache.common.annotation.Cacheable;
 
 import java.lang.annotation.Annotation;
@@ -24,7 +23,8 @@ public class CacheableOperationHandler extends CacheOperationHandler {
         Object value = cacheManager.getCache(key);
         if (value == null) {
             value = invoke(target, method, args);
-            value = cacheManager.putCache(key, value, getKeyExpireTime(operation));
+            long expireTime = getKeyExpireTime(operation);
+            value = cacheManager.putCache(key, value, expireTime);
         }
         return value;
     }
@@ -38,6 +38,5 @@ public class CacheableOperationHandler extends CacheOperationHandler {
     private Long getKeyExpireTime(CacheOperation operation) {
         CacheableOperation cacheableOperation = (CacheableOperation) operation;
         return KeyExpireUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomExpireTime());
-
     }
 }
