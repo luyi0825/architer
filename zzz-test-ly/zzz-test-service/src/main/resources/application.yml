@@ -1,4 +1,24 @@
 server:
-  port: 8080
+  port: 8888
   servlet:
     context-path: /
+
+spring:
+  rabbitmq:
+    host: 124.71.110.204
+    port: 5672
+    username: luyi
+    password: 123
+    virtual-host: stats3
+    listener:
+      simple:
+        retry:
+          ####开启消费者异常重试
+          enabled: true
+          ####最大重试次数
+          max-attempts: 3
+          initial-interval: 2000
+          max-interval: 5000
+        ####开启手动ack
+        acknowledge-mode: manual
+        prefetch: 1
