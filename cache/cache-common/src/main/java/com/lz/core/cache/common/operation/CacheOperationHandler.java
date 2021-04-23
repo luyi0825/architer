@@ -3,7 +3,7 @@ package com.lz.core.cache.common.operation;
 import com.lz.core.cache.common.CacheManager;
 import com.lz.core.cache.common.enums.LockType;
 import com.lz.core.cache.common.key.KeyGenerator;
-import com.lz.lock.LockService;
+import com.lz.lock.LockManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.annotation.Annotation;
@@ -25,7 +25,7 @@ public abstract class CacheOperationHandler {
     @Autowired(required = false)
     private KeyGenerator keyGenerator;
     @Autowired(required = false)
-    private LockService lockService;
+    private LockManager lockManager;
 
     public CacheOperationHandler() {
 
@@ -59,7 +59,9 @@ public abstract class CacheOperationHandler {
         }
     }
 
-
+    /**
+     * 执行缓存处理器
+     */
     protected abstract Object executeCacheHandler(String key, Object target, Method method, Object[] args, CacheOperation operation);
 
 
@@ -70,14 +72,14 @@ public abstract class CacheOperationHandler {
         if (lockType == LockType.none) {
             return null;
         }
-        String lockName = key + ".lock";
+        String lockName = "lock." + key;
         switch (lockType) {
             case read:
-                return lockService.getReadLock(lockName);
+                return lockManager.getReadLock(lockName);
             case write:
-                return lockService.getWriteLock(lockName);
+                return lockManager.getWriteLock(lockName);
             case reentrant:
-                return lockService.getReentrantLock(lockName);
+                return lockManager.getReentrantLock(lockName);
             default:
                 throw new IllegalArgumentException("lock not match");
         }

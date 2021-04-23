@@ -20,6 +20,7 @@
         <jsoup.verion>1.13.1</jsoup.verion>
         <spring.boot.version>2.3.6.RELEASE</spring.boot.version>
         <spring-context.version>5.2.11.RELEASE</spring-context.version>
+        <spring-data-redis.version>2.3.6.RELEASE</spring-data-redis.version>
     </properties>
 
 
