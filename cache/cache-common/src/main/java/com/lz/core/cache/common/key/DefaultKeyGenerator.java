@@ -1,6 +1,7 @@
 package com.lz.core.cache.common.key;
 
 
+import com.lz.core.cache.common.exception.CacheAnnotationIllegalException;
 import com.lz.core.cache.common.operation.CacheOperation;
 import com.lz.core.cache.common.operation.CacheOperationMetadata;
 import org.springframework.util.DigestUtils;
@@ -18,74 +19,27 @@ import java.util.StringJoiner;
  */
 public class DefaultKeyGenerator implements KeyGenerator {
 
-    private ElExpressionKeyParser elExpressionKeyParser = new ElExpressionKeyParser();
+    private final ElExpressionKeyParser elExpressionKeyParser = new ElExpressionKeyParser();
 
     /**
      * 前后缀的分割符号
      */
     private String separator = "::";
 
-    private static final int MAX_KEY_SUFFIX_SIZE = 16;
-
 
     @Override
     public String getKey(CacheOperationMetadata metadata) {
         CacheOperation cacheOperation = metadata.getCacheOperation();
         if (!StringUtils.isEmpty(cacheOperation.getCacheName())) {
-            return cacheOperation.getCacheName();
+            return elExpressionKeyParser.generateKey(metadata, cacheOperation.getCacheName());
         }
-        String cachePrefix = getKeyPrefix(metadata.getTarget(), metadata.getTargetMethod(), cacheOperation);
-        if (metadata.getArgs() == null) {
-            return cachePrefix;
+        //如果cacheName不存在，前缀后缀必须都配置
+        if (StringUtils.isEmpty(cacheOperation.getPrefix()) || StringUtils.isEmpty(cacheOperation.getSuffix())) {
+            throw new CacheAnnotationIllegalException("prefix and suffix must exist when cacheName is null");
         }
-        String cacheSuffix = "";
-        if (StringUtils.isEmpty(cacheOperation.getSuffix())) {
-            cacheSuffix = this.getCacheSuffix(metadata.getTargetMethod(), metadata.getArgs(), cacheOperation);
-        } else {
-            cacheSuffix = elExpressionKeyParser.generateKey(metadata, cacheOperation.getSuffix());
-        }
-        if (!StringUtils.isEmpty(cacheSuffix)) {
-            return cachePrefix + getSeparator() + cacheSuffix;
-        }
-        return cachePrefix;
-    }
-
-
-    /**
-     * 描述：得到缓存后缀
-     *
-     * @author luyi
-     * @date 2021/4/15
-     */
-    private String getCacheSuffix(Method method, Object[] args, CacheOperation cacheOperation) {
-        StringJoiner joiner = new StringJoiner("_");
-        int length = joiner.length();
-        if (length == 0) {
-            for (Object arg : args) {
-                joiner.add(Objects.toString(arg, "#"));
-            }
-        }
-        //太长了就采用加密的方式缩短key
-        if (joiner.length() > MAX_KEY_SUFFIX_SIZE) {
-            DigestUtils.md5Digest(joiner.toString().getBytes(StandardCharsets.UTF_8));
-        }
-        return joiner.toString();
-    }
-
-
-    /**
-     * 描述：得到缓存前缀
-     *
-     * @TODO 将前缀缓存起来，避免频繁的反射影响效率
-     * @author luyi
-     * @date 2021/4/15
-     */
-    private String getKeyPrefix(Object target, Method method, CacheOperation cacheOperation) {
-        String cachePrefix = cacheOperation.getPrefix();
-        if (StringUtils.isEmpty(cachePrefix)) {
-            cachePrefix = target.getClass().getName();
-        }
-        return cachePrefix;
+        String cachePrefix = elExpressionKeyParser.generateKey(metadata, cacheOperation.getPrefix());
+        String cacheSuffix = elExpressionKeyParser.generateKey(metadata, cacheOperation.getSuffix());
+        return cachePrefix + getSeparator() + cacheSuffix;
     }
 
 
