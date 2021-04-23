@@ -1,12 +1,16 @@
 package com.lz.lock.distributed;
 
-import com.lz.lock.LockService;
+import com.lz.lock.LockManager;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @author luyi
+ * 分布式锁配置类
+ */
 @Configuration
 public class LockConfiguration {
     /**
@@ -23,7 +27,7 @@ public class LockConfiguration {
     }
 
     @Bean
-    public LockService lockService() {
-        return new DistributedLock();
+    public LockManager lockService(RedissonClient redissonClient) {
+        return new DistributedLockManager(redissonClient);
     }
 }

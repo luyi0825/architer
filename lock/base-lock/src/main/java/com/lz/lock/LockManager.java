@@ -6,7 +6,7 @@ import java.util.concurrent.locks.Lock;
  * @author luyi
  * 缓存操作
  */
-public interface LockService {
+public interface LockManager {
     /**
      * 得到读锁
      *
