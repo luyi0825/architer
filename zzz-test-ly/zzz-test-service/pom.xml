@@ -27,6 +27,11 @@
             <artifactId>redis-cache</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.lz.core</groupId>
+            <artifactId>thread-pool-client-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.lz.core</groupId>
