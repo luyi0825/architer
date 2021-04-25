@@ -1,4 +1,4 @@
-package com.lz.thread.client.annotation;
+package com.lz.core.thread.client.annotation;
 
 import java.lang.annotation.*;
 

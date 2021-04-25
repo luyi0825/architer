@@ -1,4 +1,4 @@
-package com.lz.thread.client;
+package com.lz.core.thread.client;
 
 /**
  * 拒绝策略：跟线程池拒绝策略一一对应

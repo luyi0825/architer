@@ -1,6 +1,7 @@
-package com.lz.thread.client.parse;
+package com.lz.core.thread.client.parse;
 
-import com.lz.thread.client.annotation.ThreadPoolClient;
+
+import com.lz.core.thread.client.annotation.ThreadPoolClient;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;

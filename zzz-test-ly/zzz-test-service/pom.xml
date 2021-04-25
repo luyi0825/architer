@@ -30,6 +30,7 @@
         <dependency>
             <groupId>com.lz.core</groupId>
             <artifactId>thread-pool-client-impl</artifactId>
+            <scope>compile</scope>
             <version>${project.version}</version>
         </dependency>
 
