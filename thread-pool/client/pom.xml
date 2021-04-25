@@ -5,17 +5,15 @@
 
     <parent>
         <groupId>com.lz.core</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>thread-pool</artifactId>
         <version>1.0.0</version>
-        <relativePath>../../product</relativePath>
+        <relativePath>../../thread-pool</relativePath>
     </parent>
-    <packaging>pom</packaging>
-    <artifactId>thread-pool</artifactId>
-    <name>thread-pool</name>
-    <description>thread-pool</description>
-    <modules>
-        <module>config</module>
-        <module>client</module>
-        <module>client-impl</module>
-    </modules>
+    <packaging>jar</packaging>
+    <artifactId>thread-pool-client</artifactId>
+    <name>thread-pool-client</name>
+    <description>thread-pool-client</description>
+    <dependencies>
+
+    </dependencies>
 </project>
