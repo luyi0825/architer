@@ -49,4 +49,8 @@ public @interface PutCache {
      */
     boolean async() default false;
 
+    /**
+     * @see Cacheable#cacheValue()
+     */
+    String cacheValue() default "";
 }

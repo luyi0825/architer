@@ -44,7 +44,6 @@ public @interface Cacheable {
      */
     long randomExpireTime() default -1;
 
-
     /**
      * 缓存失效时间
      * 默认30分钟
@@ -64,5 +63,10 @@ public @interface Cacheable {
      * 是否异步
      */
     boolean async() default false;
+
+    /**
+     * 缓存值,默认为方法返回值
+     */
+    String cacheValue() default "";
 
 }

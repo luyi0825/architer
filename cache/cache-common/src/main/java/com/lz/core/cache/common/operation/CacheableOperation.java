@@ -22,4 +22,11 @@ public class CacheableOperation extends CacheOperation {
      */
     private long expireTime;
 
+    /**
+     * 缓存值
+     *
+     * @see Cacheable#cacheValue()
+     */
+    private String cacheValue;
+
 }

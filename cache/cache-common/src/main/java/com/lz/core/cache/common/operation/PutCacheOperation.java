@@ -4,8 +4,8 @@ import com.lz.core.cache.common.annotation.Cacheable;
 import lombok.Data;
 
 /**
- * @see com.lz.core.cache.common.annotation.PutCache 对应
  * @author luyi
+ * @see com.lz.core.cache.common.annotation.PutCache 对应
  */
 @Data
 public class PutCacheOperation extends CacheOperation {
@@ -20,4 +20,11 @@ public class PutCacheOperation extends CacheOperation {
      * @see Cacheable#expireTime()
      */
     private long expireTime;
+
+    /**
+     * 缓存值
+     *
+     * @see Cacheable#cacheValue()
+     */
+    private String cacheValue;
 }
