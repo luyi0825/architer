@@ -3,14 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>lock</artifactId>
+        <artifactId>cache</artifactId>
         <groupId>com.lz.core</groupId>
         <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../cache</relativePath>
     </parent>
-    <artifactId>lock-base</artifactId>
-    <name>lock-base</name>
-    <description>jdk的锁</description>
+    <artifactId>cache-lock-base</artifactId>
+    <name>cache-lock-base</name>
+    <description>缓存锁的接口包</description>
     <packaging>jar</packaging>
-
 </project>

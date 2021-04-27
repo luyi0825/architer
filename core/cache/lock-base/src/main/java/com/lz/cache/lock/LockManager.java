@@ -1,10 +1,10 @@
-package com.lz.lock;
+package com.lz.cache.lock;
 
 import java.util.concurrent.locks.Lock;
 
 /**
  * @author luyi
- * 缓存操作
+ * 缓存对应的锁
  */
 public interface LockManager {
     /**
