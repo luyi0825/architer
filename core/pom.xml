@@ -32,8 +32,8 @@
         <module>boot</module>
         <module>log</module>
         <module>authority</module>
-        <module>lock</module>
         <module>utils</module>
+        <module>mq</module>
     </modules>
 
     <dependencies>
