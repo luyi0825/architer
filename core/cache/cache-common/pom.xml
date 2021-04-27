@@ -33,7 +33,7 @@
         </dependency>
         <dependency>
             <groupId>com.lz.core</groupId>
-            <artifactId>lock-base</artifactId>
+            <artifactId>cache-lock-base</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

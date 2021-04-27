@@ -1,9 +1,10 @@
 package com.lz.core.cache.common.operation;
 
+
+import com.lz.cache.lock.LockManager;
 import com.lz.core.cache.common.CacheManager;
 import com.lz.core.cache.common.enums.LockType;
 import com.lz.core.cache.common.key.KeyGenerator;
-import com.lz.lock.LockManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.annotation.Annotation;
