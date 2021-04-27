@@ -6,7 +6,7 @@
         <artifactId>parent</artifactId>
         <groupId>com.lz.core</groupId>
         <version>1.0.0</version>
-        <relativePath>../../product</relativePath>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
     <groupId>com.zp</groupId>
     <artifactId>zp-test</artifactId>
