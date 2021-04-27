@@ -1,6 +1,7 @@
 package com.lz.core.thread.client.entity;
 
-import com.lz.thread.client.RejectedHandler;
+
+import com.lz.core.thread.client.RejectedHandler;
 import lombok.Data;
 
 /**
