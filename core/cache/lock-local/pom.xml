@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>cache-lock-local</artifactId>
-    <name>cache-lock-local</name>
+    <name>lock-local</name>
     <description>本地锁</description>
     <packaging>jar</packaging>
 

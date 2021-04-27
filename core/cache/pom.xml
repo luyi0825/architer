@@ -6,16 +6,23 @@
         <artifactId>parent</artifactId>
         <groupId>com.lz.core</groupId>
         <version>1.0.0</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>cache</artifactId>
     <name>cache</name>
     <description>数据缓存</description>
     <packaging>pom</packaging>
     <modules>
+
         <module>cache-common</module>
-        <module>local-cache</module>
-        <module>redis-cache</module>
+        <module>cache-local</module>
+        <module>cache-redis</module>
+        <!--  锁的基包-->
+        <module>lock-base</module>
+        <!-- 分布式锁-->
+        <module>lock-distributed</module>
+        <!-- 本地锁，jdk对应的锁-->
+        <module>lock-local</module>
     </modules>
     <dependencyManagement>
         <dependencies>

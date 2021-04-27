@@ -8,7 +8,7 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>lock-distributed</artifactId>
+    <artifactId>cache-distributed-lock</artifactId>
     <name>lock-distributed</name>
     <description>分布式锁</description>
     <packaging>jar</packaging>
