@@ -6,7 +6,6 @@
         <artifactId>parent</artifactId>
         <groupId>com.lz.core</groupId>
         <version>1.0.0</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
     <groupId>com.zp</groupId>
     <artifactId>zp-test</artifactId>
@@ -39,8 +38,8 @@
 
         <dependency>
             <groupId>com.lz.core</groupId>
-            <artifactId>cache-common</artifactId>
-            <version>${project.version}</version>
+            <artifactId>redis-cache</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>

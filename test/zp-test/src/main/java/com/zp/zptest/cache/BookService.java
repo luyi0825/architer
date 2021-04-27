@@ -1,8 +1,11 @@
 package com.zp.zptest.cache;
 
-import com.lz.core.cache.common.annotation.Caching;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
+
+
+
+
+import com.lz.core.cache.common.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class BookService {
 
 //    @Cacheable("book")
-    @Caching(randomExpireTime = 60*5)
+    @Cacheable(randomExpireTime = 60*5)
     public Book getByIsbn(String isbn){
         try {
             Thread.sleep(1000);
