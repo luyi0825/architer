@@ -1,6 +1,7 @@
-package com.lz.lock.distributed;
+package com.lz.cache.lock.distributed;
 
-import com.lz.lock.LockManager;
+
+import com.lz.cache.lock.LockManager;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;

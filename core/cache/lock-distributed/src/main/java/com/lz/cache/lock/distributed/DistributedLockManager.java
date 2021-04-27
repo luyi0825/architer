@@ -1,17 +1,18 @@
-package com.lz.lock.distributed;
+package com.lz.cache.lock.distributed;
 
-import com.lz.lock.LockManager;
+
+import com.lz.cache.lock.LockManager;
 import org.redisson.api.RedissonClient;
 
 import java.util.concurrent.locks.Lock;
 
 /**
- * 分布式锁
+ * 分布式锁:Redisson实现
  *
  * @author luyi
  */
 public class DistributedLockManager implements LockManager {
-    private RedissonClient redissonClient;
+    private final RedissonClient redissonClient;
 
     public DistributedLockManager(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
