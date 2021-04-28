@@ -98,6 +98,7 @@ public class CacheAnnotationsParser {
         putCacheOperation.setExpireTime(cachePut.expireTime());
         putCacheOperation.setRandomExpireTime(cachePut.randomExpireTime());
         putCacheOperation.setAnnotation(cachePut);
+        putCacheOperation.setCacheName(putCacheOperation.getCacheValue());
         return putCacheOperation;
     }
 
@@ -130,6 +131,7 @@ public class CacheAnnotationsParser {
         operation.setExpireTime(cacheable.expireTime());
         operation.setRandomExpireTime(cacheable.randomExpireTime());
         operation.setAnnotation(cacheable);
+        operation.setCacheValue(cacheable.cacheValue());
         return operation;
     }
 }
