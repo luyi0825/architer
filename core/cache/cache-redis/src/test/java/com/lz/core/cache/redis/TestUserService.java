@@ -38,7 +38,6 @@ public class TestUserService {
      */
     @Test
     public void testConcurrentFindById() throws InterruptedException {
-
         CountDownLatch countDownLatch = new CountDownLatch(1000);
         Long id = (long) (Math.random() * 100000);
         for (int i = 0; i < 1000; i++) {
@@ -69,7 +68,6 @@ public class TestUserService {
      */
     @Test
     public void testReadWriteUser() throws InterruptedException {
-
         String name = "user-read-write";
         CountDownLatch countDownLatch = new CountDownLatch(2);
         User user = new User(name, 555);
@@ -97,10 +95,22 @@ public class TestUserService {
         countDownLatch.await();
         System.out.println(user);
     }
+
+    /**
+     * 测试删除数据
+     */
     @Test
-    public void testDeleteByName(){
+    public void testDeleteByName() {
         String name = "user1";
         userService.deleteByName(name);
     }
 
+    /**
+     * 测试@PutCache注解值
+     */
+    @Test
+    public void testPutCacheCacheValue() {
+        User user = new User("233", 555);
+        userService.updateForCacheValue(user);
+    }
 }

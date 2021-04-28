@@ -59,6 +59,16 @@ public class UserServiceImpl implements UserService {
         System.out.println("delete:" + name);
     }
 
+    @Override
+    public void updateForCacheValue(User user) {
+        System.out.println("更新数据");
+        try {
+            Thread.sleep(1000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String getUserClassName() {
         return userClassName;
     }
