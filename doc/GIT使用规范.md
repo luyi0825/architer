@@ -11,7 +11,7 @@
 ### 1.type（必须写）:
 
 - fix:表示修改bug
-- docs： 文档说明
+- doc： 文档说明
 - test: 测试代码
 - feat: 功能
 
