@@ -1,5 +1,7 @@
-package com.lz.core.cache.common.key;
+package com.lz.core.cache.common;
 
+import com.lz.core.cache.common.key.CacheEvaluationContext;
+import com.lz.core.cache.common.key.CacheExpressionRootObject;
 import com.lz.core.cache.common.operation.CacheOperationMetadata;
 import org.springframework.context.expression.AnnotatedElementKey;
 import org.springframework.core.DefaultParameterNameDiscoverer;
@@ -16,19 +18,26 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author luyi
- * el表达式key解析器
+ * 缓存表带是解析
  */
-public class ElExpressionKeyParser {
+public class CacheExpressionParser {
 
 
     private final SpelExpressionParser parser = new SpelExpressionParser();
     private final Map<ExpressionKey, Expression> keyCache = new ConcurrentHashMap<>(64);
 
+    /**
+     * 执行解析
+     *
+     * @param cacheOperationMetadata 缓存操作元数据
+     * @param expression             表达式
+     * @return SpEl表达式解析后的值
+     */
     @Nullable
-    public String generateKey(CacheOperationMetadata cacheOperationMetadata, String expression) {
+    public Object executeParse(CacheOperationMetadata cacheOperationMetadata, String expression) {
         EvaluationContext evaluationContext = createEvaluationContext(cacheOperationMetadata);
         Expression ex = getExpression(keyCache, cacheOperationMetadata.getMethodKey(), expression);
-        return Objects.requireNonNull(ex.getValue(evaluationContext)).toString();
+        return Objects.requireNonNull(ex.getValue(evaluationContext));
     }
 
 
@@ -100,6 +109,4 @@ public class ElExpressionKeyParser {
             return result;
         }
     }
-
-
 }

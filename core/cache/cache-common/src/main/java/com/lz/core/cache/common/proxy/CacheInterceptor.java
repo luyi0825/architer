@@ -20,10 +20,6 @@ public class CacheInterceptor implements MethodInterceptor {
     private CacheAnnotationsParser cacheAnnotationsParser;
 
 
-    public CacheInterceptor() {
-        System.out.println("CacheInterceptor init");
-    }
-
     private CacheProcess cacheProcess;
 
 

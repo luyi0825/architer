@@ -2,6 +2,8 @@ package com.lz.core.cache.common.operation;
 
 
 import com.lz.core.cache.common.annotation.Cacheable;
+import com.lz.core.cache.common.utils.CacheUtils;
+import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
 
@@ -24,20 +26,17 @@ public class CacheableOperationHandler extends CacheOperationHandler {
         Object value = cacheManager.getCache(key);
         if (value == null) {
             value = invoke(metadata);
-            long expireTime = getKeyExpireTime(metadata.getCacheOperation());
-            value = cacheManager.putCache(key, value, expireTime);
+            CacheableOperation cacheableOperation = (CacheableOperation) metadata.getCacheOperation();
+            String cacheValue = cacheableOperation.getCacheValue();
+            long expireTime = CacheUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomExpireTime());
+            if (StringUtils.isEmpty(cacheValue)) {
+                cacheManager.putCache(key, value, expireTime);
+            } else {
+                Object needCacheValue = cacheExpressionParser.executeParse(metadata, cacheValue);
+                cacheManager.putCache(key, needCacheValue, expireTime);
+            }
         }
         return value;
     }
 
-    /**
-     * 得到key过期时间
-     *
-     * @param operation CacheableOperation
-     * @return 过期的时间
-     */
-    private Long getKeyExpireTime(CacheOperation operation) {
-        CacheableOperation cacheableOperation = (CacheableOperation) operation;
-        return KeyExpireUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomExpireTime());
-    }
 }

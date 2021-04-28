@@ -2,6 +2,7 @@ package com.lz.core.cache.common.operation;
 
 
 import com.lz.cache.lock.LockManager;
+import com.lz.core.cache.common.CacheExpressionParser;
 import com.lz.core.cache.common.CacheManager;
 import com.lz.core.cache.common.enums.LockType;
 import com.lz.core.cache.common.key.KeyGenerator;
@@ -27,6 +28,8 @@ public abstract class CacheOperationHandler {
 
     private LockManager lockManager;
 
+    protected CacheExpressionParser cacheExpressionParser;
+
     public CacheOperationHandler() {
 
     }
@@ -45,8 +48,7 @@ public abstract class CacheOperationHandler {
      * @return 处理后的结果值，这个值就是缓存注解方法对应的返回值
      */
     public final Object handler(CacheOperationMetadata metadata) {
-
-        String key = keyGenerator.getKey(metadata);
+        String key = keyGenerator.getKey(metadata).toString();
         Lock lock = this.getLock(key, metadata.getCacheOperation().getLock());
         if (lock == null) {
             return executeCacheHandler(key, metadata);
@@ -57,6 +59,10 @@ public abstract class CacheOperationHandler {
         } finally {
             lock.unlock();
         }
+    }
+
+    public void setCacheValue() {
+
     }
 
     /**
@@ -119,5 +125,10 @@ public abstract class CacheOperationHandler {
     public CacheOperationHandler setLockManager(LockManager lockManager) {
         this.lockManager = lockManager;
         return this;
+    }
+
+    @Autowired
+    public void setCacheExpressionParser(CacheExpressionParser cacheExpressionParser) {
+        this.cacheExpressionParser = cacheExpressionParser;
     }
 }

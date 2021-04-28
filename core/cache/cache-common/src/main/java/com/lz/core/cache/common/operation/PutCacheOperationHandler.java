@@ -1,7 +1,7 @@
 package com.lz.core.cache.common.operation;
 
 import com.lz.core.cache.common.annotation.PutCache;
-import com.lz.core.cache.common.key.ElExpressionKeyParser;
+import com.lz.core.cache.common.utils.CacheUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
@@ -18,32 +18,20 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         return operationAnnotation instanceof PutCache;
     }
 
-    private final ElExpressionKeyParser elExpressionKeyParser = new ElExpressionKeyParser();
-
-
     @Override
     protected Object executeCacheHandler(String key, CacheOperationMetadata metadata) {
         Object value = invoke(metadata);
         PutCacheOperation putCacheOperation = (PutCacheOperation) metadata.getCacheOperation();
         String cacheValue = putCacheOperation.getCacheValue();
-        if (StringUtils.isEmpty(value)) {
-            cacheManager.putCache(key, value, getKeyExpireTime(putCacheOperation));
+        long expireTime = CacheUtils.getExpireTime(putCacheOperation.getExpireTime(), putCacheOperation.getRandomExpireTime());
+        if (StringUtils.isEmpty(cacheValue)) {
+            cacheManager.putCache(key, value, expireTime);
         } else {
-            Object needCacheValue = elExpressionKeyParser.generateKey(metadata, cacheValue);
-            cacheManager.putCache(key, needCacheValue, getKeyExpireTime(putCacheOperation));
+            Object needCacheValue = cacheExpressionParser.executeParse(metadata, cacheValue);
+            cacheManager.putCache(key, needCacheValue, expireTime);
         }
-
         return value;
     }
 
-    /**
-     * 得到key过期时间
-     *
-     * @param operation PutCacheOperation
-     * @return 过期的时间
-     */
-    private Long getKeyExpireTime(CacheOperation operation) {
-        PutCacheOperation putCacheOperation = (PutCacheOperation) operation;
-        return KeyExpireUtils.getExpireTime(putCacheOperation.getExpireTime(), putCacheOperation.getRandomExpireTime());
-    }
+
 }

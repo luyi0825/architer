@@ -98,7 +98,7 @@ public class CacheAnnotationsParser {
         putCacheOperation.setExpireTime(cachePut.expireTime());
         putCacheOperation.setRandomExpireTime(cachePut.randomExpireTime());
         putCacheOperation.setAnnotation(cachePut);
-        putCacheOperation.setCacheName(putCacheOperation.getCacheValue());
+        putCacheOperation.setCacheValue(cachePut.cacheValue());
         return putCacheOperation;
     }
 

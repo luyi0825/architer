@@ -1,12 +1,16 @@
-package com.lz.core.cache.common.operation;
+package com.lz.core.cache.common.utils;
+
 
 import com.lz.core.cache.common.Constants;
 
 /**
  * @author luyi
+ * key过期工具类
  */
-public class KeyExpireUtils {
-    public static Long getExpireTime(long expireTime, long randomExpireTime) {
+public class CacheUtils {
+
+
+    public static long getExpireTime(long expireTime, long randomExpireTime) {
         if (Constants.NEVER_EXPIRE == expireTime) {
             return Constants.NEVER_EXPIRE;
         }
@@ -18,4 +22,6 @@ public class KeyExpireUtils {
         }
         return expireTime;
     }
+
+
 }

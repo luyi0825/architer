@@ -18,9 +18,14 @@ import org.springframework.context.annotation.Configuration;
 public class CacheConfiguration {
 
     @Bean
+    public CacheExpressionParser cacheExpressionParser() {
+        return new CacheExpressionParser();
+    }
+
+    @Bean
     @ConditionalOnMissingBean
-    public KeyGenerator keyGenerator() {
-        return new DefaultKeyGenerator();
+    public KeyGenerator keyGenerator(CacheExpressionParser cacheExpressionParser) {
+        return new DefaultKeyGenerator(cacheExpressionParser);
     }
 
     @Bean
@@ -43,7 +48,6 @@ public class CacheConfiguration {
     public PutCacheOperationHandler putCacheOperationHandler() {
         return new PutCacheOperationHandler();
     }
-
 
 
 }
