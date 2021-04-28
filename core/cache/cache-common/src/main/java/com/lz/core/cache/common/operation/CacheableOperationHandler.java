@@ -4,7 +4,7 @@ package com.lz.core.cache.common.operation;
 import com.lz.core.cache.common.annotation.Cacheable;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
+
 
 /**
  * CacheableOperation 对应的处理类
@@ -13,17 +13,18 @@ import java.lang.reflect.Method;
  */
 public class CacheableOperationHandler extends CacheOperationHandler {
 
+
     @Override
     public boolean match(Annotation operationAnnotation) {
         return operationAnnotation instanceof Cacheable;
     }
 
     @Override
-    protected Object executeCacheHandler(String key, Object target, Method method, Object[] args, CacheOperation operation) {
+    protected Object executeCacheHandler(String key, CacheOperationMetadata metadata) {
         Object value = cacheManager.getCache(key);
         if (value == null) {
-            value = invoke(target, method, args);
-            long expireTime = getKeyExpireTime(operation);
+            value = invoke(metadata);
+            long expireTime = getKeyExpireTime(metadata.getCacheOperation());
             value = cacheManager.putCache(key, value, expireTime);
         }
         return value;

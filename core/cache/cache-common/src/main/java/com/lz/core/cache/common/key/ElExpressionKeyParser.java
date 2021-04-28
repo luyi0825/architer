@@ -24,9 +24,8 @@ public class ElExpressionKeyParser {
     private final SpelExpressionParser parser = new SpelExpressionParser();
     private final Map<ExpressionKey, Expression> keyCache = new ConcurrentHashMap<>(64);
 
-
     @Nullable
-    protected String generateKey(CacheOperationMetadata cacheOperationMetadata, String expression) {
+    public String generateKey(CacheOperationMetadata cacheOperationMetadata, String expression) {
         EvaluationContext evaluationContext = createEvaluationContext(cacheOperationMetadata);
         Expression ex = getExpression(keyCache, cacheOperationMetadata.getMethodKey(), expression);
         return Objects.requireNonNull(ex.getValue(evaluationContext)).toString();

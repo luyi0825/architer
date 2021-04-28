@@ -20,12 +20,11 @@ public abstract class CacheOperationHandler {
     /**
      * 缓存manager,定义protected，让实现类也可以直接使用
      */
-    @Autowired(required = false)
+
     protected CacheManager cacheManager;
 
-    @Autowired(required = false)
     private KeyGenerator keyGenerator;
-    @Autowired(required = false)
+
     private LockManager lockManager;
 
     public CacheOperationHandler() {
@@ -50,11 +49,11 @@ public abstract class CacheOperationHandler {
         String key = keyGenerator.getKey(metadata);
         Lock lock = this.getLock(key, metadata.getCacheOperation().getLock());
         if (lock == null) {
-            return executeCacheHandler(key, metadata.getTarget(), metadata.getTargetMethod(), metadata.getArgs(), metadata.getCacheOperation());
+            return executeCacheHandler(key, metadata);
         }
         lock.lock();
         try {
-            return executeCacheHandler(key, metadata.getTarget(), metadata.getTargetMethod(), metadata.getArgs(), metadata.getCacheOperation());
+            return executeCacheHandler(key, metadata);
         } finally {
             lock.unlock();
         }
@@ -62,8 +61,11 @@ public abstract class CacheOperationHandler {
 
     /**
      * 执行缓存处理器
+     *
+     * @param key      缓存的key
+     * @param metadata 缓存操作元数据
      */
-    protected abstract Object executeCacheHandler(String key, Object target, Method method, Object[] args, CacheOperation operation);
+    protected abstract Object executeCacheHandler(String key, CacheOperationMetadata metadata);
 
 
     /**
@@ -86,6 +88,10 @@ public abstract class CacheOperationHandler {
         }
     }
 
+    public Object invoke(CacheOperationMetadata metadata) {
+        return invoke(metadata.getTarget(), metadata.getTargetMethod(), metadata.getArgs());
+    }
+
     /**
      * 反射invoke,得到值
      */
@@ -95,5 +101,23 @@ public abstract class CacheOperationHandler {
         } catch (Exception e) {
             throw new RuntimeException("操作失败", e);
         }
+    }
+
+    @Autowired
+    public CacheOperationHandler setCacheManager(CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+        return this;
+    }
+
+    @Autowired(required = false)
+    public CacheOperationHandler setKeyGenerator(KeyGenerator keyGenerator) {
+        this.keyGenerator = keyGenerator;
+        return this;
+    }
+
+    @Autowired
+    public CacheOperationHandler setLockManager(LockManager lockManager) {
+        this.lockManager = lockManager;
+        return this;
     }
 }
