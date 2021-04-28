@@ -11,7 +11,6 @@ import axios from '@/router/axios';
 //放到原型对象中
 Vue.prototype.$http = axios;
 Vue.use(ElementPlus)
-Vue.use(element)
 //使用vue3.0
 Vue.use(VueCompositionApi);
 new Vue({
