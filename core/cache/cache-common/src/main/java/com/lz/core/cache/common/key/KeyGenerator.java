@@ -12,10 +12,7 @@ public interface KeyGenerator {
     /**
      * 得到key
      *
-     * @param annotation 对应的注解
-     * @param target     对象
-     * @param method     方法
-     * @param args       参数
+     * @param cacheOperationMetadata 缓存操作元信息
      * @return 缓存的key
      */
     String getKey(CacheOperationMetadata cacheOperationMetadata);
