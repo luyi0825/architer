@@ -21,6 +21,7 @@
         <spring.boot.version>2.3.6.RELEASE</spring.boot.version>
         <spring-context.version>5.2.11.RELEASE</spring-context.version>
         <spring-data-redis.version>2.3.6.RELEASE</spring-data-redis.version>
+        <redisson.version>3.15.4</redisson.version>
     </properties>
 
 
@@ -139,6 +140,11 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>2.12.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
