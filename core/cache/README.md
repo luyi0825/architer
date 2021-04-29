@@ -2,7 +2,7 @@
 
 缓存公共包，系统子模块需要引入的包
 
-## cache-locl
+## cache-local
 
 本地缓存
 
