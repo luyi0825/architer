@@ -25,10 +25,10 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         String cacheValue = putCacheOperation.getCacheValue();
         long expireTime = CacheUtils.getExpireTime(putCacheOperation.getExpireTime(), putCacheOperation.getRandomExpireTime());
         if (StringUtils.isEmpty(cacheValue)) {
-            cacheManager.putCache(key, value, expireTime);
+            writeCache(putCacheOperation.isAsync(), () -> cacheManager.putCache(key, value, expireTime));
         } else {
             Object needCacheValue = cacheExpressionParser.executeParse(metadata, cacheValue);
-            cacheManager.putCache(key, needCacheValue, expireTime);
+            writeCache(putCacheOperation.isAsync(), () -> cacheManager.putCache(key, needCacheValue, expireTime));
         }
         return value;
     }

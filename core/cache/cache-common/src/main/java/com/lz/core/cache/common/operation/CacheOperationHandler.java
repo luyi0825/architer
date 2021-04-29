@@ -2,15 +2,18 @@ package com.lz.core.cache.common.operation;
 
 
 import com.lz.cache.lock.LockManager;
+import com.lz.core.cache.common.CacheAsyncExecutorService;
 import com.lz.core.cache.common.CacheExpressionParser;
 import com.lz.core.cache.common.CacheManager;
 import com.lz.core.cache.common.enums.LockType;
+import com.lz.core.cache.common.exception.CacheHandlerException;
 import com.lz.core.cache.common.key.KeyGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.concurrent.locks.Lock;
+import java.util.function.Function;
 
 /**
  * @author luyi
@@ -21,7 +24,6 @@ public abstract class CacheOperationHandler {
     /**
      * 缓存manager,定义protected，让实现类也可以直接使用
      */
-
     protected CacheManager cacheManager;
 
     private KeyGenerator keyGenerator;
@@ -29,6 +31,8 @@ public abstract class CacheOperationHandler {
     private LockManager lockManager;
 
     protected CacheExpressionParser cacheExpressionParser;
+
+    protected CacheAsyncExecutorService cacheAsyncExecutorService;
 
     public CacheOperationHandler() {
 
@@ -48,7 +52,7 @@ public abstract class CacheOperationHandler {
      * @return 处理后的结果值，这个值就是缓存注解方法对应的返回值
      */
     public final Object handler(CacheOperationMetadata metadata) {
-        String key = keyGenerator.getKey(metadata).toString();
+        String key = keyGenerator.getKey(metadata);
         Lock lock = this.getLock(key, metadata.getCacheOperation().getLock());
         if (lock == null) {
             return executeCacheHandler(key, metadata);
@@ -61,18 +65,28 @@ public abstract class CacheOperationHandler {
         }
     }
 
-    public void setCacheValue() {
-
-    }
-
     /**
      * 执行缓存处理器
      *
      * @param key      缓存的key
      * @param metadata 缓存操作元数据
+     * @return 调用方法的返回值
      */
     protected abstract Object executeCacheHandler(String key, CacheOperationMetadata metadata);
 
+    /**
+     * 执行缓存写操作
+     */
+    public void writeCache(boolean async, CacheWriteExecute cacheWriteExecute) {
+        if (async) {
+            if (cacheAsyncExecutorService == null) {
+                throw new CacheHandlerException("cacheAsyncExecutorService is null");
+            }
+            cacheAsyncExecutorService.submit(cacheWriteExecute::write);
+        } else {
+            cacheWriteExecute.write();
+        }
+    }
 
     /**
      * 通过缓存注解得到对应的锁
@@ -121,14 +135,18 @@ public abstract class CacheOperationHandler {
         return this;
     }
 
-    @Autowired
-    public CacheOperationHandler setLockManager(LockManager lockManager) {
+    @Autowired(required = false)
+    public void setLockManager(LockManager lockManager) {
         this.lockManager = lockManager;
-        return this;
     }
 
-    @Autowired
+    @Autowired(required = false)
     public void setCacheExpressionParser(CacheExpressionParser cacheExpressionParser) {
         this.cacheExpressionParser = cacheExpressionParser;
+    }
+
+    @Autowired(required = false)
+    public void setCacheAsyncExecutorService(CacheAsyncExecutorService cacheAsyncExecutorService) {
+        this.cacheAsyncExecutorService = cacheAsyncExecutorService;
     }
 }
