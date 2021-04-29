@@ -121,7 +121,7 @@ public abstract class CacheOperationHandler {
         return this;
     }
 
-    @Autowired
+    @Autowired(required = false)
     public CacheOperationHandler setLockManager(LockManager lockManager) {
         this.lockManager = lockManager;
         return this;

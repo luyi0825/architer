@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ import java.util.Map;
 @Log4j2
 public class ThreadPoolParser implements ApplicationContextAware {
 
-    List<ThreadPoolTaskExecutor> threadPoolTaskExecutors;
+    List<ThreadPoolTaskExecutor> threadPoolTaskExecutors=new ArrayList<>();
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
