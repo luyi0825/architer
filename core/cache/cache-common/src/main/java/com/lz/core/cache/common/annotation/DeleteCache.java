@@ -48,6 +48,6 @@ public @interface DeleteCache {
      * true表示在方法直接删除缓存
      * false 表示在方法执行之后删除
      */
-    boolean before() default false;
+    boolean before() default true;
 
 }
