@@ -31,7 +31,7 @@ public class MessageSender {
 
         Map<String, Object> params = new HashMap<>();
         // params.put("x-dead-letter-exchange", DEAD_FANOUT_EXCHANGE);
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1; i++) {
             params.put("try-count", i);
             // params.put("x-dead-letter-routing-key", "dead_queue_gathering_data");
             //  params.put("x-message-ttl", maxInterval);
