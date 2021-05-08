@@ -17,7 +17,7 @@ public interface ConfirmCallbackHandler extends RabbitTemplate.ConfirmCallback {
      *
      * @return 处理器标识key
      */
-    String getHandlerKey();
+    String getConfirmCallbackKey();
 
     /**
      * 消息只要抵达了Broker,ack就会为true
