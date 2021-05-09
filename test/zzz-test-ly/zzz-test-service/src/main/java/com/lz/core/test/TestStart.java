@@ -19,4 +19,7 @@ public class TestStart {
         Class<?>[] classes = new MoulesBuilder().buildMoules(TestStart.class);
         SpringApplication.run(classes, args);
     }
+
+
+
 }

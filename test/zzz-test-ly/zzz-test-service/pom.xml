@@ -74,6 +74,24 @@
             <artifactId>cache-distributed-lock</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+
+
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+            <version>2.2.5.RELEASE</version>
+            <exclusions>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>2.3.6.RELEASE</version>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -2,8 +2,16 @@ server:
   port: 8888
   servlet:
     context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
 
 spring:
+  application:
+    name: test-server
   rabbitmq:
     host: 124.71.110.204
     port: 5672
@@ -26,8 +34,19 @@ spring:
     publisher-returns: true
     template:
       mandatory: true
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
 
 #    # 当exchange无法找到任何一个合适的queue时，将消息return给生产者
 #    spring.rabbitmq.template.mandatory=true
 #    # 必须设置为true，否则消息消息路由失败也无法触发Return回调
 #    spring.rabbitmq.publisher-returns=true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
