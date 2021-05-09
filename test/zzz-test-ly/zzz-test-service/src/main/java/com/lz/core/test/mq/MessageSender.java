@@ -2,10 +2,13 @@ package com.lz.core.test.mq;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lz.core.mq.rabbit.CallBackMessage;
+import com.lz.core.mq.rabbit.CallbackCorrelationData;
 import com.lz.core.utils.JsonUtils;
 import lombok.Data;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,8 +44,12 @@ public class MessageSender {
             String userJson = JsonUtils.toJsonString(user);
             MessageProperties messageProperties = new MessageProperties();
             messageProperties.getHeaders().putAll(params);
+            messageProperties.setCorrelationId("123");
+            CorrelationData correlationData = new CallbackCorrelationData("123")
+                    .setConfirmKey(CallbackHandler.class.getName());
+            Message callBackMessage = new CallBackMessage(userJson.getBytes(StandardCharsets.UTF_8), messageProperties).setReturnKey(CallbackHandler.class.getName());
             // EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
-            rabbitTemplate.send("queue_gathering_data", new Message(userJson.getBytes(StandardCharsets.UTF_8), new MessageProperties()));
+            rabbitTemplate.send("queue_gathering_data", callBackMessage, correlationData);
         }
         return message;
 
@@ -61,9 +68,9 @@ public class MessageSender {
             User user = new User();
             ObjectMapper OBJECT_MAPPER = new ObjectMapper();
             user.setUsername("username" + i);
+            rabbitTemplate.setCorrelationKey("te");
             String userJson = JsonUtils.toJsonString(user);
             MessageProperties messageProperties = new MessageProperties();
-            messageProperties.getHeaders().put("retryCount", 1);
             // EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
             rabbitTemplate.send("queue_physical_table", new Message(userJson.getBytes(StandardCharsets.UTF_8), messageProperties));
         }

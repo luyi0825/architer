@@ -22,3 +22,12 @@ spring:
         ####开启手动ack
         acknowledge-mode: manual
         prefetch: 1
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      mandatory: true
+
+#    # 当exchange无法找到任何一个合适的queue时，将消息return给生产者
+#    spring.rabbitmq.template.mandatory=true
+#    # 必须设置为true，否则消息消息路由失败也无法触发Return回调
+#    spring.rabbitmq.publisher-returns=true
