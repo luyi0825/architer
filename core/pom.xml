@@ -35,6 +35,7 @@
         <module>authority</module>
         <module>utils</module>
         <module>mq</module>
+        <module>db</module>
     </modules>
 
     <dependencies>
