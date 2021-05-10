@@ -10,8 +10,6 @@ server:
     uri-encoding: UTF-8
 
 spring:
-  application:
-    name: test-server
   rabbitmq:
     host: 124.71.110.204
     port: 5672
@@ -39,6 +37,7 @@ spring:
       transport:
         dashboard: localhost:8080
         port: 8719
+
 
 #    # 当exchange无法找到任何一个合适的queue时，将消息return给生产者
 #    spring.rabbitmq.template.mandatory=true
