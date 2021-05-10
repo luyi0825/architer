@@ -19,7 +19,7 @@ public class DruidConfig {
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource")
+    @ConfigurationProperties(prefix = "spring.datasource.druid")
     public DruidDataSource druidDataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setDefaultAutoCommit(false);
