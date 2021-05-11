@@ -22,6 +22,9 @@
         <spring-data-redis.version>2.3.6.RELEASE</spring-data-redis.version>
         <redisson.version>3.15.4</redisson.version>
         <jackson.version>2.12.2</jackson.version>
+        <!--spring-cloud-alibaba的版本-->
+        <alibaba-cloud.version>2021.1</alibaba-cloud.version>
+        <spring-cloud.version>2020.0.2</spring-cloud.version>
     </properties>
 
 
