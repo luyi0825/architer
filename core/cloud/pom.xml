@@ -15,6 +15,7 @@
     <modules>
         <module>nacos-config</module>
         <module>nacos-discovery</module>
+        <module>sentinel</module>
     </modules>
     <dependencyManagement>
         <dependencies>
