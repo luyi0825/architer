@@ -6,11 +6,15 @@
         <artifactId>parent</artifactId>
         <groupId>com.lz.core</groupId>
         <version>1.0.0</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>log</artifactId>
     <name>log</name>
     <description>日志</description>
     <packaging>pom</packaging>
+    <modules>
+        <module>log-facade</module>
+        <module>log-facade-impl</module>
+    </modules>
 
 </project>
