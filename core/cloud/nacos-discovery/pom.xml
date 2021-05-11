@@ -10,7 +10,7 @@
     </parent>
     <artifactId>cloud-nacos-discovery</artifactId>
     <name>cloud-nacos-discovery</name>
-    <description>spring-clould-alibaba-discovery</description>
+    <description>spring-cloud-alibaba-discovery</description>
     <packaging>jar</packaging>
 
     <dependencies>

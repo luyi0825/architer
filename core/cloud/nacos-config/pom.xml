@@ -10,7 +10,7 @@
     </parent>
     <artifactId>cloud-nacos-config</artifactId>
     <name>cloud-nacos-config</name>
-    <description>spring-clould-alibaba-config配置</description>
+    <description>spring-cloud-alibaba-config配置</description>
     <packaging>jar</packaging>
 
     <dependencies>
