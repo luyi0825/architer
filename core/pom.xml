@@ -36,6 +36,7 @@
         <module>utils</module>
         <module>mq</module>
         <module>db</module>
+        <module>cloud</module>
     </modules>
 
     <dependencies>
