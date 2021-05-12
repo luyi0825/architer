@@ -17,15 +17,4 @@
         <!--rabbitMq-->
         <module>mq-rabbit</module>
     </modules>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-amqp</artifactId>
-                <version>${spring.boot.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
 </project>
