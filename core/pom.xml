@@ -17,9 +17,8 @@
         <lombok.version>1.18.16</lombok.version>
         <easyexcel.verion>2.2.8</easyexcel.verion>
         <jsoup.verion>1.13.1</jsoup.verion>
-        <spring-boot.version>2.3.6.RELEASE</spring-boot.version>
+        <spring-boot.version>2.4.2</spring-boot.version>
         <spring-context.version>5.2.11.RELEASE</spring-context.version>
-        <spring-data-redis.version>2.3.6.RELEASE</spring-data-redis.version>
         <redisson.version>3.15.4</redisson.version>
         <jackson.version>2.12.2</jackson.version>
         <!--spring-cloud-alibaba的版本-->
