@@ -41,6 +41,7 @@
         <module>mq</module>
         <module>db</module>
         <module>cloud</module>
+        <module>test</module>
     </modules>
 
     <dependencies>
