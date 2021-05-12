@@ -11,6 +11,7 @@
     <modules>
         <module>test-moule</module>
         <module>zzz-test-service</module>
+        <module>zzz-test-serviceSlave</module>
     </modules>
     <build>
         <plugins>

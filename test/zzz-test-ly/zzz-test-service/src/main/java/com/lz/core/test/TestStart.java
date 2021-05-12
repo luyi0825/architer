@@ -6,20 +6,19 @@ import com.lz.core.cache.common.annotation.CustomEnableCaching;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.AdviceMode;
 
 /**
  * @author luyi
  */
 @SpringBootApplication
-@CustomEnableCaching(mode = AdviceMode.PROXY)
+@CustomEnableCaching
 @EnableRabbit
+@EnableDiscoveryClient
 public class TestStart {
     public static void main(String[] args) {
         Class<?>[] classes = new MoulesBuilder().buildMoules(TestStart.class);
         SpringApplication.run(classes, args);
     }
-
-
-
 }
