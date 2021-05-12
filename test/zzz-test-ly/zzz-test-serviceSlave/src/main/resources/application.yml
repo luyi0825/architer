@@ -1,0 +1,70 @@
+server:
+  port: 8889
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  rabbitmq:
+    host: 124.71.110.204
+    port: 5672
+    username: luyi
+    password: 123
+    virtual-host: stats3
+    listener:
+      simple:
+        retry:
+          ####开启消费者异常重试
+          enabled: true
+          ####最大重试次数
+          max-attempts: 3
+          initial-interval: 2000
+          max-interval: 5000
+        ####开启手动ack
+        acknowledge-mode: manual
+        prefetch: 1
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      mandatory: true
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+  datasource:
+    druid:
+      stat-view-servlet:
+        url-pattern: /druid/*
+        login-username: test
+        login-password: test
+        enabled: true
+      username: luyi
+      password: 19940825Ls.
+      url: jdbc:mysql://124.71.110.204:3306/shop_sys?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+#    # 当exchange无法找到任何一个合适的queue时，将消息return给生产者
+#    spring.rabbitmq.template.mandatory=true
+#    # 必须设置为true，否则消息消息路由失败也无法触发Return回调
+#    spring.rabbitmq.publisher-returns=true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    jmx:
+      exposure:
+        include: "*"
+
+  server:
+    port: 8081
+
