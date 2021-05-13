@@ -16,7 +16,7 @@ spring:
 
       ## 注册中心配置
       discovery:
-        server-addr: 124.71.110.204:88481
+        server-addr: 124.71.110.204:8848
         #group: dev
         namespace: public
         group: DEFAULT_GROUP
