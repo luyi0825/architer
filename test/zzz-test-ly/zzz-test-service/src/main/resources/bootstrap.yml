@@ -13,13 +13,13 @@ spring:
         file-extension: yml
         ## 命名空间
         namespace: public
-
       ## 注册中心配置
       discovery:
         server-addr: 124.71.110.204:8848
         #group: dev
         namespace: public
         group: DEFAULT_GROUP
+        enabled: true
 
 
 
