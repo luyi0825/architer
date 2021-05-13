@@ -10,8 +10,6 @@ server:
     uri-encoding: UTF-8
 
 spring:
-  profiles:
-    active: test
   rabbitmq:
     host: 124.71.110.204
     port: 5672
