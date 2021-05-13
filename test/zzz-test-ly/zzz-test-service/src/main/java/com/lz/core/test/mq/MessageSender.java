@@ -49,7 +49,7 @@ public class MessageSender {
                     .setConfirmKey(CallbackHandler.class.getName());
             Message callBackMessage = new CallBackMessage(userJson.getBytes(StandardCharsets.UTF_8), messageProperties).setReturnKey(CallbackHandler.class.getName());
             // EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
-            rabbitTemplate.send("queue_gathering_data", callBackMessage, correlationData);
+            //rabbitTemplate.send("queue_gathering_data", callBackMessage, correlationData);
         }
         return message;
 
@@ -109,6 +109,15 @@ public class MessageSender {
     @Data
     class User implements Serializable {
         private String username;
+
+        public String getUsername() {
+            return username;
+        }
+
+        public User setUsername(String username) {
+            this.username = username;
+            return this;
+        }
     }
 
 

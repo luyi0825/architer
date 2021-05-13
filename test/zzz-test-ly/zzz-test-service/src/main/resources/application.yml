@@ -39,6 +39,15 @@ spring:
       transport:
         dashboard: localhost:8080
         port: 8719
+      datasource:
+        ds1:
+          nacos:
+            server-addr: 124.71.110.204:8848
+            dataId: sentinel
+            groupId: DEFAULT_GROUP
+            dataType: json
+            ruleType: flow
+
   datasource:
     druid:
       stat-view-servlet:
