@@ -24,13 +24,4 @@
         <!-- 本地锁，jdk对应的锁-->
         <module>lock-local</module>
     </modules>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-redis</artifactId>
-                <version>${spring-data-redis.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 </project>
