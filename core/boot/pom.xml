@@ -6,13 +6,13 @@
         <artifactId>parent</artifactId>
         <groupId>com.lz.core</groupId>
         <version>1.0.0</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>boot</artifactId>
     <name>boot</name>
     <description>启动</description>
     <packaging>pom</packaging>
     <modules>
-        <module>moule-builder</module>
+        <module>boot-starter</module>
     </modules>
 </project>
