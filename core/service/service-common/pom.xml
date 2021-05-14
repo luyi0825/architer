@@ -13,6 +13,10 @@
     <description>service公共</description>
     <packaging>jar</packaging>
     <dependencies>
-
+        <dependency>
+            <groupId>com.lz.core</groupId>
+            <artifactId>log-facade</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
