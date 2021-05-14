@@ -8,9 +8,9 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>module-builder</artifactId>
-    <name>boot-module-builder</name>
-    <description>模块构建</description>
+    <artifactId>boot-starter</artifactId>
+    <name>boot-starter</name>
+    <description>启动器</description>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
@@ -26,8 +26,9 @@
             <artifactId>log-facade</artifactId>
             <version>1.0.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
-
-
 </project>
