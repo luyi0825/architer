@@ -43,6 +43,7 @@
         <module>db</module>
         <module>cloud</module>
         <module>test</module>
+        <module>service</module>
     </modules>
 
     <dependencies>
