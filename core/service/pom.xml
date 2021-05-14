@@ -11,11 +11,8 @@
     <artifactId>service</artifactId>
     <name>service</name>
     <description>公共</description>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <modules>
         <module>service-common</module>
     </modules>
-    <dependencies>
-
-    </dependencies>
 </project>
