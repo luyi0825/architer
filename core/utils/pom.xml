@@ -6,7 +6,6 @@
         <artifactId>parent</artifactId>
         <groupId>com.lz.core</groupId>
         <version>1.0.0</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
     <artifactId>utils</artifactId>
     <name>utils</name>

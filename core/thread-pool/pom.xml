@@ -7,7 +7,6 @@
         <groupId>com.lz.core</groupId>
         <artifactId>parent</artifactId>
         <version>1.0.0</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
     <packaging>pom</packaging>
     <artifactId>thread-pool</artifactId>
