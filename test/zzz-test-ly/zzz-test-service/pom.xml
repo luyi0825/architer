@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.lz.core.test</groupId>
         <version>1.0.0</version>
-        <artifactId>zzz-test-ly-parent</artifactId>
+        <artifactId>zzz-test-parent</artifactId>
         <relativePath>../../zzz-test-ly</relativePath>
     </parent>
     <artifactId>zzz-test-service</artifactId>
@@ -16,11 +16,7 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>com.lz.core.test</groupId>
-            <artifactId>zzz-test-module</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+
 
         <dependency>
             <groupId>com.lz.core</groupId>
@@ -47,14 +43,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>com.lz.core</groupId>
+            <artifactId>boot-starter-web</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.lz.core</groupId>
@@ -127,10 +118,7 @@
             <version>1.0.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+
 
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
