@@ -13,6 +13,6 @@
     <description>启动</description>
     <packaging>pom</packaging>
     <modules>
-        <module>boot-starter</module>
+        <module>boot-starter-web</module>
     </modules>
 </project>
