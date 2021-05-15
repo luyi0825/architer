@@ -17,6 +17,7 @@
         <module>nacos-discovery</module>
         <module>sentinel</module>
         <module>dubbo</module>
+        <module>zookeeper-discovery</module>
     </modules>
     <dependencyManagement>
         <dependencies>
