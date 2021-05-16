@@ -18,6 +18,10 @@ eureka:
     service-url:
       ## eureka交互的地址
       defaultZone: http://eureka9000.com:9000/eureka
+  server:
+    #关闭自我保护机制，保证不可用服务被及时踢除
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 2000
 
 
 
