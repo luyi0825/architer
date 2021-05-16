@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: zk-client-pay
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+server:
+  port: 9006
+  tomcat:
+    threads:
+      max: 50
+
+
+
+
+
+
