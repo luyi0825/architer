@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: hystrix-provider-zk-payment
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+server:
+  port: 9008
+  tomcat:
+    threads:
+      max: 50
+
+
+
+
+
+
+

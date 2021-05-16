@@ -16,6 +16,7 @@
         <module>eureka-client-pay-9003</module>
         <module>eureka-client-order-9004</module>
         <module>zk-client-pay-9006</module>
+        <module>hystrix-provider-payment9008</module>
     </modules>
     <properties>
         <core.version>1.0.0</core.version>
