@@ -10,6 +10,12 @@ server:
     threads:
       max: 50
 
+#ribbon的超时时间
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+
+
 
 
 
