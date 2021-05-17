@@ -1,14 +1,13 @@
 package com.lz.core.test.valid.vo;
 
 
-import com.lz.core.valid.ListValue;
-import com.lz.core.valid.group.AddAndUpdateGroup;
-import com.lz.core.valid.group.AddGroup;
-import com.lz.core.valid.group.UpdateGroup;
+import com.lz.core.service.valid.ListValue;
+import com.lz.core.service.valid.group.AddAndUpdateGroup;
+import com.lz.core.service.valid.group.AddGroup;
+import com.lz.core.service.valid.group.UpdateGroup;
 import lombok.Data;
 
 import javax.validation.constraints.*;
-import java.io.Serializable;
 
 /**
  * @author luyi

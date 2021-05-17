@@ -32,12 +32,6 @@
 
         <dependency>
             <groupId>com.lz.core</groupId>
-            <artifactId>valid</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.lz.core</groupId>
             <artifactId>log-facade-impl</artifactId>
             <version>1.0.0</version>
         </dependency>
@@ -117,6 +111,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
             <version>1.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lz.core</groupId>
+            <artifactId>service-common</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

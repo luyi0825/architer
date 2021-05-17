@@ -33,7 +33,6 @@
 
 
     <modules>
-        <module>valid</module>
         <module>excel</module>
         <module>thread-pool</module>
         <module>cache</module>

@@ -1,4 +1,5 @@
-package com.lz.core.valid;
+package com.lz.core.service.valid;
+
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

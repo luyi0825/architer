@@ -1,4 +1,4 @@
-package com.lz.core.valid.group;
+package com.lz.core.service.valid.group;
 
 /**
  * 参数校验add组

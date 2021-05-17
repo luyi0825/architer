@@ -1,5 +1,5 @@
 
-package com.lz.core.valid.group;
+package com.lz.core.service.valid.group;
 
 
 import javax.validation.GroupSequence;

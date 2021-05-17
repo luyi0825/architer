@@ -2,7 +2,7 @@ package com.lz.core.test.valid.controller;
 
 
 import com.lz.core.test.valid.vo.User;
-import com.lz.core.valid.group.AddGroup;
+import com.lz.core.service.valid.group.AddGroup;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

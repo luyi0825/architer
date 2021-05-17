@@ -1,9 +1,8 @@
-package com.lz.core.valid;
+package com.lz.core.service.valid;
 
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ObjectUtils;
-
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

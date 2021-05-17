@@ -1,4 +1,4 @@
-package com.lz.core.valid.group;
+package com.lz.core.service.valid.group;
 
 /**
  * 数据删除检验
