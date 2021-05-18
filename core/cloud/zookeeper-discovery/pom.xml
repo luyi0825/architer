@@ -11,7 +11,7 @@
     <name>cloud-zookeeper-discovery</name>
     <description>zookeeper-discovery服务发现</description>
     <packaging>jar</packaging>
-
+    <version>1.0.0</version>
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -32,7 +32,6 @@
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
-            <version>${zookeeper.version}</version>
         </dependency>
     </dependencies>
 </project>
