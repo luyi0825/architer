@@ -17,8 +17,10 @@ ribbon:
 
 
 
-
-
+## feign客户端开启hystrix
+feign:
+  hystrix:
+    enabled: true
 
 
 

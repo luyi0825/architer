@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Pay对应的远程调用
  */
 @Component
-@FeignClient(value = "hystrix-provider-zk-payment")
-@RequestMapping("/pay")
+@FeignClient(value = "hystrix-provider-zk-payment", fallback = PayClientCallBack.class)
 public interface PayClient {
-    @RequestMapping("/hystrix/ok/{id}")
+    @RequestMapping("/pay/hystrix/ok/{id}")
     String getPayOK(@PathVariable(name = "id") String id);
 
-    @RequestMapping("/hystrix/timeout/{id}")
+    @RequestMapping("/pay/hystrix/timeout/{id}")
     String getPayTimeOut(@PathVariable(name = "id") String id);
 }
