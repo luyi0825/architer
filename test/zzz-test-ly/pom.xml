@@ -28,7 +28,14 @@
         <dependencies>
             <dependency>
                 <groupId>com.lz.core</groupId>
-                <artifactId>dependencies</artifactId>
+                <artifactId>core-dependencies</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>additional-dependencies</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
