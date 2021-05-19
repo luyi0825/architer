@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>dependencies</artifactId>
+        <groupId>com.lz.core</groupId>
+        <version>1.0.0</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.lz.core</groupId>
-    <artifactId>dependencies</artifactId>
+    <artifactId>additional-dependencies</artifactId>
     <version>1.0.0</version>
-    <name>dependencies</name>
+    <name>additional-dependencies</name>
     <description>依赖管理</description>
     <packaging>pom</packaging>
 
@@ -75,12 +79,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${alibaba-druid.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <scope>compile</scope>
-                <version>${lombok.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
