@@ -36,7 +36,7 @@
         <dependencies>
             <dependency>
                 <groupId>com.lz.core</groupId>
-                <artifactId>dependencies</artifactId>
+                <artifactId>additional-dependencies</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
