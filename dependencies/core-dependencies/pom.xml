@@ -7,19 +7,49 @@
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.lz.core</groupId>
     <artifactId>core-dependencies</artifactId>
     <version>1.0.0</version>
     <name>core-dependencies</name>
     <description>依赖管理</description>
     <packaging>pom</packaging>
 
-    <properties>
-        <core.version>1.0.0</core.version>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>boot-starter-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>redis-cache</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>cloud-nacos-config</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>cloud-nacos-discovery</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>cloud-open-feign</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>cloud-zookeeper-discovery</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>cloud-sentinel</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
