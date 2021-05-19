@@ -1,6 +1,6 @@
 package com.lz.core.test.hystrix.order.controller;
 
-import com.lz.core.service.response.BaseResponse;
+
 import com.lz.core.test.hystrix.order.feign.PayClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

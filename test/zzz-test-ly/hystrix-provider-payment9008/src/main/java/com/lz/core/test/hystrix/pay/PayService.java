@@ -15,10 +15,10 @@ import java.util.concurrent.TimeUnit;
 @DefaultProperties(defaultFallback = "globalFallBack")
 public class PayService {
 
-    @HystrixCommand(commandProperties = {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000")})
+   // @HystrixCommand(commandProperties = {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000")})
     public String getPayOK(String id) {
         try {
-            TimeUnit.SECONDS.sleep((long) (Math.random() * 5));
+            TimeUnit.MILLISECONDS.sleep((long) (Math.random() * 5));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

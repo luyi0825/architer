@@ -1,9 +1,8 @@
 spring:
   application:
     name: hystrix-consumer-zk-order
-  cloud:
-    zookeeper:
-      connect-string: localhost:2181
+  profiles:
+    active: out
 server:
   port: 9010
   tomcat:
@@ -21,6 +20,14 @@ ribbon:
 feign:
   hystrix:
     enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: true
+      # feign最大连接数
+    max-connections: 200
+    # feign单个路径的最大连接数
+    max-connections-per-route: 50
 
 
 
