@@ -14,5 +14,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>boot-starter-web</module>
+        <module>boot-rest-template</module>
     </modules>
 </project>
