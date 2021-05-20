@@ -50,6 +50,16 @@
                 <artifactId>cloud-sentinel</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>service-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>mq-rabbit</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
