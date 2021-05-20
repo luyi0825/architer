@@ -19,6 +19,9 @@
         <module>hystrix-provider-payment9008</module>
         <module>hystrix-consumer-order9010</module>
         <module>gateway</module>
+        <module>config-bus-center-9017</module>
+        <module>config-bus-client-9018</module>
+        <module>config-bus-client-9019</module>
     </modules>
     <properties>
         <core.version>1.0.0</core.version>
