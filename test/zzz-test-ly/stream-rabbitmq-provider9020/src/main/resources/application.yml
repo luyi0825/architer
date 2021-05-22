@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: stream-rabbitmq-provider9020
+  profiles:
+    active: out
+server:
+  port: 9020
+  tomcat:
+    threads:
+      max: 50
+
+
+
+
+
+
+
+

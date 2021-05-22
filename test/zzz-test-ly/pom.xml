@@ -22,6 +22,9 @@
         <module>config-bus-center-9017</module>
         <module>config-bus-client-9018</module>
         <module>config-bus-client-9019</module>
+        <module>stream-rabbitmq-provider9020</module>
+        <module>stream-rabbitmq-consumer9021</module>
+        <module>stream-rabbitmq-consumer9022</module>
     </modules>
     <properties>
         <core.version>1.0.0</core.version>
