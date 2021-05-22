@@ -12,6 +12,16 @@ spring:
     sampler:
       # 采集率值介于0-1之间，1则表示全部采集
       probability: 1
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
 
 
 
