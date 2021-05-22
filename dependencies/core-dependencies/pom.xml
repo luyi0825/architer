@@ -60,6 +60,16 @@
                 <artifactId>mq-rabbit</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>boot-rest-template</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>log-facade-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>

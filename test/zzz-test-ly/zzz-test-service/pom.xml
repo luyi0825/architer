@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.lz.core</groupId>
             <artifactId>thread-pool-client-impl</artifactId>
-            <scope>compile</scope>
+            <version>${core.version}</version>
         </dependency>
 
         <dependency>
@@ -42,6 +42,7 @@
         <dependency>
             <groupId>com.lz.core</groupId>
             <artifactId>cache-distributed-lock</artifactId>
+            <version>${core.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lz.core</groupId>
@@ -62,6 +63,7 @@
         <dependency>
             <groupId>com.lz.core</groupId>
             <artifactId>db-druid</artifactId>
+            <version>${core.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
@@ -84,12 +86,6 @@
         <dependency>
             <groupId>com.lz.core</groupId>
             <artifactId>cloud-nacos-config</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.alibaba.nacos</groupId>
-                    <artifactId>nacos-client</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.lz.core</groupId>
@@ -99,7 +95,6 @@
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-client</artifactId>
-            <version>1.4.1</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -109,7 +104,10 @@
         <dependency>
             <groupId>com.lz.core</groupId>
             <artifactId>service-common</artifactId>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.lz.core</groupId>
+            <artifactId>boot-rest-template</artifactId>
         </dependency>
     </dependencies>
 
