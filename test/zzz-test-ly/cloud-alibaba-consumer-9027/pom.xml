@@ -43,5 +43,9 @@
 <!--            <groupId>org.springframework.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-starter-zipkin</artifactId>-->
 <!--        </dependency>-->
+        <dependency>
+            <groupId>com.lz.core</groupId>
+            <artifactId>cloud-sentinel</artifactId>
+        </dependency>
     </dependencies>
 </project>

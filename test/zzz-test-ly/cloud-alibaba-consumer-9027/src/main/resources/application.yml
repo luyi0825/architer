@@ -10,6 +10,11 @@ spring:
     sampler:
       # 采集率值介于0-1之间，1则表示全部采集,一般0.5就可以
       probability: 1
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
 
 
 

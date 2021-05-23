@@ -43,5 +43,9 @@
             <groupId>com.lz.core</groupId>
             <artifactId>cloud-open-feign</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.lz.core</groupId>
+            <artifactId>cloud-sentinel</artifactId>
+        </dependency>
     </dependencies>
 </project>
