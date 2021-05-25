@@ -14,9 +14,9 @@ import java.util.UUID;
  *
  * @author luyi
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages="com.lz.core.test.consumer.zipkin.controller")
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.lz.core.test.consumer.zipkin.feign"})
 @RestController
 public class CloudAlibabaConsumer9027 {
     public static void main(String[] args) {

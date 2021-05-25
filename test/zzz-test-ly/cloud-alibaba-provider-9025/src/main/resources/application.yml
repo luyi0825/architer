@@ -15,7 +15,7 @@ spring:
   cloud:
     sentinel:
       transport:
-        dashboard: localhost:8081
+        dashboard: localhost:8080
         ##默认8719，加入被占用，会一直+1直到找到没有占用的端口
         port: 8719
       datasource:
@@ -23,9 +23,10 @@ spring:
           nacos:
             server_addr: 124.71.110.204:8848
             groupId: sentinel
-            dataId: ${spring.applicaion.name}
+            dataId: cloud-alibaba-provider
             data-type: json
             rule-type: flow
+            namespace: public
 
 management:
   endpoints:

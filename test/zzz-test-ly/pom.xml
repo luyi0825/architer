@@ -26,6 +26,7 @@
         <module>stream-rabbitmq-consumer9021</module>
         <module>stream-rabbitmq-consumer9022</module>
         <module>cloud-alibaba-provider-9025</module>
+        <module>cloud-alibaba-provider-9026</module>
         <module>cloud-alibaba-consumer-9027</module>
     </modules>
     <properties>

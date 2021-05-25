@@ -1,5 +1,6 @@
 package com.lz.core.test.provider;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.lz.core.test.provider.config.UserConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,6 +27,7 @@ public class CloudAlibabaProvider9025 {
     }
 
     @RequestMapping("/test")
+    @SentinelResource(value = "test")
     public String test() {
         return UUID.randomUUID().toString();
     }

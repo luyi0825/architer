@@ -15,7 +15,7 @@ spring:
   cloud:
     sentinel:
       transport:
-        dashboard: localhost:8081
+        dashboard: localhost:8080
         ##默认8719，加入被占用，会一直+1直到找到没有占用的端口
         port: 8719
       datasource:

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/zipkin")
 @RestController
 public class ZipkinController {
+    @Autowired(required = false)
     private ProviderZipkinFeign providerZipkinFeign;
 
     @RequestMapping("/get/{id}")
@@ -20,9 +21,7 @@ public class ZipkinController {
         return providerZipkinFeign.getXXX(id);
     }
 
-    @Autowired(required = false)
-    public ZipkinController setProviderZipkinFeign(ProviderZipkinFeign providerZipkinFeign) {
-        this.providerZipkinFeign = providerZipkinFeign;
-        return this;
-    }
+
+
+
 }
