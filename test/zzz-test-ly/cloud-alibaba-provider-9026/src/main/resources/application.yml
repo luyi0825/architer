@@ -1,5 +1,5 @@
 ﻿server:
-  port: 9025
+  port: 9026
   tomcat:
     threads:
       max: 50
