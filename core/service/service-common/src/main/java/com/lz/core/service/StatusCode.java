@@ -16,7 +16,7 @@ public enum StatusCode {
     NO_LOGIN(401, "请登录"),
     NO_PERMISSION(403, "没有权限"),
 
-    PARAMS_VALID_EXCEPTION(100, "IP地址发生改变");
+    PARAMS_VALID_EXCEPTION(100, "参数校验异常");
 
     StatusCode(int code, String message) {
         this.code = code;
