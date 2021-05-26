@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateKeyException.class)
     public R handleDuplicateKeyException(DuplicateKeyException e) {
-        logger.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return R.error("数据库中已存在该记录");
     }
 
