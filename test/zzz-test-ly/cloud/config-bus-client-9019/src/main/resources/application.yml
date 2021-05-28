@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    active: out
+server:
+  port: 9019
+  tomcat:
+    threads:
+      max: 50
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+
+
+
+

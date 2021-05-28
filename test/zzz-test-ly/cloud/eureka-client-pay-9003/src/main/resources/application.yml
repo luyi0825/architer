@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: eureka-client-pay
+server:
+  port: 9003
+  tomcat:
+    threads:
+      max: 50
+
+eureka:
+  client:
+    #  表示将自己注册到注册中心，默认为true
+    register-with-eureka: true
+    ## 从注册中心拉取已有的注册信息，默认 true（集群的时候必须为true,才能使用ribbon负载 均衡）
+    fetch-registry: true
+    service-url:
+      ## eureka交互的地址
+      defaultZone: http://eureka9000.com:9000/eureka,http://eureka9001.com:9001/eureka
+
+
+
+
+

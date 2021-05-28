@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: hystrix-provider-zk-payment
+  profiles:
+    active: out
+server:
+  port: 9008
+  tomcat:
+    threads:
+      max: 50
+
+
+
+
+
+
+
+

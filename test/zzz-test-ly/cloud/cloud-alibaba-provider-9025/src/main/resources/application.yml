@@ -1,0 +1,45 @@
+﻿server:
+  port: 9025
+  tomcat:
+    threads:
+      max: 50
+spring:
+  profiles:
+    active: out
+  zipkin:
+    base-url: http://localhost:9411/
+  sleuth:
+    sampler:
+      # 采集率值介于0-1之间，1则表示全部采集
+      probability: 1
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        ##默认8719，加入被占用，会一直+1直到找到没有占用的端口
+        port: 8719
+      datasource:
+        ds1:
+          nacos:
+            server_addr: 124.71.110.204:8848
+            groupId: sentinel
+            dataId: cloud-alibaba-provider
+            data-type: json
+            rule-type: flow
+            namespace: public
+
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
+
+
+
+
+

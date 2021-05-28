@@ -1,0 +1,15 @@
+﻿spring:
+  cloud:
+    zookeeper:
+      connect-string: 124.71.110.204:2182
+  rabbitmq:
+    host: 124.71.110.204
+    username: luyi
+    password: 123
+    virtual-host: test
+    port: 5672
+
+
+
+
+

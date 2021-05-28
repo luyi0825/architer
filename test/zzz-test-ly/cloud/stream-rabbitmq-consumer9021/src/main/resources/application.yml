@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: stream-rabbitmq-consumer
+  profiles:
+    active: out
+server:
+  port: 9021
+  tomcat:
+    threads:
+      max: 50
+
+
+
+
+
+
+
+

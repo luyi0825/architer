@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.lz.core.test</groupId>
+    <artifactId>zzz-test-cloud</artifactId>
+    <version>1.0.0</version>
+    <name>zzz-test-cloud</name>
+    <description>ly-测试</description>
+    <packaging>pom</packaging>
+    <modules>
+        <module>zzz-test-service</module>
+        <module>eureka-server-9000</module>
+        <module>eureka-server-9001</module>
+        <module>eureka-client-pay-9002</module>
+        <module>eureka-client-pay-9003</module>
+        <module>eureka-client-order-9004</module>
+        <module>zk-client-pay-9006</module>
+        <module>hystrix-provider-payment9008</module>
+        <module>hystrix-consumer-order9010</module>
+        <module>gateway</module>
+        <module>config-bus-center-9017</module>
+        <module>config-bus-client-9018</module>
+        <module>config-bus-client-9019</module>
+        <module>stream-rabbitmq-provider9020</module>
+        <module>stream-rabbitmq-consumer9021</module>
+        <module>stream-rabbitmq-consumer9022</module>
+        <module>cloud-alibaba-provider-9025</module>
+        <module>cloud-alibaba-provider-9026</module>
+        <module>cloud-alibaba-consumer-9027</module>
+    </modules>
+    <properties>
+        <core.version>1.0.0</core.version>
+        <jackson.version>2.11.4</jackson.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>core-dependencies</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.lz.core</groupId>
+                <artifactId>additional-dependencies</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

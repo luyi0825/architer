@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: hystrix-consumer-zk-order
+  profiles:
+    active: out
+server:
+  port: 9010
+  tomcat:
+    threads:
+      max: 50
+
+#ribbon的超时时间
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+
+
+
+## feign客户端开启hystrix
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: true
+      # feign最大连接数
+    max-connections: 200
+    # feign单个路径的最大连接数
+    max-connections-per-route: 50
+
+
+
