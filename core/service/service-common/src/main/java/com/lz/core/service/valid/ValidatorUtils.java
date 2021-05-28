@@ -3,9 +3,7 @@ package com.lz.core.service.valid;
 
 
 import com.lz.core.service.exception.ParamsValidException;
-import com.lz.core.service.exception.ServiceException;
 
-import javax.sql.rowset.serial.SerialException;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -18,7 +16,7 @@ import java.util.Set;
  *
  * @author luyi
  */
-public class ValidatorUtils {
+public final class ValidatorUtils {
     private static final Validator VALIDATOR = Validation.buildDefaultValidatorFactory().getValidator();
 
     /**
