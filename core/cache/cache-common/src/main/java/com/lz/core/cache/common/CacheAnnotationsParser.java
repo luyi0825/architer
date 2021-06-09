@@ -1,23 +1,20 @@
 package com.lz.core.cache.common;
 
 
+import com.lz.core.cache.common.annotation.Caching;
 import com.lz.core.cache.common.annotation.DeleteCache;
 import com.lz.core.cache.common.annotation.PutCache;
 import com.lz.core.cache.common.annotation.Cacheable;
-import com.lz.core.cache.common.operation.CacheOperation;
-import com.lz.core.cache.common.operation.CacheableOperation;
-import com.lz.core.cache.common.operation.DeleteCacheOperation;
-import com.lz.core.cache.common.operation.PutCacheOperation;
+import com.lz.core.cache.common.operation.*;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.lang.Nullable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author luyi
@@ -76,12 +73,46 @@ public class CacheAnnotationsParser {
                 cacheOperation = parseDeleteCacheAnnotation(annotatedElement, (DeleteCache) annotation);
             } else if (annotation instanceof Cacheable) {
                 cacheOperation = parseCacheableAnnotation(annotatedElement, (Cacheable) annotation);
+            } else if (annotation instanceof Caching) {
+                cacheOperation = parseCachingAnnotation(annotatedElement, (Caching) annotation);
             }
             if (cacheOperation != null) {
                 ops.add(cacheOperation);
             }
         });
         return ops;
+    }
+
+    /**
+     * 解析@Caching注解
+     */
+    private CachingOperation parseCachingAnnotation(AnnotatedElement annotatedElement, Caching caching) {
+        CachingOperation cachingOperation = new CachingOperation();
+        List<CacheOperation> cacheOperationList = new ArrayList<>(4);
+        Cacheable[] cacheables = caching.cacheable();
+        if (ArrayUtils.isNotEmpty(cacheables)) {
+            for (Cacheable cacheable : cacheables) {
+                CacheableOperation cacheableOperation = this.parseCacheableAnnotation(annotatedElement, cacheable);
+                cacheOperationList.add(cacheableOperation);
+            }
+        }
+        PutCache[] putCaches = caching.put();
+        if (ArrayUtils.isNotEmpty(putCaches)) {
+            for (PutCache putCache : putCaches) {
+                CacheOperation putOperation = this.parsePutCacheAnnotation(annotatedElement, putCache);
+                cacheOperationList.add(putOperation);
+            }
+        }
+
+        DeleteCache[] deleteCaches = caching.delete();
+        if (ArrayUtils.isNotEmpty(deleteCaches)) {
+            for (DeleteCache deleteCache : deleteCaches) {
+                CacheOperation deleteOperation = this.parseDeleteCacheAnnotation(annotatedElement, deleteCache);
+                cacheOperationList.add(deleteOperation);
+            }
+        }
+        cachingOperation.setOperations(cacheOperationList.toArray(new CacheOperation[0]));
+        return cachingOperation;
     }
 
     /**
