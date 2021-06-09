@@ -31,7 +31,7 @@ public class CacheAspectj {
      * caching切点
      */
     @Pointcut("@annotation(com.lz.core.cache.common.annotation.Cacheable)")
-    public void cachingPointcut() {
+    public void cacheablePointcut() {
     }
 
     /**
@@ -48,8 +48,15 @@ public class CacheAspectj {
     public void deleteCachePointcut() {
     }
 
+    /**
+     * 多个缓存操作的节点
+     */
+    @Pointcut("@annotation(com.lz.core.cache.common.annotation.Caching)")
+    public void cachingPointcut() {
+    }
 
-    @Around("cachingPointcut()")
+
+    @Around("cacheablePointcut()")
     public Object cacheable(ProceedingJoinPoint jp) {
         return handler(jp);
     }
@@ -61,6 +68,11 @@ public class CacheAspectj {
 
     @Around("deleteCachePointcut()")
     public Object deleteCache(ProceedingJoinPoint jp) {
+        return handler(jp);
+    }
+
+    @Around("cachingPointcut()")
+    public Object caching(ProceedingJoinPoint jp) {
         return handler(jp);
     }
 
