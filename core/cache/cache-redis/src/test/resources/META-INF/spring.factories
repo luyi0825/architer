@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.lz.core.cache.redis.RedisConfig
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.core.cache.redis.RedisConfig

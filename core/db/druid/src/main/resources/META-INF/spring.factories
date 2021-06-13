@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.lz.core.druid.DruidConfig
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.core.druid.DruidConfig
