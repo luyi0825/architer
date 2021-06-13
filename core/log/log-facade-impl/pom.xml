@@ -37,7 +37,7 @@
 
 
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>log-facade</artifactId>
             <version>${project.version}</version>
         </dependency>

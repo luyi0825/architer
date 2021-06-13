@@ -22,7 +22,7 @@
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>cache-lock-base</artifactId>
             <version>${project.version}</version>
         </dependency>

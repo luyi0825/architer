@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>zzz-test-parent</artifactId>
-        <groupId>com.lz.core.test</groupId>
+        <groupId>com.core.test</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.lz.core.test</groupId>
+    <groupId>com.core.test</groupId>
     <artifactId>zzz-test-cloud</artifactId>
     <version>1.0.0</version>
     <name>zzz-test-cloud</name>
@@ -42,14 +42,14 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.lz.core</groupId>
+                <groupId>com.core</groupId>
                 <artifactId>core-dependencies</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>com.lz.core</groupId>
+                <groupId>com.core</groupId>
                 <artifactId>additional-dependencies</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>

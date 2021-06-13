@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>zzz-test-parent</artifactId>
-        <groupId>com.lz.core.test</groupId>
+        <groupId>com.core.test</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -17,11 +17,11 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>cloud-zookeeper-discovery</artifactId>
         </dependency>
         <!--        <dependency>-->
@@ -30,11 +30,11 @@
         <!--            <version>4.5.3</version>-->
         <!--        </dependency>-->
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>cloud-open-feign</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>service-common</artifactId>
         </dependency>
         <dependency>

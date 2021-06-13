@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>zzz-test-cloud</artifactId>
-        <groupId>com.lz.core.test</groupId>
+        <groupId>com.core.test</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -17,12 +17,12 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>boot-starter-web</artifactId>
             <version>${core.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>cloud-zookeeper-discovery</artifactId>
             <version>${core.version}</version>
         </dependency>

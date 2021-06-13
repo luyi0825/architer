@@ -30,7 +30,7 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>test</artifactId>
             <version>${project.version}</version>
         </dependency>
