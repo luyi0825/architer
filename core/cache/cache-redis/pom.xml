@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.lz.core</groupId>
+        <groupId>com.core</groupId>
         <artifactId>cache</artifactId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
@@ -19,7 +19,7 @@
             <version>3.6.0</version>
         </dependency>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>cache-common</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -39,7 +39,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>log-facade</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -55,19 +55,19 @@
             <version>1.26</version>
         </dependency>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>test</artifactId>
             <version>1.0.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!--分布式的锁，一般只在启动的项目导入，组件中导入接口层就行了，这里测试用-->
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>cache-distributed-lock</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>

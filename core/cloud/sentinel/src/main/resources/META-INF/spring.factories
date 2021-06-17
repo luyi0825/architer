@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.lz.core.cloud.sentinel.SentinelConfig
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.core.cloud.sentinel.SentinelConfig

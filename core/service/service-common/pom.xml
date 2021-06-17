@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>service</artifactId>
-        <groupId>com.lz.core</groupId>
+        <groupId>com.core</groupId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>log-facade</artifactId>
             <version>${project.version}</version>
         </dependency>

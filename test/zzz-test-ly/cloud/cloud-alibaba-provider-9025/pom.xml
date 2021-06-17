@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.lz.core.test</groupId>
+        <groupId>com.core.test</groupId>
         <version>1.0.0</version>
         <artifactId>zzz-test-cloud</artifactId>
     </parent>
@@ -16,19 +16,19 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>service-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>cloud-nacos-config</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>cloud-nacos-discovery</artifactId>
         </dependency>
         <dependency>
@@ -40,7 +40,7 @@
 <!--            <artifactId>spring-cloud-starter-zipkin</artifactId>-->
 <!--        </dependency>-->
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>cloud-open-feign</artifactId>
             <exclusions>
                 <exclusion>
@@ -54,7 +54,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.lz.core</groupId>
+            <groupId>com.core</groupId>
             <artifactId>cloud-sentinel</artifactId>
         </dependency>
         <dependency>
