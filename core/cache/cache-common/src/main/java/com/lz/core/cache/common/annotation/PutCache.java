@@ -53,4 +53,14 @@ public @interface PutCache {
      * @see Cacheable#cacheValue()
      */
     String cacheValue() default "";
+
+    /**
+     * @see Cacheable#condition()
+     */
+    String condition() default "";
+
+    /**
+     * @see Cacheable#unless()
+     */
+    String unless() default "";
 }

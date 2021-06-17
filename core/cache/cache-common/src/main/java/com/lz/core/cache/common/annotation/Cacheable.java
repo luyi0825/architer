@@ -69,4 +69,14 @@ public @interface Cacheable {
      */
     String cacheValue() default "";
 
+    /**
+     * 条件满足的时候，进行缓存操作
+     */
+    String condition() default "";
+
+    /**
+     * 条件满足的时候，不进行缓存操作
+     */
+    String unless() default "";
+
 }

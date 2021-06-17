@@ -50,4 +50,14 @@ public @interface DeleteCache {
      */
     boolean before() default true;
 
+    /**
+     * @see Cacheable#condition()
+     */
+    String condition() default "";
+
+    /**
+     * @see Cacheable#unless()
+     */
+    String unless() default "";
+
 }
