@@ -24,20 +24,17 @@ public class CacheOperation {
     /**
      * @see Cacheable#cacheName()
      */
-    private String cacheName;
+    private String[] cacheName;
 
     private LockType lock;
-
-    private String prefix;
+    /**
+     * @see Cacheable#key()
+     */
+    private String key;
     /**
      * @see Cacheable#async()
      */
     private boolean async;
-
-    /**
-     * @see Cacheable#suffix()
-     */
-    private String suffix;
 
 
 }
