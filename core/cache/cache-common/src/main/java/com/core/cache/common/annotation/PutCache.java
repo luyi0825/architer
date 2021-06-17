@@ -5,6 +5,8 @@ import com.core.cache.common.enums.LockType;
 import java.lang.annotation.*;
 
 /**
+ * 向缓存中放数据
+ *
  * @author luyi
  */
 @Target(ElementType.METHOD)
