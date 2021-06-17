@@ -19,17 +19,12 @@ public @interface DeleteCache {
     /**
      * @see Cacheable#cacheName()
      */
-    String cacheName() default "";
+    String[] cacheName() default "";
 
     /**
-     * @see Cacheable#prefix()
+     * @see Cacheable#key()
      */
-    String prefix() default "";
-
-    /**
-     * @see Cacheable#suffix()
-     */
-    String suffix() default "";
+    String key();
 
     /**
      * 锁的类型，比如删除锁的时候是否允许查询接口读取数据

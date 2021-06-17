@@ -18,17 +18,12 @@ public @interface PutCache {
     /**
      * @see Cacheable#cacheName()
      */
-    String cacheName() default "";
+    String[] cacheName() default "";
 
     /**
-     * @see Cacheable#prefix()
+     * @see Cacheable#key()
      */
-    String prefix() default "";
-
-    /**
-     * @see Cacheable#suffix()
-     */
-    String suffix() default "";
+    String key();
 
     /**
      * @see Cacheable#randomExpireTime()

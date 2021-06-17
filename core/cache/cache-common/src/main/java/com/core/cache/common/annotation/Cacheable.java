@@ -9,7 +9,9 @@ import java.lang.annotation.*;
 /**
  * 缓存数据，缓存中有的时候，就从缓存中取值，没有就将换回结果放入缓存中
  * 1.所有的时间单位都是秒
- * 2.缓存的key为缓存前缀加上缓存名称
+ * 2.缓存的中的key的取值为：
+ * *** a.如果cacheName为空就为key的取值
+ * *** b.如果cacheName不为空，就为cacheName+缓存分隔符+key的取值
  *
  * @author luyi
  * @date 2020/12/17
@@ -22,20 +24,13 @@ public @interface Cacheable {
 
     /**
      * 缓存名称
-     * 1.当value不为“”，那么缓存的key就为value
-     * 2.当value不为“”:缓存名称为缓存前缀+缓存分割符号+缓存后缀
      */
-    String cacheName() default "";
+    String[] cacheName() default "";
 
     /**
-     * 缓存前缀,支持SpEL
+     * 缓存key,支持SpEL
      */
-    String prefix() default "";
-
-    /**
-     * 缓存后缀  支持SpEL
-     */
-    String suffix() default "";
+    String key();
 
     /**
      * 缓存随机失效时间
@@ -64,7 +59,7 @@ public @interface Cacheable {
     boolean async() default false;
 
     /**
-     * 缓存值,默认为方法返回值
+     * 缓存值,默认为方法返回值，支持spEL表达式
      */
     String cacheValue() default "";
 
