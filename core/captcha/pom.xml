@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.core</groupId>
             <artifactId>test</artifactId>
-            <version>1.0.0</version>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

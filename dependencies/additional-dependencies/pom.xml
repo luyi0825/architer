@@ -37,6 +37,8 @@
         <zookeeper.version>3.7.0</zookeeper.version>
         <hutool.version>5.6.5</hutool.version>
         <nacos-client.version>1.4.2</nacos-client.version>
+        <junit.verion>4.13.2</junit.verion>
+        <junit-jupiter-api.verison>5.7.1</junit-jupiter-api.verison>
     </properties>
 
     <dependencyManagement>
@@ -146,6 +148,16 @@
                 <groupId>com.alibaba.nacos</groupId>
                 <artifactId>nacos-client</artifactId>
                 <version>${nacos-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.verion}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit-jupiter-api.verison}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

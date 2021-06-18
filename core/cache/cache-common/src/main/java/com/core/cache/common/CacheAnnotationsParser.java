@@ -6,8 +6,6 @@ import com.core.cache.common.annotation.Caching;
 import com.core.cache.common.annotation.DeleteCache;
 import com.core.cache.common.annotation.PutCache;
 import com.core.cache.common.operation.*;
-import com.lz.core.cache.common.operation.*;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -122,9 +120,8 @@ public class CacheAnnotationsParser {
     private CacheOperation parsePutCacheAnnotation(AnnotatedElement annotatedElement, PutCache cachePut) {
         PutCacheOperation putCacheOperation = new PutCacheOperation();
         putCacheOperation.setName(annotatedElement.toString());
-        putCacheOperation.setPrefix(cachePut.prefix());
+        putCacheOperation.setKey(cachePut.key());
         putCacheOperation.setCacheName(cachePut.cacheName());
-        putCacheOperation.setSuffix(cachePut.suffix());
         putCacheOperation.setLock(cachePut.lock());
         putCacheOperation.setAsync(cachePut.async());
         putCacheOperation.setExpireTime(cachePut.expireTime());
@@ -140,11 +137,10 @@ public class CacheAnnotationsParser {
     private CacheOperation parseDeleteCacheAnnotation(AnnotatedElement annotatedElement, DeleteCache deleteCache) {
         DeleteCacheOperation deleteCacheOperation = new DeleteCacheOperation();
         deleteCacheOperation.setName(annotatedElement.toString());
-        deleteCacheOperation.setPrefix(deleteCache.prefix());
         deleteCacheOperation.setCacheName(deleteCache.cacheName());
         deleteCacheOperation.setLock(deleteCache.lock());
         deleteCacheOperation.setAsync(deleteCache.async());
-        deleteCacheOperation.setSuffix(deleteCache.suffix());
+        deleteCacheOperation.setKey(deleteCache.key());
         deleteCacheOperation.setAnnotation(deleteCache);
         return deleteCacheOperation;
     }
@@ -155,11 +151,10 @@ public class CacheAnnotationsParser {
     private CacheableOperation parseCacheableAnnotation(AnnotatedElement annotatedElement, Cacheable cacheable) {
         CacheableOperation operation = new CacheableOperation();
         operation.setName(annotatedElement.toString());
-        operation.setPrefix(cacheable.prefix());
         operation.setCacheName(cacheable.cacheName());
         operation.setLock(cacheable.lock());
         operation.setAsync(cacheable.async());
-        operation.setSuffix(cacheable.suffix());
+        operation.setKey(cacheable.key());
         operation.setExpireTime(cacheable.expireTime());
         operation.setRandomExpireTime(cacheable.randomExpireTime());
         operation.setAnnotation(cacheable);

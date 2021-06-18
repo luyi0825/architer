@@ -5,6 +5,8 @@ import com.core.cache.common.enums.LockType;
 import java.lang.annotation.*;
 
 /**
+ * 向缓存中放数据
+ *
  * @author luyi
  */
 @Target(ElementType.METHOD)
@@ -16,17 +18,12 @@ public @interface PutCache {
     /**
      * @see Cacheable#cacheName()
      */
-    String cacheName() default "";
+    String[] cacheName() default "";
 
     /**
-     * @see Cacheable#prefix()
+     * @see Cacheable#key()
      */
-    String prefix() default "";
-
-    /**
-     * @see Cacheable#suffix()
-     */
-    String suffix() default "";
+    String key();
 
     /**
      * @see Cacheable#randomExpireTime()
@@ -52,4 +49,14 @@ public @interface PutCache {
      * @see Cacheable#cacheValue()
      */
     String cacheValue() default "";
+
+    /**
+     * @see Cacheable#condition()
+     */
+    String condition() default "";
+
+    /**
+     * @see Cacheable#unless()
+     */
+    String unless() default "";
 }
