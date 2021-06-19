@@ -148,7 +148,22 @@ export default {
                     icon: "el-icon-lx-redpacket_fill",
                     index: "/donate",
                     title: "支持作者"
-                }
+                },
+              {
+                icon: "el-icon-lx-warn",
+                index: "8",
+                title: "消息配置",
+                subs: [
+                  {
+                    index: "/message/capcha",
+                    title: "验证码"
+                  },
+                  {
+                    index: "777",
+                    title: "404页面"
+                  }
+                ]
+              },
             ]
         };
     },
