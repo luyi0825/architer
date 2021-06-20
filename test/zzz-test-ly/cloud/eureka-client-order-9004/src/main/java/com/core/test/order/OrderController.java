@@ -1,6 +1,6 @@
 package com.core.test.order;
 
-import com.core.service.response.BaseResponse;
+import com.core.module.common.response.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.web.bind.annotation.GetMapping;

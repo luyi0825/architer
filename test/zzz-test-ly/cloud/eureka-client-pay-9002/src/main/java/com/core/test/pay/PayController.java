@@ -1,6 +1,6 @@
 package com.core.test.pay;
 
-import com.core.service.response.BaseResponse;
+import com.core.module.common.response.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;

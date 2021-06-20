@@ -2,7 +2,7 @@ package com.core.test.valid.controller;
 
 
 import com.core.test.valid.vo.User;
-import com.core.service.valid.group.AddGroup;
+import com.core.module.common.valid.group.AddGroup;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

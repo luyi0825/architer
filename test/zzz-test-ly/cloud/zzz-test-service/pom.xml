@@ -25,10 +25,7 @@
             <version>${core.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.core</groupId>
-            <artifactId>log-facade-impl</artifactId>
-        </dependency>
+
 
         <dependency>
             <groupId>com.core</groupId>

@@ -1,8 +1,8 @@
 package com.core.test.valid.vo;
 
 
-import com.core.service.valid.ListValue;
-import com.core.service.valid.group.AddGroup;
+import com.core.module.common.valid.ListValue;
+import com.core.module.common.valid.group.AddGroup;
 import lombok.Data;
 
 /**
