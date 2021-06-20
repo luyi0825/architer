@@ -11,15 +11,7 @@ import java.util.List;
  * 分页和普通查询都可以用这个作为参数接收的对象
  */
 @Data
-public class QueryParams<T> implements Serializable {
-    /**
-     * 当前页
-     */
-    private Long page;
-    /**
-     * 查询数量
-     */
-    private Long limit = 10L;
+public class QueryParam<T> implements Serializable {
 
     /**
      * 查询条件
@@ -30,15 +22,21 @@ public class QueryParams<T> implements Serializable {
      * 排序条件
      */
     private List<Order> orders;
+
     /**
-     * 查询的实体
+     * 分页信息
+     */
+    private Pager page;
+
+    /**
+     *
      */
     private T entity;
 
-    /**
-     * 指定的查询的字段（不指定查询所有）
-     */
-    private String[] fieldName;
+//    /**
+//     * 指定的查询的字段（不指定查询所有）
+//     */
+//    private String[] fieldName;
 
 
 }

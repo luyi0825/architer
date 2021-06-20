@@ -1,8 +1,9 @@
 package com.core.mybatisplus.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.core.mybatisplus.Pagination;
-import com.core.mybatisplus.QueryParams;
+import com.core.mybatisplus.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 
 /**
@@ -10,14 +11,25 @@ import com.core.mybatisplus.QueryParams;
  *
  * @author luyi
  */
-public interface BaseService<T> extends IService<T> {
+public interface BaseService<T> {
     /**
      * 分页查询
      *
-     * @param queryParams 查询参数
+     * @param queryParam 查询条件
      * @return 分页信息
      */
-    Pagination pageQuery(QueryParams<T> queryParams);
+    Pagination pageQuery(QueryParam<T> queryParam);
+
+
+    /**
+     * 描述：根据指定查询条件查询
+     *
+     * @param queryParam 查询参数
+     * @return list 数据
+     * @date 2020/12/28
+     */
+    @Autowired
+    List<T> queryList(QueryParam<T> queryParam);
 
 
 }
