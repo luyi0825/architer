@@ -32,6 +32,7 @@
         <dependency>
             <groupId>com.core</groupId>
             <artifactId>test</artifactId>
+            <scope>test</scope>
             <version>${project.version}</version>
         </dependency>
 
