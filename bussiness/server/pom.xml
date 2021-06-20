@@ -14,5 +14,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>message-server</module>
+        <module>gateway-server</module>
     </modules>
 </project>
