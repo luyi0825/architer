@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
 
-    @Cacheable(prefix = "#root.method.returnType.name", suffix = "#id", lock = LockType.reentrant, expireTime = 60)
+    @Cacheable(cacheName = "#root.method.returnType.name", key = "#id", lock = LockType.reentrant, expireTime = 60)
     User findById(@NonNull Long id);
 
     User update(User user);
@@ -24,6 +24,6 @@ public interface UserService {
      *
      * @param user
      */
-    @PutCache(prefix = "#user.class.name", suffix = "#user.name", cacheValue = "#user")
+    @PutCache(cacheName = "#user.class.name", key = "#user.name", cacheValue = "#user")
     void updateForCacheValue(User user);
 }
