@@ -1,6 +1,5 @@
 
 import axios from 'axios'
-import router from '@/router'
 import qs from 'qs'
 import merge from 'lodash/merge'
 // import {clearLoginInfo} from '@/utils'
@@ -34,7 +33,7 @@ http.interceptors.response.use(response => {
   // eslint-disable-next-line no-undef
   if (response.data && response.data.code === 401) { // 401, token失效
    // clearLoginInfo()
-    router.push({name: 'login'})
+   // router.push({name: 'login'})
   }
   var headers = response.headers
 
