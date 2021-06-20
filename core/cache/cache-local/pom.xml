@@ -14,7 +14,6 @@
     <description>Demo project for Spring Boot</description>
     <packaging>jar</packaging>
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -23,11 +22,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.core</groupId>
-            <artifactId>log-facade</artifactId>
-            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

@@ -52,7 +52,12 @@
             </dependency>
             <dependency>
                 <groupId>com.core</groupId>
-                <artifactId>service-common</artifactId>
+                <artifactId>module-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.core</groupId>
+                <artifactId>module-model</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -63,11 +68,6 @@
             <dependency>
                 <groupId>com.core</groupId>
                 <artifactId>boot-rest-template</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.core</groupId>
-                <artifactId>log-facade-impl</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
