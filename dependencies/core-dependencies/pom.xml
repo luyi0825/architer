@@ -70,6 +70,16 @@
                 <artifactId>log-facade-impl</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.core</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.core</groupId>
+                <artifactId>db-druid</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
