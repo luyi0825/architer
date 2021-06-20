@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     private QueryWrapperBuilder<T> queryWrapperBuilder;
-    private BaseMapper<T> baseMapper;
+    protected BaseMapper<T> baseMapper;
 
     @Override
     public Pagination pageQuery(QueryParam<T> queryParam) {
