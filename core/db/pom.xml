@@ -14,7 +14,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>druid</module>
-
+        <module>mybatis-plus</module>
     </modules>
     <dependencyManagement>
         <dependencies>
