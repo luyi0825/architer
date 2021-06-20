@@ -5,13 +5,15 @@ import com.core.cache.common.exception.CacheAnnotationIllegalException;
 import com.core.cache.common.operation.CacheOperation;
 import com.core.cache.common.operation.CacheOperationMetadata;
 import com.core.cache.common.CacheExpressionParser;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 
 /**
  * @author luyi
  * 默认缓存key 生成器
+ * @TODO 多个cacheName的处理
  */
 public class DefaultKeyGenerator implements KeyGenerator {
 
@@ -26,20 +28,20 @@ public class DefaultKeyGenerator implements KeyGenerator {
         this.cacheExpressionParser = cacheExpressionParser;
     }
 
-
     @Override
     public String getKey(CacheOperationMetadata metadata) {
         CacheOperation cacheOperation = metadata.getCacheOperation();
-        if (!StringUtils.isEmpty(cacheOperation.getCacheName())) {
-            return Objects.requireNonNull(cacheExpressionParser.executeParse(metadata, cacheOperation.getCacheName())).toString();
+        String[] cacheName = cacheOperation.getCacheName();
+        String cacheKey = cacheOperation.getKey();
+        if (StringUtils.isEmpty(cacheKey)) {
+            throw new CacheAnnotationIllegalException("cacheKey is null");
         }
-        //如果cacheName不存在，前缀后缀必须都配置
-        if (StringUtils.isEmpty(cacheOperation.getPrefix()) || StringUtils.isEmpty(cacheOperation.getSuffix())) {
-            throw new CacheAnnotationIllegalException("prefix and suffix must exist when cacheName is null");
+        String cacheSuffix = Objects.requireNonNull(cacheExpressionParser.executeParse(metadata, cacheKey)).toString();
+        if (ArrayUtils.isEmpty(cacheName)) {
+            return cacheSuffix;
+        } else {
+            return cacheName[0] + getSeparator() + cacheSuffix;
         }
-        String cachePrefix = Objects.requireNonNull(cacheExpressionParser.executeParse(metadata, cacheOperation.getPrefix())).toString();
-        String cacheSuffix = Objects.requireNonNull(cacheExpressionParser.executeParse(metadata, cacheOperation.getSuffix())).toString();
-        return cachePrefix + getSeparator() + cacheSuffix;
     }
 
 
