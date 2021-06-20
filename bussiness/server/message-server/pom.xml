@@ -21,6 +21,11 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.bussiness</groupId>
+            <artifactId>module-message-template-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.core</groupId>
             <artifactId>db-druid</artifactId>
         </dependency>

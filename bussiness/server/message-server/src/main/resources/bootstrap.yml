@@ -3,7 +3,7 @@
 spring:
   application:
     ##会员服务
-    name: test-server
+    name: message-service
 ## nacos配置
   cloud:
     nacos:

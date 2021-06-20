@@ -1,4 +1,4 @@
-package com.business.message;
+package com.business.message.start;
 
 import com.core.boot.MoulesBuilder;
 import org.springframework.boot.SpringApplication;

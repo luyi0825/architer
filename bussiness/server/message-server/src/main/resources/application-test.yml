@@ -9,6 +9,10 @@ server:
   tomcat:
     uri-encoding: UTF-8
 
+mybatis-plus:
+  #type-aliases-package: com.ly.*
+  mapper-locations: classpath*:/com.bussniss.message/*/mapper/*.xml
+
 spring:
   cloud:
     sentinel:
