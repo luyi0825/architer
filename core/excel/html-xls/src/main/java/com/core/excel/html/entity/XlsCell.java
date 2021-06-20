@@ -43,13 +43,13 @@ public class XlsCell {
      */
     private CellAlign.LevelAlign levelAlign;
     /**
-     * 垂直对齐方式
-     */
-    private CellAlign.Valign valign = CellAlign.Valign.center;
-    /**
      * 行数
      */
     private int rowspan;
+    /**
+     * 垂直对齐方式
+     */
+    private CellAlign.Valign valign = CellAlign.Valign.MIDDLE;
     /**
      * 列数
      */

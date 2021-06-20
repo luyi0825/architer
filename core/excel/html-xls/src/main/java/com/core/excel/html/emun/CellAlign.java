@@ -14,30 +14,32 @@ public class CellAlign {
         /**
          * 居中
          */
-        center(),
+        CENTER(),
         /**
          * 左对齐
          */
-        left(),
+        LEFT(),
         /**
          * 右对齐
          */
-        right()
+        RIGHT()
     }
-
+    /**
+    *垂直
+     */
     public enum Valign {
         /**
-         * 居中
+         * 垂直居中
          */
-        center(),
+        MIDDLE(),
         /**
          * 上对齐
          */
-        top(),
+        TOP(),
         /**
          * 下对齐
          */
-        bottom()
+        BOTTOM()
     }
 
 }

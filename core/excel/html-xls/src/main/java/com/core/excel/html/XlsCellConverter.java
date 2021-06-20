@@ -7,6 +7,9 @@ import com.alibaba.excel.metadata.GlobalConfiguration;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
 import com.core.excel.html.entity.XlsCell;
 
+/**
+ * @author luyi
+ */
 public class XlsCellConverter implements Converter<XlsCell> {
     @Override
     public Class supportJavaTypeKey() {
