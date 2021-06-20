@@ -12,9 +12,4 @@
     <name>log</name>
     <description>日志</description>
     <packaging>pom</packaging>
-    <modules>
-        <module>log-facade</module>
-        <module>log-facade-impl</module>
-    </modules>
-
 </project>
