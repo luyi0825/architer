@@ -1,4 +1,4 @@
-package com.core.boot;
+package com.core.module.common;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,7 @@
 package com.core.boot;
 
 
+import com.core.module.common.Module;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.io.Resource;
@@ -27,7 +28,7 @@ public class MoulesBuilder {
     /**
      * 扫描的包
      */
-    private String[] scanPackages = new String[]{"com.lz.**"};
+    private String[] scanPackages = new String[]{"com.core.**"};
 
     /**
      * 资源模式

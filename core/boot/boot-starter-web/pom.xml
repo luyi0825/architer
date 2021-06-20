@@ -13,15 +13,9 @@
     <description>启动器</description>
     <packaging>jar</packaging>
     <dependencies>
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.core</groupId>
-            <artifactId>log-facade-impl</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -45,9 +39,17 @@
         </dependency>
         <dependency>
             <groupId>com.core</groupId>
-            <artifactId>service-common</artifactId>
+            <artifactId>module-common</artifactId>
             <version>1.0.0</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.core</groupId>
+            <artifactId>module-model</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 </project>

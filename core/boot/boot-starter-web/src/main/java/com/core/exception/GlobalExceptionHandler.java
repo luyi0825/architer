@@ -1,10 +1,10 @@
 package com.core.exception;
 
 
-import com.core.service.StatusCode;
-import com.core.service.exception.ServiceException;
-import com.core.service.response.BaseResponse;
-import com.core.service.response.R;
+import com.core.module.common.StatusCode;
+import com.core.module.common.exception.ServiceException;
+import com.core.module.common.response.BaseResponse;
+import com.core.module.common.response.R;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindException;
@@ -28,6 +28,10 @@ import java.util.List;
 @Log4j2
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    public GlobalExceptionHandler() {
+        log.info("初始化全局异常处理....");
+    }
 
 
     @Value("${spring.application.name:12}")
