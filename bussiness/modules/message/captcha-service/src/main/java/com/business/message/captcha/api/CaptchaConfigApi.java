@@ -28,7 +28,7 @@ public interface CaptchaConfigApi {
     @ApiOperation(value = "分页查询")
     @ApiOperationSupport(ignoreParameters = {"entity"})
     @PostMapping("/pageQuery")
-    Pagination pageQuery(@RequestBody  QueryParam<CaptchaConfig> queryParam);
+    Pagination pageQuery(@RequestBody QueryParam<CaptchaConfig> queryParam);
 
     /**
      * 添加验证码配置
@@ -38,4 +38,22 @@ public interface CaptchaConfigApi {
     @ApiOperation(value = "添加验证码配置")
     @PostMapping("/add")
     void addCaptchaConfig(@RequestBody @Validated(AddGroup.class) CaptchaConfig captchaConfig);
+
+    /**
+     * 通过id(主键)查询验证码配置
+     *
+     * @param id 配置信息ID
+     */
+    @ApiOperation(value = "通过id(主键)查询验证码配置")
+    @GetMapping("/add/{id}")
+    CaptchaConfig findById(@PathVariable(name = "id") Integer id);
+
+    /**
+     * 修改验证码配置
+     *
+     * @param captchaConfig 修改的验证码配置信息
+     */
+    @PostMapping("/update")
+    @ApiOperation(value = "修改验证码配置")
+    void updateCaptchaConfig(@RequestBody CaptchaConfig captchaConfig);
 }

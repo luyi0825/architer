@@ -16,5 +16,14 @@
             <artifactId>module-message-captcha</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.core</groupId>
+            <artifactId>captcha</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.core</groupId>
+            <artifactId>redis-cache</artifactId>
+        </dependency>
     </dependencies>
 </project>

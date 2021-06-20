@@ -1,5 +1,6 @@
 package com.core.captcha.base;
 
+import com.core.captcha.CaptchaConstants;
 import com.core.captcha.model.CaptchaModel;
 
 import java.awt.*;
@@ -8,7 +9,6 @@ import java.awt.geom.QuadCurve2D;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.security.SecureRandom;
 import java.util.Base64;
 
 /**
@@ -60,7 +60,7 @@ public abstract class Captcha {
             model = this.getDefaultCaptchaModel();
         }
         String code = generateCode(model.getLen());
-        this.graphicsImage(os, code,model);
+        this.graphicsImage(os, code, model);
         return code;
     }
 
@@ -70,7 +70,7 @@ public abstract class Captcha {
      * @param code 验证码
      * @param os   输出流
      */
-    protected abstract void graphicsImage(OutputStream os, String code,CaptchaModel model) throws IOException;
+    protected abstract void graphicsImage(OutputStream os, String code, CaptchaModel model) throws IOException;
 
     /**
      * 生成验证码
@@ -105,8 +105,8 @@ public abstract class Captcha {
      * @param num 数量
      * @param g   Graphics2D
      */
-    public void drawLine(int num, Graphics2D g,CaptchaModel model) {
-        drawLine(num, null, g,model);
+    public void drawLine(int num, Graphics2D g, CaptchaModel model) {
+        drawLine(num, null, g, model);
     }
 
     /**
@@ -157,8 +157,6 @@ public abstract class Captcha {
         return new Color(color[0], color[1], color[2]);
     }
 
-    protected static final SecureRandom RANDOM = new SecureRandom();
-
 
     /**
      * 随机画干扰圆
@@ -166,8 +164,8 @@ public abstract class Captcha {
      * @param num 数量
      * @param g   Graphics2D
      */
-    public void drawOval(int num, Graphics2D g,CaptchaModel model) {
-        drawOval(num, null, g,model);
+    public void drawOval(int num, Graphics2D g, CaptchaModel model) {
+        drawOval(num, null, g, model);
     }
 
     /**
@@ -193,7 +191,7 @@ public abstract class Captcha {
      * @return 随机数
      */
     public static int num(int min, int max) {
-        return min + RANDOM.nextInt(max - min);
+        return min + CaptchaConstants.RANDOM.nextInt(max - min);
     }
 
     /**
@@ -203,7 +201,7 @@ public abstract class Captcha {
      * @return 随机数
      */
     public static int num(int num) {
-        return RANDOM.nextInt(num);
+        return CaptchaConstants.RANDOM.nextInt(num);
     }
 
     /**
@@ -212,8 +210,8 @@ public abstract class Captcha {
      * @param num 数量
      * @param g   Graphics2D
      */
-    public void drawBesselLine(int num, Graphics2D g,CaptchaModel model) {
-        drawBesselLine(num, null, g,model);
+    public void drawBesselLine(int num, Graphics2D g, CaptchaModel model) {
+        drawBesselLine(num, null, g, model);
     }
 
     /**

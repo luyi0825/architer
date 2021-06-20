@@ -30,4 +30,14 @@ public class CaptchaConfigApiImpl implements CaptchaConfigApi {
     public void addCaptchaConfig(CaptchaConfig captchaConfig) {
         captchaConfigService.addCaptchaConfig(captchaConfig);
     }
+
+    @Override
+    public CaptchaConfig findById(Integer id) {
+       return captchaConfigService.findById(id);
+    }
+
+    @Override
+    public void updateCaptchaConfig(CaptchaConfig captchaConfig) {
+        captchaConfigService.updateCaptchaConfig(captchaConfig);
+    }
 }

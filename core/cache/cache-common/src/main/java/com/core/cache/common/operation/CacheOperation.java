@@ -25,7 +25,7 @@ public class CacheOperation {
     /**
      * @see Cacheable#cacheName()
      */
-    private String[] cacheName;
+    private String cacheName;
 
     private LockType lock;
     /**

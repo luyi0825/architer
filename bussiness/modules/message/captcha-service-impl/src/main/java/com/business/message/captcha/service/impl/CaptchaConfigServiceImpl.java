@@ -1,6 +1,8 @@
 package com.business.message.captcha.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.business.message.captcha.dao.CatpchaConfigDao;
 import com.business.message.captcha.entity.CaptchaConfig;
 import com.business.message.captcha.service.CaptchaConfigService;
@@ -30,5 +32,22 @@ public class CaptchaConfigServiceImpl extends BaseServiceImpl<CaptchaConfig> imp
     public void addCaptchaConfig(CaptchaConfig captchaConfig) {
         captchaConfig.setAddTime(new Date());
         catpchaConfigDao.insert(captchaConfig);
+    }
+
+    @Override
+    public CaptchaConfig findById(Integer id) {
+        return catpchaConfigDao.selectById(id);
+    }
+
+    @Override
+    public void updateCaptchaConfig(CaptchaConfig captchaConfig) {
+        catpchaConfigDao.updateById(captchaConfig);
+    }
+
+    @Override
+    public CaptchaConfig findByCode(String captchaCode) {
+        QueryWrapper<CaptchaConfig> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("captcha_code", captchaCode);
+        return catpchaConfigDao.selectOne(queryWrapper);
     }
 }

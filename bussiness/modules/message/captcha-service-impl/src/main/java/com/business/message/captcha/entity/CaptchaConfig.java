@@ -42,6 +42,10 @@ public class CaptchaConfig implements Serializable {
     @ListValue(value = {"1", "2", "10", "20"}, message = "验证码类型有误")
     private String captchaType;
     /**
+     * 验证码编码
+     */
+    private String captchaCode;
+    /**
      * 过期时间/单位分钟
      */
     private Integer expireTime;
