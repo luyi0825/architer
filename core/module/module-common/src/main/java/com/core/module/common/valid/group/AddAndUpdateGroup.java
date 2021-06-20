@@ -1,5 +1,5 @@
 
-package com.core.service.valid.group;
+package com.core.module.common.valid.group;
 
 
 import javax.validation.GroupSequence;

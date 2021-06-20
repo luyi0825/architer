@@ -8,11 +8,12 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>service</artifactId>
-    <name>service</name>
+    <artifactId>module</artifactId>
+    <name>module</name>
     <description>公共</description>
     <packaging>pom</packaging>
     <modules>
-        <module>service-common</module>
+        <module>module-model</module>
+        <module>module-common</module>
     </modules>
 </project>

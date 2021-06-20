@@ -1,4 +1,4 @@
-package com.core.service.valid;
+package com.core.module.common.valid;
 
 
 import javax.validation.Constraint;

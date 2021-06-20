@@ -1,4 +1,4 @@
-package com.core.service.valid;
+package com.core.module.common.valid;
 
 /**
  * 描述:ListValue 注解的校验器 -- 数值

@@ -1,6 +1,6 @@
 
 
-package com.core.service.response;
+package com.core.module.common.response;
 
 
 import java.util.HashMap;

@@ -1,7 +1,7 @@
-package com.core.service.response;
+package com.core.module.common.response;
 
 
-import com.core.service.StatusCode;
+import com.core.module.common.StatusCode;
 import lombok.Data;
 
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package com.core.service.exception;
+package com.core.module.common.exception;
 
 /**
  * 业务异常

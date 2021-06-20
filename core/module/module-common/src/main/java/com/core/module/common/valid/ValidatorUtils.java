@@ -1,8 +1,8 @@
 
-package com.core.service.valid;
+package com.core.module.common.valid;
 
 
-import com.core.service.exception.ParamsValidException;
+import com.core.module.common.exception.ParamsValidException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

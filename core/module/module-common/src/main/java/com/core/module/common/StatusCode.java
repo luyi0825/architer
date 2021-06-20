@@ -1,4 +1,4 @@
-package com.core.service;
+package com.core.module.common;
 
 /**
  * 定义service常用异常
