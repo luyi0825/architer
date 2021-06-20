@@ -25,7 +25,7 @@ public @interface Cacheable {
     /**
      * 缓存名称
      */
-    String[] cacheName() default "";
+    String cacheName() default "";
 
     /**
      * 缓存key,支持SpEL

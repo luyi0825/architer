@@ -18,7 +18,7 @@ public @interface PutCache {
     /**
      * @see Cacheable#cacheName()
      */
-    String[] cacheName() default "";
+    String cacheName() default "";
 
     /**
      * @see Cacheable#key()
