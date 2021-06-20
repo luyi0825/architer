@@ -1,0 +1,31 @@
+boolean:
+  -
+    id: 0
+    text: 否
+  -
+    id: 1
+    text: 是
+country:
+  -
+    id: cn
+    text: 中国
+  -
+    id: en
+    text: 英国
+declareStatus:
+  -
+    id: 0
+    text: 未申报
+  -
+    id: 1
+    text: 未申报
+  -
+    id: 2
+    text: 审核中
+  -
+    id: 3
+    text: 审核通过
+  -
+    id: 4
+    text: 审核不通过
+

@@ -1,0 +1,35 @@
+##应用名称配置
+spring:
+  application:
+    name: gateway
+## nacos配置
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        ##配置文件拓展名
+        file-extension: yml
+        ## 命名空间
+        namespace: gateway
+        ## 分组,表示激活的配置文件（dev|test|prod）
+        #group: dev
+        extensionConfigs[0]:
+          ## mysql数据库配置
+          dataId: mysql.yml
+         # group: DEFAULT_GROUP
+          ## 配置自动刷新
+          refresh: true
+        extensionConfigs[1]:
+          ## redis的配置信息
+          dataId: redis.yml
+          #group: DEFAULT_GROUP
+          ## 配置自动刷新
+          refresh: true
+      discovery:
+        server-addr: localhost:8848
+        #group: dev
+        namespace: public
+
+
+
+
