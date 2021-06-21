@@ -12,7 +12,9 @@ server:
 mybatis-plus:
   #type-aliases-package: com.ly.*
   mapper-locations: classpath*:/com.bussniss.message/*/mapper/*.xml
-
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#org.apache.ibatis.logging.log4j2.Log4j2Impl #
 spring:
   cloud:
     sentinel:
@@ -28,6 +30,7 @@ spring:
         enabled: true
       username: root
       password: 123456
+
       url: jdbc:mysql://${host}:3306/message?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
