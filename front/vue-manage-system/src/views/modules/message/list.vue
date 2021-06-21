@@ -84,11 +84,11 @@ export default {
           conditions: [{
             'field': 'templateCode',
             'value': this.template.templateCode,
-            'query': 'like'
+            'condition': 'like'
           }, {
             'field': 'templateName',
             'value': this.template.templateName,
-            'query': 'like'
+            'condition': 'like'
           }]
         })
       }).then(() => {
