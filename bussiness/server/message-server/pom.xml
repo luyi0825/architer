@@ -45,5 +45,13 @@
             <!--在引用时请在maven中央仓库搜索3.X最新版本号-->
             <version>3.0.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.core</groupId>
+            <artifactId>cloud-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+        </dependency>
     </dependencies>
 </project>
