@@ -10,7 +10,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>module-model</artifactId>
-    <name>service-common</name>
+    <name>>module-model</name>
     <description>service公共</description>
     <packaging>jar</packaging>
     <dependencies>
