@@ -3,6 +3,7 @@ package com.business.message.template.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.core.mybatisplus.entity.BaseEntity;
 import lombok.Data;
 
 /**
@@ -13,7 +14,8 @@ import lombok.Data;
  */
 @TableName("t_message_template")
 @Data
-public class MessageTemplate {
+public class MessageTemplate extends BaseEntity {
+
     /**
      * 描述：模板名称
      */
@@ -31,16 +33,9 @@ public class MessageTemplate {
      */
     private String content;
 
-    /**
-     * 主题
-     */
-    private String subject;
 
-    /**
-     * 消息过期时间：分钟
-     */
-    @TableField("expire_time")
-    private Long expireTime;
+
+
 
 
 }
