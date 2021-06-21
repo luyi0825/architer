@@ -22,7 +22,10 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     public Pagination pageQuery(QueryParam<T> queryParam) {
         //分页对象
-        Pager pager=queryParam.getPage();
+        Pager pager = queryParam.getPage();
+        if (pager == null) {
+            pager = new Pager();
+        }
         Page page = new Page<T>(pager.getCurrentPage(), pager.getLimit());
         page = this.baseMapper.selectPage(page, queryWrapperBuilder.buildQueryWrapper(queryParam));
         return new Pagination(page);

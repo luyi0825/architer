@@ -12,10 +12,15 @@ public class Pager implements Serializable {
     /**
      * 当前页
      */
-    private Long currentPage;
+    private Integer currentPage;
     /**
      * 查询数量
      */
-    private Long limit = 10L;
+    private Integer limit;
+
+    public Pager() {
+        this.currentPage = 1;
+        this.limit = 10;
+    }
 
 }
