@@ -1,3 +1,6 @@
+
+nacos-host: 192.168.2.222
+
 ##应用名称配置
 spring:
   application:
@@ -6,11 +9,11 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: localhost:8848
+        server-addr: ${192.168.2.222}:8848
         ##配置文件拓展名
         file-extension: yml
         ## 命名空间
-        namespace: gateway
+        namespace: public
         ## 分组,表示激活的配置文件（dev|test|prod）
         #group: dev
         extensionConfigs[0]:
@@ -26,8 +29,7 @@ spring:
           ## 配置自动刷新
           refresh: true
       discovery:
-        server-addr: localhost:8848
-        #group: dev
+        server-addr: ${nacos-host}:8848
         namespace: public
 
 
