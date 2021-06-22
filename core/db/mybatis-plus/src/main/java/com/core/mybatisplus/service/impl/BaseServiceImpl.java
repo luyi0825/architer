@@ -1,12 +1,15 @@
 package com.core.mybatisplus.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.core.mybatisplus.*;
 import com.core.mybatisplus.builder.QueryWrapperBuilder;
 import com.core.mybatisplus.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -26,23 +29,31 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
         if (pager == null) {
             pager = new Pager();
         }
-        Page page = new Page<T>(pager.getCurrentPage(), pager.getLimit());
+        Page<T> page = new Page<>(pager.getCurrentPage(), pager.getLimit());
         page = this.baseMapper.selectPage(page, queryWrapperBuilder.buildQueryWrapper(queryParam));
         return new Pagination(page);
     }
 
-
-    /**
-     * 描述：根据指定查询条件查询
-     *
-     * @param queryParam 查询参数
-     * @return list 数据
-     * @date 2020/12/28
-     */
     @Override
-    public List<T> queryList(QueryParam<T> queryParam) {
+    public List<T> selectList(QueryParam<T> queryParam) {
         return this.baseMapper.selectList(queryWrapperBuilder.buildQueryWrapper(queryParam));
     }
+
+    @Override
+    public List<T> selectList(QueryWrapper<T> queryWrapper) {
+        return this.baseMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public T getById(@NonNull Serializable id) {
+        return this.baseMapper.selectById(id);
+    }
+
+    @Override
+    public int insert(T entity) {
+        return this.baseMapper.insert(entity);
+    }
+
 
     @Autowired
     public void setQueryWrapperBuilder(QueryWrapperBuilder<T> queryWrapperBuilder) {
