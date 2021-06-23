@@ -1,12 +1,13 @@
 package com.core.mybatisplus.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author luyi
  * 实体的基类
  */
-public abstract class BaseEntity {
+public abstract class BaseEntity implements Serializable {
     /**
      * 添加人
      */
