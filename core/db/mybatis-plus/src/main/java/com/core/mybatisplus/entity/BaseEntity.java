@@ -1,7 +1,5 @@
 package com.core.mybatisplus.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-
 import java.util.Date;
 
 /**
