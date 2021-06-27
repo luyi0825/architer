@@ -13,8 +13,8 @@
     <modules>
         <module>message-template</module>
         <module>message-template-impl</module>
-        <module>captcha-service</module>
-        <module>captcha-service-impl</module>
+        <module>mail-service</module>
+        <module>mail-service-impl</module>
         <module>captcha-service</module>
         <module>captcha-service-impl</module>
     </modules>
