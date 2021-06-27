@@ -1,4 +1,4 @@
-package com.core.boot;
+package com.core.starter.web.module;
 
 
 import com.core.module.common.Module;

@@ -1,4 +1,4 @@
-package com.core.exception;
+package com.core.starter.web.exception;
 
 
 import com.core.module.common.StatusCode;
