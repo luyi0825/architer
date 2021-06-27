@@ -15,5 +15,8 @@
     <modules>
         <module>message-server</module>
         <module>gateway-server</module>
+        <module>base-server</module>
+        <module>sso-server</module>
+        <module>file-server</module>
     </modules>
 </project>
