@@ -1,0 +1,29 @@
+
+nacos-host: 192.168.2.222
+##应用名称配置
+spring:
+  application:
+    ##会员服务
+    name: base-service
+## nacos配置
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos-host}:8848
+        ##配置文件拓展名
+        file-extension: yml
+        ## 命名空间
+        namespace: public
+      ## 注册中心配置
+      discovery:
+        server-addr: ${nacos-host}:8848
+        namespace: public
+        group: DEFAULT_GROUP
+        enabled: true
+
+
+
+
+
+
+
