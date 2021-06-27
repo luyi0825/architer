@@ -35,6 +35,9 @@ public interface BaseService<T> {
 
     /**
      * 通过mybitis-plus的QueryWrapper查询
+     *
+     * @param queryWrapper mybitis-plus的QueryWrapper
+     * @return 满足条件的结果集合
      */
     List<T> selectList(QueryWrapper<T> queryWrapper);
 
@@ -42,16 +45,23 @@ public interface BaseService<T> {
      * 通过主键查询
      *
      * @param id 主键ID
+     * @return 实体信息
      */
     T getById(@NonNull Serializable id);
 
     /**
      * 添加
+     *
+     * @param entity 需要添加的信息
+     * @return 添加成功的条数
      */
     int insert(T entity);
 
     /**
      * 通过主键ID查询
+     *
+     * @param id 主键ID
+     * @return 删除的条数
      */
     int delete(Serializable id);
 
