@@ -25,5 +25,14 @@
             <groupId>com.core</groupId>
             <artifactId>redis-cache</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.core</groupId>
+            <artifactId>test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.core</groupId>
+            <artifactId>module-model</artifactId>
+        </dependency>
     </dependencies>
 </project>

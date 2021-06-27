@@ -1,17 +1,15 @@
 package com.business.message.captcha.component;
 
 import com.business.message.captcha.CaptchaType;
-import com.business.message.captcha.entity.CaptchaConfig;
-import com.business.message.captcha.service.CaptchaConfigService;
+import com.business.message.captcha.entity.CaptchaTemplate;
+import com.business.message.captcha.service.CaptchaTemplateService;
 import com.core.cache.redis.RedisConstants;
 import com.core.cache.redis.StringRedisService;
 import com.core.captcha.CharacterGifCaptcha;
 import com.core.captcha.CharacterStaticCaptcha;
 import com.core.captcha.base.Captcha;
-import com.core.captcha.base.CharacterCaptcha;
 import com.core.captcha.utils.CharacterCaptchaUtil;
 import com.core.module.common.exception.ServiceException;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,13 +22,13 @@ import javax.servlet.http.HttpSession;
  */
 @Component
 public class CaptchaProducer {
-    private final CaptchaConfigService captchaConfigService;
+    private final CaptchaTemplateService captchaTemplateService;
     private final StringRedisService redisService;
     private final static String SESSION_CAPTCHA = "session_captcha";
 
-    public CaptchaProducer(CaptchaConfigService captchaConfigService,
+    public CaptchaProducer(CaptchaTemplateService captchaTemplateService,
                            StringRedisService redisService) {
-        this.captchaConfigService = captchaConfigService;
+        this.captchaTemplateService = captchaTemplateService;
         this.redisService = redisService;
     }
 
@@ -38,15 +36,15 @@ public class CaptchaProducer {
      *
      */
     public String produceImage(HttpServletResponse response, HttpSession session, String captchaCode) {
-        CaptchaConfig captchaConfig = captchaConfigService.findByCode(captchaCode);
-        if (captchaConfig == null) {
+        CaptchaTemplate captchaEntity = captchaTemplateService.findByCode(captchaCode);
+        if (captchaEntity == null) {
             throw new ServiceException("验证码配置不存在");
         }
-        String type = captchaConfig.getCaptchaType();
+        int type = captchaEntity.getCaptchaType();
         Captcha captcha = null;
-        if (CaptchaType.PICTURE_PNG.getType().equals(type)) {
+        if (CaptchaType.PICTURE_PNG.getType() == type) {
             captcha = new CharacterStaticCaptcha();
-        } else if (CaptchaType.PICTURE_GIF.getType().equals(type)) {
+        } else if (CaptchaType.PICTURE_GIF.getType() == type) {
             captcha = new CharacterGifCaptcha();
         }
         response.setContentType("image/gif");
@@ -56,7 +54,7 @@ public class CaptchaProducer {
         try {
             String code = captcha.out(response.getOutputStream(), null);
             String key = SESSION_CAPTCHA + RedisConstants.SPLIT + session.getId();
-            redisService.set(key, code, captchaConfig.getExpireTime() * 60);
+            redisService.set(key, code, captchaEntity.getExpireTime() * 60);
             return code;
         } catch (Exception e) {
             throw new ServiceException("生成验证码失败", e);
@@ -64,10 +62,10 @@ public class CaptchaProducer {
     }
 
     public void produceMail(String captchaCode, String mail) {
-        CaptchaConfig captchaConfig = captchaConfigService.findByCode(captchaCode);
-        if (captchaConfig == null) {
+        CaptchaTemplate captchaEntity = captchaTemplateService.findByCode(captchaCode);
+        if (captchaEntity == null) {
             throw new ServiceException("验证码配置不存在");
         }
-        String code = CharacterCaptchaUtil.getCode(captchaConfig.getCaptchaLength());
+        String code = CharacterCaptchaUtil.getCode(captchaEntity.getCaptchaLength());
     }
 }

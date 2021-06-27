@@ -1,6 +1,7 @@
 package com.business.message.captcha.api;
 
-import com.business.message.captcha.entity.CaptchaConfig;
+
+import com.business.message.captcha.entity.CaptchaTemplate;
 import com.core.module.common.valid.group.AddGroup;
 import com.core.mybatisplus.Pagination;
 import com.core.mybatisplus.QueryParam;
@@ -15,9 +16,10 @@ import io.swagger.annotations.Api;
  *
  * @author luyi
  */
-@RestController("captchaConfigApi")
-@Api(tags = "验证码配置")
-public interface CaptchaConfigApi {
+@RestController()
+@Api(tags = "验证码模板")
+@RequestMapping("/captchaTemplateApi")
+public interface CaptchaTemplateApi {
 
     /**
      * 分页查询
@@ -28,16 +30,16 @@ public interface CaptchaConfigApi {
     @ApiOperation(value = "分页查询")
     @ApiOperationSupport(ignoreParameters = {"entity"})
     @PostMapping("/pageQuery")
-    Pagination pageQuery(@RequestBody QueryParam<CaptchaConfig> queryParam);
+    Pagination pageQuery(@RequestBody QueryParam<CaptchaTemplate> queryParam);
 
     /**
      * 添加验证码配置
      *
-     * @param captchaConfig 配置信息
+     * @param captchaEntity 配置信息
      */
-    @ApiOperation(value = "添加验证码配置")
+    @ApiOperation(value = "添加验证码模板")
     @PostMapping("/add")
-    void addCaptchaConfig(@RequestBody @Validated(AddGroup.class) CaptchaConfig captchaConfig);
+    void addCaptchaTemplate(@RequestBody @Validated(AddGroup.class) CaptchaTemplate captchaEntity);
 
     /**
      * 通过id(主键)查询验证码配置
@@ -45,15 +47,24 @@ public interface CaptchaConfigApi {
      * @param id 配置信息ID
      */
     @ApiOperation(value = "通过id(主键)查询验证码配置")
-    @GetMapping("/add/{id}")
-    CaptchaConfig findById(@PathVariable(name = "id") Integer id);
+    @GetMapping("/findById/{id}")
+    CaptchaTemplate findById(@PathVariable(name = "id") Integer id);
 
     /**
      * 修改验证码配置
      *
-     * @param captchaConfig 修改的验证码配置信息
+     * @param captchaEntity 修改的验证码配置信息
      */
     @PostMapping("/update")
-    @ApiOperation(value = "修改验证码配置")
-    void updateCaptchaConfig(@RequestBody CaptchaConfig captchaConfig);
+    @ApiOperation(value = "修改验证码模板")
+    void updateCaptchaTemplate(@RequestBody CaptchaTemplate captchaEntity);
+
+    /**
+     * 通过主键ID删除
+     *
+     * @param id 主键ID
+     */
+    @PostMapping("/delete/{id}")
+    @ApiOperation(value = "通过主键ID删除验证码模板")
+    void delete(@PathVariable int id);
 }
