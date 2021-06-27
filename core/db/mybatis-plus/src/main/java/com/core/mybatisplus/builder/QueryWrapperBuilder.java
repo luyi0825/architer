@@ -3,6 +3,8 @@ package com.core.mybatisplus.builder;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.core.mybatisplus.*;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -95,7 +97,10 @@ public class QueryWrapperBuilder<T> {
                         queryWrapper.eq(field, value);
                         break;
                     case "like":
-                        queryWrapper.like(field, value);
+                        if (ObjectUtils.isNotEmpty(value)) {
+                            queryWrapper.like(field, value);
+                        }
+
                     default:
                         break;
                 }
