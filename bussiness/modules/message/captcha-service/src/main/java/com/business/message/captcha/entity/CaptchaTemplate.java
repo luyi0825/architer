@@ -6,23 +6,30 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.core.mybatisplus.entity.BaseEntity;
 import lombok.Data;
 
 /**
- * 验证码配置
+ * 验证码模板
  *
  * @author luyi
  */
 @Data
-@TableName("t_message_captcha_config")
-public class CaptchaConfig implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+@TableName("t_message_captcha_template")
+public class CaptchaTemplate extends BaseEntity implements Serializable {
     /**
      * 主键ID
      */
     @TableId
     private Integer id;
+    /**
+     * 编码
+     */
+    private String templateCode;
+    /**
+     * 模板名称
+     */
+    private String templateName;
     /**
      * 验证码长度
      */
@@ -36,20 +43,9 @@ public class CaptchaConfig implements Serializable {
      */
     private Integer expireTime;
     /**
-     * 添加人
+     * 验证码内容
      */
-    private String addUser;
-    /**
-     * 添加时间
-     */
-    private String addTime;
-    /**
-     * 更新人
-     */
-    private Date updateUser;
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
+    private String content;
+
 
 }
