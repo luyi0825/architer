@@ -9,30 +9,31 @@ public enum CaptchaType {
     /**
      * 图片验证吗
      */
-    PICTURE_PNG("1", "图片验证码)"),
-    PICTURE_GIF("2", "GIF图片验证码"),
+    PICTURE_PNG(1, "图片验证码)"),
+    PICTURE_GIF(2, "GIF图片验证码"),
     /**
-     *邮件验证码
+     * 邮件验证码
      */
-    MAIL("10","邮件验证码"),
+    MAIL(10, "邮件验证码"),
     /**
      * 短信验证码
      */
-    SMS("20","短信验证码");
-    private String type;
+    SMS(20, "短信验证码");
+    private int type;
     private String caption;
 
-    CaptchaType(String type, String caption) {
+    CaptchaType(int type, String caption) {
         this.type = type;
         this.caption = caption;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public CaptchaType setType(int type) {
         this.type = type;
+        return this;
     }
 
     public String getCaption() {
@@ -43,7 +44,7 @@ public enum CaptchaType {
         this.caption = caption;
     }
 
-    public static String[] getTypes(){
+    public static String[] getTypes() {
         return null;
     }
 
