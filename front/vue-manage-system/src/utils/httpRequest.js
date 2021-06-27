@@ -1,4 +1,3 @@
-
 import axios from 'axios'
 import qs from 'qs'
 import merge from 'lodash/merge'
@@ -16,37 +15,37 @@ const http = axios.create({
  * 请求拦截
  */
 http.interceptors.request.use(config => {
-  // Vue.cookie.get('token');// 请求头带上token
-  var token = sessionStorage.getItem('token')
-  if (token) {
-    config.headers['token'] = token
-  }
-  return config
+    // Vue.cookie.get('token');// 请求头带上token
+    var token = sessionStorage.getItem('token')
+    if (token) {
+        config.headers['token'] = token
+    }
+    return config
 }, error => {
-  return Promise.reject(error)
+    return Promise.reject(error)
 })
 
 /**
  * 响应拦截
  */
 http.interceptors.response.use(response => {
-  // eslint-disable-next-line no-undef
-  if (response.data && response.data.code === 401) { // 401, token失效
-   // clearLoginInfo()
-   // router.push({name: 'login'})
-  }
-  var headers = response.headers
+    // eslint-disable-next-line no-undef
+    if (response.data && response.data.code === 401) { // 401, token失效
+        // clearLoginInfo()
+        // router.push({name: 'login'})
+    }
+    var headers = response.headers
 
-  if (headers && headers.token) {
-    sessionStorage.setItem('token', headers.token)
-    // console.log("token update:",headers.token)
-    // Vue.cookie.set("token",headers.token);
-    // console.log(Vue.cookie.get("token"))
-    // document.cookie = "token=" + headers.token;
-  }
-  return response
+    if (headers && headers.token) {
+        sessionStorage.setItem('token', headers.token)
+        // console.log("token update:",headers.token)
+        // Vue.cookie.set("token",headers.token);
+        // console.log(Vue.cookie.get("token"))
+        // document.cookie = "token=" + headers.token;
+    }
+    return response
 }, error => {
-  return Promise.reject(error)
+    return Promise.reject(error)
 })
 
 /**
@@ -54,9 +53,9 @@ http.interceptors.response.use(response => {
  * @param {*} actionName action方法名称
  */
 http.adornUrl = (actionName) => {
-  // 非生产环境 && 开启代理, 接口前缀统一使用[/proxyApi/]前缀做代理拦截!
-  return "http://localhost:8888"+actionName;
-  //return (process.env.NODE_ENV !== 'production' && process.env.OPEN_PROXY ? '/proxyApi/' : window.SITE_CONFIG.baseUrl) + actionName
+    // 非生产环境 && 开启代理, 接口前缀统一使用[/proxyApi/]前缀做代理拦截!
+    return "http://localhost:9999" + actionName;
+    //return (process.env.NODE_ENV !== 'production' && process.env.OPEN_PROXY ? '/proxyApi/' : window.SITE_CONFIG.baseUrl) + actionName
 }
 
 /**
@@ -65,10 +64,10 @@ http.adornUrl = (actionName) => {
  * @param {*} openDefultParams 是否开启默认参数?
  */
 http.adornParams = (params = {}, openDefultParams = true) => {
-  var defaults = {
-    't': new Date().getTime()
-  }
-  return openDefultParams ? merge(defaults, params) : params
+    var defaults = {
+        't': new Date().getTime()
+    }
+    return openDefultParams ? merge(defaults, params) : params
 }
 
 /**
@@ -80,10 +79,10 @@ http.adornParams = (params = {}, openDefultParams = true) => {
  *  form: 'application/x-www-form-urlencoded; charset=utf-8'
  */
 http.adornData = (data = {}, openDefultdata = true, contentType = 'json') => {
-  var defaults = {
-    't': new Date().getTime()
-  }
-  data = openDefultdata ? merge(defaults, data) : data
-  return contentType === 'json' ? JSON.stringify(data) : qs.stringify(data)
+    var defaults = {
+        't': new Date().getTime()
+    }
+    data = openDefultdata ? merge(defaults, data) : data
+    return contentType === 'json' ? JSON.stringify(data) : qs.stringify(data)
 }
 export default http
