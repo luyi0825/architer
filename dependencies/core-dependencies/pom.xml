@@ -80,6 +80,11 @@
                 <artifactId>db-druid</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.core</groupId>
+                <artifactId>test</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
