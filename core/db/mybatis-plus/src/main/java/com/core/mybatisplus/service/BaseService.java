@@ -50,5 +50,9 @@ public interface BaseService<T> {
      */
     int insert(T entity);
 
+    /**
+     * 通过主键ID查询
+     */
+    int delete(Serializable id);
 
 }

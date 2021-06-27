@@ -54,6 +54,10 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
         return this.baseMapper.insert(entity);
     }
 
+    @Override
+    public int delete(Serializable id) {
+        return this.baseMapper.deleteById(id);
+    }
 
     @Autowired
     public void setQueryWrapperBuilder(QueryWrapperBuilder<T> queryWrapperBuilder) {
