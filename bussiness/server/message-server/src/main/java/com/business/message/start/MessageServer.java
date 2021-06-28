@@ -1,7 +1,7 @@
 package com.business.message.start;
 
 import com.core.starter.web.module.MoulesBuilder;
-import com.core.cache.common.annotation.CustomEnableCaching;
+import com.core.cache.common.annotation.EnableCustomCaching;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +13,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author luyi
  */
 @SpringBootApplication
-@CustomEnableCaching
+@EnableCustomCaching
 @EnableDiscoveryClient
 @MapperScan("com.business.message.*.dao")
 public class MessageServer {

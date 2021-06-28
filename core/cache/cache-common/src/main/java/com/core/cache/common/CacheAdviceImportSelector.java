@@ -1,7 +1,7 @@
 package com.core.cache.common;
 
 
-import com.core.cache.common.annotation.CustomEnableCaching;
+import com.core.cache.common.annotation.EnableCustomCaching;
 import com.core.cache.common.aspectj.AspectjConfiguration;
 import com.core.cache.common.proxy.ProxyConfiguration;
 import org.springframework.context.annotation.AdviceMode;
@@ -18,9 +18,9 @@ import java.util.function.Predicate;
  * @author luyi
  * @see org.springframework.cache.annotation.CachingConfigurationSelector
  * </p>
- * @see CustomEnableCaching
+ * @see EnableCustomCaching
  */
-public class CacheAdviceImportSelector extends AdviceModeImportSelector<CustomEnableCaching> {
+public class CacheAdviceImportSelector extends AdviceModeImportSelector<EnableCustomCaching> {
 
     @Override
     public String[] selectImports(AdviceMode adviceMode) {

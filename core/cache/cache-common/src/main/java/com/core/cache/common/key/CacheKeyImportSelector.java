@@ -1,6 +1,6 @@
 package com.core.cache.common.key;
 
-import com.core.cache.common.annotation.CustomEnableCaching;
+import com.core.cache.common.annotation.EnableCustomCaching;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
@@ -27,7 +27,7 @@ public class CacheKeyImportSelector implements ImportSelector {
      */
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-        Class<?> annType = CustomEnableCaching.class;
+        Class<?> annType = EnableCustomCaching.class;
         AnnotationAttributes attributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(annType.getName(), false));
         String[] imports = selectKeyStrategyImports();
         if (imports == null) {
