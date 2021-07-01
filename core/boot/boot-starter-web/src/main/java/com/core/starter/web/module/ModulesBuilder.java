@@ -23,7 +23,7 @@ import java.util.Set;
  * 可以通过set方法修改默认的scanPackages和resourcePattern
  */
 @Log4j2
-public class MoulesBuilder {
+public class ModulesBuilder {
 
     /**
      * 扫描的包
@@ -34,6 +34,9 @@ public class MoulesBuilder {
      * 资源模式
      */
     private String resourcePattern = "*Module.class";
+
+    public ModulesBuilder() {
+    }
 
 
     /**
@@ -102,7 +105,7 @@ public class MoulesBuilder {
                     Module module = clazz.getAnnotation(Module.class);
                     if (module != null) {
                         resourceSet.add(clazz);
-                        log.info("load moule:{}-{}-{}", module.name(), module.caption(),className);
+                        log.info("start load module:{}-{}-{}", module.name(), module.caption(),className);
                     }
                 }
             }
@@ -129,7 +132,7 @@ public class MoulesBuilder {
      * @param scanPackages 包扫描范围
      * @return 模块构建器
      */
-    public MoulesBuilder setScanPackages(String[] scanPackages) {
+    public ModulesBuilder setScanPackages(String[] scanPackages) {
         Assert.notEmpty(scanPackages, "scanPackages is null");
         this.scanPackages = scanPackages;
         return this;
@@ -141,7 +144,7 @@ public class MoulesBuilder {
      * @param resourcePattern 资源形式
      * @return 模块构建器
      */
-    public MoulesBuilder setResourcePattern(String resourcePattern) {
+    public ModulesBuilder setResourcePattern(String resourcePattern) {
         Assert.notNull(resourcePattern, "resourcePattern not null");
         this.resourcePattern = resourcePattern;
         return this;

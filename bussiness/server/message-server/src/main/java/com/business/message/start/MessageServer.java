@@ -1,6 +1,6 @@
 package com.business.message.start;
 
-import com.core.starter.web.module.MoulesBuilder;
+import com.core.starter.web.module.ModulesBuilder;
 import com.core.cache.common.annotation.EnableCustomCaching;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -18,7 +18,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @MapperScan("com.business.message.*.dao")
 public class MessageServer {
     public static void main(String[] args) {
-        Class<?>[] modules = new MoulesBuilder().buildMoules(MessageServer.class);
+        Class<?>[] modules = new ModulesBuilder().buildMoules(MessageServer.class);
         new SpringApplication(modules).run(args);
     }
 

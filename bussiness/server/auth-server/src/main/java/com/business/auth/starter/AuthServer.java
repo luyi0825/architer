@@ -1,6 +1,6 @@
 package com.business.auth.starter;
 
-import com.core.starter.web.module.MoulesBuilder;
+import com.core.starter.web.module.ModulesBuilder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AuthServer {
     public static void main(String[] args) {
-        Class<?>[] classes = new MoulesBuilder().buildMoules(AuthServer.class);
+        Class<?>[] classes = new ModulesBuilder().buildMoules(AuthServer.class);
         new SpringApplication(classes).run(args);
     }
 }
