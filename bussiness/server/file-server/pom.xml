@@ -7,8 +7,8 @@
         <groupId>com.bussiness</groupId>
         <version>1.0.0</version>
     </parent>
-    <artifactId>sso-server</artifactId>
-    <name>sso-server</name>
+    <artifactId>file-server</artifactId>
+    <name>file-server</name>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
