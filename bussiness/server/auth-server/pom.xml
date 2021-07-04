@@ -31,5 +31,11 @@
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-client</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.bussiness</groupId>
+            <artifactId>module-auth-user-service-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
