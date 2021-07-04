@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>message</module>
+        <module>auth</module>
     </modules>
     <dependencies>
         <dependency>
