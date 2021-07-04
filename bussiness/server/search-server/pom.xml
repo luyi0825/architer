@@ -12,6 +12,10 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.core</groupId>
             <artifactId>boot-starter-web</artifactId>
         </dependency>
