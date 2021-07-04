@@ -65,4 +65,11 @@ public interface BaseService<T> {
      */
     int delete(Serializable id);
 
+    /**
+     * 查询一条数据
+     * @param queryWrapper  mybitis-plus的QueryWrapper
+     * @return 单个数据
+     */
+    T selectOne(QueryWrapper<T> queryWrapper);
+
 }
