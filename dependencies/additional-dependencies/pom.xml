@@ -41,6 +41,7 @@
         <junit-jupiter-api.verison>5.7.1</junit-jupiter-api.verison>
         <mybaits-plus.version>3.4.1</mybaits-plus.version>
         <mysql.version>8.0.25</mysql.version>
+        <elasticsearch.version>7.9.3</elasticsearch.version>
     </properties>
 
     <dependencyManagement>
@@ -171,6 +172,11 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
