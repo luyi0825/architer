@@ -18,5 +18,6 @@
         <module>base-server</module>
         <module>auth-server</module>
         <module>file-server</module>
+        <module>search-server</module>
     </modules>
 </project>
