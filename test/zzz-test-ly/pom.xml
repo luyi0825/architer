@@ -11,6 +11,7 @@
     <modules>
         <module>cloud</module>
         <module>jvm</module>
+        <module>mysql-initdata</module>
 
     </modules>
     <properties>

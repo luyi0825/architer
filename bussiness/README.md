@@ -6,5 +6,6 @@
 - 文件服务（file-server） 9004
 - 授权服务（auth-server）9006
 - 搜索服务（search-server） 9008  
-- 网关（gateway）9999
+- 定时任务服务 9010   
+- 网关（gateway）9999/80/433
 
