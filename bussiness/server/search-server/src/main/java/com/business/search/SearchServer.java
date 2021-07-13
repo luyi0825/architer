@@ -1,4 +1,4 @@
-package com.business.search.start;
+package com.business.search;
 
 import com.core.starter.web.module.ModulesBuilder;
 import org.springframework.boot.SpringApplication;
@@ -12,9 +12,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-public class MessageServer {
+public class SearchServer {
     public static void main(String[] args) {
-        Class<?>[] modules = new ModulesBuilder().buildMoules(MessageServer.class);
+        Class<?>[] modules = new ModulesBuilder().buildMoules(SearchServer.class);
         new SpringApplication(modules).run(args);
     }
 

@@ -8,7 +8,7 @@ server:
       force: true
   tomcat:
     uri-encoding: UTF-8
-  port: 9000
+  port: 9008
 
 mybatis-plus:
   #type-aliases-package: com.ly.*

@@ -1,4 +1,4 @@
-package com.business.search.start;
+package com.business.search.config;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RequestOptions;
@@ -26,6 +26,6 @@ public class RestHighLevelClientConfig {
     public RestHighLevelClient esClient() {
         return new RestHighLevelClient(
                 RestClient.builder(
-                        new HttpHost("124.71.110.204", 9200)));
+                        new HttpHost("192.168.2.222", 9200,"http")));
     }
 }

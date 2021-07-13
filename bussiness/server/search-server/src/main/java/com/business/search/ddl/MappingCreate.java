@@ -19,7 +19,7 @@ import java.util.Map;
  * 创造mapping
  */
 @Component
-public class MappingCreater {
+public class MappingCreate {
     private RestHighLevelClient restHighLevelClient;
 
     /**
