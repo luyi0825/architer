@@ -1,14 +1,11 @@
 package com.business.search.ddl.service.impl;
 
 import com.business.search.ddl.MappingType;
-import com.business.search.ddl.dao.IndexDao;
-import com.business.search.ddl.dao.MappingDao;
+import com.business.search.ddl.dao.IndexMappingDao;
 import com.business.search.ddl.model.MappingItem;
-import com.business.search.ddl.model.SearchMapping;
+import com.business.search.ddl.model.IndexMapping;
 import com.business.search.ddl.service.MappingService;
 import com.core.module.common.exception.ParamsValidException;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.indices.PutMappingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -23,31 +20,29 @@ import java.util.Map;
  */
 @Service
 public class MappingServiceImpl implements MappingService {
-    private final IndexDao indexDao;
-    private final MappingDao mappingDao;
+    private final IndexMappingDao indexMappingDao;
 
     @Autowired
-    public MappingServiceImpl(IndexDao indexDao, MappingDao mappingDao) {
-        this.indexDao = indexDao;
-        this.mappingDao = mappingDao;
+    public MappingServiceImpl(IndexMappingDao indexMappingDao) {
+        this.indexMappingDao = indexMappingDao;
     }
 
     /**
      * 创建mapping
      *
-     * @param searchMapping
+     * @param indexMapping
      * @return
      * @throws IOException
      */
     @Override
-    public boolean createMapping(SearchMapping searchMapping) throws IOException {
+    public boolean createMapping(IndexMapping indexMapping) throws IOException {
         //判断索引是否已经存在
-        if (indexDao.exists(searchMapping.getIndex())) {
+        if (indexMappingDao.exists(indexMapping.getIndex())) {
             return false;
         }
         //创建index
-        indexDao.createIndex(searchMapping.getIndex(),null,null);
-        List<MappingItem> mappingItems = searchMapping.getMappingItems();
+        indexMappingDao.createIndex(indexMapping.getIndex(),null,null);
+        List<MappingItem> mappingItems = indexMapping.getMappingItems();
         Map<String, Object> mapping = new HashMap<>(mappingItems.size());
         mappingItems.forEach(mappingItem -> {
             String field = mappingItem.getField();
@@ -64,6 +59,6 @@ public class MappingServiceImpl implements MappingService {
             properties.put("message", message);
             mapping.put("properties", properties);
         });
-        return mappingDao.putMapping(searchMapping.getIndex(), mapping);
+        return indexMappingDao.putMapping(indexMapping.getIndex(), mapping);
     }
 }

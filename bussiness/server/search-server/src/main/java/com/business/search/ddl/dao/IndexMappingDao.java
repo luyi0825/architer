@@ -1,9 +1,11 @@
 package com.business.search.ddl.dao;
 
+
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.GetIndexRequest;
+import org.elasticsearch.client.indices.PutMappingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -13,11 +15,12 @@ import java.util.Map;
 
 /**
  * @author luyi
- * index操作
+ * es的mapping 操作
  */
 @Component
-public class IndexDao {
+public class IndexMappingDao {
     private RestHighLevelClient client;
+
 
     /**
      * 判断index是否存在
@@ -41,6 +44,21 @@ public class IndexDao {
         }
         return client.indices().create(indexRequest, RequestOptions.DEFAULT).isAcknowledged();
     }
+
+    /**
+     * 添加mapping
+     *
+     * @param index   对应es中的index
+     * @param mapping mapping 定义
+     * @return 是否成功
+     * @throws IOException client.indices().putMapping 抛出的异常
+     */
+    public boolean putMapping(String index, Map<String, ?> mapping) throws IOException {
+        PutMappingRequest putMappingRequest = new PutMappingRequest(index);
+        putMappingRequest.source(mapping);
+        return client.indices().putMapping(putMappingRequest, RequestOptions.DEFAULT).isAcknowledged();
+    }
+
 
     @Autowired
     public void setClient(RestHighLevelClient client) {

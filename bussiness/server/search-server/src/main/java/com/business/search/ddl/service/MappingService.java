@@ -1,9 +1,9 @@
 package com.business.search.ddl.service;
 
-import com.business.search.ddl.model.SearchMapping;
+import com.business.search.ddl.model.IndexMapping;
 
 import java.io.IOException;
 
 public interface MappingService {
-    public boolean createMapping(SearchMapping searchMapping) throws IOException;
+    boolean createMapping(IndexMapping indexMapping) throws IOException;
 }

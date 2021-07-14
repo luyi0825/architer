@@ -7,7 +7,7 @@ import java.util.List;
  * @author luyi
  * 查询引擎的mapping
  */
-public class SearchMapping implements Serializable {
+public class IndexMapping implements Serializable {
     /**
      * index项
      */
