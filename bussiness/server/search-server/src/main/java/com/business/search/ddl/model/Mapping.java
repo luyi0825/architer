@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * @author luyi
+ * es 中mapping定义
  */
 public class Mapping implements Serializable {
     /**

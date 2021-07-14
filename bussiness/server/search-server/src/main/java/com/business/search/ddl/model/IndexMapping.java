@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * @author luyi
- * 查询引擎的mapping
+ * es的index定义，并包含mapping
  */
 public class IndexMapping implements Serializable {
     /**

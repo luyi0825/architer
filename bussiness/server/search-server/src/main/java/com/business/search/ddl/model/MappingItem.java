@@ -5,6 +5,8 @@ import com.business.search.ddl.MappingType;
 import java.io.Serializable;
 
 /**
+ * mapping字段项
+ *
  * @author luyi
  */
 public class MappingItem implements Serializable {
