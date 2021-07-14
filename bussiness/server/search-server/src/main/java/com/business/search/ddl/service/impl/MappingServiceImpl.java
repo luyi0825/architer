@@ -56,7 +56,7 @@ public class MappingServiceImpl implements MappingService {
             Map<String, Object> message = new HashMap<>(1);
             message.put("type", mappingType.getType());
             Map<String, Object> properties = new HashMap<>(1);
-            properties.put("message", message);
+            properties.put(field, message);
             mapping.put("properties", properties);
         });
         return indexMappingDao.putMapping(indexMapping.getIndex(), mapping);
