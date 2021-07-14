@@ -5,8 +5,8 @@ import com.business.search.properties.EsHost;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +21,13 @@ import java.util.List;
 @Configuration
 @EnableConfigurationProperties(ElasticSearchProperties.class)
 public class RestHighLevelClientConfig {
-    @Autowired
-    private ElasticSearchProperties elasticSearchProperties;
+
+    private final ElasticSearchProperties elasticSearchProperties;
+
+    RestHighLevelClientConfig(ElasticSearchProperties elasticSearchProperties) {
+        this.elasticSearchProperties = elasticSearchProperties;
+    }
+
 
     public static final RequestOptions COMMON_OPTIONS;
 
@@ -36,14 +41,14 @@ public class RestHighLevelClientConfig {
     }
 
     @Bean
-    public RestHighLevelClient esClient() {
+    public RestHighLevelClient restHighLevelClient() {
         List<EsHost> hosts = elasticSearchProperties.getHosts();
         if (CollectionUtils.isEmpty(hosts)) {
             throw new IllegalArgumentException("es hosts is null");
         }
         List<HttpHost> httpHosts = new ArrayList<>(hosts.size());
         hosts.forEach(host -> httpHosts.add(new HttpHost(host.getIp(), host.getPort(), host.getScheme())));
-        return new RestHighLevelClient(
-                RestClient.builder(httpHosts.toArray(new HttpHost[0])));
+        RestClientBuilder restClientBuilder = RestClient.builder(httpHosts.toArray(new HttpHost[0]));
+        return new RestHighLevelClient(restClientBuilder);
     }
 }
