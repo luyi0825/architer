@@ -32,15 +32,19 @@
             <artifactId>boot-starter-web</artifactId>
             <scope>compile</scope>
         </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.core</groupId>-->
+        <!--            <artifactId>db-druid</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>mysql</groupId>-->
+        <!--            <artifactId>mysql-connector-java</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
-            <groupId>com.core</groupId>
-            <artifactId>db-druid</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.core</groupId>
             <artifactId>cloud-nacos-discovery</artifactId>

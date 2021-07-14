@@ -60,3 +60,12 @@ management:
   server:
     port: 8082
 
+customize:
+  es:
+    hosts[0]:
+      ip: 192.168.3.222
+      port: 9200
+
+
+
+

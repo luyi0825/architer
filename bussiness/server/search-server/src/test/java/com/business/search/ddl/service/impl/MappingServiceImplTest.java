@@ -1,7 +1,9 @@
-package com.business.search.ddl;
+package com.business.search.ddl.service.impl;
 
+import com.business.search.ddl.MappingType;
 import com.business.search.ddl.model.MappingItem;
 import com.business.search.ddl.model.SearchMapping;
+import com.business.search.ddl.service.MappingService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +14,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-@RunWith(value = SpringRunner.class)
-public class MappingCreateTest {
-
+@RunWith(value= SpringRunner.class)
+public class MappingServiceImplTest {
     @Autowired
-    private MappingCreate mappingCreate;
+    private MappingService mappingService;
 
 
     @Test
@@ -28,9 +29,9 @@ public class MappingCreateTest {
         List<MappingItem> mappingItems = new ArrayList<>();
         MappingItem mappingItem = new MappingItem();
         mappingItem.setField("name");
-        mappingItem.setMappingType(MappingType.KEYWORD);
+        mappingItem.setMappingType(MappingType.DOUBLE);
         mappingItems.add(mappingItem);
         searchMapping.setMappingItems(mappingItems);
-        mappingCreate.createMapping(searchMapping);
+        mappingService.createMapping(searchMapping);
     }
 }
