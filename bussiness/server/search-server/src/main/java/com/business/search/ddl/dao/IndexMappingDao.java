@@ -1,6 +1,8 @@
 package com.business.search.ddl.dao;
 
 
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
@@ -43,6 +45,17 @@ public class IndexMappingDao {
             indexRequest.mapping(mappings);
         }
         return client.indices().create(indexRequest, RequestOptions.DEFAULT).isAcknowledged();
+    }
+
+    /**
+     * 删除索引
+     * @param index
+     * @return
+     * @throws IOException
+     */
+    public boolean deleteIndex(String... index) throws IOException {
+        DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(index);
+        return client.indices().delete(deleteIndexRequest, RequestOptions.DEFAULT).isAcknowledged();
     }
 
     /**
