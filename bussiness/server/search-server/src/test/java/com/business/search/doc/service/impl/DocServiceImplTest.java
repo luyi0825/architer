@@ -21,6 +21,7 @@ public class DocServiceImplTest {
     public void putTest() throws IOException {
         Map<String, Object> params = new HashMap<>();
         params.put("name", 6.1);
+        params.put("id","123");
         docService.put(index, params);
     }
 
