@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.core.mybatisplus.MybatisPlusConfig
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.core.log.executor.LogExecutorConfig
