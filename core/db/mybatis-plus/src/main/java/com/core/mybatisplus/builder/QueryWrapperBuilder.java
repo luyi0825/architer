@@ -2,9 +2,11 @@ package com.core.mybatisplus.builder;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.core.mybatisplus.*;
+import com.core.query.common.OperatorEnum;
+import com.core.query.common.model.OrderCondition;
+import com.core.query.common.model.QueryCondition;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -47,13 +49,12 @@ public class QueryWrapperBuilder<T> {
      * @param orders       排序
      * @param queryWrapper plus的QueryWrapper
      */
-    private void buildOrders(List<Order> orders, QueryWrapper<T> queryWrapper) {
+    private void buildOrders(List<OrderCondition> orders, QueryWrapper<T> queryWrapper) {
         if (!CollectionUtils.isEmpty(orders)) {
             orders.forEach(order -> {
                 String field = order.getField();
-                OrderEnum orderEnum = order.getOrder();
                 //降序
-                if (OrderEnum.desc.equals(orderEnum)) {
+                if (order.isDesc()) {
                     queryWrapper.orderByDesc(humpToLine(field));
                 } else {
                     queryWrapper.orderByAsc(humpToLine(field));
@@ -82,10 +83,10 @@ public class QueryWrapperBuilder<T> {
      * @param conditions   查询条件
      * @param queryWrapper plus的QueryWrapper
      */
-    private void buildConditions(List<Condition> conditions, QueryWrapper<T> queryWrapper) {
+    private void buildConditions(List<QueryCondition> conditions, QueryWrapper<T> queryWrapper) {
         if (!CollectionUtils.isEmpty(conditions)) {
             conditions.forEach(condition -> {
-                ConditionEnum conditionEnum = condition.getCondition();
+                OperatorEnum conditionEnum = condition.getOperator();
                 String field = humpToLine(condition.getField());
                 Object value = condition.getValue();
                 if (value == null) {
