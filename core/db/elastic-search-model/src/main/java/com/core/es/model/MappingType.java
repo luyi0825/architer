@@ -1,4 +1,4 @@
-package com.business.search.ddl;
+package com.core.es.model;
 
 /**
  * @author luyi
@@ -26,7 +26,7 @@ public enum MappingType {
      * 通配符字段类型
      */
     WILDCARD("wildcard");
-    private String type;
+    private final String type;
 
     MappingType(String type) {
         this.type = type;

@@ -1,9 +1,10 @@
 package com.business.search.ddl.service.impl;
 
-import com.business.search.ddl.MappingType;
-import com.business.search.ddl.model.MappingItem;
-import com.business.search.ddl.model.IndexMapping;
+
 import com.business.search.ddl.service.IndexMappingService;
+import com.core.es.model.MappingType;
+import com.core.es.model.ddl.IndexMapping;
+import com.core.es.model.ddl.MappingItem;
 import com.core.module.common.exception.ServiceException;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;

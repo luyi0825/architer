@@ -1,6 +1,6 @@
 package com.business.search.doc.api;
-
-import com.business.search.doc.model.DocumentRequest;
+;
+import com.core.es.model.doc.DocumentRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;

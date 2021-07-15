@@ -57,5 +57,14 @@
             <groupId>com.core</groupId>
             <artifactId>test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.core</groupId>
+            <artifactId>elastic-search-model</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.core</groupId>
+            <artifactId>mq-rabbit</artifactId>
+        </dependency>
     </dependencies>
 </project>

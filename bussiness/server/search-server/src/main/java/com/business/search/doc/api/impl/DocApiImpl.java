@@ -1,8 +1,8 @@
 package com.business.search.doc.api.impl;
 
 import com.business.search.doc.api.DocApi;
-import com.business.search.doc.model.DocumentRequest;
 import com.business.search.doc.service.DocService;
+import com.core.es.model.doc.DocumentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 

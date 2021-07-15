@@ -1,7 +1,7 @@
 package com.business.search.ddl.service;
 
-import com.business.search.ddl.model.IndexMapping;
-import com.business.search.ddl.model.Mapping;
+
+import com.core.es.model.ddl.IndexMapping;
 
 import java.io.IOException;
 

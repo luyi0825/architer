@@ -1,8 +1,9 @@
 package com.business.search.doc.service.impl;
 
-import com.business.search.doc.model.DocumentRequest;
-import com.business.search.doc.model.DocumentResponse;
+
 import com.business.search.doc.service.DocService;
+import com.core.es.model.doc.DocumentRequest;
+import com.core.es.model.doc.DocumentResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;

@@ -17,6 +17,12 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 #org.apache.ibatis.logging.log4j2.Log4j2Impl #
 spring:
+  rabbitmq:
+    virtual-host: test
+    host: ${host}
+    port: 15673
+    username: admin
+    password: admin
   cloud:
     sentinel:
       transport:
@@ -63,7 +69,7 @@ management:
 customize:
   es:
     hosts[0]:
-      ip: 192.168.3.222
+      ip: 192.168.2.222
       port: 9200
 
 

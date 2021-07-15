@@ -1,7 +1,7 @@
 package com.business.search.doc.service;
-
-import com.business.search.doc.model.DocumentRequest;
-import com.business.search.doc.model.DocumentResponse;
+;
+import com.core.es.model.doc.DocumentRequest;
+import com.core.es.model.doc.DocumentResponse;
 
 import java.io.IOException;
 import java.util.List;
