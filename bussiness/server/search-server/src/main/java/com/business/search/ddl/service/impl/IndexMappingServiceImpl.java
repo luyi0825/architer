@@ -7,8 +7,6 @@ import com.business.search.ddl.model.IndexMapping;
 import com.business.search.ddl.service.IndexMappingService;
 import com.core.module.common.exception.ParamsValidException;
 import com.core.module.common.exception.ServiceException;
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.support.IndicesOptions;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.core.CountRequest;
