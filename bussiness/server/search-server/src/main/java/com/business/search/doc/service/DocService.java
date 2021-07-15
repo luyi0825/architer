@@ -1,7 +1,10 @@
 package com.business.search.doc.service;
 
+import com.business.search.doc.model.DocumentRequest;
+import com.business.search.doc.model.DocumentResponse;
+
 import java.io.IOException;
-import java.util.Map;
+import java.util.List;
 
 /**
  * 数据查询的service
@@ -9,12 +12,17 @@ import java.util.Map;
  * @author luyi
  */
 public interface DocService {
-    public Object queryList(String index) throws IOException;
+
+    DocumentRequest insert(String index, DocumentRequest docs) throws IOException;
+
+    DocumentResponse findById(String index, String id) throws IOException;
+
+    List<DocumentResponse> queryList(String index) throws IOException;
 
     /**
      * @param index
-     * @param docs
+     * @param documentRequest
      * @throws IOException
      */
-    void put(String index, Map<String, Object> docs) throws IOException;
+    void update(String index, DocumentRequest documentRequest) throws IOException;
 }
