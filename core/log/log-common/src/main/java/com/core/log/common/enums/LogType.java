@@ -5,7 +5,7 @@ package com.core.log.common.enums;
  *
  * @author luyi
  */
-public enum DBType {
+public enum LogType {
     /**
      * 日志会存到es中
      */

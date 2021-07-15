@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author luyi
  */
 @Data
-@ConfigurationProperties(prefix = "customize.common-thread-pool", ignoreInvalidFields = true)
+@ConfigurationProperties(prefix = "customize.thread-pool", ignoreInvalidFields = true)
 public class TaskExecutorProperties {
     /**
      * 核心线程数量

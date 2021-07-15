@@ -1,6 +1,6 @@
 package com.core.log.common.service;
 
-import com.core.log.common.enums.DBType;
+import com.core.log.common.enums.LogType;
 
 import java.io.Serializable;
 
@@ -15,5 +15,5 @@ public interface Log {
      * @param logInfo
      * @return
      */
-    boolean log(DBType dBType, String schema, Serializable logInfo);
+    boolean log(LogType dBType, String schema, Serializable logInfo);
 }

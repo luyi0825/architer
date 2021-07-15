@@ -1,6 +1,6 @@
 package com.core.log.executor;
 
-import com.core.log.common.enums.DBType;
+import com.core.log.common.enums.LogType;
 import com.core.log.common.service.Log;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +13,9 @@ import java.io.Serializable;
 @Component
 public class LogImpl implements Log {
 
+
     @Override
-    public boolean log(DBType dBType, String schema, Serializable logInfo) {
+    public boolean log(LogType dBType, String schema, Serializable logInfo) {
         return false;
     }
 }

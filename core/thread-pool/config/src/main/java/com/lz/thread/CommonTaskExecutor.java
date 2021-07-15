@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  *
  * @author luyi
  */
-public class CommonTaskExecutor extends ThreadPoolTaskExecutor {
+public abstract class CommonTaskExecutor extends ThreadPoolTaskExecutor {
 
     private final TaskExecutorProperties taskExecutorProperties;
 
