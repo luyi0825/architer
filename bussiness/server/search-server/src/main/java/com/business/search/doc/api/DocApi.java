@@ -1,9 +1,9 @@
 package com.business.search.doc.api;
 
+import com.business.search.doc.model.DocumentRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author luyi
@@ -16,10 +16,10 @@ public interface DocApi {
      * 添加文档
      *
      * @param index 索引信息
-     * @param docs  文档信息(数据)
+     * @param documentRequest  文档信息(数据)
      */
     @PostMapping("/put/{index}")
-    void put(@PathVariable(name = "index") String index, @RequestBody Map<String, Object> docs) throws IOException;
+    void put(@PathVariable(name = "index") String index, @RequestBody DocumentRequest documentRequest) throws IOException;
 
 
     /**
