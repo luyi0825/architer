@@ -51,7 +51,7 @@ public class IndexMappingServiceImpl implements IndexMappingService {
         if (indexMappingDao.exists(indexMapping.getIndex())) {
             long count = restHighLevelClient.count(countRequest, RequestOptions.DEFAULT).getCount();
             if (count > 0) {
-                throw new ServiceException("存在数据，无法重构");
+                throw new ServiceException(MessageFormat.format("index[{0}]存在数据，无法重构)", index));
             }
             if (!indexMappingDao.deleteIndex(indexMapping.getIndex())) {
                 return false;
