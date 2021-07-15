@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.core.mybatisplus.*;
 import com.core.mybatisplus.builder.QueryWrapperBuilder;
 import com.core.mybatisplus.service.BaseService;
+import com.core.query.common.model.Pager;
+import com.core.query.common.model.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 
@@ -23,7 +25,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     protected BaseMapper<T> baseMapper;
 
     @Override
-    public Pagination pageQuery(QueryParam<T> queryParam) {
+    public Pagination<T> pageQuery(QueryParam<T> queryParam) {
         //分页对象
         Pager pager = queryParam.getPage();
         if (pager == null) {
@@ -31,7 +33,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
         }
         Page<T> page = new Page<>(pager.getCurrentPage(), pager.getLimit());
         page = this.baseMapper.selectPage(page, queryWrapperBuilder.buildQueryWrapper(queryParam));
-        return new Pagination(page);
+        return new Pagination<T>(page.getRecords(),page.getTotal(),(int)page.getSize(),(int)page.getCurrent());
     }
 
     @Override

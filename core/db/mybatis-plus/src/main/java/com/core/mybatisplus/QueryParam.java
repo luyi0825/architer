@@ -1,5 +1,8 @@
 package com.core.mybatisplus;
 
+import com.core.query.common.model.OrderCondition;
+import com.core.query.common.model.Pager;
+import com.core.query.common.model.QueryCondition;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,12 +19,12 @@ public class QueryParam<T> implements Serializable {
     /**
      * 查询条件
      */
-    private List<Condition> conditions;
+    private List<QueryCondition> conditions;
 
     /**
      * 排序条件
      */
-    private List<Order> orders;
+    private List<OrderCondition> orders;
 
     /**
      * 分页信息

@@ -2,6 +2,7 @@ package com.core.mybatisplus.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.core.mybatisplus.*;
+import com.core.query.common.model.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 
@@ -67,7 +68,8 @@ public interface BaseService<T> {
 
     /**
      * 查询一条数据
-     * @param queryWrapper  mybitis-plus的QueryWrapper
+     *
+     * @param queryWrapper mybitis-plus的QueryWrapper
      * @return 单个数据
      */
     T selectOne(QueryWrapper<T> queryWrapper);
