@@ -9,3 +9,4 @@ package-lock.json
 *.log
 logs
 # 本地配置文件
+application-local.yml
