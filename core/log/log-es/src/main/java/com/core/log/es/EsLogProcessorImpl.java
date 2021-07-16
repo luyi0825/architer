@@ -25,6 +25,7 @@ public class EsLogProcessorImpl extends LogProcessor {
     @Override
     public void log(LogMeta logMeta) {
         SyncDocumentDTO syncDocumentDTO = new SyncDocumentDTO();
+
         rabbitTemplate.convertAndSend(EsConstant.QUEUE_SYNC_ES_DOCUMENT, syncDocumentDTO);
     }
 

@@ -23,6 +23,11 @@ spring:
     port: 5672
     username: luyi
     password: 123
+    listener:
+      simple:
+        ## 开始手动签收
+        acknowledge-mode: manual
+
   cloud:
     sentinel:
       transport:
