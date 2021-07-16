@@ -45,14 +45,14 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.core</groupId>
-            <artifactId>cloud-nacos-discovery</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-client</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.core</groupId>-->
+        <!--            <artifactId>cloud-nacos-discovery</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba.nacos</groupId>-->
+        <!--            <artifactId>nacos-client</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.core</groupId>
             <artifactId>test</artifactId>
