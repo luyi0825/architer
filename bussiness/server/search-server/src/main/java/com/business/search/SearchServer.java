@@ -1,9 +1,9 @@
 package com.business.search;
 
 import com.core.starter.web.module.ModulesBuilder;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * 搜索服务
@@ -11,7 +11,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author luyi
  */
 @SpringBootApplication
-@EnableDiscoveryClient
+@EnableRabbit
+//@EnableDiscoveryClient
 public class SearchServer {
     public static void main(String[] args) {
         Class<?>[] modules = new ModulesBuilder().buildMoules(SearchServer.class);
