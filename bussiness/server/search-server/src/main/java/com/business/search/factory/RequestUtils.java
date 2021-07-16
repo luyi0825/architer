@@ -14,9 +14,10 @@ import java.util.List;
  * @author luyi
  */
 @Component
+@SuppressWarnings("rawtypes")
 public class RequestUtils {
 
-    private List<FactorySupport<DocWriteRequest>> factorySupportList;
+    private List<FactorySupport> factorySupportList;
 
 
     public DocWriteRequest getDocWriteRequest(DocumentRequest documentRequest) {
@@ -26,7 +27,7 @@ public class RequestUtils {
                 return factorySupport.get(documentRequest);
             }
         }
-         throw new IllegalArgumentException("requestType is null");
+        throw new IllegalArgumentException("requestType is null");
     }
 
     public BulkRequest getBulkRequest(DocumentRequest documentRequest) {
@@ -38,14 +39,12 @@ public class RequestUtils {
 
     public BulkRequest getBulkRequest(List<DocumentRequest> documentRequests) {
         BulkRequest bulkRequest = new BulkRequest();
-        documentRequests.forEach(documentRequest -> {
-            bulkRequest.add(getDocWriteRequest(documentRequest));
-        });
+        documentRequests.forEach(documentRequest -> bulkRequest.add(getDocWriteRequest(documentRequest)));
         return bulkRequest;
     }
 
     @Autowired
-    public void setFactorySupportList(List<FactorySupport<DocWriteRequest>> factorySupportList) {
+    public void setFactorySupportList(List<FactorySupport> factorySupportList) {
         this.factorySupportList = factorySupportList;
     }
 }
