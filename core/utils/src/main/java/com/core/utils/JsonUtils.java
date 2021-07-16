@@ -5,9 +5,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -19,7 +16,7 @@ import java.util.List;
  * 2.ObjectMapper是线程安全的，可以减少对象频繁的创建
  *
  * @author luyi
- * @TODO 对于其他的后续再不断增加，考虑将这个工具类抽出来，不放到缓存中（因为其他的地方也要用）
+ *
  */
 public class JsonUtils {
     /**
