@@ -2,9 +2,7 @@ package com.core.log.es;
 
 
 import com.core.es.model.EsConstant;
-import com.core.es.model.ddl.IndexMapping;
-import com.core.es.model.doc.DocumentRequest;
-import com.core.es.model.doc.SyncDocumentRequest;
+import com.core.es.model.doc.SyncDocumentDTO;
 import com.core.log.common.LogMeta;
 import com.core.log.common.enums.LogType;
 import com.core.log.common.service.LogProcessor;
@@ -26,8 +24,8 @@ public class EsLogProcessorImpl extends LogProcessor {
 
     @Override
     public void log(LogMeta logMeta) {
-        SyncDocumentRequest syncDocumentRequest = new SyncDocumentRequest();
-        rabbitTemplate.convertAndSend(EsConstant.QUEUE_SYNC_ES_DOCUMENT, syncDocumentRequest);
+        SyncDocumentDTO syncDocumentDTO = new SyncDocumentDTO();
+        rabbitTemplate.convertAndSend(EsConstant.QUEUE_SYNC_ES_DOCUMENT, syncDocumentDTO);
     }
 
     @Autowired

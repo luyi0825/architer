@@ -26,7 +26,7 @@ public class RequestUtils {
                 return factorySupport.get(documentRequest);
             }
         }
-        return null;
+         throw new IllegalArgumentException("requestType is null");
     }
 
     public BulkRequest getBulkRequest(DocumentRequest documentRequest) {
