@@ -10,7 +10,16 @@ import java.util.Map;
 public class DocumentRequest implements Serializable {
     private String id;
     private String index;
+    private String requestType;
     private Map<String, Object> source;
+
+    public String getRequestType() {
+        return requestType;
+    }
+
+    public void setRequestType(String requestType) {
+        this.requestType = requestType;
+    }
 
     public String getIndex() {
         return index;
