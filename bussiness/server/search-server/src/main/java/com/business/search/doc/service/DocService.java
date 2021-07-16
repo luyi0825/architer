@@ -1,5 +1,6 @@
 package com.business.search.doc.service;
-;
+
+
 import com.core.es.model.doc.DocumentRequest;
 import com.core.es.model.doc.DocumentResponse;
 
@@ -13,16 +14,39 @@ import java.util.List;
  */
 public interface DocService {
 
-    DocumentRequest insert(String index, DocumentRequest docs) throws IOException;
-
+    /**
+     * 通过id查询
+     *
+     * @param index 索引
+     * @param id    主键
+     * @return 文档数据
+     * @throws IOException es中 GetRequest操作抛出的异常
+     */
     DocumentResponse findById(String index, String id) throws IOException;
 
+    /**
+     * 查询集合（也就是查询所有）
+     *
+     * @param index 索引
+     * @return 文档数据集合
+     * @throws IOException es中client操作的异常
+     */
     List<DocumentResponse> queryList(String index) throws IOException;
 
     /**
-     * @param index
-     * @param documentRequest
-     * @throws IOException
+     * 批量操作
+     *
+     * @param documentRequests 多个文档操作请求
+     * @throws IOException es-bulk操作抛出的异常
      */
-    void update(String index, DocumentRequest documentRequest) throws IOException;
+    void bulk(List<DocumentRequest> documentRequests) throws IOException;
+
+    /**
+     * 单个操作
+     *
+     * @param documentRequest 单个文档操作请求
+     * @throws IOException es-bulk操作抛出的异常
+     */
+    void bulkOne(DocumentRequest documentRequest) throws IOException;
+
 }

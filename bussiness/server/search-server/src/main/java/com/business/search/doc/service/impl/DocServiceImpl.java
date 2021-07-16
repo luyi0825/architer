@@ -2,24 +2,19 @@ package com.business.search.doc.service.impl;
 
 
 import com.business.search.doc.service.DocService;
+import com.business.search.factory.RequestUtils;
 import com.core.es.model.doc.DocumentRequest;
 import com.core.es.model.doc.DocumentResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.update.UpdateRequest;
-import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,23 +27,12 @@ import java.util.List;
 @Service
 public class DocServiceImpl implements DocService {
 
+    private RequestUtils requestUtils;
+
     private RestHighLevelClient restHighLevelClient;
 
     private static final String ID_KEY = "id";
 
-    @Override
-    public DocumentRequest insert(String index, DocumentRequest docs) throws IOException {
-        IndexRequest indexRequest = new IndexRequest();
-        indexRequest.index(index);
-        if (StringUtils.hasText(docs.getId())) {
-            indexRequest.id(docs.getId());
-        }
-        indexRequest.source(docs.getSource());
-        IndexResponse indexResponse = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
-        System.out.println(indexResponse.getResult().getOp());
-        docs.setId(indexResponse.getId());
-        return docs;
-    }
 
     @Override
     public DocumentResponse findById(String index, String id) throws IOException {
@@ -77,16 +61,24 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-    public void update(String index, DocumentRequest documentRequest) throws IOException {
-        UpdateRequest request = new UpdateRequest(index, documentRequest.getId());
-        ObjectMapper objectMapper = new ObjectMapper();
-        request.doc(objectMapper.writeValueAsString(documentRequest), XContentType.JSON);
-        UpdateResponse updateResponse = restHighLevelClient.update(request, RequestOptions.DEFAULT);
-        System.out.println(updateResponse.getResult().getOp());
+    public void bulk(List<DocumentRequest> documentRequests) throws IOException {
+        BulkRequest bulkRequest = requestUtils.getBulkRequest(documentRequests);
+        restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+    }
+
+    @Override
+    public void bulkOne(DocumentRequest documentRequest) throws IOException {
+        BulkRequest bulkRequest = requestUtils.getBulkRequest(documentRequest);
+        restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
     }
 
     @Autowired
     public void setRestHighLevelClient(RestHighLevelClient restHighLevelClient) {
         this.restHighLevelClient = restHighLevelClient;
+    }
+
+    @Autowired
+    public void setRequestUtils(RequestUtils requestUtils) {
+        this.requestUtils = requestUtils;
     }
 }
