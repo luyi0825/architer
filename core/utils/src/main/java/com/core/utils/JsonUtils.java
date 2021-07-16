@@ -5,6 +5,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -81,7 +85,6 @@ public class JsonUtils {
      *
      * @param value 需要反序列化的字符串
      * @param clazz list中的实体
-     * @param <T>   实体类型
      * @return 反序列化后的list
      */
     public static <T> List<T> readListValue(String value, Class<T> clazz) {
@@ -92,4 +95,22 @@ public class JsonUtils {
             throw new RuntimeException("反序列化失败", e);
         }
     }
+
+    /**
+     * 将Json字符串反序列化成list
+     *
+     * @param bytes 需要反序列化的字符串对应的字节码
+     * @param clazz list中的实体
+     * @return 反序列化后的list
+     */
+    public static <T> List<T> readListValue(byte[] bytes, Class<T> clazz) {
+        JavaType listType = OBJECT_MAPPER.getTypeFactory().constructParametricType(List.class, clazz);
+        try {
+            return OBJECT_MAPPER.readValue(new String(bytes, StandardCharsets.UTF_8), listType);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("反序列化失败", e);
+        }
+    }
+
+
 }
