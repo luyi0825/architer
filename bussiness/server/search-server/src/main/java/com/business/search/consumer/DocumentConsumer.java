@@ -1,7 +1,6 @@
 package com.business.search.consumer;
 
 import com.business.search.doc.service.DocService;
-import com.business.search.factory.RequestUtils;
 import com.core.es.model.EsConstant;
 import com.core.es.model.doc.DocumentRequest;
 import com.core.es.model.doc.SyncDocumentDTO;
@@ -18,6 +17,7 @@ import java.util.List;
 
 /**
  * @author luyi
+ * es文档消费者
  */
 @Component
 public class DocumentConsumer {
@@ -28,7 +28,6 @@ public class DocumentConsumer {
         List<SyncDocumentDTO> syncDocumentDTOList = JsonUtils.readListValue(message.getBody(), SyncDocumentDTO.class);
         for (SyncDocumentDTO syncDocumentDTO : syncDocumentDTOList) {
             List<DocumentRequest> documentRequests = syncDocumentDTO.getDocs();
-            BulkRequest bulkRequest = new BulkRequest();
             docService.bulk(documentRequests);
         }
     }
