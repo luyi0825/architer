@@ -1,8 +1,10 @@
 package com.business.search.doc.service.impl;
 
-import com.business.search.doc.model.DocumentRequest;
-import com.business.search.doc.model.DocumentResponse;
+
 import com.business.search.doc.service.DocService;
+import com.core.es.model.doc.DocumentRequest;
+import com.core.es.model.doc.DocumentResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +21,17 @@ import java.util.Map;
 public class DocServiceImplTest {
     private DocService docService;
     private final static String index = "test";
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final static ObjectMapper objectMapper = new ObjectMapper();
 
+    public static void main(String[] args) throws JsonProcessingException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("name", 6.1);
+        params.put("age", "123");
+        DocumentRequest documentRequest = new DocumentRequest();
+        documentRequest.setId("123");
+        documentRequest.setSource(params);
+        System.out.println(objectMapper.writeValueAsString(documentRequest));
+    }
 
     @Autowired
     public void setDocService(DocService docService) {
@@ -35,10 +46,11 @@ public class DocServiceImplTest {
         DocumentRequest documentRequest = new DocumentRequest();
         documentRequest.setId("123");
         documentRequest.setSource(params);
+        System.out.println(objectMapper.writeValueAsString(documentRequest));
         for (int i = 0; i < 10; i++) {
             params.put("age", i);
-            Object object = docService.insert(index, documentRequest);
-            System.out.println(object);
+            docService.bulkOne( documentRequest);
+            //System.out.println(object);
         }
     }
 
@@ -62,6 +74,6 @@ public class DocServiceImplTest {
         DocumentRequest documentRequest = new DocumentRequest();
         documentRequest.setId("123");
         documentRequest.setSource(params);
-        docService.update(index, documentRequest);
+        docService.bulkOne(documentRequest);
     }
 }
