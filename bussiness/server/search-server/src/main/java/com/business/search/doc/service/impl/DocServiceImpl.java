@@ -6,6 +6,7 @@ import com.business.search.factory.RequestUtils;
 import com.core.es.model.doc.DocumentRequest;
 import com.core.es.model.doc.DocumentResponse;
 import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequest;
@@ -61,15 +62,16 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-    public void bulk(List<DocumentRequest> documentRequests) throws IOException {
+    public boolean bulk(List<DocumentRequest> documentRequests) throws IOException {
         BulkRequest bulkRequest = requestUtils.getBulkRequest(documentRequests);
-        restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+        BulkResponse bulkResponse = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+        return !bulkResponse.hasFailures();
     }
 
     @Override
-    public void bulkOne(DocumentRequest documentRequest) throws IOException {
+    public boolean bulkOne(DocumentRequest documentRequest) throws IOException {
         BulkRequest bulkRequest = requestUtils.getBulkRequest(documentRequest);
-        restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+        return !restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT).hasFailures();
     }
 
     @Autowired

@@ -39,7 +39,7 @@ public interface DocService {
      * @param documentRequests 多个文档操作请求
      * @throws IOException es-bulk操作抛出的异常
      */
-    void bulk(List<DocumentRequest> documentRequests) throws IOException;
+    boolean bulk(List<DocumentRequest> documentRequests) throws IOException;
 
     /**
      * 单个操作
@@ -47,6 +47,6 @@ public interface DocService {
      * @param documentRequest 单个文档操作请求
      * @throws IOException es-bulk操作抛出的异常
      */
-    void bulkOne(DocumentRequest documentRequest) throws IOException;
+    boolean bulkOne(DocumentRequest documentRequest) throws IOException;
 
 }
