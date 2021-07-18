@@ -32,11 +32,19 @@ public class IndexMappingServiceImplTest {
         List<MappingItem> mappingItems = new ArrayList<>();
         MappingItem mappingItem = new MappingItem();
         mappingItem.setField("name");
-        mappingItem.setMappingType(MappingType.DOUBLE);
+        mappingItem.setMappingType(MappingType.KEYWORD);
         mappingItems.add(mappingItem);
         mappingItem = new MappingItem();
         mappingItem.setField("age");
         mappingItem.setMappingType(MappingType.LONG);
+        mappingItems.add(mappingItem);
+        mappingItem = new MappingItem();
+        mappingItem.setField("address");
+        mappingItem.setMappingType(MappingType.TEXT);
+        mappingItems.add(mappingItem);
+        mappingItem = new MappingItem();
+        mappingItem.setField("money");
+        mappingItem.setMappingType(MappingType.DOUBLE);
         mappingItems.add(mappingItem);
         indexMapping.setMappingItems(mappingItems);
         indexMappingService.createIndexMapping(indexMapping);
@@ -49,13 +57,22 @@ public class IndexMappingServiceImplTest {
         List<MappingItem> mappingItems = new ArrayList<>();
         MappingItem mappingItem = new MappingItem();
         mappingItem.setField("name");
-        mappingItem.setMappingType(MappingType.DOUBLE);
+        mappingItem.setMappingType(MappingType.KEYWORD);
         mappingItems.add(mappingItem);
         mappingItem = new MappingItem();
-        mappingItem.setField("id");
+        mappingItem.setField("age");
         mappingItem.setMappingType(MappingType.LONG);
         mappingItems.add(mappingItem);
+        mappingItem = new MappingItem();
+        mappingItem.setField("address");
+        mappingItem.setMappingType(MappingType.TEXT);
+        mappingItems.add(mappingItem);
+        mappingItem = new MappingItem();
+        mappingItem.setField("money");
+        mappingItem.setMappingType(MappingType.DOUBLE);
+        mappingItems.add(mappingItem);
         indexMapping.setMappingItems(mappingItems);
+        indexMappingService.createIndexMapping(indexMapping);
         try {
             indexMappingService.rebuildIndexMapping(indexMapping);
         } catch (ServiceException serviceException) {
