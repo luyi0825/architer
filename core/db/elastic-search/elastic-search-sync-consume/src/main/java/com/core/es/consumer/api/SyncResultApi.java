@@ -1,6 +1,6 @@
 package com.core.es.consumer.api;
 
-import com.core.es.consumer.entiry.SyncResult;
+import com.core.es.consumer.entity.SyncResult;
 import com.core.es.consumer.service.SyncResultService;
 import com.core.es.consumer.vo.SyncResultVO;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.core.es.consumer.service;
 
 
-import com.core.es.consumer.entiry.SyncResult;
+import com.core.es.consumer.entity.SyncResult;
 
 import java.util.List;
 

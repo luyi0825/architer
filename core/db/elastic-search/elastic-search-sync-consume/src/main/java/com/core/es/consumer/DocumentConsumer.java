@@ -1,7 +1,7 @@
 package com.core.es.consumer;
 
 
-import com.core.es.consumer.entiry.SyncResult;
+import com.core.es.consumer.entity.SyncResult;
 import com.core.es.consumer.service.SyncResultService;
 import com.core.es.dml.service.DocService;
 import com.core.es.model.EsConstant;

@@ -2,7 +2,7 @@ package com.core.es.consumer.service.impl;
 
 
 import com.core.es.consumer.dao.SyncResultDao;
-import com.core.es.consumer.entiry.SyncResult;
+import com.core.es.consumer.entity.SyncResult;
 import com.core.es.consumer.service.SyncResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
