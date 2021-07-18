@@ -2,8 +2,7 @@ package com.core.es.model;
 
 /**
  * @author luyi
- * 数据类型
- * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html
+ * 数据类型,可以看：https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html
  */
 public enum MappingType {
     /**
@@ -27,7 +26,6 @@ public enum MappingType {
      * 通配符字段类型
      */
     WILDCARD("wildcard"),
-
     /**
      * 文本
      */
