@@ -51,9 +51,5 @@
             <artifactId>module-model</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
     </dependencies>
 </project>
