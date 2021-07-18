@@ -1,6 +1,6 @@
-package com.lz.thread.properties;
+package com.core.thread.properties;
 
-import com.lz.thread.RejectedHandler;
+import com.core.thread.RejectedHandler;
 
 /**
  * 线程池配置

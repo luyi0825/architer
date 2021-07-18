@@ -1,7 +1,6 @@
-package com.lz.thread;
+package com.core.thread;
 
-import com.lz.thread.properties.TaskExecutorProperties;
-import com.lz.thread.properties.ThreadPoolConfig;
+import com.core.thread.properties.ThreadPoolConfig;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 

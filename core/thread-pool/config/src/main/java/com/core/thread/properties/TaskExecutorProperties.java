@@ -1,8 +1,7 @@
-package com.lz.thread.properties;
+package com.core.thread.properties;
 
 
-import com.lz.thread.RejectedHandler;
-import lombok.Data;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.Map;
@@ -12,10 +11,15 @@ import java.util.Map;
  *
  * @author luyi
  */
-@Data
 @ConfigurationProperties(prefix = "customize.thread-pool", ignoreInvalidFields = true)
 public class TaskExecutorProperties {
     private Map<String, ThreadPoolConfig> configs;
 
+    public Map<String, ThreadPoolConfig> getConfigs() {
+        return configs;
+    }
 
+    public void setConfigs(Map<String, ThreadPoolConfig> configs) {
+        this.configs = configs;
+    }
 }
