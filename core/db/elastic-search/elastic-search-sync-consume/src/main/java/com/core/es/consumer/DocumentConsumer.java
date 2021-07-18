@@ -155,4 +155,19 @@ public class DocumentConsumer {
     public void setRetryUtils(RetryUtils retryUtils) {
         this.retryUtils = retryUtils;
     }
+
+    @Autowired
+    public void setExecutor(DocumentConsumerExecutor executor) {
+        this.executor = executor;
+    }
+
+    @Autowired
+    public void setCallBackHandler(CallBackHandler callBackHandler) {
+        this.callBackHandler = callBackHandler;
+    }
+
+    @Autowired
+    public void setSyncResultService(SyncResultService syncResultService) {
+        this.syncResultService = syncResultService;
+    }
 }
