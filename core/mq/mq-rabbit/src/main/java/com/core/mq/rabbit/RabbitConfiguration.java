@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan("com.core.mq.rabbit")
-public class RabbitConfig {
+public class RabbitConfiguration {
 
     /**
      * 自定义消息转换器-Jackson
