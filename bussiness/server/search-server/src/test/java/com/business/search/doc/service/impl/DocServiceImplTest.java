@@ -1,7 +1,7 @@
 package com.business.search.doc.service.impl;
 
 
-import com.business.search.doc.service.DocService;
+import com.core.es.dml.service.DocService;
 import com.core.es.model.doc.DocumentRequest;
 import com.core.es.model.doc.DocumentResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;

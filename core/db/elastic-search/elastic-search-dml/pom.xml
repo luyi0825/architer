@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.core</groupId>
             <artifactId>elastic-search-model</artifactId>
-            <version>1.0.0</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

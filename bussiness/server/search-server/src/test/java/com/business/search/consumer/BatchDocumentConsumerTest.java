@@ -90,13 +90,13 @@ public class BatchDocumentConsumerTest {
                 }
                 syncDocumentDTO.setDocs(documentRequests);
                 MessageProperties messageProperties = new MessageProperties();
-                messageProperties.setHeader(RabbitmqConstants.MAX_TRY_COUNT_KEY, 3);
+                messageProperties.setHeader(RabbitmqConstants.MAX_RETRY_COUNT, 3);
                 Message message = null;
                 try {
                     message = new Message(objectMapper.writeValueAsBytes(syncDocumentDTO), messageProperties);
                     CorrelationData correlationData = new CorrelationData();
                     correlationData.setId(finalI + "");
-                    rabbitTemplate.send("", EsConstant.QUEUE_BATCH_SYNC_ES_DOCUMENT, message, correlationData);
+                    rabbitTemplate.send(EsConstant.EXCHANGE_SYNC_ES_DOCUMENT, EsConstant.QUEUE_BATCH_SYNC_ES_DOCUMENT, message, correlationData);
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
                 }

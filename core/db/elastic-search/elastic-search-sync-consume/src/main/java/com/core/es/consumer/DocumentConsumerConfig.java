@@ -1,9 +1,10 @@
 package com.core.es.consumer;
 
-import com.lz.thread.properties.TaskExecutorProperties;
-import com.lz.thread.properties.ThreadPoolConfig;
+import com.core.thread.properties.TaskExecutorProperties;
+import com.core.thread.properties.ThreadPoolConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,7 @@ public class DocumentConsumerConfig {
     private static final Logger LOG = LoggerFactory.getLogger(DocumentConsumerConfig.class);
 
     @Bean
-    public DocumentConsumerExecutor DocumentConsumerExecutor(TaskExecutorProperties taskExecutorProperties) {
+    public DocumentConsumerExecutor DocumentConsumerExecutor(@Autowired(required = false) TaskExecutorProperties taskExecutorProperties) {
         Map<String, ThreadPoolConfig> threadPoolConfigMap = taskExecutorProperties.getConfigs();
         ThreadPoolConfig threadPoolConfig = null;
         if (!CollectionUtils.isEmpty(threadPoolConfigMap)) {

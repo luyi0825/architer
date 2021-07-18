@@ -28,12 +28,21 @@ spring:
         ## 开始手动签收
         acknowledge-mode: manual
 
+  data:
+    mongodb:
+      #uri: mongodb://192.168.2.222:27017
+      username: luyi
+      password: '123'
+      database: search
+      port: 27017
+      host: ${host}
+
+
   cloud:
     sentinel:
       transport:
         dashboard: localhost:8080
         port: 8719
-  datasource:
     druid:
       stat-view-servlet:
         url-pattern: /druid/*

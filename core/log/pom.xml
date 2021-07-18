@@ -18,6 +18,5 @@
         <module>log-common</module>
         <module>log-executor</module>
         <module>log-mysql</module>
-        <module>log-es</module>
     </modules>
 </project>

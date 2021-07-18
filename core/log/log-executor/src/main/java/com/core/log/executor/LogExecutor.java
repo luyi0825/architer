@@ -1,12 +1,16 @@
 package com.core.log.executor;
 
-import com.lz.thread.CommonTaskExecutor;
+import com.core.thread.CommonTaskExecutor;
+import com.core.thread.properties.ThreadPoolConfig;
 
 /**
  * @author luyi
  */
 public class LogExecutor extends CommonTaskExecutor {
-    public LogExecutor(LogProperties taskExecutorProperties) {
-        super(taskExecutorProperties);
+    public LogExecutor(ThreadPoolConfig threadPoolConfig) {
+        super(threadPoolConfig);
     }
+//    public LogExecutor(LogProperties taskExecutorProperties) {
+//        super(taskExecutorProperties);
+//    }
 }

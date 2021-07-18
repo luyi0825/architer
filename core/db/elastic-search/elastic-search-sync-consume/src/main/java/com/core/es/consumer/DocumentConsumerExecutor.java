@@ -1,7 +1,7 @@
 package com.core.es.consumer;
 
-import com.lz.thread.CommonTaskExecutor;
-import com.lz.thread.properties.ThreadPoolConfig;
+import com.core.thread.CommonTaskExecutor;
+import com.core.thread.properties.ThreadPoolConfig;
 
 public class DocumentConsumerExecutor extends CommonTaskExecutor {
 

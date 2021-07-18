@@ -151,7 +151,7 @@ public class DocumentConsumer {
         this.docService = docService;
     }
 
-    @Autowired
+    @Autowired(required = false)
     public void setRetryUtils(RetryUtils retryUtils) {
         this.retryUtils = retryUtils;
     }

@@ -1,7 +1,7 @@
 package com.business.search.ddl.service.impl;
 
 
-import com.business.search.ddl.service.IndexMappingService;
+import com.core.es.dml.service.IndexMappingService;
 import com.core.es.model.MappingType;
 import com.core.es.model.ddl.IndexMapping;
 import com.core.es.model.ddl.MappingItem;

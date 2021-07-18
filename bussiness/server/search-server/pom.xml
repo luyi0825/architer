@@ -13,13 +13,21 @@
     <dependencies>
         <dependency>
             <groupId>com.core</groupId>
+            <artifactId>boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.core</groupId>
             <artifactId>elastic-search-dml</artifactId>
-            <version>1.0.0</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.core</groupId>
             <artifactId>elastic-search-mq-consumer</artifactId>
-            <version>1.0.0</version>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.core</groupId>
+            <artifactId>test</artifactId>
         </dependency>
     </dependencies>
 </project>
