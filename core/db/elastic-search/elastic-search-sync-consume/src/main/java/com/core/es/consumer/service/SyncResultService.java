@@ -5,6 +5,10 @@ import com.core.es.consumer.entiry.SyncResult;
 
 import java.util.List;
 
+/**
+ * @author luyi
+ * 同步结果对应的service接口层
+ */
 public interface SyncResultService {
     void insert(SyncResult syncResult);
 
