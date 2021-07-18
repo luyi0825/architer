@@ -15,8 +15,8 @@ import java.util.Map;
 /**
  * @author luyi
  */
-@Log4j2
 public class ThreadPoolParser implements ApplicationContextAware {
+
 
     List<ThreadPoolTaskExecutor> threadPoolTaskExecutors=new ArrayList<>();
 
