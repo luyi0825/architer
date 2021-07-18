@@ -1,6 +1,7 @@
 package com.lz.thread;
 
 import com.lz.thread.properties.TaskExecutorProperties;
+import com.lz.thread.properties.ThreadPoolConfig;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 
@@ -20,25 +21,25 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public abstract class CommonTaskExecutor extends ThreadPoolTaskExecutor {
 
-    private final TaskExecutorProperties taskExecutorProperties;
+    private final ThreadPoolConfig threadPoolConfig;
 
-    public CommonTaskExecutor(TaskExecutorProperties taskExecutorProperties) {
-        this.taskExecutorProperties = taskExecutorProperties;
+    public CommonTaskExecutor(ThreadPoolConfig threadPoolConfig) {
+        this.threadPoolConfig = threadPoolConfig;
     }
 
     @Override
     public void initialize() {
         //@TODO 校验自义定配置的是否正确
         //核心线程
-        this.setCorePoolSize(taskExecutorProperties.getCorePoolSize());
+        this.setCorePoolSize(threadPoolConfig.getCorePoolSize());
         //最大的线程
-        this.setMaxPoolSize(taskExecutorProperties.getMaxPoolSize());
+        this.setMaxPoolSize(threadPoolConfig.getMaxPoolSize());
         //线程池队列大小
-        this.setQueueCapacity(taskExecutorProperties.getQueueCapacity());
+        this.setQueueCapacity(threadPoolConfig.getQueueCapacity());
         //非核心线程池存活的时间
-        this.setKeepAliveSeconds(taskExecutorProperties.getKeepAlive());
+        this.setKeepAliveSeconds(threadPoolConfig.getKeepAlive());
         //拒绝策略
-        this.setRejectedExecutionHandler(getRejectedExecutionHandler(taskExecutorProperties.getRejectedHandler()));
+        this.setRejectedExecutionHandler(getRejectedExecutionHandler(threadPoolConfig.getRejectedHandler()));
         super.initialize();
     }
 
