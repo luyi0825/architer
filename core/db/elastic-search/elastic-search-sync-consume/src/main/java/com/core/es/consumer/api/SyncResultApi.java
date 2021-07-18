@@ -4,7 +4,6 @@ import com.core.es.consumer.entiry.SyncResult;
 import com.core.es.consumer.service.SyncResultService;
 import com.core.es.consumer.vo.SyncResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,11 +18,7 @@ public class SyncResultApi {
     @GetMapping("/{businessKey}/{batchId}")
     public SyncResultVO getSyncResult(@PathVariable(name = "businessKey") String businessKey, @PathVariable(name = "batchId") String batchId) {
         SyncResult syncResult = syncResultService.findByBusinessKeyAndBatchId(businessKey, batchId);
-        SyncResultVO syncResultVO = new SyncResultVO();
-        syncResultVO.setBusinessKey(syncResult.getBusinessKey());
-        syncResultVO.setBatchId(syncResult.getBatchId());
-        syncResultVO.setCallback(syncResult.isCallback());
-        return syncResultVO;
+        return this.getSyncResultVo(syncResult);
     }
 
 
@@ -40,11 +35,19 @@ public class SyncResultApi {
         return new ArrayList<>(0);
     }
 
+    /**
+     * 得到同步结果的VO
+     *
+     * @param syncResult 同步结果
+     */
     private SyncResultVO getSyncResultVo(SyncResult syncResult) {
+        if (syncResult == null) {
+            return null;
+        }
         SyncResultVO syncResultVO = new SyncResultVO();
         syncResultVO.setBusinessKey(syncResult.getBusinessKey());
         syncResultVO.setBatchId(syncResult.getBatchId());
-        syncResultVO.setCallback(syncResult.isCallback());
+        syncResultVO.setSuccess(syncResult.isSuccess());
         syncResultVO.setVersion(syncResult.getVersion());
         return syncResultVO;
     }
