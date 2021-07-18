@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -16,7 +17,6 @@ import java.util.List;
  * 2.ObjectMapper是线程安全的，可以减少对象频繁的创建
  *
  * @author luyi
- *
  */
 public class JsonUtils {
     /**
@@ -44,6 +44,30 @@ public class JsonUtils {
         }
     }
 
+    public static byte[] writeValueAsBytes(Object object) {
+        try {
+            return OBJECT_MAPPER.writeValueAsBytes(object);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("序列化失败", e);
+        }
+    }
+
+    /**
+     * 将json转为对象
+     *
+     * @param bytes json字符串
+     * @param clazz 反序列化的class
+     * @param <T>   实体类型
+     * @return 反序列化的实体
+     */
+    public static <T> T readValue(byte[] bytes, Class<T> clazz) {
+        try {
+            return OBJECT_MAPPER.readValue(bytes, clazz);
+        } catch (IOException e) {
+            throw new RuntimeException("反序列化失败", e);
+        }
+    }
+
     /**
      * 将json转为对象
      *
@@ -59,6 +83,7 @@ public class JsonUtils {
             throw new RuntimeException("反序列化失败", e);
         }
     }
+
 
     /**
      * 将Json字符串反序列化成list
