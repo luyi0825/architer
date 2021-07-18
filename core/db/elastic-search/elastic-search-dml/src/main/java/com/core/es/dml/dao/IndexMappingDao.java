@@ -2,7 +2,6 @@ package com.core.es.dml.dao;
 
 
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
@@ -49,9 +48,10 @@ public class IndexMappingDao {
 
     /**
      * 删除索引
-     * @param index
-     * @return
-     * @throws IOException
+     *
+     * @param index 索引
+     * @return 是否删除成功
+     * @throws IOException es执行DeleteIndexRequest
      */
     public boolean deleteIndex(String... index) throws IOException {
         DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(index);
