@@ -1,4 +1,4 @@
-package com.business.search.ddl.model;
+package com.core.es.model.ddl;
 
 import com.core.es.model.ddl.MappingItem;
 

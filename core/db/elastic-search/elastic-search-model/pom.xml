@@ -12,11 +12,4 @@
     <name>elastic-search-model</name>
     <description>elastic-search-model</description>
     <packaging>jar</packaging>
-    <modules>
-
-
-    </modules>
-    <dependencies>
-
-    </dependencies>
 </project>
