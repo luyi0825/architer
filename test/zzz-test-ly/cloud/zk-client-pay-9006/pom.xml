@@ -31,11 +31,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.core</groupId>
-            <artifactId>service-common</artifactId>
-            <version>${core.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.3</version>

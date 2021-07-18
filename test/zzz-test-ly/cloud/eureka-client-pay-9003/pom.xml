@@ -23,10 +23,5 @@
             <artifactId>boot-starter-web</artifactId>
             <version>${core.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.core</groupId>
-            <artifactId>service-common</artifactId>
-            <version>1.0.0</version>
-        </dependency>
     </dependencies>
 </project>

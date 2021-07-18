@@ -20,10 +20,6 @@
         </dependency>
         <dependency>
             <groupId>com.core</groupId>
-            <artifactId>service-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.core</groupId>
             <artifactId>cloud-zookeeper-discovery</artifactId>
         </dependency>
         <dependency>

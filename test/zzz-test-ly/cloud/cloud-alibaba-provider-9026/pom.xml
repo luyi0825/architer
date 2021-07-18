@@ -21,10 +21,6 @@
         </dependency>
         <dependency>
             <groupId>com.core</groupId>
-            <artifactId>service-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.core</groupId>
             <artifactId>cloud-nacos-config</artifactId>
         </dependency>
         <dependency>
