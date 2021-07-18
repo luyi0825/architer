@@ -15,7 +15,7 @@
     <modules>
         <module>druid</module>
         <module>mybatis-plus</module>
-        <module>elastic-search-model</module>
+        <module>elastic-search</module>
     </modules>
     <dependencyManagement>
         <dependencies>

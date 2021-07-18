@@ -10,13 +10,19 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>module-model</artifactId>
-    <name>>module-model</name>
+    <name>module-model</name>
     <description>service公共</description>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.4.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
