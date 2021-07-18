@@ -1,8 +1,9 @@
-package com.business.search.ddl.service.impl;
+package com.core.es.dml.service.impl;
 
 
-import com.business.search.ddl.dao.IndexMappingDao;
-import com.business.search.ddl.service.IndexMappingService;
+
+import com.core.es.dml.service.IndexMappingService;
+import com.core.es.dml.dao.IndexMappingDao;
 import com.core.es.model.MappingType;
 import com.core.es.model.ddl.IndexMapping;
 import com.core.es.model.ddl.MappingItem;

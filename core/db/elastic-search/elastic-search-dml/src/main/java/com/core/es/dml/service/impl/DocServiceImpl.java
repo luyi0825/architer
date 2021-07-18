@@ -1,8 +1,8 @@
-package com.business.search.doc.service.impl;
+package com.core.es.dml.service.impl;
 
 
-import com.business.search.doc.service.DocService;
-import com.business.search.factory.RequestUtils;
+import com.core.es.dml.factory.RequestUtils;
+import com.core.es.dml.service.DocService;
 import com.core.es.model.doc.DocumentRequest;
 import com.core.es.model.doc.DocumentResponse;
 import org.elasticsearch.action.bulk.BulkRequest;

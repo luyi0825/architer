@@ -1,4 +1,4 @@
-package com.business.search.ddl.service;
+package com.core.es.dml.service;
 
 
 import com.core.es.model.ddl.IndexMapping;
