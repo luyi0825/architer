@@ -1,6 +1,8 @@
 package com.core.cache.local;
 
 import lombok.extern.log4j.Log4j2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -10,9 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date 2021/3/10
  * 清理缓存执行器
  */
-@Log4j2
+
 public class CleanCacheActuator {
 
+    private static final Logger log = LoggerFactory.getLogger(CleanCacheActuator.class);
 
     private CleanCacheExecutorService cleanCacheExecutorService;
 

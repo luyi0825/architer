@@ -1,8 +1,8 @@
 package com.core.cache.local;
 
 
-
-import lombok.extern.log4j.Log4j2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
@@ -12,8 +12,10 @@ import java.io.*;
  * @author luyi
  * @date 2021/3/10
  */
-@Log4j2
+
 public class CacheEnduranceActuator {
+
+    private static final Logger log = LoggerFactory.getLogger(CacheEnduranceActuator.class);
 
 
     /**
