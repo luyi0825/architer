@@ -1,7 +1,6 @@
 package com.core.es.dml.service.impl;
 
 
-
 import com.core.es.dml.service.IndexMappingService;
 import com.core.es.dml.dao.IndexMappingDao;
 import com.core.es.model.MappingType;
@@ -23,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author admin
+ * @author luyi
  */
 @Service
 public class IndexMappingServiceImpl implements IndexMappingService {

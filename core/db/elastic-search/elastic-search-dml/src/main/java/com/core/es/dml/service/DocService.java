@@ -33,7 +33,12 @@ public interface DocService {
      */
     List<DocumentResponse> queryList(String index) throws IOException;
 
-
+    /**
+     * 批量操作
+     *
+     * @param documentRequests 多个文档操作请求
+     * @throws IOException es-bulk操作抛出的异常
+     */
     boolean bulk(List<DocumentRequest> documentRequests) throws IOException;
 
     /**
