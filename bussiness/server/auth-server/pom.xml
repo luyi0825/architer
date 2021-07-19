@@ -12,11 +12,11 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.core</groupId>
+            <groupId>com.architecture.ultimate</groupId>
             <artifactId>boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.core</groupId>
+            <groupId>com.architecture.ultimate</groupId>
             <artifactId>db-druid</artifactId>
         </dependency>
         <dependency>
@@ -24,7 +24,7 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.core</groupId>
+            <groupId>com.architecture.ultimate</groupId>
             <artifactId>cloud-nacos-discovery</artifactId>
         </dependency>
         <dependency>

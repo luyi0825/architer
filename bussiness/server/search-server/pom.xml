@@ -12,21 +12,21 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.core</groupId>
-            <artifactId>boot-starter-web</artifactId>
+            <groupId>com.architecture.ultimate</groupId>
+            <artifactId>boot-starter-web-mvc</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.core</groupId>
+            <groupId>com.architecture.ultimate</groupId>
             <artifactId>elastic-search-dml</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.core</groupId>
+            <groupId>com.architecture.ultimate</groupId>
             <artifactId>elastic-search-mq-consumer</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.core</groupId>
+            <groupId>com.architecture.ultimate</groupId>
             <artifactId>test</artifactId>
         </dependency>
     </dependencies>

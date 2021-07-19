@@ -7,9 +7,9 @@
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>core-dependencies</artifactId>
+    <artifactId>ultimate-dependencies</artifactId>
     <version>1.0.0</version>
-    <name>core-dependencies</name>
+    <name>ultimate-dependencies</name>
     <description>依赖管理</description>
     <packaging>pom</packaging>
 
@@ -17,7 +17,12 @@
         <dependencies>
             <dependency>
                 <groupId>com.architecture.ultimate</groupId>
-                <artifactId>boot-starter-web</artifactId>
+                <artifactId>boot-starter-web-mvc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.architecture.ultimate</groupId>
+                <artifactId>boot-starter-web-flux</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -67,7 +72,7 @@
             </dependency>
             <dependency>
                 <groupId>com.architecture.ultimate</groupId>
-                <artifactId>boot-rest-template</artifactId>
+                <artifactId>cloud-resttemplate</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

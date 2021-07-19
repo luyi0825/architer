@@ -2,10 +2,9 @@ package com.business.message.captcha.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.business.message.captcha.CaptchaType;
-import com.core.module.common.valid.ListValue;
-import com.core.module.common.valid.group.AddGroup;
-import com.core.module.common.valid.group.UpdateGroup;
+import com.architecture.ultimate.module.common.valid.ListValue;
+import com.architecture.ultimate.module.common.valid.group.AddGroup;
+import com.architecture.ultimate.module.common.valid.group.UpdateGroup;
 import lombok.Data;
 
 import javax.validation.constraints.Max;

@@ -9,7 +9,7 @@ import com.core.captcha.CharacterGifCaptcha;
 import com.core.captcha.CharacterStaticCaptcha;
 import com.core.captcha.base.Captcha;
 import com.core.captcha.utils.CharacterCaptchaUtil;
-import com.core.module.common.exception.ServiceException;
+import com.architecture.ultimate.module.common.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;

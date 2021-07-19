@@ -8,7 +8,7 @@
 		<version>2.3.10.RELEASE</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.core</groupId>
+	<groupId>com.architecture.ultimate</groupId>
 	<artifactId>code-generator</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>

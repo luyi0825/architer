@@ -1,13 +1,7 @@
 package com.business.search.consumer;
 
 import cn.hutool.core.lang.UUID;
-import com.core.es.model.EsConstant;
-import com.core.es.model.RequestType;
-import com.core.es.model.doc.DocumentRequest;
-import com.core.es.model.dto.BatchSyncDocumentDTO;
-import com.core.es.model.dto.SyncDocumentDTO;
-import com.core.mq.rabbit.RabbitmqConstants;
-import com.core.utils.JsonUtils;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;

@@ -1,6 +1,7 @@
 package com.business.search;
 
-import com.core.starter.web.module.ModulesBuilder;
+
+import org.elasticsearch.common.inject.ModulesBuilder;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,8 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //@EnableDiscoveryClient
 public class SearchServer {
     public static void main(String[] args) {
-        Class<?>[] modules = new ModulesBuilder().buildMoules(SearchServer.class);
-        new SpringApplication(modules).run(args);
+        new SpringApplication(SearchServer.class).run(args);
     }
 
 }

@@ -2,11 +2,11 @@ package com.bussiness;
 
 
 
-import com.core.module.common.StatusCode;
-import com.core.module.common.exception.ServiceException;
-import com.core.module.common.response.BaseResponse;
+import com.architecture.ultimate.module.common.StatusCode;
+import com.architecture.ultimate.module.common.exception.ServiceException;
+import com.architecture.ultimate.module.common.response.BaseResponse;
 
-import com.core.module.common.response.R;
+import com.architecture.ultimate.module.common.response.R;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

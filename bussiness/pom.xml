@@ -13,14 +13,14 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>additional-dependencies</artifactId>
                 <version>${core.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>core-dependencies</artifactId>
                 <version>${core.version}</version>
                 <type>pom</type>

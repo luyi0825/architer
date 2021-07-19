@@ -12,7 +12,7 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.core</groupId>
+            <groupId>com.architecture.ultimate</groupId>
             <artifactId>boot-starter-web</artifactId>
         </dependency>
         <dependency>
@@ -26,7 +26,7 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.core</groupId>
+            <groupId>com.architecture.ultimate</groupId>
             <artifactId>db-druid</artifactId>
         </dependency>
         <dependency>
@@ -46,7 +46,7 @@
             <version>3.0.2</version>
         </dependency>
         <dependency>
-            <groupId>com.core</groupId>
+            <groupId>com.architecture.ultimate</groupId>
             <artifactId>cloud-nacos-discovery</artifactId>
         </dependency>
         <dependency>

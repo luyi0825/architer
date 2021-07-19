@@ -18,7 +18,7 @@
             <artifactId>spring-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.core</groupId>
+            <groupId>com.architecture.ultimate</groupId>
             <artifactId>mybatis-plus</artifactId>
         </dependency>
         <dependency>
@@ -37,7 +37,7 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.core</groupId>
+            <groupId>com.architecture.ultimate</groupId>
             <artifactId>module-common</artifactId>
         </dependency>
         <dependency>
@@ -60,7 +60,7 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.core</groupId>
+            <groupId>com.architecture.ultimate</groupId>
             <artifactId>redis-cache</artifactId>
         </dependency>
     </dependencies>
