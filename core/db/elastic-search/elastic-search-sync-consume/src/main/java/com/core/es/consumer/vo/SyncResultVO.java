@@ -5,6 +5,8 @@ import java.io.Serializable;
 
 /**
  * 同步结果VO
+ *
+ * @author luyi
  */
 public class SyncResultVO implements Serializable {
     /**
@@ -18,14 +20,14 @@ public class SyncResultVO implements Serializable {
     /**
      * 是否回调成功
      */
-    private boolean isSuccess;
+    private Boolean success;
 
-    public boolean isSuccess() {
-        return isSuccess;
+    public Boolean getSuccess() {
+        return success;
     }
 
-    public void setSuccess(boolean success) {
-        isSuccess = success;
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 
     private Long version;
@@ -54,4 +56,13 @@ public class SyncResultVO implements Serializable {
         this.batchId = batchId;
     }
 
+    @Override
+    public String toString() {
+        return "SyncResultVO{" +
+                "businessKey='" + businessKey + '\'' +
+                ", batchId='" + batchId + '\'' +
+                ", success=" + success +
+                ", version=" + version +
+                '}';
+    }
 }
