@@ -18,9 +18,9 @@ public class ElasticSearchProperties {
      */
     private String password;
     /**
-     * 集群地址
+     * 集群节点地址
      */
-    private List<EsHost> hosts;
+    private List<EsNode> nodes;
     /**
      * 默认的数据分片数
      */
@@ -46,12 +46,12 @@ public class ElasticSearchProperties {
         this.password = password;
     }
 
-    public List<EsHost> getHosts() {
-        return hosts;
+    public List<EsNode> getNodes() {
+        return nodes;
     }
 
-    public void setHosts(List<EsHost> hosts) {
-        this.hosts = hosts;
+    public void setNodes(List<EsNode> nodes) {
+        this.nodes = nodes;
     }
 
     public int getDefaultShards() {

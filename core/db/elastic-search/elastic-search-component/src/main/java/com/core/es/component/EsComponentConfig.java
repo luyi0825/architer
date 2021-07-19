@@ -17,13 +17,13 @@ import java.util.List;
 
 /**
  * @author luyi
+ * ES组件配置类
  */
 @Configuration
 @EnableConfigurationProperties(ElasticSearchProperties.class)
-public class EsClientConfig {
+public class EsComponentConfig {
 
-    private  ElasticSearchProperties elasticSearchProperties;
-
+    private ElasticSearchProperties elasticSearchProperties;
 
 
     public static final RequestOptions COMMON_OPTIONS;
@@ -39,9 +39,9 @@ public class EsClientConfig {
 
     @Bean
     public RestHighLevelClient restHighLevelClient() {
-        List<EsHost> hosts = elasticSearchProperties.getHosts();
+        List<EsNode> hosts = elasticSearchProperties.getNodes();
         if (CollectionUtils.isEmpty(hosts)) {
-            throw new IllegalArgumentException("es hosts is null");
+            throw new IllegalArgumentException("es nodes is null");
         }
         List<HttpHost> httpHosts = new ArrayList<>(hosts.size());
         hosts.forEach(host -> httpHosts.add(new HttpHost(host.getIp(), host.getPort(), host.getScheme())));

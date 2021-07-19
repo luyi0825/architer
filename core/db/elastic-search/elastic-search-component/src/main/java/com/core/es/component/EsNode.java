@@ -2,7 +2,11 @@ package com.core.es.component;
 
 import java.io.Serializable;
 
-public class EsHost implements Serializable {
+/**
+ * @author luyi
+ * ES的节点
+ */
+public class EsNode implements Serializable {
     private String ip;
     private int port = 92;
     private String scheme = "http";
@@ -29,5 +33,14 @@ public class EsHost implements Serializable {
 
     public void setScheme(String scheme) {
         this.scheme = scheme;
+    }
+
+    @Override
+    public String toString() {
+        return "EsNode{" +
+                "ip='" + ip + '\'' +
+                ", port=" + port +
+                ", scheme='" + scheme + '\'' +
+                '}';
     }
 }
