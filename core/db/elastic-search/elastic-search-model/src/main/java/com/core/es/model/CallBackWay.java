@@ -2,6 +2,8 @@ package com.core.es.model;
 
 /**
  * 请求成功后回调的方式
+ *
+ * @author luyi
  */
 public enum CallBackWay {
     /**
