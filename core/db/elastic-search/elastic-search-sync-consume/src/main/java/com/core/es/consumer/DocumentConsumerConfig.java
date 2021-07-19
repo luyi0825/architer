@@ -19,18 +19,18 @@ import java.util.Map;
 @Configuration
 @ComponentScan("com.core.es.consumer")
 public class DocumentConsumerConfig {
-    private final static String es_document_consumer = "es_document_consumer";
+    private final static String ES_DOCUMENT_CONSUMER = "es_document_consumer";
     private static final Logger LOG = LoggerFactory.getLogger(DocumentConsumerConfig.class);
 
     @Bean
-    public DocumentConsumerExecutor DocumentConsumerExecutor(@Autowired(required = false) TaskExecutorProperties taskExecutorProperties) {
+    public DocumentConsumerExecutor documentConsumerExecutor(@Autowired(required = false) TaskExecutorProperties taskExecutorProperties) {
         Map<String, ThreadPoolConfig> threadPoolConfigMap = taskExecutorProperties.getConfigs();
         ThreadPoolConfig threadPoolConfig = null;
         if (!CollectionUtils.isEmpty(threadPoolConfigMap)) {
-            threadPoolConfig = threadPoolConfigMap.get(es_document_consumer);
+            threadPoolConfig = threadPoolConfigMap.get(ES_DOCUMENT_CONSUMER);
         }
         if (threadPoolConfig == null) {
-            LOG.error("注意:es消费数据线程池【{}】没有配置,采用默认配置", es_document_consumer);
+            LOG.error("注意:es消费数据线程池【{}】没有配置,采用默认配置", ES_DOCUMENT_CONSUMER);
             threadPoolConfig = new ThreadPoolConfig();
         }
         return new DocumentConsumerExecutor(threadPoolConfig);
