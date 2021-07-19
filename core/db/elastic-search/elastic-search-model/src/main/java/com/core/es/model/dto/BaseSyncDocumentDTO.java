@@ -29,10 +29,6 @@ public abstract class BaseSyncDocumentDTO implements Serializable {
      */
     private Long version;
     /**
-     * 是否异步处理，对于一些大量数据，同步处理比较慢，true就可以异步处理
-     */
-    private boolean async = false;
-    /**
      * 回调方式
      */
     private String callBackWay;
@@ -90,12 +86,5 @@ public abstract class BaseSyncDocumentDTO implements Serializable {
         this.version = version;
     }
 
-    public boolean isAsync() {
-        return async;
-    }
-
-    public void setAsync(boolean async) {
-        this.async = async;
-    }
 
 }
