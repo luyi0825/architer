@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>dependencies</artifactId>
-        <groupId>com.core</groupId>
+        <groupId>com.architecture.ultimate</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -16,72 +16,72 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>boot-starter-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>redis-cache</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>cloud-nacos-config</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>cloud-nacos-discovery</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>cloud-open-feign</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>cloud-zookeeper-discovery</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>cloud-sentinel</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>module-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>module-model</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>mq-rabbit</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>boot-rest-template</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>mybatis-plus</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>db-druid</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.core</groupId>
+                <groupId>com.architecture.ultimate</groupId>
                 <artifactId>test</artifactId>
                 <version>${project.version}</version>
             </dependency>
