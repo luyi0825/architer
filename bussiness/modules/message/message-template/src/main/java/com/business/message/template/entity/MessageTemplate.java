@@ -3,7 +3,7 @@ package com.business.message.template.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.core.mybatisplus.entity.BaseEntity;
+import com.architecture.ultimate.mybatisplus.entity.BaseEntity;
 import lombok.Data;
 
 /**

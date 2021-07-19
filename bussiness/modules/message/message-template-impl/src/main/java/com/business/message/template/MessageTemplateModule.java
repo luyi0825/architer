@@ -1,6 +1,6 @@
 package com.business.message.template;
 
-import com.core.module.common.Module;
+import com.architecture.ultimate.module.common.Module;
 import org.mybatis.spring.annotation.MapperScan;
 
 /**

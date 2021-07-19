@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import com.business.message.template.entity.MessageLimit;
 import com.business.message.template.service.MessageLimitService;
-import com.core.mybatisplus.service.impl.BaseServiceImpl;
+import com.architecture.ultimate.mybatisplus.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

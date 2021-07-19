@@ -1,6 +1,6 @@
 package com.business.file.start;
 
-import com.core.starter.web.module.ModulesBuilder;
+import com.architecture.ultimate.starter.web.module.ModulesBuilder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

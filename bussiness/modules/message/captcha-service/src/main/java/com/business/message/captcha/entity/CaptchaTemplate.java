@@ -4,9 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import com.core.mybatisplus.entity.BaseEntity;
+import com.architecture.ultimate.mybatisplus.entity.BaseEntity;
 import lombok.Data;
 
 /**

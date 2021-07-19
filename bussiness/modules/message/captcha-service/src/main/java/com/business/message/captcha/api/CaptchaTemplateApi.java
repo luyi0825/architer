@@ -3,8 +3,8 @@ package com.business.message.captcha.api;
 
 import com.business.message.captcha.entity.CaptchaTemplate;
 import com.core.module.common.valid.group.AddGroup;
-import com.core.mybatisplus.QueryParam;
-import com.core.query.common.model.Pagination;
+import com.architecture.ultimate.mybatisplus.QueryParam;
+import com.architecture.ultimate.query.common.model.Pagination;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;

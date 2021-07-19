@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.business.message.captcha.dao.CaptchaTemplateDao;
 import com.business.message.captcha.entity.CaptchaTemplate;
 import com.business.message.captcha.service.CaptchaTemplateService;
-import com.core.mybatisplus.service.impl.BaseServiceImpl;
+import com.architecture.ultimate.mybatisplus.service.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

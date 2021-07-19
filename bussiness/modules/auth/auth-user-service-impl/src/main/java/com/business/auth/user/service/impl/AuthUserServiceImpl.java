@@ -1,10 +1,8 @@
 package com.business.auth.user.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.business.auth.user.entity.AuthUser;
 import com.business.auth.user.service.AuthUserService;
-import com.core.mybatisplus.service.impl.BaseServiceImpl;
-import org.apache.commons.lang3.StringUtils;
+import com.architecture.ultimate.mybatisplus.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
