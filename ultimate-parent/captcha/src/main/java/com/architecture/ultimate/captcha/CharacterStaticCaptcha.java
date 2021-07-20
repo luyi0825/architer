@@ -1,8 +1,8 @@
-package com.core.captcha;
+package com.architecture.ultimate.captcha;
 
 
-import com.core.captcha.base.CharacterCaptcha;
-import com.core.captcha.model.CaptchaModel;
+import com.architecture.ultimate.captcha.base.CharacterCaptcha;
+import com.architecture.ultimate.captcha.model.CaptchaModel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

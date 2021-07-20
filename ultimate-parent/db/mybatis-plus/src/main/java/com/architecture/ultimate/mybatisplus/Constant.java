@@ -1,5 +1,4 @@
-package com.core.mybatisplus;
-
+package com.architecture.ultimate.mybatisplus;
 public class Constant {
     /**
      * 当前页码

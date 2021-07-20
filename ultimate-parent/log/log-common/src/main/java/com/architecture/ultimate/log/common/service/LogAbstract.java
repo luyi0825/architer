@@ -1,6 +1,9 @@
-package com.core.log.common.service;
+package com.architecture.ultimate.lol.common.service;
 
-import com.core.log.common.LogMeta;
+
+import com.architecture.ultimate.log.common.LogMeta;
+import com.architecture.ultimate.log.common.service.Log;
+import com.architecture.ultimate.log.common.service.LogFunction;
 
 public abstract class LogAbstract implements Log {
 

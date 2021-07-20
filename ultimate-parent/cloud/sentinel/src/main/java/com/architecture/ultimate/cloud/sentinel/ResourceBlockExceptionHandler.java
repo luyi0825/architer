@@ -1,7 +1,7 @@
-package com.core.cloud.sentinel;
+package com.architecture.ultimate.cloud.sentinel;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.core.utils.JsonUtils;
+import com.architecture.ultimate.utils.JsonUtils;
 
 import java.util.HashMap;
 import java.util.Map;

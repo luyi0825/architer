@@ -1,5 +1,4 @@
-package com.core.excel.html.emun;
-
+package com.architecture.ultimate.excel.html.emun;
 /**
  * 描述：cell对齐方式
  *

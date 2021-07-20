@@ -1,9 +1,9 @@
-package com.core.captcha.controller;
+package com.architecture.ultimate.captcha.controller;
 
 
-import com.core.captcha.CharacterGifCaptcha;
-import com.core.captcha.CharacterStaticCaptcha;
-import com.core.captcha.base.Captcha;
+import com.architecture.ultimate.captcha.CharacterGifCaptcha;
+import com.architecture.ultimate.captcha.CharacterStaticCaptcha;
+import com.architecture.ultimate.captcha.base.Captcha;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -89,13 +89,13 @@ public class XlsCellWriteSheet {
         //水平样式
         if (xlsCell.getLevelAlign() != null) {
             switch (xlsCell.getLevelAlign()) {
-                case CellAlign.LevelAlign.CENTER:
+                case CENTER:
                     cellStyle.setAlignment(HorizontalAlignment.CENTER);
                     break;
-                case CellAlign.LevelAlign.LEFT:
+                case LEFT:
                     cellStyle.setAlignment(HorizontalAlignment.LEFT);
                     break;
-                case CellAlign.LevelAlign.RIGHT:
+                case RIGHT:
                     cellStyle.setAlignment(HorizontalAlignment.RIGHT);
                     break;
                 default:
@@ -105,13 +105,13 @@ public class XlsCellWriteSheet {
         //垂直样式
         if (xlsCell.getValign() != null) {
             switch (xlsCell.getValign()) {
-                case CellAlign.Valign.MIDDLE:
+                case MIDDLE:
                     cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
                     break;
-                case CellAlign.Valign.TOP:
+                case TOP:
                     cellStyle.setVerticalAlignment(VerticalAlignment.TOP);
                     break;
-                case CellAlign.Valign.BOTTOM:
+                case BOTTOM:
                     cellStyle.setVerticalAlignment(VerticalAlignment.BOTTOM);
                     break;
                 default:

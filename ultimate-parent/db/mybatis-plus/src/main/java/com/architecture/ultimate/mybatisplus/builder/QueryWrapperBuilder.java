@@ -1,10 +1,10 @@
-package com.core.mybatisplus.builder;
+package com.architecture.ultimate.mybatisplus.builder;
 
+import com.architecture.ultimate.mybatisplus.QueryParam;
+import com.architecture.ultimate.query.common.OperatorEnum;
+import com.architecture.ultimate.query.common.model.OrderCondition;
+import com.architecture.ultimate.query.common.model.QueryCondition;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.core.mybatisplus.*;
-import com.core.query.common.OperatorEnum;
-import com.core.query.common.model.OrderCondition;
-import com.core.query.common.model.QueryCondition;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.core.query.common.model;
+package com.architecture.ultimate.query.common.model;
 
 /**
  * @author luyi

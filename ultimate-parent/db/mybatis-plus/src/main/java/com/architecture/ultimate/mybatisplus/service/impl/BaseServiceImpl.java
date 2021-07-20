@@ -1,13 +1,15 @@
-package com.core.mybatisplus.service.impl;
+package com.architecture.ultimate.mybatisplus.service.impl;
 
+import com.architecture.ultimate.mybatisplus.QueryParam;
+import com.architecture.ultimate.mybatisplus.builder.QueryWrapperBuilder;
+import com.architecture.ultimate.mybatisplus.service.BaseService;
+import com.architecture.ultimate.query.common.model.Pager;
+import com.architecture.ultimate.query.common.model.Pagination;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.core.mybatisplus.*;
-import com.core.mybatisplus.builder.QueryWrapperBuilder;
-import com.core.mybatisplus.service.BaseService;
-import com.core.query.common.model.Pager;
-import com.core.query.common.model.Pagination;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 

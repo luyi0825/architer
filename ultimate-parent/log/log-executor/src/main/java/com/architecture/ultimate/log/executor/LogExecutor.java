@@ -1,7 +1,7 @@
-package com.core.log.executor;
+package com.architecture.ultimate.log.executor;
 
-import com.core.thread.CommonTaskExecutor;
-import com.core.thread.properties.ThreadPoolConfig;
+import com.architecture.ultimate.thread.CommonTaskExecutor;
+import com.architecture.ultimate.thread.properties.ThreadPoolConfig;
 
 /**
  * @author luyi

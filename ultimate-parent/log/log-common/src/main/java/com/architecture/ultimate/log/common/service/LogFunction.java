@@ -1,6 +1,7 @@
-package com.core.log.common.service;
+package com.architecture.ultimate.log.common.service;
 
-import com.core.log.common.LogMeta;
+
+import com.architecture.ultimate.log.common.LogMeta;
 
 public interface LogFunction {
 

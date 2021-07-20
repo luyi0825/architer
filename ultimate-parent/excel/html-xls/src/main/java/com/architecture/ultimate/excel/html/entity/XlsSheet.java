@@ -1,5 +1,6 @@
-package com.core.excel.html.entity;
+package com.architecture.ultimate.excel.html.entity;
 
+import com.architecture.ultimate.excel.html.entity.XlsCell;
 import lombok.Data;
 
 import java.util.List;

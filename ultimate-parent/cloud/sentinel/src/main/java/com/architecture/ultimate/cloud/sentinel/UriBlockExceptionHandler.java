@@ -1,9 +1,10 @@
-package com.core.cloud.sentinel;
+package com.architecture.ultimate.cloud.sentinel;
 
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.util.StringUtil;
-import com.core.utils.JsonUtils;
+import com.architecture.ultimate.utils.JsonUtils;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

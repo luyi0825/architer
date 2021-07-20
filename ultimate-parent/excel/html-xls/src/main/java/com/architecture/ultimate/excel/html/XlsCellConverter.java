@@ -1,11 +1,12 @@
-package com.core.excel.html;
+package com.architecture.ultimate.excel.html;
 
 import com.alibaba.excel.converters.Converter;
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.CellData;
 import com.alibaba.excel.metadata.GlobalConfiguration;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
-import com.core.excel.html.entity.XlsCell;
+import com.architecture.ultimate.excel.html.entity.XlsCell;
+
 
 /**
  * @author luyi

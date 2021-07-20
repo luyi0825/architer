@@ -1,4 +1,6 @@
-package com.core.captcha.base;
+package com.architecture.ultimate.captcha.base;
+
+import com.architecture.ultimate.captcha.base.ArithHelper;
 
 import java.util.Collections;
 import java.util.Stack;
@@ -6,6 +8,7 @@ import java.util.Stack;
 
 /**
  * 字符串计算器
+ *
  * @link https://www.cnblogs.com/woider/p/5331391.html
  */
 public class Calculator {

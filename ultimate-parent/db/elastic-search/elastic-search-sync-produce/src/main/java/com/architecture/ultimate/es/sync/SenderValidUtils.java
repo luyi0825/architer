@@ -1,10 +1,11 @@
-package com.core.es.sync;
+package com.architecture.ultimate.es.sync;
 
 import cn.hutool.core.exceptions.ValidateException;
-import com.core.es.model.doc.DocumentRequest;
-import com.core.es.model.dto.BaseSyncDocumentDTO;
-import com.core.es.model.dto.BatchSyncDocumentDTO;
-import com.core.es.model.dto.SyncDocumentDTO;
+
+import com.architecture.ultimate.es.model.doc.DocumentRequest;
+import com.architecture.ultimate.es.model.dto.BaseSyncDocumentDTO;
+import com.architecture.ultimate.es.model.dto.BatchSyncDocumentDTO;
+import com.architecture.ultimate.es.model.dto.SyncDocumentDTO;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;

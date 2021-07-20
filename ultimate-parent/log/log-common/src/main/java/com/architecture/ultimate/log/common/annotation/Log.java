@@ -1,6 +1,7 @@
-package com.core.log.common.annotation;
+package com.architecture.ultimate.log.common.annotation;
 
-import com.core.log.common.enums.LogType;
+
+import com.architecture.ultimate.log.common.enums.LogType;
 
 /**
  * @author luyi

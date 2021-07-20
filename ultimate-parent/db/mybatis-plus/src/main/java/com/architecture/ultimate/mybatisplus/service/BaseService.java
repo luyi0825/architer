@@ -2,9 +2,7 @@ package com.architecture.ultimate.mybatisplus.service;
 
 import com.architecture.ultimate.mybatisplus.QueryParam;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.core.mybatisplus.*;
 import com.architecture.ultimate.query.common.model.Pagination;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
@@ -32,7 +30,6 @@ public interface BaseService<T> {
      * @return list 数据
      * @date 2020/12/28
      */
-    @Autowired
     List<T> selectList(QueryParam<T> queryParam);
 
     /**

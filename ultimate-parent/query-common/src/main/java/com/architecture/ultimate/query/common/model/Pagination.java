@@ -6,8 +6,7 @@
  * 版权所有，侵权必究！
  */
 
-package com.core.query.common.model;
-
+package com.architecture.ultimate.query.common.model;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.core.captcha;
+package com.architecture.ultimate.captcha;
 
 import java.security.SecureRandom;
 

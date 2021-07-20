@@ -1,4 +1,4 @@
-package com.core.captcha.utils;
+package com.architecture.ultimate.captcha.utils;
 
 /**
  *

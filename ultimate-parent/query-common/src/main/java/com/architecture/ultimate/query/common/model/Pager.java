@@ -1,13 +1,12 @@
 package com.architecture.ultimate.query.common.model;
 
-import lombok.Data;
+
 
 import java.io.Serializable;
 
 /**
  * @author luyi
  */
-@Data
 public class Pager implements Serializable {
     /**
      * 当前页
@@ -23,4 +22,19 @@ public class Pager implements Serializable {
         this.limit = 10;
     }
 
+    public Integer getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(Integer currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
 }

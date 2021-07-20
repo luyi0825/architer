@@ -1,6 +1,7 @@
-package com.core.log.executor;
+package com.architecture.ultimate.log.executor;
 
-import com.core.thread.properties.TaskExecutorProperties;
+
+import com.architecture.ultimate.thread.properties.TaskExecutorProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**

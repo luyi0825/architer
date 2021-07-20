@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2016-2019 人人开源 All rights reserved.
- *
+ * <p>
  * https://www.renren.io
- *
+ * <p>
  * 版权所有，侵权必究！
  */
 
-package com.core.mybatisplus;
+package com.architecture.ultimate.mybatisplus;
 
+import com.architecture.ultimate.mybatisplus.builder.QueryWrapperBuilder;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.core.mybatisplus.builder.QueryWrapperBuilder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,6 @@
 
 
-package com.core.mybatisplus;
-
-
+package com.architecture.ultimate.mybatisplus;
 
 import org.apache.commons.lang3.StringUtils;
 

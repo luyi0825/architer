@@ -19,5 +19,7 @@
         <module>elastic-search-sync-produce</module>
         <module>elastic-search-sync-consume</module>
         <module>elastic-search-data-query</module>
+        <module>elastic-search-document-kafaka-consumer</module>
+        <module>elastic-search-document-kafaka-send</module>
     </modules>
 </project>

@@ -1,5 +1,4 @@
-package com.core.mybatisplus.entity;
-
+package com.architecture.ultimate.mybatisplus.entity;
 import java.io.Serializable;
 import java.util.Date;
 

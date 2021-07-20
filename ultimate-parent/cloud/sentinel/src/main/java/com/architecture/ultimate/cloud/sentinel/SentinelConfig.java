@@ -1,5 +1,4 @@
-package com.core.cloud.sentinel;
-
+package com.architecture.ultimate.cloud.sentinel;
 
 
 import org.springframework.context.annotation.Bean;

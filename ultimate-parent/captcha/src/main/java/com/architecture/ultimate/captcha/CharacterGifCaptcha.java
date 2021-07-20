@@ -1,10 +1,9 @@
-package com.core.captcha;
+package com.architecture.ultimate.captcha;
 
 
-
-import com.core.captcha.base.CharacterCaptcha;
-import com.core.captcha.utils.GifEncoder;
-import com.core.captcha.model.CaptchaModel;
+import com.architecture.ultimate.captcha.base.CharacterCaptcha;
+import com.architecture.ultimate.captcha.model.CaptchaModel;
+import com.architecture.ultimate.captcha.utils.GifEncoder;
 
 import java.awt.*;
 import java.awt.geom.CubicCurve2D;
@@ -46,7 +45,7 @@ public class CharacterGifCaptcha extends CharacterCaptcha {
             gifEncoder.setRepeat(0);
             gifEncoder.start(os);
             for (int i = 0; i < len; i++) {
-                BufferedImage frame = graphicsImage(fontColor, code, i, besselXY,model);
+                BufferedImage frame = graphicsImage(fontColor, code, i, besselXY, model);
                 gifEncoder.addFrame(frame);
                 frame.flush();
             }
@@ -83,7 +82,7 @@ public class CharacterGifCaptcha extends CharacterCaptcha {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         // 画干扰圆圈
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.1f * num(10)));
-        drawOval(2, g2d,model);
+        drawOval(2, g2d, model);
         // 画干扰线,设置透明度
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
         g2d.setStroke(new BasicStroke(1.2f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
@@ -100,7 +99,7 @@ public class CharacterGifCaptcha extends CharacterCaptcha {
         for (int i = 0; i < code.length(); i++) {
             String charCode = (code.charAt(i) + "").intern();
             // 设置透明度
-            AlphaComposite ac3 = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, getAlpha(flag, i,model.getLen()));
+            AlphaComposite ac3 = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, getAlpha(flag, i, model.getLen()));
             g2d.setComposite(ac3);
             g2d.setColor(fontColor[i]);
             // 文字的纵坐标
@@ -118,7 +117,7 @@ public class CharacterGifCaptcha extends CharacterCaptcha {
      * @param j
      * @return 透明度
      */
-    private float getAlpha(int i, int j,int len) {
+    private float getAlpha(int i, int j, int len) {
         int num = i + j;
         float r = (float) 1 / (len - 1);
         float s = len * r;

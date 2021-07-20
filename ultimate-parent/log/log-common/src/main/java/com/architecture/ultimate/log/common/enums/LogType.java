@@ -1,4 +1,4 @@
-package com.core.log.common.enums;
+package com.architecture.ultimate.log.common.enums;
 
 /**
  * 日志数据类型

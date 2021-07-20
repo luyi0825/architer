@@ -1,9 +1,10 @@
-package com.core.excel.html;
+package com.architecture.ultimate.excel.html;
 
-import com.core.excel.html.emun.HtmlType;
-import com.core.excel.html.entity.HtmlSheet;
-import com.core.excel.html.entity.XlsSheet;
-import com.core.excel.html.parser.HtmlParser;
+
+import com.architecture.ultimate.excel.html.emun.HtmlType;
+import com.architecture.ultimate.excel.html.entity.HtmlSheet;
+import com.architecture.ultimate.excel.html.entity.XlsSheet;
+import com.architecture.ultimate.excel.html.parser.HtmlParser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
-package com.core.excel.html.parser;
+package com.architecture.ultimate.excel.html.parser;
 
-import com.core.excel.html.emun.HtmlType;
+import com.architecture.ultimate.excel.html.emun.HtmlType;
 
 /**
  * @author luyi

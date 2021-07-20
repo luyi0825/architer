@@ -30,9 +30,9 @@ public class DefaultHtmlParser implements HtmlParser {
      * 2.如果直接使用实现类直接解析，外部的接口太杂太多
      * 所以放入Map中处理
      */
-    public Map<String, com.core.excel.html.parser.HtmlStyleParser> htmlStyleParserMap;
+    public Map<String, HtmlStyleParser> htmlStyleParserMap;
 
-    public DefaultHtmlParser(List<com.core.excel.html.parser.HtmlStyleParser> htmlStyleParsers) {
+    public DefaultHtmlParser(List<HtmlStyleParser> htmlStyleParsers) {
         htmlStyleParserMap = new HashMap<>(htmlStyleParsers.size());
         htmlStyleParsers.forEach(htmlStyleParser -> {
             //得到html类型，并放入字符串常量池

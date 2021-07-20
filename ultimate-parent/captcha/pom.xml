@@ -16,7 +16,7 @@
         <!-- 测试用的依赖包-->
         <dependency>
             <groupId>com.architecture.ultimate</groupId>
-            <artifactId>boot-starter-web</artifactId>
+            <artifactId>boot-starter-web-mvc</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>

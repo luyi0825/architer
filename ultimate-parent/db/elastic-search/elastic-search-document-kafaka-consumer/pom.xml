@@ -4,18 +4,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>elastic-search</artifactId>
-        <groupId>ccom.architecture.ultimate</groupId>
+        <groupId>com.architecture.ultimate</groupId>
         <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>elastic-search-document-kafka-consumer</artifactId>
     <name>elastic-search-document-kafka-consumer</name>
     <description>elastic-search-document-kafka-consumer</description>
     <packaging>jar</packaging>
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.kafka</groupId>-->
+        <!--            <artifactId>spring-kafka</artifactId>-->
+        <!--        </dependency>-->
     </dependencies>
 </project>

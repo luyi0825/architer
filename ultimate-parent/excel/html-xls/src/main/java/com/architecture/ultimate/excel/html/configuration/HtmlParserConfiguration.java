@@ -1,9 +1,10 @@
-package com.core.excel.html.configuration;
+package com.architecture.ultimate.excel.html.configuration;
 
-import com.core.excel.html.parser.DefaultHtmlParser;
-import com.core.excel.html.parser.DefaultHtmlStyleParser;
-import com.core.excel.html.parser.HtmlParser;
-import com.core.excel.html.parser.HtmlStyleParser;
+
+import com.architecture.ultimate.excel.html.parser.DefaultHtmlParser;
+import com.architecture.ultimate.excel.html.parser.DefaultHtmlStyleParser;
+import com.architecture.ultimate.excel.html.parser.HtmlParser;
+import com.architecture.ultimate.excel.html.parser.HtmlStyleParser;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

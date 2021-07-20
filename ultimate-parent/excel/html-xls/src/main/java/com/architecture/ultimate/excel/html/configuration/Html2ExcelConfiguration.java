@@ -1,6 +1,6 @@
-package com.core.excel.html.configuration;
+package com.architecture.ultimate.excel.html.configuration;
 
-import com.core.excel.html.Html2XlsExport;
+import com.architecture.ultimate.excel.html.Html2XlsExport;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

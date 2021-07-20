@@ -1,9 +1,10 @@
-package com.core.es.sync;
+package com.architecture.ultimate.es.sync;
 
-import com.core.es.model.EsConstant;
-import com.core.es.model.dto.BatchSyncDocumentDTO;
-import com.core.es.model.dto.SyncDocumentDTO;
-import com.core.utils.JsonUtils;
+
+import com.architecture.ultimate.es.model.EsConstant;
+import com.architecture.ultimate.es.model.dto.BatchSyncDocumentDTO;
+import com.architecture.ultimate.es.model.dto.SyncDocumentDTO;
+import com.architecture.ultimate.utils.JsonUtils;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.connection.CorrelationData;

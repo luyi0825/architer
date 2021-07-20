@@ -1,12 +1,9 @@
-package com.core.log.executor;
+package com.architecture.ultimate.log.executor;
 
-import com.core.log.common.LogMeta;
-import com.core.log.common.service.Log;
-import com.core.log.common.service.LogAbstract;
-import com.core.log.common.service.LogProcessor;
-import com.core.log.common.service.LogSupport;
+
+import com.architecture.ultimate.log.common.LogMeta;
+import com.architecture.ultimate.log.common.service.LogProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,7 +14,7 @@ import java.util.Map;
  * @author 日志执行器
  */
 @Component
-public class LogImpl extends LogAbstract {
+public class LogImpl extends com.architecture.ultimate.lol.common.service.LogAbstract {
 
     private final List<LogProcessor> logProcessors;
 
