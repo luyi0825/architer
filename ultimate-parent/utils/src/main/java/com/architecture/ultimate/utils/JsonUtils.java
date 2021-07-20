@@ -1,4 +1,4 @@
-package com.core.utils;
+package com.architecture.ultimate.utils;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
