@@ -1,4 +1,4 @@
-package com.core.mq.rabbit;
+package com.architecture.ultimate.mq.rabbit;
 
 /**
  * 重试操作
