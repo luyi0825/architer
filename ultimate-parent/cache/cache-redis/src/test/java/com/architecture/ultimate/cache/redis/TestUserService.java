@@ -1,7 +1,8 @@
-package com.core.cache.redis;
+package com.architecture.ultimate.cache.redis;
 
-import com.core.cache.redis.entity.User;
-import com.core.cache.redis.service.UserService;
+
+import com.architecture.ultimate.cache.redis.entity.User;
+import com.architecture.ultimate.cache.redis.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
-package com.core.thread.client.entity;
+package com.architecture.ultimate.thread.client.entity;
 
 
-import com.core.thread.client.RejectedHandler;
+import com.architecture.ultimate.thread.client.RejectedHandler;
 import lombok.Data;
 
 /**
@@ -35,5 +35,5 @@ public class ClientInfo {
      *
      * @see RejectedHandler
      */
-    private RejectedHandler rejectedHandler;
+    private String rejectedHandler;
 }

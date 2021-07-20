@@ -1,7 +1,8 @@
-package com.core.es.dml.service;
+package com.architecture.ultimate.es.dml.service;
 
 
-import com.core.es.model.ddl.IndexMapping;
+
+import com.architecture.ultimate.es.model.ddl.IndexMapping;
 
 import java.io.IOException;
 

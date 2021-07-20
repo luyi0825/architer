@@ -1,8 +1,9 @@
-package com.core.cache.common.proxy;
+package com.architecture.ultimate.cache.common.proxy;
 
-import com.core.cache.common.operation.CacheOperation;
-import com.core.cache.common.CacheProcess;
-import com.core.cache.common.CacheAnnotationsParser;
+
+import com.architecture.ultimate.cache.common.CacheAnnotationsParser;
+import com.architecture.ultimate.cache.common.CacheProcess;
+import com.architecture.ultimate.cache.common.operation.CacheOperation;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.lang.Nullable;

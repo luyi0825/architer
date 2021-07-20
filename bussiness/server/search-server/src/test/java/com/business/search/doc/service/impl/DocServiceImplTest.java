@@ -1,6 +1,9 @@
 package com.business.search.doc.service.impl;
 
 
+import com.architecture.ultimate.es.dml.service.DocService;
+import com.architecture.ultimate.es.model.doc.DocumentRequest;
+import com.architecture.ultimate.es.model.doc.DocumentResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;

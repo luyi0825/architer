@@ -1,13 +1,13 @@
-package com.core.cache.common.operation;
+package com.architecture.ultimate.cache.common.operation;
 
 
+import com.architecture.ultimate.cache.common.CacheAsyncExecutorService;
+import com.architecture.ultimate.cache.common.CacheExpressionParser;
+import com.architecture.ultimate.cache.common.CacheManager;
+import com.architecture.ultimate.cache.common.enums.LockType;
+import com.architecture.ultimate.cache.common.exception.CacheHandlerException;
+import com.architecture.ultimate.cache.common.key.KeyGenerator;
 import com.lz.cache.lock.LockManager;
-import com.core.cache.common.CacheAsyncExecutorService;
-import com.core.cache.common.CacheExpressionParser;
-import com.core.cache.common.CacheManager;
-import com.core.cache.common.enums.LockType;
-import com.core.cache.common.exception.CacheHandlerException;
-import com.core.cache.common.key.KeyGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.annotation.Annotation;

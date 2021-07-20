@@ -2,6 +2,12 @@ package com.business.search.consumer;
 
 import cn.hutool.core.lang.UUID;
 
+import com.architecture.ultimate.es.model.EsConstant;
+import com.architecture.ultimate.es.model.RequestType;
+import com.architecture.ultimate.es.model.doc.DocumentRequest;
+import com.architecture.ultimate.es.model.dto.BatchSyncDocumentDTO;
+import com.architecture.ultimate.mq.rabbit.RabbitmqConstants;
+import com.architecture.ultimate.utils.JsonUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;

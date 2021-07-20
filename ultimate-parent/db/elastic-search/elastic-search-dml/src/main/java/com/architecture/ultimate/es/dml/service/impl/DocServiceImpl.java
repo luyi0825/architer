@@ -1,10 +1,11 @@
-package com.core.es.dml.service.impl;
+package com.architecture.ultimate.es.dml.service.impl;
 
 
-import com.core.es.dml.factory.RequestUtils;
-import com.core.es.dml.service.DocService;
-import com.core.es.model.doc.DocumentRequest;
-import com.core.es.model.doc.DocumentResponse;
+
+import com.architecture.ultimate.es.dml.factory.RequestUtils;
+import com.architecture.ultimate.es.dml.service.DocService;
+import com.architecture.ultimate.es.model.doc.DocumentRequest;
+import com.architecture.ultimate.es.model.doc.DocumentResponse;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetRequest;

@@ -1,8 +1,10 @@
-package com.core.es.consumer.api;
+package com.architecture.ultimate.es.consumer.api;
 
-import com.core.es.consumer.entity.SyncResult;
-import com.core.es.consumer.service.SyncResultService;
-import com.core.es.consumer.vo.SyncResultVO;
+
+
+import com.architecture.ultimate.es.consumer.entity.SyncResult;
+import com.architecture.ultimate.es.consumer.service.SyncResultService;
+import com.architecture.ultimate.es.consumer.vo.SyncResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

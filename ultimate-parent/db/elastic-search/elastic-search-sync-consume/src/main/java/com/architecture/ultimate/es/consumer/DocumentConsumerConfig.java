@@ -1,7 +1,9 @@
-package com.core.es.consumer;
+package com.architecture.ultimate.es.consumer;
 
-import com.core.thread.properties.TaskExecutorProperties;
-import com.core.thread.properties.ThreadPoolConfig;
+
+
+import com.architecture.ultimate.thread.properties.TaskExecutorProperties;
+import com.architecture.ultimate.thread.properties.ThreadPoolConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ import java.util.Map;
  * 文档消费配置类
  */
 @Configuration
-@ComponentScan("com.core.es.consumer")
+@ComponentScan("com.architecture.ultimate.es.consumer")
 public class DocumentConsumerConfig {
     private final static String ES_DOCUMENT_CONSUMER = "es_document_consumer";
     private static final Logger LOG = LoggerFactory.getLogger(DocumentConsumerConfig.class);

@@ -1,6 +1,6 @@
-package com.core.thread;
+package com.architecture.ultimate.thread;
 
-import com.core.thread.properties.TaskExecutorProperties;
+import com.architecture.ultimate.thread.properties.TaskExecutorProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

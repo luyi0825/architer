@@ -1,6 +1,9 @@
-package com.core.mq.rabbit;
+package com.architecture.ultimate.mq.rabbit;
 
 
+import com.architecture.ultimate.mq.rabbit.CallBackMessage;
+import com.architecture.ultimate.mq.rabbit.ConfirmCallbackHandler;
+import com.architecture.ultimate.mq.rabbit.ReturnCallbackHandler;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeansException;

@@ -1,7 +1,11 @@
-package com.core.cache.redis.service;
+package com.architecture.ultimate.cache.redis.service;
 
-import com.core.cache.redis.entity.User;
 
+import com.architecture.ultimate.cache.redis.entity.User;
+
+/**
+ * @author luyi
+ */
 public class Constatnt {
     public static final String userClass = User.class.getName();
 }

@@ -1,4 +1,5 @@
-package com.core.cache.common;
+package com.architecture.ultimate.cache.common;
+
 
 import java.util.concurrent.ExecutorService;
 

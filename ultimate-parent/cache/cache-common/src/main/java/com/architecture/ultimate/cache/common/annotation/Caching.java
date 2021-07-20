@@ -1,4 +1,4 @@
-package com.core.cache.common.annotation;
+package com.architecture.ultimate.cache.common.annotation;
 
 import java.lang.annotation.*;
 

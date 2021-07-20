@@ -1,6 +1,8 @@
-package com.core.es.consumer;
+package com.architecture.ultimate.es.consumer;
 
-import com.core.es.model.dto.BaseSyncDocumentDTO;
+
+
+import com.architecture.ultimate.es.model.dto.BaseSyncDocumentDTO;
 
 import java.io.IOException;
 

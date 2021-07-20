@@ -1,7 +1,8 @@
-package com.core.es.consumer;
+package com.architecture.ultimate.es.consumer;
 
-import com.core.thread.CommonTaskExecutor;
-import com.core.thread.properties.ThreadPoolConfig;
+
+import com.architecture.ultimate.thread.CommonTaskExecutor;
+import com.architecture.ultimate.thread.properties.ThreadPoolConfig;
 
 /**
  * @author luyi

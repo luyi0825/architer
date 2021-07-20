@@ -1,6 +1,8 @@
-package com.core.cache.common.operation;
+package com.architecture.ultimate.cache.common.operation;
 
-import com.core.cache.common.annotation.DeleteCache;
+
+
+import com.architecture.ultimate.cache.common.annotation.DeleteCache;
 
 import java.lang.annotation.Annotation;
 

@@ -1,7 +1,9 @@
-package com.core.cache.common.annotation;
+package com.architecture.ultimate.cache.common.annotation;
 
 
-import com.core.cache.common.enums.LockType;
+
+
+import com.architecture.ultimate.cache.common.enums.LockType;
 
 import java.lang.annotation.*;
 

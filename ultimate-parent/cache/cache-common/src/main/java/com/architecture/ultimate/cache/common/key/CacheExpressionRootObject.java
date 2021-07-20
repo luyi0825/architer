@@ -1,4 +1,4 @@
-package com.core.cache.common.key;
+package com.architecture.ultimate.cache.common.key;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

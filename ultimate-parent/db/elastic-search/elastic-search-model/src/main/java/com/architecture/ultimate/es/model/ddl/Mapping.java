@@ -1,6 +1,6 @@
-package com.core.es.model.ddl;
+package com.architecture.ultimate.es.model.ddl;
 
-import com.core.es.model.ddl.MappingItem;
+
 
 import java.io.Serializable;
 import java.util.List;

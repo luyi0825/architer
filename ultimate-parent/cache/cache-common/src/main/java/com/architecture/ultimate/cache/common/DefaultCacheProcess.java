@@ -1,9 +1,10 @@
-package com.core.cache.common;
+package com.architecture.ultimate.cache.common;
 
 
-import com.core.cache.common.operation.CacheOperation;
-import com.core.cache.common.operation.CacheOperationHandler;
-import com.core.cache.common.operation.CacheOperationMetadata;
+
+import com.architecture.ultimate.cache.common.operation.CacheOperation;
+import com.architecture.ultimate.cache.common.operation.CacheOperationHandler;
+import com.architecture.ultimate.cache.common.operation.CacheOperationMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 
 

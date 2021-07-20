@@ -1,6 +1,7 @@
 package com.architecture.ultimate.starter.web.module;
 
 
+import com.architecture.ultimate.module.common.Module;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

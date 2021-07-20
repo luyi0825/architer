@@ -1,4 +1,4 @@
-package com.core.cache.common.enums;
+package com.architecture.ultimate.cache.common.enums;
 
 /**
  * 描述:锁的方式

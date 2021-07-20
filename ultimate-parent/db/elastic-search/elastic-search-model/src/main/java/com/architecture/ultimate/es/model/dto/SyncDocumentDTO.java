@@ -1,9 +1,10 @@
-package com.core.es.model.dto;
+package com.architecture.ultimate.es.model.dto;
 
-import com.core.es.model.doc.DocumentRequest;
+
+
+import com.architecture.ultimate.es.model.doc.DocumentRequest;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author luyi

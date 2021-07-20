@@ -1,17 +1,18 @@
-package com.core.es.consumer;
+package com.architecture.ultimate.es.consumer;
 
 
-import com.core.es.consumer.entity.SyncResult;
-import com.core.es.consumer.service.SyncResultService;
-import com.core.es.dml.service.DocService;
-import com.core.es.model.EsConstant;
-import com.core.es.model.dto.BaseSyncDocumentDTO;
-import com.core.es.model.dto.BatchSyncDocumentDTO;
-import com.core.es.model.dto.SyncDocumentDTO;
-import com.core.module.common.exception.ParamsValidException;
-import com.core.module.common.exception.ServiceException;
-import com.core.mq.rabbit.RetryType;
-import com.core.mq.rabbit.RetryUtils;
+import com.architecture.ultimate.es.consumer.entity.SyncResult;
+import com.architecture.ultimate.es.consumer.service.SyncResultService;
+import com.architecture.ultimate.es.dml.service.DocService;
+import com.architecture.ultimate.es.model.EsConstant;
+import com.architecture.ultimate.es.model.dto.BaseSyncDocumentDTO;
+import com.architecture.ultimate.es.model.dto.BatchSyncDocumentDTO;
+import com.architecture.ultimate.es.model.dto.SyncDocumentDTO;
+import com.architecture.ultimate.module.common.exception.ParamsValidException;
+import com.architecture.ultimate.module.common.exception.ServiceException;
+import com.architecture.ultimate.mq.rabbit.RetryType;
+import com.architecture.ultimate.mq.rabbit.RetryUtils;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;

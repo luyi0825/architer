@@ -1,6 +1,7 @@
-package com.core.mq.rabbit;
+package com.architecture.ultimate.mq.rabbit;
 
-import com.core.cache.redis.StringRedisService;
+
+import com.architecture.ultimate.cache.redis.StringRedisService;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
 import org.springframework.beans.factory.annotation.Autowired;

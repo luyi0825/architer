@@ -1,4 +1,4 @@
-package com.core.es.model;
+package com.architecture.ultimate.es.model;
 
 /**
  * 请求类型

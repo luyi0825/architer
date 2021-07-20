@@ -1,8 +1,10 @@
-package com.core.es.dml.service;
+package com.architecture.ultimate.es.dml.service;
 
 
-import com.core.es.model.doc.DocumentRequest;
-import com.core.es.model.doc.DocumentResponse;
+
+
+import com.architecture.ultimate.es.model.doc.DocumentRequest;
+import com.architecture.ultimate.es.model.doc.DocumentResponse;
 
 import java.io.IOException;
 import java.util.List;

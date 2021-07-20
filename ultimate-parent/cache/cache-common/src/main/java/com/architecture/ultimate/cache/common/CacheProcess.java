@@ -1,6 +1,9 @@
-package com.core.cache.common;
+package com.architecture.ultimate.cache.common;
 
-import com.core.cache.common.operation.CacheOperation;
+
+
+
+import com.architecture.ultimate.cache.common.operation.CacheOperation;
 
 import java.lang.reflect.Method;
 import java.util.Collection;

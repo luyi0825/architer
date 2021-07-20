@@ -1,6 +1,11 @@
 package com.business.search.ddl.service.impl;
 
 
+import com.architecture.ultimate.es.dml.service.IndexMappingService;
+import com.architecture.ultimate.es.model.MappingType;
+import com.architecture.ultimate.es.model.ddl.IndexMapping;
+import com.architecture.ultimate.es.model.ddl.MappingItem;
+import com.architecture.ultimate.module.common.exception.ServiceException;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +27,7 @@ public class IndexMappingServiceImplTest {
 
     @Test
     public void createIndexMapping() throws IOException {
-        IndexMapping indexMapping = new IndexMapping();
+       IndexMapping indexMapping = new IndexMapping();
         indexMapping.setIndex("test2");
         List<MappingItem> mappingItems = new ArrayList<>();
         MappingItem mappingItem = new MappingItem();

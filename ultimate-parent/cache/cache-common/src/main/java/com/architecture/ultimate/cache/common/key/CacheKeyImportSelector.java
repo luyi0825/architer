@@ -1,6 +1,7 @@
-package com.core.cache.common.key;
+package com.architecture.ultimate.cache.common.key;
 
-import com.core.cache.common.annotation.EnableCustomCaching;
+;
+import com.architecture.ultimate.cache.common.annotation.EnableCustomCaching;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;

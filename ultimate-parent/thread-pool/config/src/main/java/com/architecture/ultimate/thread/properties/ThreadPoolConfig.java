@@ -1,9 +1,12 @@
-package com.core.thread.properties;
+package com.architecture.ultimate.thread.properties;
 
-import com.core.thread.RejectedHandler;
+
+import com.architecture.ultimate.thread.RejectedHandler;
 
 /**
  * 线程池配置
+ *
+ * @author luyi
  */
 public class ThreadPoolConfig {
     /**

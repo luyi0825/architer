@@ -1,4 +1,4 @@
-package com.core.thread.properties;
+package com.architecture.ultimate.thread.properties;
 
 
 

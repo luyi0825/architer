@@ -1,7 +1,7 @@
-package com.core.cache.common.utils;
+package com.architecture.ultimate.cache.common.utils;
 
 
-import com.core.cache.common.Constants;
+import com.architecture.ultimate.cache.common.Constants;
 
 /**
  * @author luyi

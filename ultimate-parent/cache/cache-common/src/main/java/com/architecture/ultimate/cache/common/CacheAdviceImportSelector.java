@@ -1,9 +1,10 @@
-package com.core.cache.common;
+package com.architecture.ultimate.cache.common;
 
 
-import com.core.cache.common.annotation.EnableCustomCaching;
-import com.core.cache.common.aspectj.AspectjConfiguration;
-import com.core.cache.common.proxy.ProxyConfiguration;
+;
+import com.architecture.ultimate.cache.common.annotation.EnableCustomCaching;
+import com.architecture.ultimate.cache.common.aspectj.AspectjConfiguration;
+import com.architecture.ultimate.cache.common.proxy.ProxyConfiguration;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.AdviceModeImportSelector;
 import org.springframework.context.annotation.AutoProxyRegistrar;

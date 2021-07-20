@@ -1,11 +1,11 @@
-package com.core.cache.common;
+package com.architecture.ultimate.cache.common;
 
 
-import com.core.cache.common.annotation.Cacheable;
-import com.core.cache.common.annotation.Caching;
-import com.core.cache.common.annotation.DeleteCache;
-import com.core.cache.common.annotation.PutCache;
-import com.core.cache.common.operation.*;
+import com.architecture.ultimate.cache.common.annotation.Cacheable;
+import com.architecture.ultimate.cache.common.annotation.Caching;
+import com.architecture.ultimate.cache.common.annotation.DeleteCache;
+import com.architecture.ultimate.cache.common.annotation.PutCache;
+import com.architecture.ultimate.cache.common.operation.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;

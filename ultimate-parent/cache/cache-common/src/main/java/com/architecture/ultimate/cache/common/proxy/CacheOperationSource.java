@@ -1,6 +1,7 @@
-package com.core.cache.common.proxy;
+package com.architecture.ultimate.cache.common.proxy;
 
-import com.core.cache.common.operation.CacheOperation;
+
+import com.architecture.ultimate.cache.common.operation.CacheOperation;
 import org.springframework.lang.Nullable;
 
 import java.lang.reflect.Method;

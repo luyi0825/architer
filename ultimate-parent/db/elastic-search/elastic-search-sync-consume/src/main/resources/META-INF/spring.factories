@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.core.es.consumer.DocumentConsumerConfig
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.architecture.ultimate.es.consumer.DocumentConsumerConfig

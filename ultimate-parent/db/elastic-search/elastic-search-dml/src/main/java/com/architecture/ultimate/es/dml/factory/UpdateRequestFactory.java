@@ -1,7 +1,9 @@
-package com.core.es.dml.factory;
+package com.architecture.ultimate.es.dml.factory;
 
-import com.core.es.model.RequestType;
-import com.core.es.model.doc.DocumentRequest;
+
+
+import com.architecture.ultimate.es.model.RequestType;
+import com.architecture.ultimate.es.model.doc.DocumentRequest;
 import org.elasticsearch.action.DocWriteRequest;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.springframework.stereotype.Component;

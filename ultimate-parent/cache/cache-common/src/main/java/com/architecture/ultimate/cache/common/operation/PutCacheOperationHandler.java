@@ -1,7 +1,8 @@
-package com.core.cache.common.operation;
+package com.architecture.ultimate.cache.common.operation;
 
-import com.core.cache.common.annotation.PutCache;
-import com.core.cache.common.utils.CacheUtils;
+
+import com.architecture.ultimate.cache.common.annotation.PutCache;
+import com.architecture.ultimate.cache.common.utils.CacheUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;

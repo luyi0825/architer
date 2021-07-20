@@ -1,4 +1,4 @@
-package com.core.cache.redis.entity;
+package com.architecture.ultimate.cache.redis.entity;
 
 import lombok.Data;
 

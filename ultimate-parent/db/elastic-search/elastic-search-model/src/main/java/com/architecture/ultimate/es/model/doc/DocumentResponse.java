@@ -1,4 +1,4 @@
-package com.core.es.model.doc;
+package com.architecture.ultimate.es.model.doc;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;

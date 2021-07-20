@@ -1,4 +1,4 @@
-package com.core.es.dml;
+package com.architecture.ultimate.es.dml;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
  * dml模块配置类
  */
 @Configuration
-@ComponentScan(basePackages = "com.core.es.dml")
+@ComponentScan(basePackages = "com.architecture.ultimate.es.dml")
 public class EsDmlConfiguration {
 }

@@ -1,10 +1,11 @@
-package com.core.cache.common.key;
+package com.architecture.ultimate.cache.common.key;
 
 
-import com.core.cache.common.exception.CacheAnnotationIllegalException;
-import com.core.cache.common.operation.CacheOperation;
-import com.core.cache.common.operation.CacheOperationMetadata;
-import com.core.cache.common.CacheExpressionParser;
+
+import com.architecture.ultimate.cache.common.CacheExpressionParser;
+import com.architecture.ultimate.cache.common.exception.CacheAnnotationIllegalException;
+import com.architecture.ultimate.cache.common.operation.CacheOperation;
+import com.architecture.ultimate.cache.common.operation.CacheOperationMetadata;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;

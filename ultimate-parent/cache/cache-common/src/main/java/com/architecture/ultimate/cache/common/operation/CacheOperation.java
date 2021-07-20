@@ -1,7 +1,7 @@
-package com.core.cache.common.operation;
+package com.architecture.ultimate.cache.common.operation;
 
-import com.core.cache.common.annotation.Cacheable;
-import com.core.cache.common.enums.LockType;
+
+import com.architecture.ultimate.cache.common.enums.LockType;
 import lombok.Data;
 
 import java.lang.annotation.Annotation;

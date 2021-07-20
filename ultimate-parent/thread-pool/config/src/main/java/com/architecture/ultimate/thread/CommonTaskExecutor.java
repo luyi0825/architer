@@ -1,6 +1,6 @@
-package com.core.thread;
+package com.architecture.ultimate.thread;
 
-import com.core.thread.properties.ThreadPoolConfig;
+import com.architecture.ultimate.thread.properties.ThreadPoolConfig;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 

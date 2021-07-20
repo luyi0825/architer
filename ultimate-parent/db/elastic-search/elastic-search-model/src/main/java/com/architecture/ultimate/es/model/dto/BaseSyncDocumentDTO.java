@@ -1,4 +1,5 @@
-package com.core.es.model.dto;
+package com.architecture.ultimate.es.model.dto;
+
 
 
 import java.io.Serializable;

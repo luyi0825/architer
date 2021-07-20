@@ -1,4 +1,5 @@
-package com.core.cache.common;
+package com.architecture.ultimate.cache.common;
+
 
 /**
  * 描述:缓存的常量

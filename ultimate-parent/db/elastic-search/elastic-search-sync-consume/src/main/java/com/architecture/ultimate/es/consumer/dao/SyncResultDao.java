@@ -1,6 +1,7 @@
-package com.core.es.consumer.dao;
+package com.architecture.ultimate.es.consumer.dao;
 
-import com.core.es.consumer.entity.SyncResult;
+
+import com.architecture.ultimate.es.consumer.entity.SyncResult;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

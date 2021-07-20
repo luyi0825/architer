@@ -1,4 +1,4 @@
-package com.core.es.consumer.vo;
+package com.architecture.ultimate.es.consumer.vo;
 
 import java.io.Serializable;
 

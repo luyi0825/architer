@@ -1,4 +1,4 @@
-package com.core.cache.common.operation;
+package com.architecture.ultimate.cache.common.operation;
 
 import lombok.Data;
 import org.springframework.aop.support.AopUtils;

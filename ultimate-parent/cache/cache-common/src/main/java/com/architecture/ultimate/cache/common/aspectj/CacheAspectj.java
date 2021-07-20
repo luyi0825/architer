@@ -1,7 +1,8 @@
-package com.core.cache.common.aspectj;
+package com.architecture.ultimate.cache.common.aspectj;
 
-import com.core.cache.common.CacheAnnotationsParser;
-import com.core.cache.common.CacheProcess;
+
+import com.architecture.ultimate.cache.common.CacheAnnotationsParser;
+import com.architecture.ultimate.cache.common.CacheProcess;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -30,28 +31,28 @@ public class CacheAspectj {
     /**
      * caching切点
      */
-    @Pointcut("@annotation(com.core.cache.common.annotation.Cacheable)")
+    @Pointcut("@annotation(com.architecture.ultimate.cache.common.annotation.Cacheable)")
     public void cacheablePointcut() {
     }
 
     /**
      * 放置putCache切点
      */
-    @Pointcut("@annotation(com.core.cache.common.annotation.PutCache)")
+    @Pointcut("@annotation(com.architecture.ultimate.cache.common.annotation.PutCache)")
     public void putCachePointcut() {
     }
 
     /**
      * 删除deleteCache切点
      */
-    @Pointcut("@annotation(com.core.cache.common.annotation.DeleteCache)")
+    @Pointcut("@annotation(com.architecture.ultimate.cache.common.annotation.DeleteCache)")
     public void deleteCachePointcut() {
     }
 
     /**
      * 多个缓存操作的节点
      */
-    @Pointcut("@annotation(com.core.cache.common.annotation.Caching)")
+    @Pointcut("@annotation(com.architecture.ultimate.cache.common.annotation.Caching)")
     public void cachingPointcut() {
     }
 

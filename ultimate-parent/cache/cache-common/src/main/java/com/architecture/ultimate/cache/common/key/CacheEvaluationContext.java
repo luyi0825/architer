@@ -1,4 +1,4 @@
-package com.core.cache.common.key;
+package com.architecture.ultimate.cache.common.key;
 
 
 import org.springframework.context.expression.MethodBasedEvaluationContext;

@@ -1,7 +1,7 @@
-package com.core.cache.common.aspectj;
+package com.architecture.ultimate.cache.common.aspectj;
 
-import com.core.cache.common.CacheAnnotationsParser;
-import com.core.cache.common.CacheProcess;
+import com.architecture.ultimate.cache.common.CacheAnnotationsParser;
+import com.architecture.ultimate.cache.common.CacheProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
