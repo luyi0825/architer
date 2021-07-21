@@ -7,13 +7,13 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
-@Document(collection="t_document_sync_result")
+@Document(collection = "t_document_sync_result")
 public class SyncResult implements Serializable {
     /**
      * 主键ID
      */
     @Id
-    private Long id;
+    private String id;
     /**
      * 业务key
      */
@@ -55,11 +55,11 @@ public class SyncResult implements Serializable {
         this.callBackWay = callBackWay;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

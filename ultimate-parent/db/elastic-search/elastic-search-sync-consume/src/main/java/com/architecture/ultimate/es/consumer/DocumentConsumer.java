@@ -53,7 +53,7 @@ public class DocumentConsumer {
      * @throws IOException mq签收抛出的异常
      */
     @RabbitListener(bindings = {@QueueBinding(exchange = @Exchange(name = EsConstant.EXCHANGE_SYNC_ES_DOCUMENT),
-            value = @Queue(name = EsConstant.QUEUE_SYNC_ES_DOCUMENT))})
+            value = @Queue(name = EsConstant.QUEUE_SYNC_ES_DOCUMENT), key = EsConstant.QUEUE_SYNC_ES_DOCUMENT)})
     public void handler(Message message, Channel channel) throws IOException {
         SyncDocumentDTO syncDocumentDTO = null;
         try {
@@ -79,7 +79,7 @@ public class DocumentConsumer {
      * @throws IOException mq签收抛出的异常
      */
     @RabbitListener(bindings = {@QueueBinding(exchange = @Exchange(name = EsConstant.EXCHANGE_SYNC_ES_DOCUMENT),
-            value = @Queue(name = EsConstant.QUEUE_BATCH_SYNC_ES_DOCUMENT))})
+            key = {EsConstant.QUEUE_BATCH_SYNC_ES_DOCUMENT}, value = @Queue(name = EsConstant.QUEUE_BATCH_SYNC_ES_DOCUMENT))})
     public void batchHandler(Message message, Channel channel) throws IOException {
         BatchSyncDocumentDTO batchSyncDocumentDTO = null;
         try {
@@ -104,21 +104,19 @@ public class DocumentConsumer {
             return;
         }
         try {
-            CompletableFuture.supplyAsync(() -> {
-                        try {
-                            function.handler(baseSyncDocumentDTO);
-                        } catch (IOException e) {
-                            //异常转换
-                            throw new RuntimeException("es数据处理失败");
-                        }
-                        return this.getSyncResult(baseSyncDocumentDTO, false);
-                    }, executor)
-                    .exceptionally(throwable -> this.getSyncResult(baseSyncDocumentDTO, false))
-                    .thenAcceptAsync((syncResult -> {
-                        //插入同步结果
-                        syncResultService.insert(syncResult);
-                        callBackHandler.callBack(baseSyncDocumentDTO, syncResult);
-                    }), executor);
+            CompletableFuture.runAsync(() -> {
+                try {
+                    function.handler(baseSyncDocumentDTO);
+                } catch (IOException e) {
+                    //异常转换
+                    throw new RuntimeException("es数据处理失败");
+                }
+                this.saveSyncResult(baseSyncDocumentDTO, true);
+            }, executor).exceptionally(throwable -> {
+                log.error("同步失败", throwable);
+                this.saveSyncResult(baseSyncDocumentDTO, false);
+                return null;
+            });
             //手动签收
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (ServiceException | IllegalArgumentException | ParamsValidException e) {
@@ -133,8 +131,13 @@ public class DocumentConsumer {
         }
     }
 
-
-    private SyncResult getSyncResult(BaseSyncDocumentDTO baseSyncDocumentDTO, boolean isSuccess) {
+    /**
+     * 保存同步结果
+     *
+     * @param baseSyncDocumentDTO 同步的数据
+     * @param isSuccess           是否同步成功
+     */
+    private void saveSyncResult(BaseSyncDocumentDTO baseSyncDocumentDTO, boolean isSuccess) {
         SyncResult syncResult = new SyncResult();
         syncResult.setBusinessKey(baseSyncDocumentDTO.getBusinessKey());
         syncResult.setBatchId(baseSyncDocumentDTO.getBatchId());
@@ -143,7 +146,7 @@ public class DocumentConsumer {
         syncResult.setVersion(baseSyncDocumentDTO.getVersion());
         syncResult.setCallBackWay(baseSyncDocumentDTO.getCallBackWay());
         syncResult.setCallBackParams(baseSyncDocumentDTO.getCallBackParams());
-        return syncResult;
+        syncResultService.insert(syncResult);
     }
 
 

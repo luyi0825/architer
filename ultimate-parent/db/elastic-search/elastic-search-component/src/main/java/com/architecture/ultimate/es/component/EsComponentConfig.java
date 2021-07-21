@@ -22,7 +22,7 @@ import java.util.List;
 @EnableConfigurationProperties(ElasticSearchProperties.class)
 public class EsComponentConfig {
 
-    private ElasticSearchProperties elasticSearchProperties;
+    //private ElasticSearchProperties elasticSearchProperties;
 
 
     public static final RequestOptions COMMON_OPTIONS;
@@ -37,19 +37,25 @@ public class EsComponentConfig {
     }
 
     @Bean
-    public RestHighLevelClient restHighLevelClient() {
+    public RestHighLevelClient restHighLevelClient(ElasticSearchProperties elasticSearchProperties) {
         List<EsNode> hosts = elasticSearchProperties.getNodes();
+        hosts = new ArrayList<>();
+        EsNode node = new EsNode();
+        node.setIp("192.168.2.222");
+        node.setPort(9200);
+        hosts.add(node);
         if (CollectionUtils.isEmpty(hosts)) {
             throw new IllegalArgumentException("es nodes is null");
         }
+
         List<HttpHost> httpHosts = new ArrayList<>(hosts.size());
         hosts.forEach(host -> httpHosts.add(new HttpHost(host.getIp(), host.getPort(), host.getScheme())));
         RestClientBuilder restClientBuilder = RestClient.builder(httpHosts.toArray(new HttpHost[0]));
         return new RestHighLevelClient(restClientBuilder);
     }
 
-    @Autowired
-    public void setElasticSearchProperties(ElasticSearchProperties elasticSearchProperties) {
-        this.elasticSearchProperties = elasticSearchProperties;
-    }
+//    @Autowired
+//    public void setElasticSearchProperties(ElasticSearchProperties elasticSearchProperties) {
+//        this.elasticSearchProperties = elasticSearchProperties;
+//    }
 }

@@ -1,7 +1,6 @@
 package com.architecture.ultimate.cache.common;
 
 
-;
 import com.architecture.ultimate.cache.common.annotation.EnableCustomCaching;
 import com.architecture.ultimate.cache.common.aspectj.AspectjConfiguration;
 import com.architecture.ultimate.cache.common.proxy.ProxyConfiguration;

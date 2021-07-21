@@ -1,12 +1,12 @@
 package com.architecture.ultimate.es.dml.service.impl;
 
+import com.architecture.ultimate.es.dml.dao.IndexMappingDao;
 import com.architecture.ultimate.es.dml.service.IndexMappingService;
 import com.architecture.ultimate.es.model.MappingType;
 import com.architecture.ultimate.es.model.ddl.IndexMapping;
 import com.architecture.ultimate.es.model.ddl.MappingItem;
 import com.architecture.ultimate.module.common.exception.ParamsValidException;
 import com.architecture.ultimate.module.common.exception.ServiceException;
-import com.core.es.dml.dao.IndexMappingDao;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.core.CountRequest;

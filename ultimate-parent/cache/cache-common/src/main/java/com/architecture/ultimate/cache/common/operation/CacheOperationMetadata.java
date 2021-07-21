@@ -1,6 +1,6 @@
 package com.architecture.ultimate.cache.common.operation;
 
-import lombok.Data;
+
 import org.springframework.aop.support.AopUtils;
 import org.springframework.context.expression.AnnotatedElementKey;
 
@@ -10,7 +10,6 @@ import java.lang.reflect.Proxy;
 /**
  * @author luyi
  */
-@Data
 public class CacheOperationMetadata {
     private final CacheOperation cacheOperation;
     private final Class<?> targetClass;
@@ -51,5 +50,9 @@ public class CacheOperationMetadata {
 
     public AnnotatedElementKey getMethodKey() {
         return methodKey;
+    }
+
+    public Object getTarget() {
+        return target;
     }
 }

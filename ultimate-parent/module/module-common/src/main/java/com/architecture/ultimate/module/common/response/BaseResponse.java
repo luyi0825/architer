@@ -2,14 +2,11 @@ package com.architecture.ultimate.module.common.response;
 
 
 import com.architecture.ultimate.module.common.StatusCode;
-import lombok.Data;
-
 import java.io.Serializable;
 
 /**
  * @author ly
  */
-@Data
 public class BaseResponse implements Serializable {
 
 
@@ -25,6 +22,30 @@ public class BaseResponse implements Serializable {
      * 返回数据
      */
     private Object data;
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
 
     public BaseResponse() {
 

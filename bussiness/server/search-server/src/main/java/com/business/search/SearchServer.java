@@ -12,7 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author luyi
  */
 @SpringBootApplication
-@EnableRabbit
 //@EnableDiscoveryClient
 public class SearchServer {
     public static void main(String[] args) {

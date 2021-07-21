@@ -21,6 +21,10 @@
             <version>1.0.0</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.architecture.ultimate</groupId>
             <artifactId>elastic-search-model</artifactId>
             <version>1.0.0</version>
@@ -29,6 +33,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.12.9</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

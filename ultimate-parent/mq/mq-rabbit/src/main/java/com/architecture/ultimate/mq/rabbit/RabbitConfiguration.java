@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * mq配置类
  */
 @Configuration
-@ComponentScan("com.core.mq.rabbit")
+@ComponentScan("com.architecture.ultimate.mq.rabbit")
 public class RabbitConfiguration {
 
     /**
@@ -27,7 +27,5 @@ public class RabbitConfiguration {
     public PublishCallBackForwarder sendConfirm(RabbitTemplate rabbitTemplate){
        return new PublishCallBackForwarder(rabbitTemplate);
     }
-
-
 
 }

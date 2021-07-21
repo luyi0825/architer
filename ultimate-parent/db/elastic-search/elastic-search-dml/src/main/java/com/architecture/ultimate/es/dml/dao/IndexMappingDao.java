@@ -1,4 +1,4 @@
-package com.core.es.dml.dao;
+package com.architecture.ultimate.es.dml.dao;
 
 
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
