@@ -1,4 +1,4 @@
-package com.core.es.component;
+package com.architecture.ultimate.es.component;
 
 import java.io.Serializable;
 

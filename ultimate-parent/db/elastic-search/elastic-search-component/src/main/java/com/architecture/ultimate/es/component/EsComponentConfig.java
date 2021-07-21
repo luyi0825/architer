@@ -1,5 +1,4 @@
-package com.core.es.component;
-
+package com.architecture.ultimate.es.component;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RequestOptions;
