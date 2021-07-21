@@ -85,6 +85,12 @@ customize:
     hosts[0]:
       ip: ${host}
       port: 9200
+  thread-pool:
+    configs:
+      ##配置es消费数据的队列
+      es_document_consumer:
+        ## 拒绝策略
+        rejectedHandler: callerRunsPolicy
 
 
 
