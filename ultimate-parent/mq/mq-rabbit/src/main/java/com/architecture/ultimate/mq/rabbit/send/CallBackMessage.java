@@ -1,4 +1,4 @@
-package com.architecture.ultimate.mq.rabbit;
+package com.architecture.ultimate.mq.rabbit.send;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;

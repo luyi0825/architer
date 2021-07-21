@@ -1,8 +1,11 @@
 package com.architecture.ultimate.mq.rabbit;
 
+import com.architecture.ultimate.mq.rabbit.properties.RabbitmqProperties;
+import com.architecture.ultimate.mq.rabbit.send.PublishCallBackForwarder;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan("com.architecture.ultimate.mq.rabbit")
+@EnableConfigurationProperties(value = RabbitmqProperties.class)
 public class RabbitConfiguration {
 
     /**
@@ -24,8 +28,8 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public PublishCallBackForwarder sendConfirm(RabbitTemplate rabbitTemplate){
-       return new PublishCallBackForwarder(rabbitTemplate);
+    public PublishCallBackForwarder sendConfirm(RabbitTemplate rabbitTemplate) {
+        return new PublishCallBackForwarder(rabbitTemplate);
     }
 
 }
