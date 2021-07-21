@@ -1,7 +1,6 @@
 package com.architecture.ultimate.thread.properties;
 
 
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.Map;
@@ -13,6 +12,9 @@ import java.util.Map;
  */
 @ConfigurationProperties(prefix = "customize.thread-pool", ignoreInvalidFields = true)
 public class TaskExecutorProperties {
+    /**
+     * key为线程池的标识，value为线程池配置信息
+     */
     private Map<String, ThreadPoolConfig> configs;
 
     public Map<String, ThreadPoolConfig> getConfigs() {
