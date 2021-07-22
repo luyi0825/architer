@@ -1,15 +1,14 @@
-package com.core.test.valid.vo;
+package com.architecture.ultimate.test.valid.vo;
 
 
-import com.core.module.common.valid.ListValue;
-import com.core.module.common.valid.group.AddGroup;
-import lombok.Data;
+import com.architecture.ultimate.module.common.valid.ListValue;
+import com.architecture.ultimate.module.common.valid.group.AddGroup;
 
 /**
  * @author luyi
  * 用户VO
  */
-@Data
+
 public class User {
 //    @Null(message = "用户ID必须为空", groups = AddGroup.class)
 //    @NotNull(message = "用户ID必须为空", groups = UpdateGroup.class)

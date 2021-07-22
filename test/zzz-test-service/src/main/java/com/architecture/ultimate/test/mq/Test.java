@@ -1,4 +1,5 @@
-package com.core.test.mq;
+package com.architecture.ultimate.test.mq;
+
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Envelope;

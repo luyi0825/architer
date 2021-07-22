@@ -1,7 +1,6 @@
 package com.architecture.ultimate.test.mq;
 
-import com.core.mq.rabbit.ConfirmCallbackHandler;
-import com.core.mq.rabbit.ReturnCallbackHandler;
+
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.stereotype.Component;

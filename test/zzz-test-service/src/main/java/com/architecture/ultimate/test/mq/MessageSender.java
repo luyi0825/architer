@@ -1,8 +1,9 @@
-package com.core.test.mq;
+package com.architecture.ultimate.test.mq;
 
-import com.core.mq.rabbit.CallBackMessage;
-import com.core.mq.rabbit.CallbackCorrelationData;
-import com.core.utils.JsonUtils;
+
+import com.architecture.ultimate.mq.rabbit.send.CallBackMessage;
+import com.architecture.ultimate.mq.rabbit.send.CallbackCorrelationData;
+import com.architecture.ultimate.utils.JsonUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
@@ -86,8 +87,8 @@ public class MessageSender {
         // params.put("x-dead-letter-exchange", DEAD_FANOUT_EXCHANGE);
 
         for (int i = 0; i < 30_000; i++) {
-            List<RespondentReportTask> taskList = new ArrayList<>();
-            RespondentReportTask respondentReportTask = new RespondentReportTask();
+            List<com.core.test.mq.RespondentReportTask> taskList = new ArrayList<>();
+            com.core.test.mq.RespondentReportTask respondentReportTask = new com.core.test.mq.RespondentReportTask();
             respondentReportTask.setRespondentId("respondent" + i);
             respondentReportTask.setGatherWay("0");
             respondentReportTask.setRespondentTaskStatus("9");

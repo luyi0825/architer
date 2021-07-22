@@ -1,4 +1,4 @@
-package com.core.test.mq;
+package com.architecture.ultimate.test.mq;
 
 
 import org.springframework.data.annotation.Id;

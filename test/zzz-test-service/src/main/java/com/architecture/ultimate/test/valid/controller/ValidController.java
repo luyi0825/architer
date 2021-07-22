@@ -1,8 +1,8 @@
-package com.core.test.valid.controller;
+package com.architecture.ultimate.test.valid.controller;
 
 
-import com.core.test.valid.vo.User;
-import com.core.module.common.valid.group.AddGroup;
+import com.architecture.ultimate.module.common.valid.group.AddGroup;
+import com.architecture.ultimate.test.valid.vo.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
