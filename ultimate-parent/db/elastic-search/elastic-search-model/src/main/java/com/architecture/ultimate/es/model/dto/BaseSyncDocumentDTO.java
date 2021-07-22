@@ -1,7 +1,6 @@
 package com.architecture.ultimate.es.model.dto;
 
 
-
 import java.io.Serializable;
 import java.util.Map;
 
@@ -31,10 +30,13 @@ public abstract class BaseSyncDocumentDTO implements Serializable {
     private Long version;
     /**
      * 回调方式
+     * 同步成功后，自动回调
+     * 1.如果有回调的url,将自动回调，然后post的方式回调
+     * 2.队列的方式回调，发送回调数据到制定的消息队列
      */
     private String callBackWay;
     /**
-     * 回调参数,同步成功后，如果有回调的url,将自动回调，然后post的方式回调
+     * 回调参数
      */
     private Map<String, String> callBackParams;
 
