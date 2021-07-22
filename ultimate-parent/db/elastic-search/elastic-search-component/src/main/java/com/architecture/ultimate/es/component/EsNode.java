@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public class EsNode implements Serializable {
     private String ip;
-    private int port = 92;
+    private int port = 9200;
     private String scheme = "http";
 
     public String getIp() {
