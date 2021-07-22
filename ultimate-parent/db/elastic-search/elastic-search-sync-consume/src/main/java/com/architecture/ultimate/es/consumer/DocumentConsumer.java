@@ -96,6 +96,9 @@ public class DocumentConsumer {
     }
 
 
+    /**
+     * 同步doc处理
+     */
     public void syncDocumentHandler(BaseSyncDocumentDTO baseSyncDocumentDTO,
                                     SyncFunction function,
                                     Message message,
@@ -124,9 +127,8 @@ public class DocumentConsumer {
             log.info(e.getMessage(), e);
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (Exception e) {
-            //重试，比如：线程池：任务拒绝
             log.error("处理消息异常", e);
-            //异常重回对列
+            //根据业务重试，或者丢失
             retryUtils.exceptionRetry(message, channel, RetryType.REQUEUE);
         }
     }
@@ -147,6 +149,7 @@ public class DocumentConsumer {
         syncResult.setCallBackWay(baseSyncDocumentDTO.getCallBackWay());
         syncResult.setCallBackParams(baseSyncDocumentDTO.getCallBackParams());
         syncResultService.insert(syncResult);
+        callBackHandler.callBack(baseSyncDocumentDTO, syncResult);
     }
 
 

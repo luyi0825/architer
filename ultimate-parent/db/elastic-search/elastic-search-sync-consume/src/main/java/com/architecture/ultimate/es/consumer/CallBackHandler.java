@@ -5,6 +5,7 @@ import com.architecture.ultimate.es.consumer.entity.SyncResult;
 import com.architecture.ultimate.es.model.dto.BaseSyncDocumentDTO;
 import org.springframework.stereotype.Component;
 
+
 /**
  * 回调处理
  *
@@ -13,8 +14,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class CallBackHandler {
 
-    public void callBack(BaseSyncDocumentDTO syncDocumentDTO, SyncResult syncResult) {
 
+    public void callBack(BaseSyncDocumentDTO syncDocumentDTO, SyncResult syncResult) {
+        System.out.println("嗯哼，开始回调处理了");
     }
 
 }
