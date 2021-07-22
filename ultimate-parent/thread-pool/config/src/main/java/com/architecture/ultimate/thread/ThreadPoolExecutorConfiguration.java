@@ -12,7 +12,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties(TaskExecutorProperties.class)
-@ComponentScan
+//@ComponentScan
 public class ThreadPoolExecutorConfiguration {
+
+    public ThreadPoolExecutorConfiguration() {
+        System.out.println("ThreadPoolExecutorConfiguration init");
+    }
 
 }

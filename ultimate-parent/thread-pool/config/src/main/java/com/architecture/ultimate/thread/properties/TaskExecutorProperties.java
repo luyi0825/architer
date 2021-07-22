@@ -10,7 +10,7 @@ import java.util.Map;
  *
  * @author luyi
  */
-@ConfigurationProperties(prefix = "customize.thread-pool", ignoreInvalidFields = true)
+@ConfigurationProperties(prefix = "customize.thread", ignoreInvalidFields = true)
 public class TaskExecutorProperties {
     /**
      * key为线程池的标识，value为线程池配置信息
