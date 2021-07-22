@@ -153,7 +153,7 @@ public class DocumentConsumer {
     }
 
 
-    @Autowired
+    @Autowired(required = false)
     public void setDocService(DocService docService) {
         this.docService = docService;
     }

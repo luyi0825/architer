@@ -23,7 +23,6 @@
             <groupId>com.architecture.ultimate</groupId>
             <artifactId>elastic-search-model</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 

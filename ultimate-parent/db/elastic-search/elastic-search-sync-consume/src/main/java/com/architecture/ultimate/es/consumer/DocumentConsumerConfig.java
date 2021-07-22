@@ -28,10 +28,11 @@ public class DocumentConsumerConfig {
     private static final Logger LOG = LoggerFactory.getLogger(DocumentConsumerConfig.class);
 
     @Bean
+
     public DocumentConsumerExecutor documentConsumerExecutor(@Autowired(required = false) TaskExecutorProperties taskExecutorProperties) {
-        Map<String, ThreadPoolConfig> threadPoolConfigMap = taskExecutorProperties.getConfigs();
         ThreadPoolConfig threadPoolConfig = null;
-        if (!CollectionUtils.isEmpty(threadPoolConfigMap)) {
+        if (taskExecutorProperties != null) {
+            Map<String, ThreadPoolConfig> threadPoolConfigMap = taskExecutorProperties.getConfigs();
             threadPoolConfig = threadPoolConfigMap.get(ES_DOCUMENT_CONSUMER);
         }
         if (threadPoolConfig == null) {
