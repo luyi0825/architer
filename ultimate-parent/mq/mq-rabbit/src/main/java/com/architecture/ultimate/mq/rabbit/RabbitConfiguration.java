@@ -1,7 +1,7 @@
 package com.architecture.ultimate.mq.rabbit;
 
+import com.architecture.ultimate.mq.rabbit.callback.PublishCallBackForwarder;
 import com.architecture.ultimate.mq.rabbit.properties.RabbitmqProperties;
-import com.architecture.ultimate.mq.rabbit.send.PublishCallBackForwarder;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
