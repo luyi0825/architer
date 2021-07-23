@@ -63,9 +63,9 @@ public class BatchDocumentConsumerTest {
 
     @Test
     public void batchSendDocument() {
-
         AtomicInteger id = new AtomicInteger(1);
-        for (int i = 0; i < 100000; i++) {
+        //                  120501
+        for (int i = 0; i < 500000; i++) {
             int finalI = i;
             executorService.submit(() -> {
                 BatchSyncDocumentDTO syncDocumentDTO = new BatchSyncDocumentDTO();
@@ -79,7 +79,8 @@ public class BatchDocumentConsumerTest {
                     sources.put("name", "name" + id);
                     if (id.get() % 100 == 0) {
                         //每100，发送一条错误数据，模仿重试
-                        sources.put("age", "age");
+                        // sources.put("age", "age");
+                        sources.put("age", (int) (Math.random() * 100));
                     } else {
                         sources.put("age", (int) (Math.random() * 100));
                     }
@@ -103,6 +104,7 @@ public class BatchDocumentConsumerTest {
 
             });
         }
+        System.out.println(id.get());
         // syncDocumentDTO.setDocs();
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author luyi
  */
-@ConfigurationProperties("customize.es")
+@ConfigurationProperties(prefix = "customize.es")
 public class ElasticSearchProperties {
     /**
      * 用户名
