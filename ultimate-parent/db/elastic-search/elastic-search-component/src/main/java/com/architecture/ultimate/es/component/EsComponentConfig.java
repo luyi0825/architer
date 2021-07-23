@@ -39,11 +39,13 @@ public class EsComponentConfig {
     @Bean
     public RestHighLevelClient restHighLevelClient(ElasticSearchProperties elasticSearchProperties) {
         List<EsNode> hosts = elasticSearchProperties.getNodes();
-        hosts = new ArrayList<>();
-        EsNode node = new EsNode();
-        node.setIp("192.168.2.222");
-        node.setPort(9200);
-        hosts.add(node);
+        if (CollectionUtils.isEmpty(hosts)) {
+            hosts = new ArrayList<>();
+            EsNode node = new EsNode();
+            node.setIp("192.168.3.222");
+            node.setPort(9200);
+            hosts.add(node);
+        }
         if (CollectionUtils.isEmpty(hosts)) {
             throw new IllegalArgumentException("es nodes is null");
         }
