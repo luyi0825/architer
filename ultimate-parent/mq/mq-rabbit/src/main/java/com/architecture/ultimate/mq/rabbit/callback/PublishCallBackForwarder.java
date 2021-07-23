@@ -1,6 +1,10 @@
-package com.architecture.ultimate.mq.rabbit.send;
+package com.architecture.ultimate.mq.rabbit.callback;
 
 
+import com.architecture.ultimate.mq.rabbit.callback.CallBackMessage;
+import com.architecture.ultimate.mq.rabbit.callback.CallbackCorrelationData;
+import com.architecture.ultimate.mq.rabbit.callback.ConfirmCallbackHandler;
+import com.architecture.ultimate.mq.rabbit.callback.ReturnCallbackHandler;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeansException;
@@ -24,7 +28,7 @@ import java.util.Map;
  * 2.对消息没有投递到队列处理
  */
 public class PublishCallBackForwarder implements ApplicationContextAware {
-    private RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
     private RabbitProperties rabbitProperties;
 
@@ -61,7 +65,7 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
                     return;
                 }
                 CallBackMessage callBackMessage = (CallBackMessage) message;
-                String returnKey = callBackMessage.getReturnKey();
+                String returnKey = callBackMessage.getCallBackKey();
                 ReturnCallbackHandler returnCallbackHandler = returnCallbackHandlerMap.get(returnKey);
                 if (returnCallbackHandler != null) {
                     returnCallbackHandler.returnedMessage(message, replyCode, replyText, exchange, routingKey);
@@ -83,13 +87,13 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
                     return;
                 }
                 CallbackCorrelationData confirmCorrelationData = (CallbackCorrelationData) correlationData;
-                String confirmKey = confirmCorrelationData.getConfirmKey();
-                if (StringUtils.isEmpty(confirmKey)) {
+                String callbackKey = confirmCorrelationData.getCallBackKey();
+                if (StringUtils.isEmpty(callbackKey)) {
                     return;
                 }
-                ConfirmCallbackHandler confirmCallbackHandler = confirmCallbackHandlerMap.get(confirmKey);
+                ConfirmCallbackHandler confirmCallbackHandler = confirmCallbackHandlerMap.get(callbackKey);
                 if (confirmCallbackHandler == null) {
-                    throw new IllegalArgumentException(confirmKey + "not exist");
+                    throw new IllegalArgumentException(callbackKey + "not exist");
                 }
                 confirmCallbackHandler.confirm(correlationData, ack, cause);
             });
@@ -113,7 +117,7 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
         Collection<ReturnCallbackHandler> returnCallbackHandlers = returnCallbackMap.values();
         returnCallbackHandlerMap = new HashMap<>(returnCallbackHandlers.size());
         for (ReturnCallbackHandler returnCallbackHandler : returnCallbackHandlers) {
-            String callbackKey = returnCallbackHandler.getReturnCallbackKey();
+            String callbackKey = returnCallbackHandler.getCallKey();
             if (StringUtils.isEmpty(callbackKey)) {
                 continue;
             }
@@ -133,7 +137,7 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
         Collection<ConfirmCallbackHandler> confirmCallbackHandlers = confirmCallbackMap.values();
         confirmCallbackHandlerMap = new HashMap<>(confirmCallbackHandlers.size());
         for (ConfirmCallbackHandler confirmCallbackHandler : confirmCallbackHandlers) {
-            String confirmKey = confirmCallbackHandler.getConfirmCallbackKey();
+            String confirmKey = confirmCallbackHandler.getCallKey();
             if (StringUtils.isEmpty(confirmKey)) {
                 continue;
             }
@@ -143,4 +147,5 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
             confirmCallbackHandlerMap.putIfAbsent(confirmKey, confirmCallbackHandler);
         }
     }
+
 }
