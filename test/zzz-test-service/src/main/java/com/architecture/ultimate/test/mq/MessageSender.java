@@ -1,15 +1,14 @@
 package com.architecture.ultimate.test.mq;
 
 
-import com.architecture.ultimate.mq.rabbit.send.CallBackMessage;
-import com.architecture.ultimate.mq.rabbit.send.CallbackCorrelationData;
+import com.architecture.ultimate.mq.rabbit.callback.CallBackMessage;
+import com.architecture.ultimate.mq.rabbit.callback.CallbackCorrelationData;
 import com.architecture.ultimate.utils.JsonUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
-import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,9 +45,9 @@ public class MessageSender {
             MessageProperties messageProperties = new MessageProperties();
             messageProperties.getHeaders().putAll(params);
             messageProperties.setCorrelationId("123");
-            CorrelationData correlationData = new CallbackCorrelationData("123")
-                    .setConfirmKey(CallbackHandler.class.getName());
-            Message callBackMessage = new CallBackMessage(userJson.getBytes(StandardCharsets.UTF_8), messageProperties).setReturnKey(CallbackHandler.class.getName());
+            CallbackCorrelationData correlationData = new CallbackCorrelationData("123");
+            //correlationData.setCallKey(CallbackHandler.class.getName());
+            Message callBackMessage = new CallBackMessage(userJson.getBytes(StandardCharsets.UTF_8), messageProperties).setCallBackKey(CallbackHandler.class.getName());
             // EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
             //rabbitTemplate.send("queue_gathering_data", callBackMessage, correlationData);
         }
@@ -87,8 +86,8 @@ public class MessageSender {
         // params.put("x-dead-letter-exchange", DEAD_FANOUT_EXCHANGE);
 
         for (int i = 0; i < 30_000; i++) {
-            List<com.core.test.mq.RespondentReportTask> taskList = new ArrayList<>();
-            com.core.test.mq.RespondentReportTask respondentReportTask = new com.core.test.mq.RespondentReportTask();
+            List<RespondentReportTask> taskList = new ArrayList<>();
+            RespondentReportTask respondentReportTask = new RespondentReportTask();
             respondentReportTask.setRespondentId("respondent" + i);
             respondentReportTask.setGatherWay("0");
             respondentReportTask.setRespondentTaskStatus("9");
