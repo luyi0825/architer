@@ -13,6 +13,16 @@ public class RabbitmqProperties {
      */
     private boolean retry = true;
 
+    private boolean callBack = true;
+
+
+    public boolean isCallBack() {
+        return callBack;
+    }
+
+    public void setCallBack(boolean callBack) {
+        this.callBack = callBack;
+    }
 
     public boolean isRetry() {
         return retry;
