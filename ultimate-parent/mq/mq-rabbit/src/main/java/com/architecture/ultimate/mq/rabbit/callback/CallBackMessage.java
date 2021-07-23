@@ -8,23 +8,23 @@ public class CallBackMessage extends Message {
     /**
      * 消息回调标识
      */
-    private String callBackKey;
+    private String callBackId;
 
     public CallBackMessage(byte[] body, MessageProperties messageProperties) {
         super(body, messageProperties);
     }
 
-    public CallBackMessage(String callBackKey, byte[] body, MessageProperties messageProperties) {
+    public CallBackMessage(String callBackId, byte[] body, MessageProperties messageProperties) {
         super(body, messageProperties);
-        this.callBackKey = callBackKey;
+        this.callBackId = callBackId;
     }
 
-    public String getCallBackKey() {
-        return callBackKey;
+    public String getCallBackId() {
+        return callBackId;
     }
 
-    public CallBackMessage setCallBackKey(String callBackKey) {
-        this.callBackKey = callBackKey;
+    public CallBackMessage setCallBackId(String callBackId) {
+        this.callBackId = callBackId;
         return this;
     }
 }

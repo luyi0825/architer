@@ -10,6 +10,6 @@ public interface SendCallBack {
      *
      * @return 处理器标识key
      */
-    String getCallKey();
+    String getCallBackId();
 
 }

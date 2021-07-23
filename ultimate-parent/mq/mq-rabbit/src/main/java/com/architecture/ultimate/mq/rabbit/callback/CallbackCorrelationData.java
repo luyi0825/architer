@@ -9,7 +9,7 @@ public class CallbackCorrelationData extends CorrelationData {
     /**
      * 消息回调标识
      */
-    private String callBackKey;
+    private String callBackId;
 
     public CallbackCorrelationData() {
     }
@@ -18,11 +18,12 @@ public class CallbackCorrelationData extends CorrelationData {
         super(id);
     }
 
-    public String getCallBackKey() {
-        return callBackKey;
+    public String getCallBackId() {
+        return callBackId;
     }
 
-    public void setCallBackKey(String callBackKey) {
-        this.callBackKey = callBackKey;
+    public CallbackCorrelationData setCallBackId(String callBackId) {
+        this.callBackId = callBackId;
+        return this;
     }
 }
