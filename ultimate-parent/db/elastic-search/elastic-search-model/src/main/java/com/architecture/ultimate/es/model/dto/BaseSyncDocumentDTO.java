@@ -38,7 +38,7 @@ public abstract class BaseSyncDocumentDTO implements Serializable {
     /**
      * 回调参数
      */
-    private Map<String, String> callBackParams;
+    private Map<String, Object> callBackParams;
 
 
     public String getCallBackWay() {
@@ -65,11 +65,11 @@ public abstract class BaseSyncDocumentDTO implements Serializable {
         this.batchId = batchId;
     }
 
-    public Map<String, String> getCallBackParams() {
+    public Map<String, Object> getCallBackParams() {
         return callBackParams;
     }
 
-    public void setCallBackParams(Map<String, String> callBackParams) {
+    public void setCallBackParams(Map<String, Object> callBackParams) {
         this.callBackParams = callBackParams;
     }
 
