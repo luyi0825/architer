@@ -1,4 +1,4 @@
-host: 192.168.3.222
+host: 192.168.2.222
 server:
   servlet:
     context-path: /
@@ -15,8 +15,8 @@ spring:
     virtual-host: test
     host: ${host}
     port: 5672
-    username: luyi
-    password: 123
+    username: admin
+    password: admin
     listener:
       simple:
         ## 开始手动签收
@@ -26,7 +26,7 @@ spring:
       #uri: mongodb://192.168.2.222:27017
       username: luyi
       password: '123'
-      database: test
+      database: search
       port: 27017
       host: ${host}
   redis:
@@ -46,8 +46,6 @@ management:
     jmx:
       exposure:
         include: "*"
-  server:
-    port: 8082
 
 customize:
   es:
