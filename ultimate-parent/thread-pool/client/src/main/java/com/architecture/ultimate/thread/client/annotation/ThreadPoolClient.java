@@ -1,4 +1,4 @@
-package com.core.thread.client.annotation;
+package com.architecture.ultimate.thread.client.annotation;
 
 import java.lang.annotation.*;
 
