@@ -1,5 +1,6 @@
 package com.architecture.ultimate.mq.rabbit.send;
 
+import org.springframework.amqp.core.Message;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,4 +10,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RabbitMqSendValid {
+
+    public void valid(Message message) {
+        // message.getMessageProperties().set
+    }
+
 }

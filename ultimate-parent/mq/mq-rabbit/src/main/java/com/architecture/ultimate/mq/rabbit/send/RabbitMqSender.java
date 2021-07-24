@@ -1,9 +1,14 @@
 package com.architecture.ultimate.mq.rabbit.send;
 
+import com.architecture.ultimate.mq.rabbit.callback.CallBackMessage;
+import com.architecture.ultimate.mq.rabbit.callback.CallbackCorrelationData;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 /**
  * rabbitMq数据发送器
@@ -15,13 +20,30 @@ import org.springframework.stereotype.Component;
 public class RabbitMqSender {
     private RabbitTemplate rabbitTemplate;
 
-    public void send() {
-        rabbitTemplate.send(null, null, null, null);
+    /**
+     * 发送需要发布确认的消息
+     */
+    public void sendForPublishConfirm(String exchange, String routingKey, CallBackMessage message, CallbackCorrelationData correlationData) {
+        Assert.hasText(message.getCallBackId(), "message callBackId is null");
+        Assert.hasText(correlationData.getCallBackId(), "correlationData callBackId is null");
+        rabbitTemplate.send(exchange, routingKey, message, correlationData);
+    }
+
+    public void send(String routingKey, Message message) {
+        rabbitTemplate.send(routingKey, message);
     }
 
 
-    public void send(final String exchange, final String routingKey, Message message) {
-        rabbitTemplate.send(null, null, null);
+    public void send(String exchange, String routingKey, Message message) {
+        rabbitTemplate.send(exchange, routingKey, message);
     }
 
+    public void send(String exchange, String routingKey, Message message, CorrelationData correlationData) {
+        rabbitTemplate.send(exchange, routingKey, message, correlationData);
+    }
+
+    @Autowired
+    public void setRabbitTemplate(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
 }
