@@ -31,7 +31,7 @@ public class RestTemplateProperties {
     /**
      * 存活时间的单位
      */
-    private TimeUnit timeToLiveUnit = TimeUnit.SECONDS;
+    private final TimeUnit timeToLiveUnit = TimeUnit.SECONDS;
 
     private int connectionTimeout = 2000;
 
