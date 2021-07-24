@@ -15,7 +15,7 @@ public class CallbackHandler implements ConfirmCallbackHandler, ReturnCallbackHa
 
 
     @Override
-    public String getCallKey() {
+    public String getCallBackId() {
         return CallbackHandler.class.getName();
     }
 

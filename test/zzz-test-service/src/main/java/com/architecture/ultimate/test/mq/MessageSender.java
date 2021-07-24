@@ -47,7 +47,7 @@ public class MessageSender {
             messageProperties.setCorrelationId("123");
             CallbackCorrelationData correlationData = new CallbackCorrelationData("123");
             //correlationData.setCallKey(CallbackHandler.class.getName());
-            Message callBackMessage = new CallBackMessage(userJson.getBytes(StandardCharsets.UTF_8), messageProperties).setCallBackKey(CallbackHandler.class.getName());
+            Message callBackMessage = new CallBackMessage(userJson.getBytes(StandardCharsets.UTF_8), messageProperties).setCallBackId(CallbackHandler.class.getName());
             // EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
             //rabbitTemplate.send("queue_gathering_data", callBackMessage, correlationData);
         }
