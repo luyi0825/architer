@@ -65,7 +65,7 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
                     return;
                 }
                 CallBackMessage callBackMessage = (CallBackMessage) message;
-                String returnKey = callBackMessage.getCallBackKey();
+                String returnKey = callBackMessage.getCallBackId();
                 ReturnCallbackHandler returnCallbackHandler = returnCallbackHandlerMap.get(returnKey);
                 if (returnCallbackHandler != null) {
                     returnCallbackHandler.returnedMessage(message, replyCode, replyText, exchange, routingKey);
@@ -87,7 +87,7 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
                     return;
                 }
                 CallbackCorrelationData confirmCorrelationData = (CallbackCorrelationData) correlationData;
-                String callbackKey = confirmCorrelationData.getCallBackKey();
+                String callbackKey = confirmCorrelationData.getCallBackId();
                 if (StringUtils.isEmpty(callbackKey)) {
                     return;
                 }
@@ -117,7 +117,7 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
         Collection<ReturnCallbackHandler> returnCallbackHandlers = returnCallbackMap.values();
         returnCallbackHandlerMap = new HashMap<>(returnCallbackHandlers.size());
         for (ReturnCallbackHandler returnCallbackHandler : returnCallbackHandlers) {
-            String callbackKey = returnCallbackHandler.getCallKey();
+            String callbackKey = returnCallbackHandler.getCallBackId();
             if (StringUtils.isEmpty(callbackKey)) {
                 continue;
             }
@@ -137,7 +137,7 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
         Collection<ConfirmCallbackHandler> confirmCallbackHandlers = confirmCallbackMap.values();
         confirmCallbackHandlerMap = new HashMap<>(confirmCallbackHandlers.size());
         for (ConfirmCallbackHandler confirmCallbackHandler : confirmCallbackHandlers) {
-            String confirmKey = confirmCallbackHandler.getCallKey();
+            String confirmKey = confirmCallbackHandler.getCallBackId();
             if (StringUtils.isEmpty(confirmKey)) {
                 continue;
             }
