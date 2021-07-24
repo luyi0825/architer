@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author luyi
@@ -35,6 +36,7 @@ import java.util.concurrent.CompletableFuture;
  */
 @Component
 public class DocumentConsumer {
+    private final AtomicLong atomicLong = new AtomicLong(0);
     private DocService docService;
     private final Logger log = LoggerFactory.getLogger(DocumentConsumer.class);
     private RetryUtils retryUtils;
@@ -54,7 +56,10 @@ public class DocumentConsumer {
      */
     @RabbitListener(bindings = {@QueueBinding(exchange = @Exchange(name = EsConstant.EXCHANGE_SYNC_ES_DOCUMENT),
             value = @Queue(name = EsConstant.QUEUE_SYNC_ES_DOCUMENT), key = EsConstant.QUEUE_SYNC_ES_DOCUMENT)})
-    public void handler(Message message, Channel channel) throws IOException {
+    public void handler(Message message, Channel channel) throws IOException, InterruptedException {
+        atomicLong.incrementAndGet();
+        channel.basicQos(10);
+        //channel.basicQos(1, false);
         SyncDocumentDTO syncDocumentDTO = null;
         try {
             syncDocumentDTO = objectMapper.readValue(message.getBody(), SyncDocumentDTO.class);
@@ -67,7 +72,7 @@ public class DocumentConsumer {
         SyncDocumentDTO finalSyncDocumentDTO = syncDocumentDTO;
         this.syncDocumentHandler(syncDocumentDTO,
                 baseSyncDocumentDTO -> docService.bulkOne(finalSyncDocumentDTO.getDoc()), message, channel);
-
+        System.out.println(atomicLong.get());
     }
 
     /**
@@ -112,7 +117,7 @@ public class DocumentConsumer {
                     function.handler(baseSyncDocumentDTO);
                 } catch (IOException e) {
                     //异常转换
-                    throw new RuntimeException("es数据处理失败");
+                    throw new RuntimeException("es数据处理失败", e);
                 }
                 this.saveSyncResult(baseSyncDocumentDTO, true);
             }, executor).exceptionally(throwable -> {

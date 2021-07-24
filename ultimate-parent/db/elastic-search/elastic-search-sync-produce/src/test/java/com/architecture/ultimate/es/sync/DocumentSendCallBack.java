@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DocumentSendCallBack implements ConfirmCallbackHandler, ReturnCallbackHandler {
     @Override
-    public String getCallKey() {
+    public String getCallBackId() {
         return DocumentSendCallBack.class.getName();
     }
 
