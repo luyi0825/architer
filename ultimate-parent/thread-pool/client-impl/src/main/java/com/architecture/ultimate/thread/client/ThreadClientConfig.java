@@ -1,8 +1,8 @@
-package com.core.thread.client;
+package com.architecture.ultimate.thread.client;
 
 
-import com.core.thread.client.parse.ThreadPoolParser;
-import com.core.thread.client.properties.ClientProperties;
+import com.architecture.ultimate.thread.client.parse.ThreadPoolParser;
+import com.architecture.ultimate.thread.client.properties.ClientProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

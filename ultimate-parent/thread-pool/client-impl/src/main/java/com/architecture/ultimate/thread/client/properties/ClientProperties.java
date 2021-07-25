@@ -1,4 +1,4 @@
-package com.core.thread.client.properties;
+package com.architecture.ultimate.thread.client.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
