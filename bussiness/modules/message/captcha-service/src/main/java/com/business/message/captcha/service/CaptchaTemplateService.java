@@ -1,8 +1,9 @@
 package com.business.message.captcha.service;
 
 
+import com.architecture.ultimate.mybatisplus.service.BaseService;
 import com.business.message.captcha.entity.CaptchaTemplate;
-import com.core.mybatisplus.service.BaseService;
+
 
 /**
  * 验证码配置
