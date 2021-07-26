@@ -25,6 +25,7 @@
         <module>query-common</module>
         <module>log</module>
         <module>web-starter</module>
+        <module>file</module>
     </modules>
 
     <dependencies>
