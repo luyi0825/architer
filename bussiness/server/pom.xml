@@ -12,6 +12,9 @@
     <name>server-parent</name>
     <description>服务父级包</description>
     <packaging>pom</packaging>
+    <properties>
+        <docker.image.prefix>happy</docker.image.prefix>
+    </properties>
     <modules>
         <module>message-server</module>
         <module>gateway-server</module>

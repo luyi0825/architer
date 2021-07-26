@@ -37,4 +37,29 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                        <!--                        执行完build 不自动pushfalse -->-->
+                        <name>test/${project.artifactId}</name>
+                    </image>
+                    <docker>
+                        <!--远程docker daemon的连接地址和端口-->
+                        <host>tcp://192.168.2.222:2375</host>
+                        <!--如果使用https协议需要设置为true-->
+                        <tlsVerify>false</tlsVerify>
+                        <publishRegistry>
+                            <username>893431435@qq.com</username>
+                            <password>19940825Ls.</password>
+                            <url>registry.cn-hangzhou.aliyuncs.com/luyi_public/architecture.ultimate</url>
+                        </publishRegistry>
+                    </docker>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
