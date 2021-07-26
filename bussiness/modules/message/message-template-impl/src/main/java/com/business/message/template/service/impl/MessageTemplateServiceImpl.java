@@ -1,12 +1,13 @@
 package com.business.message.template.service.impl;
 
+import com.architecture.ultimate.module.common.exception.ServiceException;
+import com.architecture.ultimate.mybatisplus.service.impl.BaseServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 
 import com.business.message.template.entity.MessageTemplate;
 import com.business.message.template.service.MessageTemplateService;
-import com.core.module.common.exception.ServiceException;
-import com.core.mybatisplus.service.impl.BaseServiceImpl;
+
 import org.springframework.stereotype.Service;
 
 /**
