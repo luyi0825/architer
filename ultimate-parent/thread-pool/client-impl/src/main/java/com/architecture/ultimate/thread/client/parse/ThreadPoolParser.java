@@ -1,7 +1,7 @@
-package com.core.thread.client.parse;
+package com.architecture.ultimate.thread.client.parse;
 
 
-import com.core.thread.client.annotation.ThreadPoolClient;
+import com.architecture.ultimate.thread.client.annotation.ThreadPoolClient;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

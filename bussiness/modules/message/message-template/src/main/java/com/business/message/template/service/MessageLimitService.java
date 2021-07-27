@@ -2,8 +2,9 @@ package com.business.message.template.service;
 
 
 
+import com.architecture.ultimate.mybatisplus.service.BaseService;
 import com.business.message.template.entity.MessageLimit;
-import com.core.mybatisplus.service.BaseService;
+
 
 /**
  * 描述：消息模板发送限制

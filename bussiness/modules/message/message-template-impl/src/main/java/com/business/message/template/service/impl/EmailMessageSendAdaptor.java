@@ -1,4 +1,4 @@
-package com.business.message.mail.service.impl;
+package com.business.message.template.service.impl;
 
 
 

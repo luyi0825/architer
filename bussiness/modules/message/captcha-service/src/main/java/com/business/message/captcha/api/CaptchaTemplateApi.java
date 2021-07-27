@@ -2,7 +2,6 @@ package com.business.message.captcha.api;
 
 
 import com.business.message.captcha.entity.CaptchaTemplate;
-import com.core.module.common.valid.group.AddGroup;
 import com.architecture.ultimate.mybatisplus.QueryParam;
 import com.architecture.ultimate.query.common.model.Pagination;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;

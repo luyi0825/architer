@@ -1,9 +1,8 @@
 package com.business.message.template.service;
 
 
+import com.architecture.ultimate.mybatisplus.service.BaseService;
 import com.business.message.template.entity.MessageTemplate;
-import com.core.mybatisplus.service.BaseService;
-
 
 /**
  * @author luyi
