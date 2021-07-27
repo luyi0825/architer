@@ -1,6 +1,7 @@
 package com.business.message.captcha.api;
 
 
+import com.architecture.ultimate.module.common.valid.group.AddGroup;
 import com.business.message.captcha.entity.CaptchaTemplate;
 import com.architecture.ultimate.mybatisplus.QueryParam;
 import com.architecture.ultimate.query.common.model.Pagination;
@@ -44,6 +45,7 @@ public interface CaptchaTemplateApi {
      * 通过id(主键)查询验证码配置
      *
      * @param id 配置信息ID
+     * @return 验证码模板
      */
     @ApiOperation(value = "通过id(主键)查询验证码配置")
     @GetMapping("/findById/{id}")
