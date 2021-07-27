@@ -39,25 +39,78 @@
     </dependencies>
     <build>
         <plugins>
+            <!-- 跳过单元测试 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <!-- spring-boot-maven-plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <image>
-                        <!--                        执行完build 不自动pushfalse -->-->
-                        <name>test/${project.artifactId}</name>
-                    </image>
-                    <docker>
-                        <!--远程docker daemon的连接地址和端口-->
-                        <host>tcp://192.168.2.222:2375</host>
-                        <!--如果使用https协议需要设置为true-->
-                        <tlsVerify>false</tlsVerify>
-                        <publishRegistry>
-                            <username>893431435@qq.com</username>
-                            <password>19940825Ls.</password>
-                            <url>registry.cn-hangzhou.aliyuncs.com/luyi_public/architecture.ultimate</url>
-                        </publishRegistry>
-                    </docker>
+                    <fork>true</fork>
+                    <mainClass>${start-class}</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- fabric8 的 docker-maven-plugin -->
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+<!--                <version>0.36.1</version>-->
+                <!-- 全局配置 -->
+                <configuration>
+                    <!-- 配置远程 Docker 守护进程 url -->
+                    <dockerHost>http://110.40.139.46:2375</dockerHost>
+                    <!-- 镜像相关配置，支持多镜像 -->
+                    <images>
+                        <!-- 单个镜像配置 -->
+                        <image>
+                            <!-- 镜像名:版本号 -->
+                            <name>${project.artifactId}:${project.version}</name>
+                            <!--
+                                镜像仓库（公共仓库、阿里云仓库、私有自建仓库）配置，用于推送/拉取镜像
+                                如果不想推送至镜像仓库则无需配置
+                            -->
+<!--                            <registry>192.168.10.10:5000</registry>-->
+                            <!-- 镜像 build 相关配置 -->
+                            <build>
+                                <!-- 使用 Dockerfile 文件，默认地址是 src/main/docker -->
+                                <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                                <!-- 或者指定地址例如：从项目根路径开始找 项目名/docker -->
+                                <!--<dockerFile>${project.basedir}/docker/Dockerfile</dockerFile>-->
+                                <!--
+                                    配置构建镜像时所需要的资源
+                                    配置项说明：http://maven.fabric8.io/#build-assembly-descriptor
+                                -->
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                            </build>
+                        </image>
+                    </images>
+                    <!-- 认证配置，用于镜像仓库认证 -->
+                    <!--
+                    <authConfig>
+                        <username>用户名</username>
+                        <password>密码</password>
+                    </authConfig>
+                    -->
+                    <resources>
+                        <resource>
+
+                        </resource>
+                    </resources>
                 </configuration>
             </plugin>
         </plugins>

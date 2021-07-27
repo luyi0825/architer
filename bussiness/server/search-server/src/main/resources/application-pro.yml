@@ -1,0 +1,34 @@
+server:
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
+  port: 9008
+spring:
+  rabbitmq:
+    virtual-host: test
+    host: localhost
+    port: 5672
+    username: luyi
+    password: luyi123
+  redis:
+    host: 127.0.0.1
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017
+      username: luyi
+      password: 'luyi123'
+      database: search
+customize:
+  es:
+    hosts[0]:
+      ip: 127.0.0.1
+      port: 9200
+
+
+
+

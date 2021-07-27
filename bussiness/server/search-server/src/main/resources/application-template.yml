@@ -16,11 +16,14 @@ spring:
     port: 5672
     username: admin
     password: admin
-  cloud:
-    sentinel:
-      transport:
-        dashboard: localhost:8080
-        port: 8719
+  data:
+    mongodb:
+      #uri: mongodb://192.168.2.222:27017
+      username: luyi
+      password: '123'
+      database: search
+      port: 27017
+      host: ${host}
   redis:
     host: ${host}
 
@@ -29,17 +32,6 @@ spring:
 #    spring.rabbitmq.template.mandatory=true
 #    # 必须设置为true，否则消息消息路由失败也无法触发Return回调
 #    spring.rabbitmq.publisher-returns=true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-    jmx:
-      exposure:
-        include: "*"
-  server:
-    port: 8082
 
 customize:
   es:
