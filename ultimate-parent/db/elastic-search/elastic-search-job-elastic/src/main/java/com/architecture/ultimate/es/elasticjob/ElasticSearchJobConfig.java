@@ -17,7 +17,7 @@ public class ElasticSearchJobConfig {
     }
 
     private static CoordinatorRegistryCenter createRegistryCenter() {
-        CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(new ZookeeperConfiguration("localhost:8080", "my-job"));
+        CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(new ZookeeperConfiguration("localhost:2181", "test"));
         regCenter.init();
         return regCenter;
     }
