@@ -1,12 +1,12 @@
 package com.business.message.mail.api;
 
 
+import com.architecture.ultimate.module.common.valid.group.AddGroup;
+import com.architecture.ultimate.module.common.valid.group.UpdateGroup;
+import com.architecture.ultimate.mybatisplus.QueryParam;
+import com.architecture.ultimate.query.common.model.Pagination;
 import com.business.message.mail.entity.MessageTemplate;
 import com.business.message.mail.service.MessageTemplateService;
-import com.core.module.common.valid.group.AddGroup;
-import com.core.module.common.valid.group.UpdateGroup;
-import com.core.mybatisplus.QueryParam;
-import com.core.query.common.model.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;

@@ -2,8 +2,8 @@ package com.business.message.mail.sender;
 
 
 
+import com.architecture.ultimate.module.common.exception.ServiceException;
 import com.business.message.mail.model.Email;
-import com.core.module.common.exception.ServiceException;
 import com.sun.mail.smtp.SMTPAddressFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;

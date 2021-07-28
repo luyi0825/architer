@@ -1,8 +1,8 @@
 package com.business.message.mail.api;
 
 
-import com.bussiness.shop.message.component.SendMessageProcess;
-import com.bussiness.shop.message.entity.Email;
+import com.business.message.mail.component.SendMessageProcess;
+import com.business.message.mail.model.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

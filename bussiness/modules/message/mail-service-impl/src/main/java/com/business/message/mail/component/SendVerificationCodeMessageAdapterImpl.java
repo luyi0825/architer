@@ -1,13 +1,13 @@
 package com.business.message.mail.component;
 
 
+import com.architecture.ultimate.module.common.exception.ServiceException;
 import com.business.message.mail.MessageConstants;
 import com.business.message.mail.entity.MessageLimit;
 import com.business.message.mail.entity.MessageTemplate;
 import com.business.message.mail.model.Email;
 import com.business.message.mail.sender.EmailSender;
 import com.architecture.ultimate.cache.redis.StringRedisService;
-import com.core.module.common.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
