@@ -106,11 +106,6 @@
                         <password>密码</password>
                     </authConfig>
                     -->
-                    <resources>
-                        <resource>
-
-                        </resource>
-                    </resources>
                 </configuration>
             </plugin>
         </plugins>

@@ -28,7 +28,6 @@ public class DocumentConsumerConfig {
     private static final Logger LOG = LoggerFactory.getLogger(DocumentConsumerConfig.class);
 
     @Bean
-
     public DocumentConsumerExecutor documentConsumerExecutor(@Autowired(required = false) TaskExecutorProperties taskExecutorProperties) {
         ThreadPoolConfig threadPoolConfig = null;
         if (taskExecutorProperties != null) {

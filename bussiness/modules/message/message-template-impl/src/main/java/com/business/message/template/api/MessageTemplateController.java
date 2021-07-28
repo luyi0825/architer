@@ -4,10 +4,6 @@ package com.business.message.template.api;
 
 import com.business.message.template.entity.MessageTemplate;
 import com.business.message.template.service.MessageTemplateService;
-import com.core.module.common.valid.group.AddGroup;
-import com.core.module.common.valid.group.UpdateGroup;
-import com.core.mybatisplus.QueryParam;
-import com.core.query.common.model.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
