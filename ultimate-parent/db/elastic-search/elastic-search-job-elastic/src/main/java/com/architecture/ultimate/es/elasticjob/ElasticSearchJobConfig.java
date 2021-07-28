@@ -17,13 +17,16 @@ public class ElasticSearchJobConfig {
     }
 
     private static CoordinatorRegistryCenter createRegistryCenter() {
-        CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(new ZookeeperConfiguration("localhost:2181", "test"));
+        ZookeeperConfiguration zookeeperConfiguration = new ZookeeperConfiguration("localhost:2181", "test-job");
+        zookeeperConfiguration.setSessionTimeoutMilliseconds(2000);
+        CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(zookeeperConfiguration);
         regCenter.init();
         return regCenter;
     }
 
 
     public static JobConfiguration createJobConfiguration() {
-        return JobConfiguration.newBuilder("MyJob", 3).cron("0/5 * * * * ?").build();
+        JobConfiguration jobConfiguration = JobConfiguration.newBuilder("MyJob", 3).cron("0/5 * * * * ?").build();
+        return jobConfiguration;
     }
 }
