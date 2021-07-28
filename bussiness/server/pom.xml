@@ -22,6 +22,5 @@
         <module>auth-server</module>
         <module>file-server</module>
         <module>search-server</module>
-        <module>xxl-job-admin</module>
     </modules>
 </project>
