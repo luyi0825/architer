@@ -36,6 +36,11 @@
             <artifactId>test</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.architecture.ultimate</groupId>
+            <artifactId>elastic-search-job-elastic</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -67,7 +72,7 @@
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-<!--                <version>0.36.1</version>-->
+                <!--                <version>0.36.1</version>-->
                 <!-- 全局配置 -->
                 <configuration>
                     <!-- 配置远程 Docker 守护进程 url -->
@@ -82,7 +87,7 @@
                                 镜像仓库（公共仓库、阿里云仓库、私有自建仓库）配置，用于推送/拉取镜像
                                 如果不想推送至镜像仓库则无需配置
                             -->
-<!--                            <registry>192.168.10.10:5000</registry>-->
+                            <!--                            <registry>192.168.10.10:5000</registry>-->
                             <!-- 镜像 build 相关配置 -->
                             <build>
                                 <!-- 使用 Dockerfile 文件，默认地址是 src/main/docker -->

@@ -43,14 +43,15 @@
         <mysql.version>8.0.25</mysql.version>
         <elasticsearch.version>7.9.3</elasticsearch.version>
         <slf4j.version>2.13.3</slf4j.version>
+        <elasticjob.verion>3.0.0</elasticjob.verion>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.xuxueli</groupId>
-                <artifactId>xxl-job-core</artifactId>
-                <version>2.3.0</version>
+                <groupId>org.apache.shardingsphere.elasticjob</groupId>
+                <artifactId>elasticjob-lite-core</artifactId>
+                <version>${elasticjob.verion}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
