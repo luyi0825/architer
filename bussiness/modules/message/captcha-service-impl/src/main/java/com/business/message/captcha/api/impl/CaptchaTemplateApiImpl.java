@@ -4,8 +4,6 @@ package com.business.message.captcha.api.impl;
 import com.business.message.captcha.api.CaptchaTemplateApi;
 import com.business.message.captcha.entity.CaptchaTemplate;
 import com.business.message.captcha.service.CaptchaTemplateService;
-import com.core.mybatisplus.QueryParam;
-import com.core.query.common.model.Pagination;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

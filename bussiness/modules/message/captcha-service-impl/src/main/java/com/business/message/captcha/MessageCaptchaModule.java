@@ -1,7 +1,6 @@
 package com.business.message.captcha;
 
-
-import com.core.module.common.Module;
+import com.architecture.ultimate.module.common.Module;
 
 /**
  * 增加消息服务，验证码模块
