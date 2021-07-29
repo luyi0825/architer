@@ -10,12 +10,13 @@ import org.springframework.stereotype.Component;
 
 /**
  * 通过用户名登录
+ *
  * @author luyi
  */
 @Component
-public class UserLoginByUserName implements UserLogin{
-    @Autowired
+public class UserLoginByUserName implements UserLogin {
     private AuthUserService authUserService;
+
     @Override
     public boolean match(String loginType) {
         return LoginType.ACCOUNT.getType().equals(loginType);
@@ -29,5 +30,10 @@ public class UserLoginByUserName implements UserLogin{
         QueryWrapper<AuthUser> queryMapper = new QueryWrapper<>();
         queryMapper.eq(LoginType.ACCOUNT.getDbField(), userId);
         return this.authUserService.selectOne(queryMapper);
+    }
+
+    @Autowired
+    public void setAuthUserService(AuthUserService authUserService) {
+        this.authUserService = authUserService;
     }
 }
