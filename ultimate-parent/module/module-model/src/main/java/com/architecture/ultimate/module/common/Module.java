@@ -2,6 +2,7 @@ package com.architecture.ultimate.module.common;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -31,5 +32,7 @@ public @interface Module {
      * 模块名称(中文)
      */
     String caption();
+
+    String[] basePackages() default {};
 
 }
