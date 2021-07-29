@@ -1,0 +1,17 @@
+elasticjob:
+  tracing:
+    type: RDB
+  regCenter:
+    serverLists: 192.168.3.222:2181
+    namespace: elasticjob-lite-springboot
+    #    sessionTimeoutMilliseconds: 100000
+    #    max-sleep-time-milliseconds: 5000
+    #    base-sleep-time-milliseconds: 2000
+    #    max-retries: 4
+    connection-timeout-milliseconds: 6000
+  jobs:
+    firstJob:
+      elasticJobClass: com.architecture.ultimate.es.elasticjob.CallBack
+      cron: 0/5 * * * * ?
+      shardingTotalCount: 3
+      shardingItemParameters: 0=Beijing,1=Shanghai,2=Guangzhou
