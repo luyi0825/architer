@@ -1,4 +1,4 @@
-host: 172.17.0.6
+host: 172.31.0.5
 server:
   servlet:
     context-path: /
@@ -13,7 +13,7 @@ spring:
   rabbitmq:
     virtual-host: test
     host: ${host}
-    port: 5673
+    port: 5672
     username: luyi
     password: luyi123
   redis:

@@ -76,7 +76,7 @@
                 <!-- 全局配置 -->
                 <configuration>
                     <!-- 配置远程 Docker 守护进程 url -->
-                    <dockerHost>http://110.40.139.46:2375</dockerHost>
+                    <dockerHost>http://180.163.98.12:2375</dockerHost>
                     <!-- 镜像相关配置，支持多镜像 -->
                     <images>
                         <!-- 单个镜像配置 -->
