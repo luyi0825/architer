@@ -1,0 +1,87 @@
+host: 192.168.3.222
+server:
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
+  port: 9006
+
+mybatis-plus:
+  #type-aliases-package: com.ly.*
+  mapper-locations: classpath*:/com.business.auth/*/mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#org.apache.ibatis.logging.log4j2.Log4j2Impl #
+spring:
+  shardingsphere:
+    props:
+      sql:
+        show: true
+    datasource:
+      names: ds1,ds2,ds1_slave,ds2_slave
+      ds1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://${host}:3305/t_auth_master1?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+      ds2:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://${host}:3305/t_auth_master2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+      ds1_slave:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://${host}:3305/t_auth_slave1?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+      ds2_slave:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://${host}:3305/t_auth_slave2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+        username: root
+        password: 123456
+    masterslave:
+      load-balance-algorithm-type: round_robin
+      name: ms
+      master-data-source-name: ds1
+      slave-data-source-names: ds1_slave
+      ## # 配置分库策略
+    sharding:
+      tables:
+        t_auth_user:
+          actual-data-nodes: ds$->{1..2}.t_auth_user
+          #          table-strategy:
+          #            inline:
+          #              sharding-column: id
+          #              algorithm-expression: t_auth_user$->{(id % 2)+1}
+          key-generator:
+            column: id
+            type: SNOWFLAKE
+      default-database-strategy:
+        inline:
+          sharding-column: id
+          algorithm-expression: ds$->{(id % 2)+1}
+      binding-tables: t_auth_user
+
+  redis:
+    host: ${host}
+  jpa:
+    show-sql: true
+
+
+#    # 当exchange无法找到任何一个合适的queue时，将消息return给生产者
+#    spring.rabbitmq.template.mandatory=true
+#    # 必须设置为true，否则消息消息路由失败也无法触发Return回调
+#    spring.rabbitmq.publisher-returns=true
+
+
+
+
+

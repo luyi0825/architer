@@ -16,23 +16,23 @@
             <artifactId>boot-starter-web-mvc</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
-            <artifactId>db-druid</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.2.4</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.architecture.ultimate</groupId>
-            <artifactId>cloud-nacos-discovery</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-client</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.architecture.ultimate</groupId>-->
+<!--            <artifactId>cloud-nacos-discovery</artifactId>-->
+<!--            <version>${project.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.nacos</groupId>-->
+<!--            <artifactId>nacos-client</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.bussiness</groupId>
@@ -44,10 +44,6 @@
             <groupId>org.apache.shardingsphere</groupId>
             <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
             <version>4.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.architecture.ultimate</groupId>
-            <artifactId>db-druid</artifactId>
         </dependency>
         <dependency>
             <groupId>com.architecture.ultimate</groupId>
