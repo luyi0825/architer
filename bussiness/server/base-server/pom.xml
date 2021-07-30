@@ -15,28 +15,19 @@
             <groupId>com.architecture.ultimate</groupId>
             <artifactId>boot-starter-web-mvc</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
-            <artifactId>db-druid</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.2.4</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
-            <artifactId>cloud-nacos-discovery</artifactId>
+            <groupId>com.bussiness</groupId>
+            <artifactId>module-base-area-service-impl</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.architecture.ultimate</groupId>
-            <artifactId>mybatis-plus</artifactId>
         </dependency>
     </dependencies>
 </project>
