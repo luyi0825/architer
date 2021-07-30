@@ -13,6 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * 模块标识注解，只有标识这个注解才会装配模块
+ * 或者自己定义springBootStarter也可以
  * =>@Configuration+@ComponentScan会默认扫描这个类以及子包下的类
  *
  * @author luyi
@@ -22,7 +23,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 @Configuration
 @ComponentScan
-public @interface Module {
+public @interface SubModule {
     /**
      * 模块名称（英文）
      */
