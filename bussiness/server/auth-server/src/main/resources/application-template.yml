@@ -1,4 +1,4 @@
-host: 192.168.3.222
+host: localhost
 server:
   servlet:
     context-path: /
@@ -22,36 +22,37 @@ spring:
       sql:
         show: true
     datasource:
-      names: ds1,ds2,ds1_slave,ds2_slave
+      names: ds1,ds2,ds1slave,ds2slave
       ds1:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://${host}:3305/t_auth_master1?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+        url: jdbc:mysql://${host}:3306/t_auth1?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
         username: root
-        password: 123456
+        password: luyi123
       ds2:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://${host}:3305/t_auth_master2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+        url: jdbc:mysql://${host}:3306/t_auth2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
         username: root
-        password: 123456
-      ds1_slave:
+        password: luyi123
+      ds1slave:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://${host}:3305/t_auth_slave1?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+        url: jdbc:mysql://${host}:3305/t_auth1?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
         username: root
-        password: 123456
-      ds2_slave:
+        password: luyi123
+      ds2slave:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://${host}:3305/t_auth_slave2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+        url: jdbc:mysql://${host}:3305/t_auth2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
         username: root
-        password: 123456
-    masterslave:
-      load-balance-algorithm-type: round_robin
-      name: ms
-      master-data-source-name: ds1
-      slave-data-source-names: ds1_slave
+        password: luyi123
+      #    masterslave:
+      #      load-balance-algorithm-type: round_robin
+      #      name: ms
+      #      master-data-source-name: ds1
+      #      slave-data-source-names: ds1_slave
+
       ## # 配置分库策略
     sharding:
       tables:
@@ -69,7 +70,13 @@ spring:
           sharding-column: id
           algorithm-expression: ds$->{(id % 2)+1}
       binding-tables: t_auth_user
-
+      master-slave-rules:
+        ds1:
+          master-data-source-name: ds1
+          slave-data-source-names: ds1slave
+        ds2:
+          master-data-source-name: ds2
+          slave-data-source-names: ds2slave
   redis:
     host: ${host}
   jpa:
