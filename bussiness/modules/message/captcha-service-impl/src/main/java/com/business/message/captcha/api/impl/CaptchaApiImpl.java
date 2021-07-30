@@ -1,18 +1,16 @@
 package com.business.message.captcha.api.impl;
 
+
 import com.business.message.captcha.api.CaptchaApi;
 import com.business.message.captcha.component.CaptchaProducer;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
  * @author luyi
+ * 验证码接口实现层
  */
 @RestController
 public class CaptchaApiImpl implements CaptchaApi {
