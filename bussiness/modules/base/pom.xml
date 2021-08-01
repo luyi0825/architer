@@ -13,5 +13,7 @@
     <modules>
         <module>area-service</module>
         <module>area-service-impl</module>
+        <module>codeconvert-service</module>
+        <module>codeconvert-service-impl</module>
     </modules>
 </project>

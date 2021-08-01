@@ -7,7 +7,10 @@ import lombok.Data;
 
 import java.util.Date;
 
-
+/**
+ * @author luyi
+ * 代码集service接口类
+ */
 public interface CodeConvertService extends BaseService<CodeConvert> {
 
 
