@@ -24,7 +24,8 @@ import java.lang.annotation.*;
 public @interface Cacheable {
 
     /**
-     * 缓存名称
+     * 缓存名称,
+     * <li>解析后会缓存起来，下次直接取值</li>
      */
     String[] cacheName() default "";
 
@@ -57,6 +58,7 @@ public @interface Cacheable {
     /**
      * 锁的值
      * <li>当lockType不为node，默认值为类名（例如com.architecture.ultimate.xxx）</li>
+     * <li>支持EL表达式</li>
      */
     String lock() default "";
 

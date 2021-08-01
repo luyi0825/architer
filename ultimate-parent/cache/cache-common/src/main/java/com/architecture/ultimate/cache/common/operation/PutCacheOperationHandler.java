@@ -20,16 +20,18 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
     }
 
     @Override
-    protected Object executeCacheHandler(String key, CacheOperationMetadata metadata) {
+    protected Object executeCacheHandler(String[] keys, CacheOperationMetadata metadata) {
         Object value = invoke(metadata);
         PutCacheOperation putCacheOperation = (PutCacheOperation) metadata.getCacheOperation();
         String cacheValue = putCacheOperation.getCacheValue();
         long expireTime = CacheUtils.getExpireTime(putCacheOperation.getExpireTime(), putCacheOperation.getRandomExpireTime());
-        if (StringUtils.isEmpty(cacheValue)) {
-            writeCache(putCacheOperation.isAsync(), () -> cacheManager.putCache(key, value, expireTime));
-        } else {
-            Object needCacheValue = cacheExpressionParser.executeParse(metadata, cacheValue);
-            writeCache(putCacheOperation.isAsync(), () -> cacheManager.putCache(key, needCacheValue, expireTime));
+        for (String key : keys) {
+            if (StringUtils.isEmpty(cacheValue)) {
+                writeCache(putCacheOperation.isAsync(), () -> cacheManager.putCache(key, value, expireTime));
+            } else {
+                Object needCacheValue = cacheExpressionParser.executeParse(metadata, cacheValue);
+                writeCache(putCacheOperation.isAsync(), () -> cacheManager.putCache(key, needCacheValue, expireTime));
+            }
         }
         return value;
     }

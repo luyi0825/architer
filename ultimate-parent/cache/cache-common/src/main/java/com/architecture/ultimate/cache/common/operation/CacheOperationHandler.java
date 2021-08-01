@@ -8,6 +8,7 @@ import com.architecture.ultimate.cache.common.enums.LockType;
 import com.architecture.ultimate.cache.common.exception.CacheHandlerException;
 import com.architecture.ultimate.cache.common.key.KeyGenerator;
 import com.lz.cache.lock.LockManager;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.annotation.Annotation;
@@ -51,14 +52,14 @@ public abstract class CacheOperationHandler {
      * @return 处理后的结果值，这个值就是缓存注解方法对应的返回值
      */
     public final Object handler(CacheOperationMetadata metadata) {
-        String key = keyGenerator.getKey(metadata);
-        Lock lock = this.getLock(key, metadata.getCacheOperation().getLock());
+        String[] keys = keyGenerator.getKey(metadata);
+        Lock lock = this.getLock(metadata);
         if (lock == null) {
-            return executeCacheHandler(key, metadata);
+            return executeCacheHandler(keys, metadata);
         }
-        lock.lock();
         try {
-            return executeCacheHandler(key, metadata);
+            lock.lock();
+            return executeCacheHandler(keys, metadata);
         } finally {
             lock.unlock();
         }
@@ -71,7 +72,7 @@ public abstract class CacheOperationHandler {
      * @param metadata 缓存操作元数据
      * @return 调用方法的返回值
      */
-    protected abstract Object executeCacheHandler(String key, CacheOperationMetadata metadata);
+    protected abstract Object executeCacheHandler(String[] key, CacheOperationMetadata metadata);
 
     /**
      * 执行缓存写操作
@@ -90,12 +91,16 @@ public abstract class CacheOperationHandler {
     /**
      * 通过缓存注解得到对应的锁
      */
-    protected Lock getLock(String key, LockType lockType) {
-        if (lockType == LockType.none) {
+    protected Lock getLock(CacheOperationMetadata metadata) {
+        if (LockType.none == metadata.getCacheOperation().getLockType()) {
             return null;
         }
-        String lockName = "lock." + key;
-        switch (lockType) {
+        String lock = metadata.getCacheOperation().getLock();
+        if (StringUtils.isEmpty(lock)) {
+            lock = metadata.getTarget().getClass() + "." + metadata.getTargetMethod().getName();
+        }
+        String lockName = "lock." + lock;
+        switch (metadata.getCacheOperation().getLockType()) {
             case read:
                 return lockManager.getReadLock(lockName);
             case write:

@@ -1,7 +1,6 @@
 package com.architecture.ultimate.cache.common.operation;
 
 
-
 import com.architecture.ultimate.cache.common.annotation.Cacheable;
 import com.architecture.ultimate.cache.common.utils.CacheUtils;
 import org.springframework.util.StringUtils;
@@ -23,22 +22,29 @@ public class CacheableOperationHandler extends CacheOperationHandler {
     }
 
     @Override
-    protected Object executeCacheHandler(String key, CacheOperationMetadata metadata) {
-        Object value = cacheManager.getCache(key);
+    protected Object executeCacheHandler(String[] keys, CacheOperationMetadata metadata) {
+        //从缓存中取值
+        Object value = cacheManager.getCache(keys[0]);
+        //缓存中没有值，就从数据库得到值或者解析值
         if (value == null) {
-            value = invoke(metadata);
             CacheableOperation cacheableOperation = (CacheableOperation) metadata.getCacheOperation();
             String cacheValue = cacheableOperation.getCacheValue();
             long expireTime = CacheUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomExpireTime());
+            //cacheValue为空，就将方法返回值作为缓存值
             if (StringUtils.isEmpty(cacheValue)) {
+                value = invoke(metadata);
                 Object finalValue = value;
-                writeCache(cacheableOperation.isAsync(), () -> cacheManager.putCache(key, finalValue, expireTime));
+                for (String key : keys) {
+                    writeCache(cacheableOperation.isAsync(), () -> cacheManager.putCache(key, finalValue, expireTime));
+                }
             } else {
+                //说明给了默认的缓存值
                 Object needCacheValue = cacheExpressionParser.executeParse(metadata, cacheValue);
-                writeCache(cacheableOperation.isAsync(), () -> cacheManager.putCache(key, needCacheValue, expireTime));
+                for (String key : keys) {
+                    writeCache(cacheableOperation.isAsync(), () -> cacheManager.putCache(key, needCacheValue, expireTime));
+                }
             }
         }
         return value;
     }
-
 }

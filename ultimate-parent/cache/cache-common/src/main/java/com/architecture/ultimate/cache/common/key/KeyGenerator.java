@@ -15,7 +15,7 @@ public interface KeyGenerator {
      * @param cacheOperationMetadata 缓存操作元信息
      * @return 缓存的key
      */
-    String getKey(CacheOperationMetadata cacheOperationMetadata);
+    String[] getKey(CacheOperationMetadata cacheOperationMetadata);
 
 
 }

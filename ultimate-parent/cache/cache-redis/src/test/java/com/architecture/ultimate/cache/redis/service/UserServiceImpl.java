@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @PutCache(key = "#user.class.name + '::' + #user.name", lock = LockType.write)
+    @PutCache(key = "#user.class.name + '::' + #user.name", lockType = LockType.write)
     public User update(User user) {
         System.out.println("save ..");
         try {
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Cacheable(cacheName = "#root.method.returnType.name", key = "#name", lock = LockType.read)
+    @Cacheable(cacheName = "#root.method.returnType.name", key = "#name", lockType = LockType.read)
     @Override
     public User findByName(String name) {
         System.out.println("read:" + name);

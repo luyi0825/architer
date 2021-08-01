@@ -23,9 +23,11 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
     }
 
     @Override
-    protected Object executeCacheHandler(String key, CacheOperationMetadata metadata) {
+    protected Object executeCacheHandler(String[] keys, CacheOperationMetadata metadata) {
         CacheOperation cacheOperation = metadata.getCacheOperation();
-        writeCache(cacheOperation.isAsync(), () -> cacheManager.deleteCache(key));
+        for (String key : keys) {
+            writeCache(cacheOperation.isAsync(), () -> cacheManager.deleteCache(key));
+        }
         return invoke(metadata);
     }
 

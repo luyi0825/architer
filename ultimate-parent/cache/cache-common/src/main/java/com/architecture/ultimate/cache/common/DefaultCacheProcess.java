@@ -1,11 +1,11 @@
 package com.architecture.ultimate.cache.common;
 
 
-
 import com.architecture.ultimate.cache.common.operation.CacheOperation;
 import com.architecture.ultimate.cache.common.operation.CacheOperationHandler;
 import com.architecture.ultimate.cache.common.operation.CacheOperationMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 
 import java.lang.reflect.Method;
@@ -25,19 +25,29 @@ public class DefaultCacheProcess implements CacheProcess {
 
     @Override
     public Object process(Object target, Method method, Object[] args, Collection<CacheOperation> cacheOperations) {
+
         try {
-            for (CacheOperation operation : cacheOperations) {
-                for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
-                    if (cacheOperationHandler.match(operation.getAnnotation())) {
-                        CacheOperationMetadata cacheOperationMetadata = new CacheOperationMetadata(operation, target, method, args);
-                        return cacheOperationHandler.handler(cacheOperationMetadata);
+            if (!CollectionUtils.isEmpty(cacheOperations)) {
+                Object value = null;
+                for (CacheOperation operation : cacheOperations) {
+                    for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
+                        if (cacheOperationHandler.match(operation.getAnnotation())) {
+                            CacheOperationMetadata cacheOperationMetadata = new CacheOperationMetadata(operation, target, method, args);
+                            Object fistValue = cacheOperationHandler.handler(cacheOperationMetadata);
+                            //存在多个注解的时候，将第一个有返回值的注解作作为返回值
+                            if (fistValue != null) {
+                                value = fistValue;
+                            }
+                        }
                     }
                 }
+                return value;
             }
+            return method.invoke(target, args);
         } catch (Exception e) {
             throw new RuntimeException("cache process error", e);
         }
-        return null;
+
     }
 
 
