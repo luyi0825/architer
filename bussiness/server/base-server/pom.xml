@@ -17,7 +17,7 @@
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
+            <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.2.4</version>
         </dependency>
         <dependency>
@@ -27,6 +27,21 @@
         <dependency>
             <groupId>com.bussiness</groupId>
             <artifactId>module-base-area-service-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.architecture.ultimate</groupId>
+            <artifactId>redis-cache</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.architecture.ultimate</groupId>
+            <artifactId>cache-distributed-lock</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bussiness</groupId>
+            <artifactId>module-base-code-convert-service-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

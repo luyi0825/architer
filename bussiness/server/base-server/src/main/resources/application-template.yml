@@ -15,6 +15,7 @@ mybatis-plus:
   mapper-locations: classpath*:/com.business.base/*/mapper/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+spring:
   datasource:
     druid:
       stat-view-servlet:
@@ -29,10 +30,9 @@ mybatis-plus:
       filter:
         log4j2:
           enabled: true
+          statement-prepare-after-log-enabled: false
         wall:
           ## 防止sql注入
           enabled: true
     type: com.alibaba.druid.pool.DruidDataSource
-  redis:
-    host: ${host}
 
