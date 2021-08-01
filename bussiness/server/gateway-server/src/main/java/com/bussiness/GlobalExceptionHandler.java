@@ -76,7 +76,7 @@ public class GlobalExceptionHandler {
         BaseResponse baseResponse;
         if (e instanceof ServiceException) {
             //业务校验抛出的异常
-            baseResponse = new BaseResponse(StatusCode.BUS_EXCEPTION.getCode(), e.getMessage(), null);
+            baseResponse = new BaseResponse(StatusCode.SERVICE_EXCEPTION.getCode(), e.getMessage(), null);
             // -----------请求参数校验异常------
         } else if (e instanceof BindException) {
             baseResponse = getBindExceptionBaseResponse(((BindException) e).getBindingResult());
