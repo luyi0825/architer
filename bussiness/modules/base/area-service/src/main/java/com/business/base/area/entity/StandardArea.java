@@ -10,8 +10,12 @@ import java.io.Serializable;
  * 标准区划实体
  */
 @Data
-@TableName("t_standard_area")
+@TableName("t_base_standard_area")
 public class StandardArea implements Serializable {
+    /**
+     * 主键ID
+     */
+    private int id;
     /**
      * 区划ID
      */
@@ -19,7 +23,7 @@ public class StandardArea implements Serializable {
     /**
      * 父级ID
      */
-    private String parentId;
+    private int parentId;
     /**
      * 区划名称
      */
