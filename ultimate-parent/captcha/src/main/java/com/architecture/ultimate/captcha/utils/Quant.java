@@ -310,8 +310,9 @@ public class Quant {
                     j = -1; /* stop iter */
                 } else {
                     j--;
-                    if (dist < 0)
+                    if (dist < 0) {
                         dist = -dist;
+                    }
                     a = p[0] - b;
                     if (a < 0) {
                         a = -a;
