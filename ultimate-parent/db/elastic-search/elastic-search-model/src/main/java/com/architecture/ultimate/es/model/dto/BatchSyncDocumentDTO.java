@@ -25,4 +25,17 @@ public class BatchSyncDocumentDTO extends BaseSyncDocumentDTO implements Seriali
     public void setDocs(List<DocumentRequest> docs) {
         this.docs = docs;
     }
+
+    @Override
+    public String toString() {
+        return "BatchSyncDocumentDTO{" +
+                "businessKey='" + businessKey + '\'' +
+                ", batchId='" + batchId + '\'' +
+                ", lock='" + lock + '\'' +
+                ", version=" + version +
+                ", callBackWay='" + callBackWay + '\'' +
+                ", callBackParams=" + callBackParams +
+                ", docs=" + docs +
+                '}';
+    }
 }

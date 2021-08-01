@@ -27,4 +27,17 @@ public class SyncDocumentDTO extends BaseSyncDocumentDTO implements Serializable
     public void setDoc(DocumentRequest doc) {
         this.doc = doc;
     }
+
+    @Override
+    public String toString() {
+        return "SyncDocumentDTO{" +
+                "businessKey='" + businessKey + '\'' +
+                ", batchId='" + batchId + '\'' +
+                ", lock='" + lock + '\'' +
+                ", version=" + version +
+                ", callBackWay='" + callBackWay + '\'' +
+                ", callBackParams=" + callBackParams +
+                ", doc=" + doc +
+                '}';
+    }
 }
