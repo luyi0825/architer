@@ -18,6 +18,6 @@ public interface StandardAreaService extends BaseService<StandardArea> {
      * @param parentId 父级ID
      * @return parentID下的子区划
      */
-    List<StandardArea> findByParentId(String parentId);
+    List<StandardArea> findByParentId(int parentId);
 
 }

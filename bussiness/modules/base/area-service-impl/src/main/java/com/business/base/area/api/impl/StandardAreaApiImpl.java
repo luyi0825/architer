@@ -18,7 +18,7 @@ public class StandardAreaApiImpl implements StandardAreaApi {
     private StandardAreaService standardAreaService;
 
     @Override
-    public List<StandardArea> findByParentId(String parentId) {
+    public List<StandardArea> findByParentId(int parentId) {
         return standardAreaService.findByParentId(parentId);
     }
 

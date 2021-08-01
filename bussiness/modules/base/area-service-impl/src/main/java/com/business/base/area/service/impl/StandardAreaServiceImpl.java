@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class StandardAreaServiceImpl extends BaseServiceImpl<StandardArea> implements StandardAreaService {
     @Override
-    public List<StandardArea> findByParentId(String parentId) {
+    public List<StandardArea> findByParentId(int parentId) {
         QueryWrapper<StandardArea> queryMapper = new QueryWrapper<>();
         queryMapper.eq("parent_id", parentId);
         return this.baseMapper.selectList(queryMapper);

@@ -15,7 +15,7 @@ public class StandardArea implements Serializable {
     /**
      * 主键ID
      */
-    private int id;
+    private Integer id;
     /**
      * 区划ID
      */
