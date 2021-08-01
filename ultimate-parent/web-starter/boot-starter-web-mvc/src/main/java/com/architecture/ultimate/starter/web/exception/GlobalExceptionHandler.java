@@ -2,6 +2,7 @@ package com.architecture.ultimate.starter.web.exception;
 
 
 import com.architecture.ultimate.module.common.StatusCode;
+import com.architecture.ultimate.module.common.exception.ParamsValidException;
 import com.architecture.ultimate.module.common.exception.ServiceException;
 import com.architecture.ultimate.module.common.response.BaseResponse;
 import com.architecture.ultimate.module.common.response.R;
@@ -61,10 +62,12 @@ public class GlobalExceptionHandler {
         BaseResponse baseResponse;
         if (e instanceof ServiceException) {
             //业务校验抛出的异常
-            baseResponse = new BaseResponse(StatusCode.BUS_EXCEPTION.getCode(), e.getMessage(), null);
+            baseResponse = new BaseResponse(StatusCode.SERVICE_EXCEPTION.getCode(), e.getMessage(), null);
             // -----------请求参数校验异常------
         } else if (e instanceof BindException) {
             baseResponse = getBindExceptionBaseResponse(((BindException) e).getBindingResult());
+        } else if (e instanceof ParamsValidException) {
+            return new BaseResponse(StatusCode.PARAMS_VALID_EXCEPTION.getCode(), e.getMessage());
         } else {
             log.error(e.getMessage(), e);
             //其他的一些异常，是程序不可控制的
