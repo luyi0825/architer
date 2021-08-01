@@ -100,7 +100,7 @@ public class GenUtils {
             columnEntity.setAttrType(attrType);
 
 
-            if (!hasBigDecimal && attrType.equals("BigDecimal")) {
+            if (!hasBigDecimal && "BigDecimal".equals(attrType)) {
                 hasBigDecimal = true;
             }
             if (!hasList && "array".equals(columnEntity.getExtra())) {
