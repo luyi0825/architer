@@ -2,6 +2,7 @@ package com.architecture.ultimate.module.common.response;
 
 
 import com.architecture.ultimate.module.common.StatusCode;
+
 import java.io.Serializable;
 
 /**
@@ -88,8 +89,8 @@ public class BaseResponse implements Serializable {
      */
     public static BaseResponse fail() {
         BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setCode(StatusCode.BUS_EXCEPTION.getCode());
-        baseResponse.setMessage(StatusCode.BUS_EXCEPTION.getMessage());
+        baseResponse.setCode(StatusCode.SERVICE_EXCEPTION.getCode());
+        baseResponse.setMessage(StatusCode.SERVICE_EXCEPTION.getMessage());
         return baseResponse;
     }
 
@@ -98,9 +99,9 @@ public class BaseResponse implements Serializable {
      */
     public static BaseResponse fail(Object data) {
         BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setCode(StatusCode.BUS_EXCEPTION.getCode());
+        baseResponse.setCode(StatusCode.SERVICE_EXCEPTION.getCode());
         baseResponse.setData(data);
-        baseResponse.setMessage(StatusCode.BUS_EXCEPTION.getMessage());
+        baseResponse.setMessage(StatusCode.SERVICE_EXCEPTION.getMessage());
         return baseResponse;
     }
 

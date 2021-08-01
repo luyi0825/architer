@@ -11,11 +11,16 @@ public enum StatusCode {
      * 构造状态码信息
      */
     SYSTEM_EXCEPTION(500, "亲,服务器开小差啦,请稍后再试"),
-    BUS_EXCEPTION(400, "操作失败"),
+    SERVICE_EXCEPTION(400, "操作失败"),
     SUCCESS(200, "操作成功"),
     NO_LOGIN(401, "请登录"),
+    /**
+     * 没有权限
+     */
     NO_PERMISSION(403, "没有权限"),
-
+    /**
+     * 参数校验抛出的异常
+     */
     PARAMS_VALID_EXCEPTION(100, "参数校验异常");
 
     StatusCode(int code, String message) {
@@ -26,11 +31,11 @@ public enum StatusCode {
     /**
      * 状态码
      */
-    private int code;
+    private final int code;
     /**
      * 错误消息
      */
-    private String message;
+    private final String message;
 
     public int getCode() {
         return code;
