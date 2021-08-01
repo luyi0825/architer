@@ -27,6 +27,6 @@ public class CodeConvertItemServiceImpl extends BaseServiceImpl<CodeConvertItem>
     public List<CodeConvertItem> findByConvertCode(String convertCode) {
         QueryWrapper<CodeConvertItem> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("convert_code", convertCode);
-        this.baseMapper.selectList(queryWrapper);
+        return this.baseMapper.selectList(queryWrapper);
     }
 }
