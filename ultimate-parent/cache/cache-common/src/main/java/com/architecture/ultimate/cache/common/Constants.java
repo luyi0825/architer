@@ -13,7 +13,7 @@ public class Constants {
      */
     public static final long NEVER_EXPIRE = -1;
     /**
-     * 缓存不存在放0,防止缓存穿透
+     * 默认缓存失效的时间：12小时
      */
-    public static final String CACHE_NOT_EXIST = "0";
+    public static final long DEFAULT_CACHE_EXPIRE_TIME = 60 * 60 * 12;
 }

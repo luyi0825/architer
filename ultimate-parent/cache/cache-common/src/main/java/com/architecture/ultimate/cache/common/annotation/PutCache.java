@@ -1,6 +1,7 @@
 package com.architecture.ultimate.cache.common.annotation;
 
 
+import com.architecture.ultimate.cache.common.Constants;
 import com.architecture.ultimate.cache.common.enums.LockType;
 
 import java.lang.annotation.*;
@@ -34,7 +35,7 @@ public @interface PutCache {
     /**
      * @see Cacheable#expireTime()
      */
-    long expireTime() default -1;
+    long expireTime() default Constants.DEFAULT_CACHE_EXPIRE_TIME;
 
     /**
      * @see Cacheable#lockType()

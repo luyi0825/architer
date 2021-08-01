@@ -1,6 +1,7 @@
 package com.architecture.ultimate.cache.common.operation;
 
 
+import com.architecture.ultimate.cache.common.annotation.Cacheable;
 import com.architecture.ultimate.cache.common.enums.LockType;
 import lombok.Data;
 
@@ -15,19 +16,21 @@ import java.lang.annotation.Annotation;
 @Data
 public class CacheOperation {
     /**
-     * 名称（注解的名称）
-     */
-    private String name;
-    /**
      * 操作的注解
      */
     private Annotation annotation;
     /**
-     * @see Cacheable#cacheName()
+     * @see com.architecture.ultimate.cache.common.annotation.Cacheable#cacheName()
      */
-    private String cacheName;
-
-    private LockType lock;
+    private String[] cacheName;
+    /**
+     * @see Cacheable#lockType()
+     */
+    private LockType lockType;
+    /**
+     * @see Cacheable#lock()
+     */
+    private String lock;
     /**
      * @see Cacheable#key()
      */

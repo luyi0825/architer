@@ -1,6 +1,7 @@
 package com.architecture.ultimate.cache.common.annotation;
 
 
+import com.architecture.ultimate.cache.common.Constants;
 import com.architecture.ultimate.cache.common.enums.LockType;
 
 import java.lang.annotation.*;
@@ -40,9 +41,9 @@ public @interface Cacheable {
 
     /**
      * 缓存失效时间
-     * 默认30分钟
+     * -1标识永不失效
      */
-    long expireTime() default 30 * 60;
+    long expireTime() default Constants.DEFAULT_CACHE_EXPIRE_TIME;
 
     /**
      * 使用的锁
