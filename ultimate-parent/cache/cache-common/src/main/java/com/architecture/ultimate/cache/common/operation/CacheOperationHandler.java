@@ -57,8 +57,8 @@ public abstract class CacheOperationHandler {
         if (lock == null) {
             return executeCacheHandler(keys, metadata);
         }
+        lock.lock();
         try {
-            lock.lock();
             return executeCacheHandler(keys, metadata);
         } finally {
             lock.unlock();
