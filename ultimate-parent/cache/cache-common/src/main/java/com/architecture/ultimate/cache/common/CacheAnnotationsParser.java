@@ -119,10 +119,9 @@ public class CacheAnnotationsParser {
      */
     private CacheOperation parsePutCacheAnnotation(AnnotatedElement annotatedElement, PutCache cachePut) {
         PutCacheOperation putCacheOperation = new PutCacheOperation();
-        putCacheOperation.setName(annotatedElement.toString());
         putCacheOperation.setKey(cachePut.key());
         putCacheOperation.setCacheName(cachePut.cacheName());
-        putCacheOperation.setLock(cachePut.lock());
+        putCacheOperation.setLockType(cachePut.lockType());
         putCacheOperation.setAsync(cachePut.async());
         putCacheOperation.setExpireTime(cachePut.expireTime());
         putCacheOperation.setRandomExpireTime(cachePut.randomExpireTime());
@@ -136,9 +135,9 @@ public class CacheAnnotationsParser {
      */
     private CacheOperation parseDeleteCacheAnnotation(AnnotatedElement annotatedElement, DeleteCache deleteCache) {
         DeleteCacheOperation deleteCacheOperation = new DeleteCacheOperation();
-        deleteCacheOperation.setName(annotatedElement.toString());
         deleteCacheOperation.setCacheName(deleteCache.cacheName());
         deleteCacheOperation.setLock(deleteCache.lock());
+        deleteCacheOperation.setLockType(deleteCache.lockType());
         deleteCacheOperation.setAsync(deleteCache.async());
         deleteCacheOperation.setKey(deleteCache.key());
         deleteCacheOperation.setAnnotation(deleteCache);
@@ -150,8 +149,8 @@ public class CacheAnnotationsParser {
      */
     private CacheableOperation parseCacheableAnnotation(AnnotatedElement annotatedElement, Cacheable cacheable) {
         CacheableOperation operation = new CacheableOperation();
-        operation.setName(annotatedElement.toString());
         operation.setCacheName(cacheable.cacheName());
+        operation.setLockType(cacheable.lockType());
         operation.setLock(cacheable.lock());
         operation.setAsync(cacheable.async());
         operation.setKey(cacheable.key());
