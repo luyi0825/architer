@@ -19,7 +19,7 @@ public @interface PutCache {
     /**
      * @see Cacheable#cacheName()
      */
-    String cacheName() default "";
+    String[] cacheName() default "";
 
     /**
      * @see Cacheable#key()
@@ -34,12 +34,17 @@ public @interface PutCache {
     /**
      * @see Cacheable#expireTime()
      */
-    long expireTime() default 30 * 60;
+    long expireTime() default -1;
+
+    /**
+     * @see Cacheable#lockType()
+     */
+    LockType lockType() default LockType.none;
 
     /**
      * @see Cacheable#lock()
      */
-    LockType lock() default LockType.none;
+    String lock() default "";
 
     /**
      * @see Cacheable#async()

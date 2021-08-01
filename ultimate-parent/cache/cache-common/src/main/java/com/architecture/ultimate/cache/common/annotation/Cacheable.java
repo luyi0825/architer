@@ -1,8 +1,6 @@
 package com.architecture.ultimate.cache.common.annotation;
 
 
-
-
 import com.architecture.ultimate.cache.common.enums.LockType;
 
 import java.lang.annotation.*;
@@ -27,7 +25,7 @@ public @interface Cacheable {
     /**
      * 缓存名称
      */
-    String cacheName() default "";
+    String[] cacheName() default "";
 
     /**
      * 缓存key,支持SpEL
@@ -53,7 +51,14 @@ public @interface Cacheable {
      * *我们需要到缓存的时候是否需要加锁
      * </li>
      */
-    LockType lock() default LockType.none;
+    LockType lockType() default LockType.none;
+
+    /**
+     * 锁的值
+     * <li>当lockType不为node，默认值为类名（例如com.architecture.ultimate.xxx）</li>
+     */
+    String lock() default "";
+
 
     /**
      * 是否异步
