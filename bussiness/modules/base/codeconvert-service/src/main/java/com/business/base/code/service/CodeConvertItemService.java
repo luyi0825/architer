@@ -6,6 +6,7 @@ import com.business.base.code.entity.CodeConvertItem;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author luyi
@@ -19,4 +20,6 @@ public interface CodeConvertItemService extends BaseService<CodeConvertItem> {
      * @param convertCode codeConvert的编码
      */
     void deleteByConvertCode(String convertCode);
+
+    List<CodeConvertItem> findByConvertCode(String convertCode);
 }

@@ -7,6 +7,8 @@ import com.business.base.code.entity.CodeConvertItem;
 import com.business.base.code.service.CodeConvertItemService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author luyi
  * 代码集项service实现类
@@ -19,5 +21,12 @@ public class CodeConvertItemServiceImpl extends BaseServiceImpl<CodeConvertItem>
         QueryWrapper<CodeConvertItem> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("convert_code", convertCode);
         this.baseMapper.delete(queryWrapper);
+    }
+
+    @Override
+    public List<CodeConvertItem> findByConvertCode(String convertCode) {
+        QueryWrapper<CodeConvertItem> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("convert_code", convertCode);
+        this.baseMapper.selectList(queryWrapper);
     }
 }
