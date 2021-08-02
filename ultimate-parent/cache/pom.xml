@@ -13,15 +13,8 @@
     <description>数据缓存</description>
     <packaging>pom</packaging>
     <modules>
-
         <module>cache-common</module>
         <module>cache-local</module>
         <module>cache-redis</module>
-        <!--  锁的基包-->
-        <module>lock-base</module>
-        <!-- 分布式锁-->
-        <module>lock-distributed</module>
-        <!-- 本地锁，jdk对应的锁-->
-        <module>lock-local</module>
     </modules>
 </project>
