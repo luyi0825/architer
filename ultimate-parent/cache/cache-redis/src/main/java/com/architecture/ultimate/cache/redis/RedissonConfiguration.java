@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties(RedissonProperties.class)
-@ConditionalOnProperty(prefix = "customize.redisson", name = "enabled", havingValue = "true")
 public class RedissonConfiguration {
     /**
      * 描述:配置redisson
@@ -25,11 +24,13 @@ public class RedissonConfiguration {
      * @date 2020/12/25 下午11:45
      */
     @Bean
+    //@ConditionalOnProperty(prefix = "customize.redisson", name = "enabled", havingValue = "true", matchIfMissing = false)
     public RedissonClient redissonClient(RedissonProperties redissonProperties) {
         return Redisson.create(redissonProperties.getConfig());
     }
 
     @Bean
+    //@ConditionalOnProperty(prefix = "customize.redisson", name = "enabled", havingValue = "true", matchIfMissing = false)
     public LockManager lockService(RedissonClient redissonClient) {
         return new DistributedLockManager(redissonClient);
     }

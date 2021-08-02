@@ -36,5 +36,15 @@ spring:
           enabled: true
     type: com.alibaba.druid.pool.DruidDataSource
   redis:
-    host: ${host}
+    host: localhost
+    #password: redis123.
+
+customize:
+  redisson:
+    config:
+      enabled: true
+      singleServerConfig:
+        address: redis://${host}:6379
+        password: "redis123."
+
 

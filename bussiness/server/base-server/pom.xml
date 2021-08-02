@@ -31,11 +31,6 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
-            <artifactId>cache-distributed-lock</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.bussiness</groupId>
             <artifactId>module-base-area-service-impl</artifactId>
             <version>${project.version}</version>
