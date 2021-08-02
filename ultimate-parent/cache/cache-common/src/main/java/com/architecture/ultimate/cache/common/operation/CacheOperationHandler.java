@@ -7,7 +7,7 @@ import com.architecture.ultimate.cache.common.CacheManager;
 import com.architecture.ultimate.cache.common.enums.LockType;
 import com.architecture.ultimate.cache.common.exception.CacheHandlerException;
 import com.architecture.ultimate.cache.common.key.KeyGenerator;
-import com.lz.cache.lock.LockManager;
+import com.architecture.ultimate.cache.lock.LockManager;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 

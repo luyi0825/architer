@@ -1,4 +1,4 @@
-package com.lz.cache.lock;
+package com.architecture.ultimate.cache.lock;
 
 import java.util.concurrent.locks.Lock;
 

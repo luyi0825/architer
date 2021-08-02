@@ -1,10 +1,11 @@
-package com.lz.cache.lock.distributed;
+package com.architecture.ultimate.cache.lock.distributed;
 
 
-import com.lz.cache.lock.LockManager;
+import com.architecture.ultimate.cache.lock.LockManager;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * 分布式锁配置类
  */
 @Configuration
+@EnableConfigurationProperties(RedissionProperties.class)
 public class LockConfiguration {
     /**
      * 描述:配置单节点redission
@@ -23,7 +25,10 @@ public class LockConfiguration {
     @Bean
     public RedissonClient redissonClient() {
         Config config = new Config();
+        config.useMasterSlaveServers().setMasterAddress(null).setSlaveAddresses(null);
         config.useSingleServer().setAddress("redis://localhost:6379");
+        RedissonClient redissonClient;
+        config.useClusterServers()
         return Redisson.create(config);
     }
 

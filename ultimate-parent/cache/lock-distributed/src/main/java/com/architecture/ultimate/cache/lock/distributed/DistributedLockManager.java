@@ -1,7 +1,7 @@
-package com.lz.cache.lock.distributed;
+package com.architecture.ultimate.cache.lock.distributed;
 
 
-import com.lz.cache.lock.LockManager;
+import com.architecture.ultimate.cache.lock.LockManager;
 import org.redisson.api.RedissonClient;
 
 import java.util.concurrent.locks.Lock;

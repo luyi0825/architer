@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.lz.cache.lock.distributed.LockConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.architecture.ultimate.cache.lock.distributed.LockConfiguration
