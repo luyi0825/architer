@@ -35,4 +35,6 @@ spring:
           ## 防止sql注入
           enabled: true
     type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: ${host}
 

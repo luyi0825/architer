@@ -24,11 +24,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.bussiness</groupId>
-            <artifactId>module-base-area-service-impl</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>com.architecture.ultimate</groupId>
             <artifactId>redis-cache</artifactId>
@@ -41,7 +37,12 @@
         </dependency>
         <dependency>
             <groupId>com.bussiness</groupId>
-            <artifactId>module-base-code-convert-service-impl</artifactId>
+            <artifactId>module-base-area-service-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bussiness</groupId>
+            <artifactId>module-base-code-map-service-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
