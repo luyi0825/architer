@@ -12,11 +12,13 @@
     <name>cache-redis</name>
 
     <dependencies>
-
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+        </dependency>
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>3.6.0</version>
         </dependency>
         <dependency>
             <groupId>com.architecture.ultimate</groupId>
@@ -59,13 +61,6 @@
             <groupId>com.architecture.ultimate</groupId>
             <artifactId>ultimate-utils</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <!--分布式的锁，一般只在启动的项目导入，组件中导入接口层就行了，这里测试用-->
-        <dependency>
-            <groupId>com.architecture.ultimate</groupId>
-            <artifactId>cache-distributed-lock</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

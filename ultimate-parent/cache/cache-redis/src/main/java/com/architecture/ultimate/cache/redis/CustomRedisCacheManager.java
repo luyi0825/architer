@@ -13,7 +13,6 @@ public class CustomRedisCacheManager implements CacheManager {
     private StringRedisService stringRedisService;
 
 
-
     @Override
     public Object getCache(String key) {
         return stringRedisService.get(key);

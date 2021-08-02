@@ -1,4 +1,4 @@
-package com.architecture.ultimate.cache.lock.distributed;
+package com.architecture.ultimate.cache.redis;
 
 
 import com.architecture.ultimate.cache.lock.LockManager;
