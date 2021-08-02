@@ -1,11 +1,9 @@
 package com.architecture.ultimate.cache.redis;
 
 
-import com.architecture.ultimate.cache.lock.LockManager;
+import com.architecture.ultimate.cache.common.lock.LockManager;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
-import org.redisson.config.SingleServerConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

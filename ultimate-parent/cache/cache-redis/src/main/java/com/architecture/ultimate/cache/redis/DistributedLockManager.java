@@ -1,7 +1,7 @@
 package com.architecture.ultimate.cache.redis;
 
 
-import com.architecture.ultimate.cache.lock.LockManager;
+import com.architecture.ultimate.cache.common.lock.LockManager;
 import org.redisson.api.RedissonClient;
 
 import java.util.concurrent.locks.Lock;
