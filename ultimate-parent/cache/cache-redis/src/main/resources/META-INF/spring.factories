@@ -1,4 +1,5 @@
 ##????
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.architecture.ultimate.cache.redis.RedisConfiguration,\
-com.architecture.ultimate.cache.redis.RedissonConfiguration
+com.architecture.ultimate.cache.redis.RedissonConfiguration,\
+com.architecture.ultimate.cache.redis.RedisConfiguration
+

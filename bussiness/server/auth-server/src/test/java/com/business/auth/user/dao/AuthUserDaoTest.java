@@ -3,18 +3,17 @@ package com.business.auth.user.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.business.auth.user.entity.AuthUser;
-import org.apache.logging.log4j.core.util.UuidUtil;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
 
 import java.util.List;
 import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * 权限用户测试类
@@ -22,7 +21,6 @@ import java.util.UUID;
  * @author luyi
  */
 @SpringBootTest
-@RunWith(value = SpringRunner.class)
 public class AuthUserDaoTest {
     private static final Logger logger = LoggerFactory.getLogger(AuthUserDaoTest.class);
 
@@ -52,7 +50,7 @@ public class AuthUserDaoTest {
     @Test
     public void selectBatchIds() {
         List<AuthUser> userList = authUserDao.selectBatchIds(List.of(1420949375531130882L, 1420949232002048001L));
-        Assert.assertTrue((userList != null && userList.size() == 2));
+        assertTrue((userList != null && userList.size() == 2));
     }
 
     /**
