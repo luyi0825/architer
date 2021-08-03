@@ -7,8 +7,9 @@ import com.architecture.ultimate.es.model.ddl.IndexMapping;
 import com.architecture.ultimate.es.model.ddl.MappingItem;
 import com.architecture.ultimate.module.common.exception.ServiceException;
 import lombok.extern.log4j.Log4j2;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -18,16 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-@RunWith(value = SpringRunner.class)
-@Log4j2
 public class IndexMappingServiceImplTest {
+    private final Logger logger = LoggerFactory.getLogger(IndexMappingServiceImplTest.class);
+
     @Autowired
     private IndexMappingService indexMappingService;
 
 
     @Test
     public void createIndexMapping() throws IOException {
-       IndexMapping indexMapping = new IndexMapping();
+        IndexMapping indexMapping = new IndexMapping();
         indexMapping.setIndex("test2");
         List<MappingItem> mappingItems = new ArrayList<>();
         MappingItem mappingItem = new MappingItem();
@@ -76,7 +77,7 @@ public class IndexMappingServiceImplTest {
         try {
             indexMappingService.rebuildIndexMapping(indexMapping);
         } catch (ServiceException serviceException) {
-            log.info(serviceException.getMessage(), serviceException);
+            logger.info(serviceException.getMessage(), serviceException);
         }
 
     }

@@ -6,8 +6,7 @@ import com.architecture.ultimate.es.model.doc.DocumentRequest;
 import com.architecture.ultimate.es.model.doc.DocumentResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -17,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootTest
-@RunWith(value = SpringRunner.class)
 public class DocServiceImplTest {
     private DocService docService;
     private final static String index = "test";
