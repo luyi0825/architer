@@ -25,12 +25,12 @@
         <redisson.version>3.16.1</redisson.version>
         <jedis.version>3.6.0</jedis.version>
         <jackson.version>2.12.2</jackson.version>
-        <spring.version>5.2.14.RELEASE</spring.version>
-        <spring-boot.version>2.3.10.RELEASE</spring-boot.version>
+        <spring.version>5.3.9</spring.version>
+        <spring-boot.version>2.4.2</spring-boot.version>
         <!--spring-cloud-alibaba的版本-->
-        <alibaba-cloud.version>2.2.5.RELEASE</alibaba-cloud.version>
+        <alibaba-cloud.version>2021.1</alibaba-cloud.version>
         <!--spring-cloud的版本-->
-        <spring-cloud.version>Hoxton.SR11</spring-cloud.version>
+        <spring-cloud.version>2020.0.3</spring-cloud.version>
         <!-- log4j2的版本-->
         <log4j.version>2.14.1</log4j.version>
         <okHttp.version>4.9.1</okHttp.version>

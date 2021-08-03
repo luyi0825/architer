@@ -5,21 +5,20 @@ import com.architecture.ultimate.module.common.StatusCode;
 import com.architecture.ultimate.module.common.response.BaseResponse;
 import com.architecture.ultimate.test.api.ApiHttpClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Duration;
 
-@RunWith(value = SpringRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
+
 @SpringBootTest
 public class StandardAreaApiImplTest {
 
@@ -38,6 +37,6 @@ public class StandardAreaApiImplTest {
                 .build();
         HttpResponse<String> response = ApiHttpClient.build().send(request, HttpResponse.BodyHandlers.ofString());
         BaseResponse baseResponse = objectMapper.readValue(response.body(), BaseResponse.class);
-        Assert.assertEquals(StatusCode.SUCCESS.getCode(), (int) baseResponse.getCode());
+        assertThat(StatusCode.SUCCESS.getCode()).isEqualTo(baseResponse.getCode());
     }
 }
