@@ -25,7 +25,7 @@
         <redisson.version>3.16.1</redisson.version>
         <jedis.version>3.6.0</jedis.version>
         <jackson.version>2.12.2</jackson.version>
-        <spring.version>5.3.9</spring.version>
+        <spring.version>5.3.3</spring.version>
         <spring-boot.version>2.4.2</spring-boot.version>
         <!--spring-cloud-alibaba的版本-->
         <alibaba-cloud.version>2021.1</alibaba-cloud.version>
@@ -122,6 +122,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
                 <version>${spring.version}</version>
             </dependency>
 
