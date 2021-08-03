@@ -5,7 +5,9 @@ spring:
   application:
     ##会员服务
     name: base-service
-## nacos配置
+  main:
+    allow-bean-definition-overriding: true
+  ## nacos配置
   cloud:
     nacos:
       config:
