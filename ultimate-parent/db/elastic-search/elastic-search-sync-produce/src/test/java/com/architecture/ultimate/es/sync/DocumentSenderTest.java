@@ -12,13 +12,11 @@ import com.architecture.ultimate.mq.rabbit.callback.CallbackCorrelationData;
 import com.architecture.ultimate.mq.rabbit.send.RabbitMqSender;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +28,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @SpringBootTest
-@RunWith(value = SpringRunner.class)
 public class DocumentSenderTest {
 
     private RabbitMqSender rabbitMqSender;
