@@ -5,8 +5,7 @@ import com.architecture.ultimate.excel.html.emun.HtmlType;
 import com.architecture.ultimate.excel.html.entity.HtmlSheet;
 import com.architecture.ultimate.excel.html.entity.XlsSheet;
 import com.architecture.ultimate.excel.html.parser.HtmlParser;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +16,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
 public class TestHtmlParser {
 
     @Value("classpath:html2xls001.html")
