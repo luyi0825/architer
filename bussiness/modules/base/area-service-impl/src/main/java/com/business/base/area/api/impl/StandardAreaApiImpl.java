@@ -22,6 +22,21 @@ public class StandardAreaApiImpl implements StandardAreaApi {
         return standardAreaService.findByParentId(parentId);
     }
 
+    @Override
+    public StandardArea findById(int id) {
+        return standardAreaService.getById(id);
+    }
+
+    @Override
+    public void update(StandardArea standardArea) {
+        standardAreaService.updateById(standardArea);
+    }
+
+    @Override
+    public void delete(int id) {
+        standardAreaService.delete(id);
+    }
+
     @Autowired
     public void setStandardAreaService(StandardAreaService standardAreaService) {
         this.standardAreaService = standardAreaService;
