@@ -27,6 +27,7 @@ public class CacheAnnotationsParser {
         CACHE_OPERATION_ANNOTATIONS.add(Cacheable.class);
         CACHE_OPERATION_ANNOTATIONS.add(DeleteCache.class);
         CACHE_OPERATION_ANNOTATIONS.add(PutCache.class);
+        CACHE_OPERATION_ANNOTATIONS.add(Caching.class);
     }
 
 
@@ -65,18 +66,14 @@ public class CacheAnnotationsParser {
         }
         final Collection<CacheOperation> ops = new ArrayList<>(anns.size());
         anns.forEach(annotation -> {
-            CacheOperation cacheOperation = null;
             if (annotation instanceof PutCache) {
-                cacheOperation = parsePutCacheAnnotation(annotatedElement, (PutCache) annotation);
+                parsePutCacheAnnotation(annotatedElement, (PutCache) annotation, ops);
             } else if (annotation instanceof DeleteCache) {
-                cacheOperation = parseDeleteCacheAnnotation(annotatedElement, (DeleteCache) annotation);
+                parseDeleteCacheAnnotation(annotatedElement, (DeleteCache) annotation, ops);
             } else if (annotation instanceof Cacheable) {
-                cacheOperation = parseCacheableAnnotation(annotatedElement, (Cacheable) annotation);
+                parseCacheableAnnotation(annotatedElement, (Cacheable) annotation, ops);
             } else if (annotation instanceof Caching) {
-                cacheOperation = parseCachingAnnotation(annotatedElement, (Caching) annotation);
-            }
-            if (cacheOperation != null) {
-                ops.add(cacheOperation);
+                parseCachingAnnotation(annotatedElement, (Caching) annotation, ops);
             }
         });
         return ops;
@@ -85,39 +82,35 @@ public class CacheAnnotationsParser {
     /**
      * 解析@Caching注解
      */
-    private CachingOperation parseCachingAnnotation(AnnotatedElement annotatedElement, Caching caching) {
-        CachingOperation cachingOperation = new CachingOperation();
-        List<CacheOperation> cacheOperationList = new ArrayList<>(4);
+    private void parseCachingAnnotation(AnnotatedElement annotatedElement, Caching caching, Collection<CacheOperation> ops) {
         Cacheable[] cacheables = caching.cacheable();
         if (ArrayUtils.isNotEmpty(cacheables)) {
             for (Cacheable cacheable : cacheables) {
-                CacheableOperation cacheableOperation = this.parseCacheableAnnotation(annotatedElement, cacheable);
-                cacheOperationList.add(cacheableOperation);
+                this.parseCacheableAnnotation(annotatedElement, cacheable, ops);
+
             }
         }
         PutCache[] putCaches = caching.put();
         if (ArrayUtils.isNotEmpty(putCaches)) {
             for (PutCache putCache : putCaches) {
-                CacheOperation putOperation = this.parsePutCacheAnnotation(annotatedElement, putCache);
-                cacheOperationList.add(putOperation);
+                this.parsePutCacheAnnotation(annotatedElement, putCache, ops);
             }
         }
 
         DeleteCache[] deleteCaches = caching.delete();
         if (ArrayUtils.isNotEmpty(deleteCaches)) {
             for (DeleteCache deleteCache : deleteCaches) {
-                CacheOperation deleteOperation = this.parseDeleteCacheAnnotation(annotatedElement, deleteCache);
-                cacheOperationList.add(deleteOperation);
+                this.parseDeleteCacheAnnotation(annotatedElement, deleteCache, ops);
             }
         }
-        cachingOperation.setOperations(cacheOperationList.toArray(new CacheOperation[0]));
-        return cachingOperation;
     }
 
     /**
      * 解析@PutCache注解
      */
-    private CacheOperation parsePutCacheAnnotation(AnnotatedElement annotatedElement, PutCache cachePut) {
+    private void parsePutCacheAnnotation(AnnotatedElement annotatedElement,
+                                         PutCache cachePut,
+                                         Collection<CacheOperation> ops) {
         PutCacheOperation putCacheOperation = new PutCacheOperation();
         putCacheOperation.setKey(cachePut.key());
         putCacheOperation.setCacheName(cachePut.cacheName());
@@ -127,13 +120,15 @@ public class CacheAnnotationsParser {
         putCacheOperation.setRandomExpireTime(cachePut.randomExpireTime());
         putCacheOperation.setAnnotation(cachePut);
         putCacheOperation.setCacheValue(cachePut.cacheValue());
-        return putCacheOperation;
+        ops.add(putCacheOperation);
     }
 
     /**
      * 解析删除缓存注解
      */
-    private CacheOperation parseDeleteCacheAnnotation(AnnotatedElement annotatedElement, DeleteCache deleteCache) {
+    private void parseDeleteCacheAnnotation(AnnotatedElement annotatedElement,
+                                            DeleteCache deleteCache,
+                                            Collection<CacheOperation> ops) {
         DeleteCacheOperation deleteCacheOperation = new DeleteCacheOperation();
         deleteCacheOperation.setCacheName(deleteCache.cacheName());
         deleteCacheOperation.setLock(deleteCache.lock());
@@ -141,13 +136,13 @@ public class CacheAnnotationsParser {
         deleteCacheOperation.setAsync(deleteCache.async());
         deleteCacheOperation.setKey(deleteCache.key());
         deleteCacheOperation.setAnnotation(deleteCache);
-        return deleteCacheOperation;
+        ops.add(deleteCacheOperation);
     }
 
     /**
      * 解析@Cacheable解析
      */
-    private CacheableOperation parseCacheableAnnotation(AnnotatedElement annotatedElement, Cacheable cacheable) {
+    private void parseCacheableAnnotation(AnnotatedElement annotatedElement, Cacheable cacheable, Collection<CacheOperation> ops) {
         CacheableOperation operation = new CacheableOperation();
         operation.setCacheName(cacheable.cacheName());
         operation.setLockType(cacheable.lockType());
@@ -158,6 +153,6 @@ public class CacheAnnotationsParser {
         operation.setRandomExpireTime(cacheable.randomExpireTime());
         operation.setAnnotation(cacheable);
         operation.setCacheValue(cacheable.cacheValue());
-        return operation;
+        ops.add(operation);
     }
 }

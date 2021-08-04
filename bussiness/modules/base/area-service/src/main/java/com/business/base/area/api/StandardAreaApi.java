@@ -1,7 +1,6 @@
 package com.business.base.area.api;
 
 
-import com.architecture.ultimate.cache.common.annotation.Caching;
 import com.architecture.ultimate.cache.common.annotation.DeleteCache;
 import com.architecture.ultimate.cache.common.enums.LockType;
 import com.business.base.area.entity.StandardArea;
@@ -52,10 +51,8 @@ public interface StandardAreaApi {
      * @param id 区划的主键ID
      */
     @PostMapping("delete/{id}")
-    @Caching(
-            delete = {@DeleteCache(cacheName = "'standardAreaApi_findByParentId'", key = "#id", before = false),
-                    @DeleteCache(cacheName = "'standardAreaApi_findById'", key = "#id", before = false)},
-            cacheable = {@Cacheable(cacheName = "'standardAreaApi_delete'", key = "#id")}
-    )
+    @DeleteCache(cacheName = "'standardAreaApi_findByParentId'", key = "#id", before = false)
+    @Cacheable(cacheName = "'standardAreaApi_delete'", key = "#id")
+    @DeleteCache(cacheName = "'standardAreaApi_findById'", key = "#id", before = false)
     void delete(@PathVariable(name = "id") int id);
 }
