@@ -72,4 +72,11 @@ public interface BaseService<T> {
      */
     T selectOne(QueryWrapper<T> queryWrapper);
 
+    /**
+     * 更新
+     *
+     * @param entity 更新的实体信息
+     * @return 更新影响的数量
+     */
+    int updateById(T entity);
 }

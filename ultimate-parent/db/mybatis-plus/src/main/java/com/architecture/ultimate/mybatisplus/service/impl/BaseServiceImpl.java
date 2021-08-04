@@ -68,6 +68,12 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
         return this.baseMapper.selectOne(queryWrapper);
     }
 
+
+    @Override
+    public int updateById(T entity) {
+        return this.baseMapper.updateById(entity);
+    }
+
     @Autowired
     public void setQueryWrapperBuilder(QueryWrapperBuilder<T> queryWrapperBuilder) {
         this.queryWrapperBuilder = queryWrapperBuilder;
