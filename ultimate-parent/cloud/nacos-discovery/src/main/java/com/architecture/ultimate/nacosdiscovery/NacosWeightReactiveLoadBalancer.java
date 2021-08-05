@@ -35,8 +35,6 @@ public class NacosWeightReactiveLoadBalancer implements ReactorServiceInstanceLo
     @SneakyThrows
     @Override
     public Mono<Response<ServiceInstance>> choose(Request request) {
-//        Request<RequestDataContext> dataContextRequest=request;
-//      String serviceId=  dataContextRequest.getContext().getClientRequest().getUrl().getHost();
         Properties properties = discoveryProperties.getNacosProperties();
         NamingService namingService = nacosServiceManager.getNamingService(properties);
         Instance instance = namingService.selectOneHealthyInstance(serviceId, discoveryProperties.getGroup());
