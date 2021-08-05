@@ -48,7 +48,7 @@ spring:
             - Path=/file/**
         - id: testService
           ####转发http://www.mayikt.com/
-          uri: lb://testService/
+          uri: lb://test-server/
           ###匹配规则
           predicates:
             - Path=/testService/**
