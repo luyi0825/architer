@@ -4,40 +4,12 @@ server:
 spring:
   cloud:
     gateway:
-      globalcors:
-#        corsConfigurations:
-#          '[/**]':
-#            allowedOrigins: "*"
-#            allowedMethods: "*"
-#            allowedHeaders: "*"
       discovery:
         locator:
           ####开启以服务id去注册中心上获取转发地址
           enabled: true
         ###路由策略
       routes:
-        ###路由id
-        - id: product-service
-          ####转发http://www.mayikt.com/
-          uri: lb://product-service
-          ###匹配规则
-          predicates:
-            - Path=/product/**
-          filters:
-            #- ## 重写路径，去掉路径的product
-            - RewritePath=/product(?<segment>/?.*), $\{segment}
-        - id: member-service
-            ####转发http://www.mayikt.com/
-          uri: lb://member-service
-          ###匹配规则
-          predicates:
-            - Path=/member/**
-        - id: admin-service
-            ####转发http://www.mayikt.com/
-          uri: lb://admin-service
-          ###匹配规则
-          predicates:
-            - Path=/admin/**
           #filters:
           #  - RewritePath=/admin/(?<segment>.*), /admin/$\{segment}
         - id: file-service
@@ -46,87 +18,22 @@ spring:
           ###匹配规则
           predicates:
             - Path=/file/**
-        - id: testService
+        - id: test-server
           ####转发http://www.mayikt.com/
-          uri: lb://test-server/
+          uri: lb://test-server
           ###匹配规则
           predicates:
             - Path=/testService/**
-        ## 消息服务
-        - id: message-service
-          uri: lb://message-service
-          predicates:
-            - Path=/message/**
           filters:
-            - RewritePath=/message(?<segment>/?.*), $\{segment}
-        ## 库存服务
-        - id:  ware-service
-          uri: lb://ware-service/
-          predicates:
-            - Path=/ware/**
-        - id: product-service_host_route
-          uri: lb://product-service
-          predicates:
-            - Host=shop.com,www.shop.com
-        - id: auth-service_host_route
-          uri: lb://auth-service
-          predicates:
-            - Host=auth.shop.com
-#          filters:
-#            - RewritePath=/product/(?<segment>/?.*),$\{segment}
-  redis:
-    host: 192.168.2.222
-    port: 6379
-    timeout: 20000
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/gateway?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
-    username: root
-    password: 123456
-    type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/shop_product?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-      username: root
-      password: 123456
-      initial-size: 10
-      max-active: 100
-      min-idle: 10
-      max-wait: 60000
-      pool-prepared-statements: true
-      max-pool-prepared-statement-per-connection-size: 20
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
-      #Oracle需要打开注释
-      #validation-query: SELECT 1 FROM DUAL
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      stat-view-servlet:
-        enabled: true
-        url-pattern: /druid/*
-        #login-username: admin
-        #login-password: admin
-      filter:
-        stat:
-          log-slow-sql: true
-          slow-sql-millis: 1000
-          merge-sql: false
-        wall:
-          config:
-            multi-statement-allow: true
-ribbon:
-  ConnectTimeout: 10000 # ribbon链接超时时长
-  ReadTimeout: 10000 # ribbon读取超时时间长
-
-#mybatis
-mybatis-plus:
-  mapper-locations: classpath*:/mapper/**/*.xml
-
+            #- ## 重写路径，去掉路径的product
+            - RewritePath=/testService(?<segment>/?.*), $\{segment}
 
 logging:
   level:
-    com.ly: debug
+    com.bussiness: debug
 
-user:
-  session: 180000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway
