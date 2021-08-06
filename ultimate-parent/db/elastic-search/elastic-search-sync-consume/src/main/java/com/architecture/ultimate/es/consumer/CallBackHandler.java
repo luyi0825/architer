@@ -6,7 +6,7 @@ import com.architecture.ultimate.es.model.CallBackWay;
 import com.architecture.ultimate.es.model.EsConstant;
 import com.architecture.ultimate.es.model.dto.BaseSyncDocumentDTO;
 import com.architecture.ultimate.module.common.StatusCode;
-import com.architecture.ultimate.module.common.response.BaseResponse;
+import com.architecture.ultimate.module.common.response.ResponseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class CallBackHandler {
         if (CallBackWay.URL.name().equals(callBackWay)) {
             Map<String, Object> callBackParams = syncDocumentDTO.getCallBackParams();
             String url = (String) callBackParams.get(EsConstant.CALL_BACK_URL);
-            BaseResponse baseResponse = restTemplate.postForObject(url, callBackParams.get(EsConstant.CALL_BACK_PARAMS), BaseResponse.class);
+            ResponseResult baseResponse = restTemplate.postForObject(url, callBackParams.get(EsConstant.CALL_BACK_PARAMS), ResponseResult.class);
             assert baseResponse != null;
             if (StatusCode.SUCCESS.getCode() == baseResponse.getCode()) {
                 LOGGER.info("回调成功{}-{}", syncDocumentDTO.getBusinessKey(), syncDocumentDTO.getBatchId());

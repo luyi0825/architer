@@ -2,7 +2,7 @@ package com.architecture.ultimate.starter.web;
 
 
 import com.architecture.ultimate.starter.web.exception.GlobalExceptionHandler;
-import com.architecture.ultimate.starter.web.response.BaseResponseBodyAdvice;
+import com.architecture.ultimate.starter.web.response.ResponseResultBodyAdvice;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,7 +18,7 @@ public class StarterWebConfig {
     }
 
     @Bean
-    public BaseResponseBodyAdvice baseResponseBodyAdvice() {
-        return new BaseResponseBodyAdvice();
+    public ResponseResultBodyAdvice baseResponseBodyAdvice() {
+        return new ResponseResultBodyAdvice();
     }
 }

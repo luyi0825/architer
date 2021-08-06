@@ -1,7 +1,6 @@
 package com.business.base.codemap.api;
 
-import com.architecture.ultimate.module.common.StatusCode;
-import com.architecture.ultimate.module.common.response.BaseResponse;
+import com.architecture.ultimate.module.common.response.ResponseResult;
 import com.architecture.ultimate.test.api.ApiHttpClient;
 import com.business.base.codemap.entity.CodeMap;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,7 +38,7 @@ public class CodeMapApiTest {
                 .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(codeMap)))
                 .build();
         HttpResponse<String> response = ApiHttpClient.build().send(request, HttpResponse.BodyHandlers.ofString());
-        BaseResponse baseResponse = objectMapper.readValue(response.body(), BaseResponse.class);
+        ResponseResult baseResponse = objectMapper.readValue(response.body(), ResponseResult.class);
         // Assert.assertTrue(baseResponse.getCode() == StatusCode.SUCCESS.getCode() || baseResponse.getCode() == 100);
     }
 }

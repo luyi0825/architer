@@ -4,7 +4,7 @@ package com.architecture.ultimate.starter.web.exception;
 import com.architecture.ultimate.module.common.StatusCode;
 import com.architecture.ultimate.module.common.exception.ParamsValidException;
 import com.architecture.ultimate.module.common.exception.ServiceException;
-import com.architecture.ultimate.module.common.response.BaseResponse;
+import com.architecture.ultimate.module.common.response.ResponseResult;
 import com.architecture.ultimate.module.common.response.R;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
      * @return 统一的返回结果
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public BaseResponse webMvcValidException(MethodArgumentNotValidException exception) {
+    public ResponseResult webMvcValidException(MethodArgumentNotValidException exception) {
         //得到所有的异常信息
         return getBindExceptionBaseResponse(exception.getBindingResult());
     }
@@ -58,20 +58,20 @@ public class GlobalExceptionHandler {
      * 处理系统异常
      */
     @ExceptionHandler(value = Throwable.class)
-    public BaseResponse exceptionHandler(Exception e) {
-        BaseResponse baseResponse;
+    public ResponseResult exceptionHandler(Exception e) {
+        ResponseResult baseResponse;
         if (e instanceof ServiceException) {
             //业务校验抛出的异常
-            baseResponse = new BaseResponse(StatusCode.SERVICE_EXCEPTION.getCode(), e.getMessage(), null);
+            baseResponse = new ResponseResult(StatusCode.SERVICE_EXCEPTION.getCode(), e.getMessage(), null);
             // -----------请求参数校验异常------
         } else if (e instanceof BindException) {
             baseResponse = getBindExceptionBaseResponse(((BindException) e).getBindingResult());
         } else if (e instanceof ParamsValidException) {
-            return new BaseResponse(StatusCode.PARAMS_VALID_EXCEPTION.getCode(), e.getMessage());
+            return new ResponseResult(StatusCode.PARAMS_VALID_EXCEPTION.getCode(), e.getMessage());
         } else {
             log.error(e.getMessage(), e);
             //其他的一些异常，是程序不可控制的
-            baseResponse = new BaseResponse(StatusCode.SYSTEM_EXCEPTION.getCode(), StatusCode.SYSTEM_EXCEPTION.getMessage(), null);
+            baseResponse = new ResponseResult(StatusCode.SYSTEM_EXCEPTION.getCode(), StatusCode.SYSTEM_EXCEPTION.getMessage(), null);
             return baseResponse;
         }
         log.error(e.getMessage(), e);
@@ -84,8 +84,8 @@ public class GlobalExceptionHandler {
      * 处理系统异常
      */
     @ExceptionHandler(value = IllegalArgumentException.class)
-    public BaseResponse exceptionHandler(IllegalArgumentException e) {
-        return new BaseResponse(400, e.getMessage(), null);
+    public ResponseResult exceptionHandler(IllegalArgumentException e) {
+        return new ResponseResult(400, e.getMessage(), null);
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
@@ -106,9 +106,9 @@ public class GlobalExceptionHandler {
      * @author luyi
      * @date 2020/12/20
      */
-    private BaseResponse getBindExceptionBaseResponse(BindingResult bindingResult) {
+    private ResponseResult getBindExceptionBaseResponse(BindingResult bindingResult) {
         List<FieldError> fieldErrorList = bindingResult.getFieldErrors();
-        return new BaseResponse(StatusCode.PARAMS_VALID_EXCEPTION.getCode(), fieldErrorList.get(0).getDefaultMessage());
+        return new ResponseResult(StatusCode.PARAMS_VALID_EXCEPTION.getCode(), fieldErrorList.get(0).getDefaultMessage());
     }
 
 }

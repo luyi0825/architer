@@ -7,8 +7,9 @@ import java.io.Serializable;
 
 /**
  * @author ly
+ * 请求结果
  */
-public class BaseResponse implements Serializable {
+public class ResponseResult implements Serializable {
 
 
     /**
@@ -48,17 +49,17 @@ public class BaseResponse implements Serializable {
         this.data = data;
     }
 
-    public BaseResponse() {
+    public ResponseResult() {
 
     }
 
-    public BaseResponse(Integer code, String message, Object data) {
+    public ResponseResult(Integer code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public BaseResponse(Integer code, String message) {
+    public ResponseResult(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -66,8 +67,8 @@ public class BaseResponse implements Serializable {
     /**
      * 成功
      */
-    public static BaseResponse ok() {
-        BaseResponse baseResponse = new BaseResponse();
+    public static ResponseResult ok() {
+        ResponseResult baseResponse = new ResponseResult();
         baseResponse.setCode(StatusCode.SUCCESS.getCode());
         baseResponse.setMessage(StatusCode.SUCCESS.getMessage());
         return baseResponse;
@@ -76,8 +77,8 @@ public class BaseResponse implements Serializable {
     /**
      * 成功
      */
-    public static BaseResponse ok(Object data) {
-        BaseResponse baseResponse = new BaseResponse();
+    public static ResponseResult ok(Object data) {
+        ResponseResult baseResponse = new ResponseResult();
         baseResponse.setCode(StatusCode.SUCCESS.getCode());
         baseResponse.setMessage(StatusCode.SUCCESS.getMessage());
         baseResponse.setData(data);
@@ -87,8 +88,8 @@ public class BaseResponse implements Serializable {
     /**
      * 失败
      */
-    public static BaseResponse fail() {
-        BaseResponse baseResponse = new BaseResponse();
+    public static ResponseResult fail() {
+        ResponseResult baseResponse = new ResponseResult();
         baseResponse.setCode(StatusCode.SERVICE_EXCEPTION.getCode());
         baseResponse.setMessage(StatusCode.SERVICE_EXCEPTION.getMessage());
         return baseResponse;
@@ -97,8 +98,8 @@ public class BaseResponse implements Serializable {
     /**
      * 失败
      */
-    public static BaseResponse fail(Object data) {
-        BaseResponse baseResponse = new BaseResponse();
+    public static ResponseResult fail(Object data) {
+        ResponseResult baseResponse = new ResponseResult();
         baseResponse.setCode(StatusCode.SERVICE_EXCEPTION.getCode());
         baseResponse.setData(data);
         baseResponse.setMessage(StatusCode.SERVICE_EXCEPTION.getMessage());

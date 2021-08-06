@@ -1,12 +1,9 @@
 package com.business.base.area.api.impl;
 
 
-import com.architecture.ultimate.module.common.response.BaseResponse;
+import com.architecture.ultimate.module.common.response.ResponseResult;
 import com.business.base.area.entity.StandardArea;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-
-import java.io.IOException;
 
 
 import org.junit.jupiter.api.Test;
@@ -43,7 +40,7 @@ class StandardAreaApiImplTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        BaseResponse baseResponse = objectMapper.readValue(returnStr, BaseResponse.class);
+        ResponseResult baseResponse = objectMapper.readValue(returnStr, ResponseResult.class);
         assertThat(baseResponse.getCode()).isEqualTo(200);
         assertThat(baseResponse.getData()).isNotNull();
     }
@@ -58,10 +55,10 @@ class StandardAreaApiImplTest {
         //先查询出原来的数据
         String returnStr = mvc.perform(get("/standardAreaApi/findById/" + tempId)).andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        BaseResponse baseResponse = objectMapper.readValue(returnStr, BaseResponse.class);
-        assertThat(baseResponse.getCode()).isEqualTo(200);
-        assertThat(baseResponse.getData()).isNotNull();
-        return objectMapper.readValue(objectMapper.writeValueAsString(baseResponse.getData()), StandardArea.class);
+        ResponseResult responseResult = objectMapper.readValue(returnStr, ResponseResult.class);
+        assertThat(responseResult.getCode()).isEqualTo(200);
+        assertThat(responseResult.getData()).isNotNull();
+        return objectMapper.readValue(objectMapper.writeValueAsString(responseResult.getData()), StandardArea.class);
     }
 
     @Test
