@@ -13,9 +13,9 @@ import java.util.concurrent.TimeUnit;
 @ConfigurationProperties(prefix = "custom.rest-template")
 public class RestTemplateProperties {
     /**
-     * 默认使用okHttp
+     * 是否开启loadBalanced
      */
-    private boolean okhttp = true;
+    private boolean loadBalanced = true;
     /**
      * 默认开启HttpClient连接池
      */
@@ -79,13 +79,6 @@ public class RestTemplateProperties {
         this.timeToLive = timeToLive;
     }
 
-    public boolean isOkhttp() {
-        return okhttp;
-    }
-
-    public void setOkhttp(boolean okhttp) {
-        this.okhttp = okhttp;
-    }
 
     public boolean isHttpclient() {
         return httpclient;
@@ -101,5 +94,13 @@ public class RestTemplateProperties {
 
     public void setMaxConnections(int maxConnections) {
         this.maxConnections = maxConnections;
+    }
+
+    public boolean isLoadBalanced() {
+        return loadBalanced;
+    }
+
+    public void setLoadBalanced(boolean loadBalanced) {
+        this.loadBalanced = loadBalanced;
     }
 }
