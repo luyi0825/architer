@@ -18,7 +18,6 @@
         <dependency>
             <groupId>com.architecture.ultimate</groupId>
             <artifactId>mq-rabbit</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
