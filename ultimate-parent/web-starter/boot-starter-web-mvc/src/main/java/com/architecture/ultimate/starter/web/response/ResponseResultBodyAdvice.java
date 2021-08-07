@@ -25,7 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @RestControllerAdvice
 public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object>, Ordered {
-    private Logger logger = LoggerFactory.getLogger(ResponseResultBodyAdvice.class);
+    private final Logger logger = LoggerFactory.getLogger(ResponseResultBodyAdvice.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public ResponseResultBodyAdvice() {
@@ -59,6 +59,6 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object>, Ord
         } else {
             returnValue = ResponseResult.ok(body);
         }
-        return objectMapper.writeValueAsString(returnValue);
+        return returnValue;
     }
 }
