@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest(classes = ModuleTest.class)
 @Component
-class CodeMapServiceTest {
+public class CodeMapServiceTest {
 
     private CodeMapService codeMapService;
 
@@ -34,7 +34,7 @@ class CodeMapServiceTest {
 
 
     @Test
-    void insert() {
+    public void insert() {
         Throwable throwable1 = assertThrows(ParamsValidException.class, () -> {
             insertCodeMap(codeMap_test1);
             insertCodeMap(codeMap_test1);

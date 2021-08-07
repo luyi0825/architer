@@ -18,13 +18,13 @@ public class CodeMapItemValidConstant {
     /**
      * itemCode
      */
-    public final static String CODE_ITEM_NOT_BLANK = "代码集项编码不能为空";
-    public final static String CODE_ITEM_LENGTH_LIMIT = "代码集项编码长度不能超过30";
+    public final static String ITEM_CODE_NOT_BLANK = "代码集项编码不能为空";
+    public final static String ITEM_CODE_LENGTH_LIMIT = "代码集项编码长度不能超过30";
     /**
      * caption
      */
-    public final static String ITEM_CAPTION_NOT_BLANK = "中文描述不能为空";
-    public final static String ITEM_CAPTION_LENGTH_LIMIT = "中文描述长度不能超过50";
+    public final static String ITEM_CAPTION_NOT_BLANK = "代码集项中文名称不能为空";
+    public final static String ITEM_CAPTION_LENGTH_LIMIT = "代码集项中文名称长度超过50";
     /**
      * remark
      */

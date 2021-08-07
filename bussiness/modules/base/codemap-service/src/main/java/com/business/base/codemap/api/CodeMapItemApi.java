@@ -26,7 +26,7 @@ public interface CodeMapItemApi {
      * @param codeMapItem 添加代码级项信息
      */
     @PostMapping("/add")
-    void add(@Validated(AddGroup.class) CodeMapItem codeMapItem);
+    void add(@RequestBody @Validated(AddGroup.class) CodeMapItem codeMapItem);
 
     /**
      * 通过code查询代码集项

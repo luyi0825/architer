@@ -8,6 +8,7 @@ import com.business.base.codemap.constants.CodeMapItemValidConstant;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
+
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -33,8 +34,8 @@ public class CodeMapItem implements Serializable {
     /**
      * 代码集项编码
      */
-    @NotBlank(message = CodeMapItemValidConstant.CODE_ITEM_NOT_BLANK, groups = {AddGroup.class, UpdateGroup.class})
-    @Length(message = CodeMapItemValidConstant.CODE_ITEM_LENGTH_LIMIT, groups = {AddGroup.class, UpdateGroup.class}, max = 30)
+    @NotBlank(message = CodeMapItemValidConstant.ITEM_CODE_NOT_BLANK, groups = {AddGroup.class, UpdateGroup.class})
+    @Length(message = CodeMapItemValidConstant.ITEM_CODE_LENGTH_LIMIT, groups = {AddGroup.class, UpdateGroup.class}, max = 30)
     private String itemCode;
     /**
      * 代码集项中文名称
