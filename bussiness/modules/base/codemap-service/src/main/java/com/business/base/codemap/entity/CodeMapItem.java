@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Length;
 
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -25,6 +26,7 @@ public class CodeMapItem implements Serializable {
      * 主键ID
      */
     @TableId
+    @NotNull(message = CodeMapItemValidConstant.ID_NOT_NULL, groups = UpdateGroup.class)
     private Long id;
     /**
      * @see CodeMap#code
@@ -41,7 +43,7 @@ public class CodeMapItem implements Serializable {
      * 代码集项中文名称
      */
     @NotBlank(message = CodeMapItemValidConstant.ITEM_CAPTION_NOT_BLANK, groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 1, max = 50, message = CodeMapItemValidConstant.ITEM_CAPTION_LENGTH_LIMIT, groups = {AddGroup.class, UpdateGroup.class})
+    @Length(max = 50, message = CodeMapItemValidConstant.ITEM_CAPTION_LENGTH_LIMIT, groups = {AddGroup.class, UpdateGroup.class})
     private String itemCaption;
     /**
      * 备注

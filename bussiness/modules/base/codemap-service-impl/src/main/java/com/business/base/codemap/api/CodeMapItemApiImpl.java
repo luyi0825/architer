@@ -19,15 +19,15 @@ public class CodeMapItemApiImpl implements CodeMapItemApi {
     private CodeMapItemService codeMapItemService;
 
     @Override
+    public void add(CodeMapItem codeMapItem) {
+        codeMapItemService.insert(codeMapItem);
+    }
+
+    @Override
     public List<CodeMapItem> findByCode(@PathVariable(name = "code") String code) {
         return codeMapItemService.findByCode(code);
     }
 
-    @Override
-    public void add(CodeMapItem codeMapItem) {
-        codeMapItem.setCreateTime(new Date());
-        codeMapItemService.insert(codeMapItem);
-    }
 
     @Override
     public void update(CodeMapItem codeMapItem) {

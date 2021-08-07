@@ -20,6 +20,7 @@ public class CodeMapItemValidConstant {
      */
     public final static String ITEM_CODE_NOT_BLANK = "代码集项编码不能为空";
     public final static String ITEM_CODE_LENGTH_LIMIT = "代码集项编码长度不能超过30";
+    public final static String ITEM_CODE_EXIST = "代码集项编码[{0}]已经存在";
     /**
      * caption
      */

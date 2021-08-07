@@ -2,6 +2,7 @@ package com.business.base.codemap.api.codemapitem;
 
 import cn.hutool.core.io.FileUtil;
 import com.architecture.ultimate.module.common.ResponseStatusEnum;
+import com.architecture.ultimate.module.common.exception.ParamsValidException;
 import com.architecture.ultimate.module.common.response.ResponseResult;
 import com.architecture.ultimate.utils.JsonUtils;
 import com.business.base.codemap.api.CodeMapItemApiTest;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,6 +23,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -48,6 +51,31 @@ public class CodeMapItemAddTest {
         testCode();
         testItemCode();
         testItemCaption();
+        testRemark();
+        add();
+    }
+
+
+    private void add() throws Exception {
+        List<CodeMapItem> codeMapItems = JsonUtils.readListValue(codeMapItemStr, CodeMapItem.class);
+        CodeMapItem codeMapItem = codeMapItems.get(0);
+        this.doAdd(codeMapItem);
+        ResponseResult responseResult = this.doAdd(codeMapItem);
+        Assertions.assertEquals(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(), responseResult.getCode());
+        Assertions.assertEquals(MessageFormat.format(CodeMapItemValidConstant.ITEM_CODE_EXIST, codeMapItem.getItemCode()), responseResult.getMessage());
+
+    }
+
+    /**
+     * 测试remark
+     */
+    private void testRemark() throws Exception {
+        List<CodeMapItem> codeMapItems = JsonUtils.readListValue(codeMapItemStr, CodeMapItem.class);
+        CodeMapItem codeMapItem = codeMapItems.get(0);
+        codeMapItem.setRemark("0".repeat(101));
+        ResponseResult responseResult = this.doAdd(codeMapItem);
+        Assertions.assertEquals(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(), responseResult.getCode());
+        Assertions.assertEquals(CodeMapItemValidConstant.REMARK_LENGTH_LIMIT, responseResult.getMessage());
     }
 
 
