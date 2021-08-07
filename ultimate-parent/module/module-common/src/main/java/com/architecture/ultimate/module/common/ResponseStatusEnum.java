@@ -6,7 +6,7 @@ package com.architecture.ultimate.module.common;
  * @author luyi
  * @date 2020/12/19 下午11:55
  */
-public enum StatusCode {
+public enum ResponseStatusEnum {
     /**
      * 构造状态码信息
      */
@@ -23,7 +23,7 @@ public enum StatusCode {
      */
     PARAMS_VALID_EXCEPTION(100, "参数校验异常");
 
-    StatusCode(int code, String message) {
+    ResponseStatusEnum(int code, String message) {
         this.code = code;
         this.message = message;
     }

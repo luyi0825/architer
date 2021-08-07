@@ -1,13 +1,14 @@
 package com.business.base.codemap.api;
 
 import com.architecture.ultimate.module.common.valid.group.AddGroup;
+import com.architecture.ultimate.module.common.valid.group.UpdateGroup;
 import com.architecture.ultimate.module.common.web.PostMapping;
+import com.architecture.ultimate.query.common.model.Pager;
 import com.business.base.codemap.entity.CodeMap;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -15,8 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
  * 代码集对应的api接口层
  */
 @RestController
-@RequestMapping("/codeConvertApi")
+@RequestMapping("/codeMapApi")
 public interface CodeMapApi {
+
     /**
      * 添加代码集
      *
@@ -25,25 +27,40 @@ public interface CodeMapApi {
     @PostMapping("/add")
     void add(@RequestBody @Validated(value = AddGroup.class) CodeMap codeMap);
 
+
     /**
      * 更新
      *
      * @param id      主键ID
      * @param codeMap 更新的代码集信息
-     * @return 更新后的代码级信息
      */
     @PostMapping("/update/{id}")
-    CodeMap update(@PathVariable(name = "id") Long id, @RequestBody CodeMap codeMap);
+    void update(@PathVariable(name = "id") Long id, @Validated(UpdateGroup.class) @RequestBody CodeMap codeMap);
 
     /**
      * gguo 通过主键ID删除
      *
      * @param id 主键ID
      */
-    @PostMapping("delete/{id}")
-    void remove(@PathVariable(name = "id") Long id);
+    @PostMapping("/delete/{id}")
+    void delete(@PathVariable(name = "id") Long id);
 
+    /**
+     * 通过主键ID查找
+     *
+     * @param id 主键ID
+     * @return 代码集信息
+     */
+    @GetMapping("get/{id}")
+    CodeMap getById(@PathVariable(name = "id") long id);
 
-
+    /**
+     * 分页查询代码集合
+     *
+     * @param pager 分页信息
+     * @return 分页代码集信息
+     */
+    @GetMapping("/page")
+    List<CodeMap> page(Pager pager);
 
 }

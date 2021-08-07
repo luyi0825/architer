@@ -33,6 +33,6 @@ public class StandardAreaServiceImpl extends BaseServiceImpl<StandardArea> imple
         if (sonList.size() > 0) {
             throw new ServiceException("该区划下存在节点，无法删除");
         }
-        return super.delete(id);
+        return this.baseMapper.deleteById(id);
     }
 }

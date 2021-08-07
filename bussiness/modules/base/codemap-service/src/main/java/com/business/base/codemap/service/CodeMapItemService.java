@@ -13,11 +13,25 @@ import java.util.List;
 public interface CodeMapItemService extends BaseService<CodeMapItem> {
 
     /**
-     * 通过convertCode删除代码项
+     * 通过code删除代码项
      *
-     * @param convertCode codeConvert的编码
+     * @param code 代码集的code
      */
-    void deleteByConvertCode(String convertCode);
+    void deleteByCode(String code);
 
-    List<CodeMapItem> findByConvertCode(String convertCode);
+    /**
+     * 通过代码code统计代码项数量
+     *
+     * @param code 代码级code
+     * @return 代码级数量
+     */
+    List<CodeMapItem> findByCode(String code);
+
+    /**
+     * 通过代码code统计代码项数量
+     *
+     * @param code 代码级code
+     * @return 代码级数量
+     */
+    int countByCode(String code);
 }

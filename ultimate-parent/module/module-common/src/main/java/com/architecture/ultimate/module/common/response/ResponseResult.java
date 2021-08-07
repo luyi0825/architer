@@ -1,7 +1,7 @@
 package com.architecture.ultimate.module.common.response;
 
 
-import com.architecture.ultimate.module.common.StatusCode;
+import com.architecture.ultimate.module.common.ResponseStatusEnum;
 
 import java.io.Serializable;
 
@@ -69,8 +69,8 @@ public class ResponseResult implements Serializable {
      */
     public static ResponseResult ok() {
         ResponseResult baseResponse = new ResponseResult();
-        baseResponse.setCode(StatusCode.SUCCESS.getCode());
-        baseResponse.setMessage(StatusCode.SUCCESS.getMessage());
+        baseResponse.setCode(ResponseStatusEnum.SUCCESS.getCode());
+        baseResponse.setMessage(ResponseStatusEnum.SUCCESS.getMessage());
         return baseResponse;
     }
 
@@ -79,8 +79,8 @@ public class ResponseResult implements Serializable {
      */
     public static ResponseResult ok(Object data) {
         ResponseResult baseResponse = new ResponseResult();
-        baseResponse.setCode(StatusCode.SUCCESS.getCode());
-        baseResponse.setMessage(StatusCode.SUCCESS.getMessage());
+        baseResponse.setCode(ResponseStatusEnum.SUCCESS.getCode());
+        baseResponse.setMessage(ResponseStatusEnum.SUCCESS.getMessage());
         baseResponse.setData(data);
         return baseResponse;
     }
@@ -90,8 +90,8 @@ public class ResponseResult implements Serializable {
      */
     public static ResponseResult fail() {
         ResponseResult baseResponse = new ResponseResult();
-        baseResponse.setCode(StatusCode.SERVICE_EXCEPTION.getCode());
-        baseResponse.setMessage(StatusCode.SERVICE_EXCEPTION.getMessage());
+        baseResponse.setCode(ResponseStatusEnum.SERVICE_EXCEPTION.getCode());
+        baseResponse.setMessage(ResponseStatusEnum.SERVICE_EXCEPTION.getMessage());
         return baseResponse;
     }
 
@@ -100,9 +100,9 @@ public class ResponseResult implements Serializable {
      */
     public static ResponseResult fail(Object data) {
         ResponseResult baseResponse = new ResponseResult();
-        baseResponse.setCode(StatusCode.SERVICE_EXCEPTION.getCode());
+        baseResponse.setCode(ResponseStatusEnum.SERVICE_EXCEPTION.getCode());
         baseResponse.setData(data);
-        baseResponse.setMessage(StatusCode.SERVICE_EXCEPTION.getMessage());
+        baseResponse.setMessage(ResponseStatusEnum.SERVICE_EXCEPTION.getMessage());
         return baseResponse;
     }
 
