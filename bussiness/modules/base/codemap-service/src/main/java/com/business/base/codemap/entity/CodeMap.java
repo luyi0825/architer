@@ -5,6 +5,7 @@ import com.architecture.ultimate.module.common.valid.group.AddGroup;
 import com.architecture.ultimate.module.common.valid.group.UpdateGroup;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.business.base.codemap.constants.CodeMapValidConstant;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -22,24 +23,24 @@ public class CodeMap {
      * 主键ID
      */
     @TableId
-    @NotNull(message = "主键ID不能为空", groups = UpdateGroup.class)
+    @NotNull(message = CodeMapValidConstant.ID_NOT_NULL, groups = UpdateGroup.class)
     private Long id;
     /**
      * 编码
      */
-    @NotBlank(message = "编码不能为空", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 5, max = 30, message = "编码长度在5~40之间", groups = {AddGroup.class, UpdateGroup.class})
+    @NotBlank(message = CodeMapValidConstant.CODE_NOT_BLANK, groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 5, max = 30, message = CodeMapValidConstant.CODE_LENGTH_LIMIT, groups = {AddGroup.class, UpdateGroup.class})
     private String code;
     /**
      * 中文描述
      */
-    @NotBlank(message = "中文描述不能为空", groups = {AddGroup.class, UpdateGroup.class})
-    @Length(min = 1, max = 50, message = "中文描述长度不能超过50", groups = {AddGroup.class, UpdateGroup.class})
+    @NotBlank(message = CodeMapValidConstant.CAPTION_NOT_BLANK, groups = {AddGroup.class, UpdateGroup.class})
+    @Length(min = 1, max = 50, message = CodeMapValidConstant.CAPTION_LENGTH_LIMIT, groups = {AddGroup.class, UpdateGroup.class})
     private String caption;
     /**
      * 备注
      */
-    @Length(max = 100, message = "中文描述长度不能超过100", groups = {AddGroup.class, UpdateGroup.class})
+    @Length(max = 100, message = CodeMapValidConstant.REMARK_LENGTH_LIMIT, groups = {AddGroup.class, UpdateGroup.class})
     private String remark;
     /**
      * 更新人
