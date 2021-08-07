@@ -18,6 +18,7 @@
         <dependency>
             <groupId>com.architecture.ultimate</groupId>
             <artifactId>mq-rabbit</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -26,7 +27,7 @@
         <dependency>
             <groupId>com.architecture.ultimate</groupId>
             <artifactId>elastic-search-model</artifactId>
-            <version>1.0.0</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,20 +41,17 @@
         <dependency>
             <groupId>com.architecture.ultimate</groupId>
             <artifactId>elastic-search-dml</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.architecture.ultimate</groupId>
             <artifactId>thread-pool-config</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.architecture.ultimate</groupId>
             <artifactId>module-common</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.architecture.ultimate</groupId>
