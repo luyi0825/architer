@@ -13,12 +13,12 @@ public class CodeMapValidConstant {
     /**
      * code
      */
-    public final static String CODE_NOT_EMPTY = "编码不能为空";
+    public final static String CODE_NOT_BLANK = "编码不能为空";
     public final static String CODE_LENGTH_LIMIT = "编码长度在5~30之间";
     /**
      * caption
      */
-    public final static String CAPTION_NOT_EMPTY = "中文描述不能为空";
+    public final static String CAPTION_NOT_BLANK = "中文描述不能为空";
     public final static String CAPTION_LENGTH_LIMIT = "中文描述长度不能超过50";
     /**
      * remark
