@@ -3,9 +3,11 @@ package com.business.base.codemap.api.codemap;
 import cn.hutool.core.io.FileUtil;
 import com.architecture.ultimate.module.common.response.ResponseResult;
 import com.architecture.ultimate.utils.JsonUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.business.base.codemap.api.CodeMapApiTest;
 import com.business.base.codemap.constants.CodeMapValidConstant;
 import com.business.base.codemap.entity.CodeMap;
+import com.business.base.codemap.service.CodeMapService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.annotation.PostConstruct;
+import javax.management.Query;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,19 +24,21 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * CodeMap添加测试
+ * CodeMap更新测试
  */
 @Component
-public class CodeMapApiAdd {
+public class CodeMapApiUpdate {
 
+    private final MockMvc mvc;
+    private final CodeMapService codeMapService;
     @Value("classpath:CodeMap_test1.json")
     private Resource resource;
 
-    private final MockMvc mvc;
     private String codeMapStr;
 
-    public CodeMapApiAdd(MockMvc mvc) {
+    public CodeMapApiUpdate(MockMvc mvc, CodeMapService codeMapService) throws IOException {
         this.mvc = mvc;
+        this.codeMapService = codeMapService;
     }
 
     @PostConstruct
@@ -41,20 +46,42 @@ public class CodeMapApiAdd {
         this.codeMapStr = FileUtil.readUtf8String(resource.getFile());
     }
 
+
     public void startTest() throws Exception {
-        testRepeatAdd(codeMapStr);
-        testCode(codeMapStr);
-        testCaption(codeMapStr);
-        testRemark(codeMapStr);
+        testId();
+        testCode();
+        testCaption();
+        testRemark();
+        //更新
+        startUpdate();
+
+    }
+
+    private void startUpdate() throws Exception {
+        CodeMap codeMap = getDbCodeMap();
+        codeMap.setUpdateUser("test");
+        ResponseResult responseResult = this.getUpdateResponseResult(codeMap);
+        assertEquals(200, responseResult.getCode());
+    }
+
+    /**
+     * 测试主键
+     */
+    private void testId() throws Exception {
+        CodeMap codeMap = getDbCodeMap();
+        codeMap.setId(null);
+        ResponseResult responseResult = getUpdateResponseResult(codeMap);
+        assertEquals(100, (int) responseResult.getCode());
+        assertEquals(CodeMapValidConstant.ID_NOT_NULL, responseResult.getMessage());
     }
 
     /**
      * 测试备注
      */
-    private void testRemark(String codeMapStr) throws Exception {
-        CodeMap codeMap = JsonUtils.readValue(codeMapStr, CodeMap.class);
+    private void testRemark() throws Exception {
+        CodeMap codeMap = getDbCodeMap();
         codeMap.setRemark("0".repeat(101));
-        ResponseResult responseResult = getAddResponseResult(JsonUtils.toJsonString(codeMap));
+        ResponseResult responseResult = getUpdateResponseResult(codeMap);
         assertEquals(100, (int) responseResult.getCode());
         assertEquals(CodeMapValidConstant.REMARK_LENGTH_LIMIT, responseResult.getMessage());
     }
@@ -62,47 +89,38 @@ public class CodeMapApiAdd {
     /**
      * 测试中文名称
      */
-    private void testCaption(String codeMapStr) throws Exception {
-        CodeMap codeMap = JsonUtils.readValue(codeMapStr, CodeMap.class);
+    private void testCaption() throws Exception {
+        CodeMap codeMap = getDbCodeMap();
         codeMap.setCaption(null);
-        ResponseResult responseResult = getAddResponseResult(JsonUtils.toJsonString(codeMap));
+        ResponseResult responseResult = getUpdateResponseResult(codeMap);
         assertEquals(100, (int) responseResult.getCode());
-        assertEquals(CodeMapValidConstant.CAPTION_NOT_BLANK, responseResult.getMessage());
+        assertEquals(CodeMapValidConstant.CAPTION_NOT_EMPTY, responseResult.getMessage());
         //caption的长度太大
         codeMap.setCaption("0".repeat(51));
-        responseResult = getAddResponseResult(JsonUtils.toJsonString(codeMap));
+        responseResult = getUpdateResponseResult(codeMap);
         assertEquals(100, (int) responseResult.getCode());
         assertEquals(CodeMapValidConstant.CAPTION_LENGTH_LIMIT, responseResult.getMessage());
     }
 
-    /**
-     * 测试重复添加: 连续添加两次,code重复验证
-     */
-    private void testRepeatAdd(String addStr) throws Exception {
-        getAddResponseResult(addStr);
-        ResponseResult responseResult = getAddResponseResult(addStr);
-        assertEquals(100, (int) responseResult.getCode());
-        assertTrue(responseResult.getMessage().contains("已经存在"));
-    }
 
     /**
      * 测试code
      */
-    private void testCode(String codeMapStr) throws Exception {
-        CodeMap codeMap = JsonUtils.readValue(codeMapStr, CodeMap.class);
+    private void testCode() throws Exception {
+        CodeMap codeMap = getDbCodeMap();
         //code为空
         codeMap.setCode(null);
-        ResponseResult responseResult = getAddResponseResult(JsonUtils.toJsonString(codeMap));
+        ResponseResult responseResult = getUpdateResponseResult(codeMap);
         assertEquals(100, (int) responseResult.getCode());
-        assertEquals(CodeMapValidConstant.CODE_NOT_BLANK, responseResult.getMessage());
+        assertEquals(CodeMapValidConstant.CODE_NOT_EMPTY, responseResult.getMessage());
         //code的长度太小
         codeMap.setCode("1");
-        responseResult = getAddResponseResult(JsonUtils.toJsonString(codeMap));
+        responseResult = getUpdateResponseResult(codeMap);
         assertEquals(100, (int) responseResult.getCode());
         assertEquals(CodeMapValidConstant.CODE_LENGTH_LIMIT, responseResult.getMessage());
         //code的长度太大
         codeMap.setCode("0".repeat(31));
-        responseResult = getAddResponseResult(JsonUtils.toJsonString(codeMap));
+        responseResult = getUpdateResponseResult(codeMap);
         assertEquals(100, (int) responseResult.getCode());
         assertEquals(CodeMapValidConstant.CODE_LENGTH_LIMIT, responseResult.getMessage());
     }
@@ -110,11 +128,20 @@ public class CodeMapApiAdd {
     /**
      * 得到添加的响应结果
      */
-    private ResponseResult getAddResponseResult(String addStr) throws Exception {
-        String returnStr = mvc.perform(post(CodeMapApiTest.requestMapping + "/add").contentType(MediaType.APPLICATION_JSON).content(addStr))
+    private ResponseResult getUpdateResponseResult(CodeMap codeMap) throws Exception {
+        String updateUrl = CodeMapApiTest.requestMapping + (codeMap.getId() == null ? "/update/1" : "/update/" + codeMap.getId());
+        String returnStr = mvc.perform(post(updateUrl).contentType(MediaType.APPLICATION_JSON).content(JsonUtils.toJsonString(codeMap)))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         return JsonUtils.readValue(returnStr, ResponseResult.class);
+    }
+
+
+    private CodeMap getDbCodeMap() {
+        CodeMap codeMap = JsonUtils.readValue(codeMapStr, CodeMap.class);
+        QueryWrapper<CodeMap> codeMapQueryWrapper = new QueryWrapper<>();
+        codeMapQueryWrapper.eq("code", codeMap.getCode());
+        return codeMapService.selectOne(codeMapQueryWrapper);
     }
 
 }
