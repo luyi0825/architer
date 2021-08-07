@@ -2,6 +2,7 @@ package com.business.base.codemap.service;
 
 import cn.hutool.core.io.FileUtil;
 import com.architecture.ultimate.utils.JsonUtils;
+import com.business.base.ModuleTest;
 import com.business.base.codemap.entity.CodeMap;
 import com.business.base.codemap.entity.CodeMapItem;
 import org.junit.jupiter.api.Assertions;
@@ -22,7 +23,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@SpringBootTest
+@SpringBootTest(classes = ModuleTest.class)
 class CodeMapItemServiceTest {
     private final Logger logger = LoggerFactory.getLogger(CodeMapItemServiceTest.class);
     private CodeMapItemService codeMapItemService;
