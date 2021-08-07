@@ -1,0 +1,20 @@
+[
+  {
+    "code": "test2",
+    "itemCode": "01",
+    "remark": "item2测试",
+    "itemCaption": "item02_01测试"
+  },
+  {
+    "code": "test2",
+    "itemCode": "02",
+    "remark": "item02测试",
+    "itemCaption": "item02_02测试"
+  },
+  {
+    "code": "test2",
+    "itemCode": "03",
+    "remark": "item2测试",
+    "itemCaption": "item02_03测试"
+  }
+]
