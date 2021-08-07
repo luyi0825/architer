@@ -17,16 +17,23 @@ import java.util.List;
 public class CodeMapItemServiceImpl extends BaseServiceImpl<CodeMapItem> implements CodeMapItemService {
 
     @Override
-    public void deleteByConvertCode(String convertCode) {
+    public void deleteByCode(String code) {
         QueryWrapper<CodeMapItem> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("convert_code", convertCode);
+        queryWrapper.eq("code", code);
         this.baseMapper.delete(queryWrapper);
     }
 
     @Override
-    public List<CodeMapItem> findByConvertCode(String convertCode) {
+    public List<CodeMapItem> findByCode(String convertCode) {
         QueryWrapper<CodeMapItem> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("convert_code", convertCode);
+        queryWrapper.eq("code", convertCode);
         return this.baseMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public int countByCode(String code) {
+        QueryWrapper<CodeMapItem> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("code", code);
+        return this.baseMapper.selectCount(queryWrapper);
     }
 }
