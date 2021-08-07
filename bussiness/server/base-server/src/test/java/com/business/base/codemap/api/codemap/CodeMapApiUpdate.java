@@ -94,7 +94,7 @@ public class CodeMapApiUpdate {
         codeMap.setCaption(null);
         ResponseResult responseResult = getUpdateResponseResult(codeMap);
         assertEquals(100, (int) responseResult.getCode());
-        assertEquals(CodeMapValidConstant.CAPTION_NOT_EMPTY, responseResult.getMessage());
+        assertEquals(CodeMapValidConstant.CAPTION_NOT_BLANK, responseResult.getMessage());
         //caption的长度太大
         codeMap.setCaption("0".repeat(51));
         responseResult = getUpdateResponseResult(codeMap);
@@ -112,7 +112,7 @@ public class CodeMapApiUpdate {
         codeMap.setCode(null);
         ResponseResult responseResult = getUpdateResponseResult(codeMap);
         assertEquals(100, (int) responseResult.getCode());
-        assertEquals(CodeMapValidConstant.CODE_NOT_EMPTY, responseResult.getMessage());
+        assertEquals(CodeMapValidConstant.CODE_NOT_BLANK, responseResult.getMessage());
         //code的长度太小
         codeMap.setCode("1");
         responseResult = getUpdateResponseResult(codeMap);
