@@ -2,7 +2,6 @@
 package com.architecture.ultimate.cache.redis;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +22,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfiguration {
 
-
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer();
@@ -39,7 +37,7 @@ public class RedisConfiguration {
 
 
     @Bean
-    public RedisCacheManager redisCacheManager(RedisTemplate redisTemplate) {
+    public RedisCacheManager redisCacheManager(RedisTemplate<String, Object> redisTemplate) {
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisTemplate.getConnectionFactory());
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisTemplate.getValueSerializer()));
