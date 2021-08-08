@@ -26,6 +26,7 @@
         <module>log</module>
         <module>web-starter</module>
         <module>file</module>
+        <module>statemachine</module>
     </modules>
 
     <dependencies>
