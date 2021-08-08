@@ -9,6 +9,7 @@ server:
   tomcat:
     uri-encoding: UTF-8
   port: 9092
+  shutdown: graceful
 
 mybatis-plus:
   #type-aliases-package: com.ly.*
@@ -38,7 +39,9 @@ spring:
   redis:
     host: localhost
     #password: redis123.
-
+  output:
+    ansi:
+      enabled: "%clr"
 customize:
   redisson:
     enabled: true
@@ -46,5 +49,8 @@ customize:
       singleServerConfig:
         address: redis://${host}:6379
         password: "redis123."
+##
+debug: true
+
 
 
