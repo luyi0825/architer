@@ -24,15 +24,14 @@ public class CodeMapItemApiImpl implements CodeMapItemApi {
     }
 
     @Override
-    public List<CodeMapItem> findByCode(@PathVariable(name = "code") String code) {
-        return codeMapItemService.findByCode(code);
-    }
-
-
-    @Override
     public void update(CodeMapItem codeMapItem) {
         codeMapItem.setUpdateTime(new Date());
         codeMapItemService.updateById(codeMapItem);
+    }
+
+    @Override
+    public List<CodeMapItem> findByCode(@PathVariable(name = "code") String code) {
+        return codeMapItemService.findByCode(code);
     }
 
     @Override
