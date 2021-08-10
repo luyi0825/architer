@@ -1,3 +1,4 @@
+host: 192.168.3.222
 server:
   port: 8888
   servlet:
@@ -37,6 +38,8 @@ spring:
       transport:
         dashboard: localhost:8080
         port: 8719
+  redis:
+    host: ${host}
   datasource:
     druid:
       stat-view-servlet:
@@ -49,6 +52,8 @@ spring:
       url: jdbc:mysql://124.71.110.204:3306/shop_sys?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+
 
 
 #    # 当exchange无法找到任何一个合适的queue时，将消息return给生产者
@@ -67,4 +72,12 @@ management:
 
   server:
     port: 8082
+customize:
+  redisson:
+    config:
+      singleServerConfig:
+        address: redis://${host}:6379
+        password: "redis123."
+
+
 
