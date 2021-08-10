@@ -25,6 +25,7 @@ class ExceptionTestApiTest {
     private MockMvc mockMvc;
     private static final String API = "/exceptionTestApi";
 
+
     @Test
     void missingServletRequestParameterException() throws Exception {
         //没有参数的校验
@@ -35,6 +36,25 @@ class ExceptionTestApiTest {
         Assertions.assertEquals(MessageFormat.format(GlobalExceptionHandler.MISSING_PARAMETER_EXCEPTION_TIP, "test"), responseResult.getMessage());
         //有参数
         builder = MockMvcRequestBuilders.get(API + "/missingServletRequestParameterException").param("test", "123");
+        str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
+        responseResult = JsonUtils.readValue(str, ResponseResult.class);
+        Assertions.assertEquals(ResponseStatusEnum.SUCCESS.getCode(), (int) responseResult.getCode());
+    }
+
+    @Test
+    void constraintViolationException() throws Exception {
+        //长度<10
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(API + "/constraintViolationException")
+                .param("test", "a54")
+                .param("test2", "2");
+        String str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
+        ResponseResult responseResult = JsonUtils.readValue(str, ResponseResult.class);
+        Assertions.assertEquals(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(), (int) responseResult.getCode());
+        Assertions.assertEquals("最小长度为10", responseResult.getMessage());
+        //yes
+        builder = MockMvcRequestBuilders.get(API + "/constraintViolationException")
+                .param("test", "1".repeat(11))
+                .param("test2", "1".repeat(20));
         str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
         responseResult = JsonUtils.readValue(str, ResponseResult.class);
         Assertions.assertEquals(ResponseStatusEnum.SUCCESS.getCode(), (int) responseResult.getCode());
