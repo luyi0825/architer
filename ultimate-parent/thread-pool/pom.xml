@@ -13,7 +13,7 @@
     <name>thread-pool</name>
     <description>thread-pool</description>
     <modules>
-        <module>config</module>
+        <module>thread-pool-component</module>
         <module>client</module>
         <module>client-impl</module>
     </modules>
