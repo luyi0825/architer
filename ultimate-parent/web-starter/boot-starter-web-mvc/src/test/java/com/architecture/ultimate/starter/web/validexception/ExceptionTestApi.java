@@ -1,4 +1,4 @@
-package com.architecture.ultimate.starter.web;
+package com.architecture.ultimate.starter.web.validexception;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
