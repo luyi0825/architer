@@ -37,6 +37,11 @@ import java.util.Set;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     private final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    /**
+     * 缺少缺少参数异常提示
+     */
+    public static final String MISSING_PARAMETER_EXCEPTION_TIP = "缺少参数【{0}]】";
+
 
     public GlobalExceptionHandler() {
         logger.info("初始化全局异常处理");
@@ -143,7 +148,7 @@ public class GlobalExceptionHandler {
      * 缺少参数的异常
      */
     private ResponseResult getMissingServletRequestParameterExceptionResponseResult(MissingServletRequestParameterException e) {
-        String message = MessageFormat.format("缺少参数{0}", e.getParameterName());
+        String message = MessageFormat.format(MISSING_PARAMETER_EXCEPTION_TIP, e.getParameterName());
         return new ResponseResult(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(), message);
     }
 
