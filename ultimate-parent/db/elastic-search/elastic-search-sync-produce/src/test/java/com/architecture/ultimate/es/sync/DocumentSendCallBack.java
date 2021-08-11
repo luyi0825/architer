@@ -2,11 +2,13 @@ package com.architecture.ultimate.es.sync;
 
 import com.architecture.ultimate.mq.rabbit.callback.ConfirmCallbackHandler;
 import com.architecture.ultimate.mq.rabbit.callback.ReturnCallbackHandler;
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.ReturnedMessage;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.stereotype.Component;
 
+/**
+ * 文档rabbitMq消息确认
+ */
 @Component
 public class DocumentSendCallBack implements ConfirmCallbackHandler, ReturnCallbackHandler {
     @Override
