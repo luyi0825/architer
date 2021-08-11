@@ -6,18 +6,22 @@ import com.architecture.ultimate.module.common.exception.ParamsValidException;
 import com.architecture.ultimate.module.common.exception.ServiceException;
 import com.architecture.ultimate.module.common.response.ResponseResult;
 import com.architecture.ultimate.module.common.response.R;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.yaml.snakeyaml.constructor.DuplicateKeyException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.text.MessageFormat;
@@ -85,13 +89,10 @@ public class GlobalExceptionHandler {
         }
         //单个校验失败的异常
         if (e instanceof ConstraintViolationException) {
-            return constraintViolationExceptionResponseResult(e);
+            return constraintViolationExceptionResponseResult((ConstraintViolationException) e);
         }
-        //post请求的对象参数校验失败后抛出的异常
-        if (e instanceof MethodArgumentNotValidException) {
-            return getMethodArgumentNotValidExceptionResponseResult(e);
-        }
-        //get请求的对象参数校验失败后抛出的异常
+        /*get请求的对象参数校验失败后抛出BindException异常,post抛出MethodArgumentNotValidException，
+        而且MethodArgumentNotValidException instanceof BindException*/
         if (e instanceof BindException) {
             return getBindExceptionResponseResult((BindException) e);
         }
@@ -105,43 +106,44 @@ public class GlobalExceptionHandler {
     /**
      * post请求的对象参数校验失败后抛出的异常
      */
-    private ResponseResult getMethodArgumentNotValidExceptionResponseResult(Exception e) {
-        List<ObjectError> errors = ((MethodArgumentNotValidException) e).getBindingResult().getAllErrors();
+    private ResponseResult getBindExceptionResponseResult(BindException e) {
+        List<ObjectError> errors = e.getBindingResult().getAllErrors();
         Map<String, String> errorsMap = new HashMap<>(errors.size());
-        errors.forEach(error -> {
-            errorsMap.put(error.getObjectName(), error.getDefaultMessage());
-
-        });
-        return new ResponseResult(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(), null, errorsMap);
+        String message = null;
+        for (ObjectError error : errors) {
+            if (message == null) {
+                message = error.getDefaultMessage();
+            }
+            if (error instanceof FieldError) {
+                errorsMap.put(((FieldError) error).getField(), error.getDefaultMessage());
+            }
+        }
+        return new ResponseResult(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(), message, errorsMap);
     }
 
     /**
      * 单个校验失败的异常
      */
-    private ResponseResult constraintViolationExceptionResponseResult(Exception e) {
-        Set<ConstraintViolation<?>> sets = ((ConstraintViolationException) e).getConstraintViolations();
+    private ResponseResult constraintViolationExceptionResponseResult(ConstraintViolationException e) {
+        Set<ConstraintViolation<?>> sets = e.getConstraintViolations();
         if (!CollectionUtils.isEmpty(sets)) {
-            Map<String, String> errors = new HashMap<>();
+            Map<String, String> errors = new HashMap<>(sets.size());
+            ResponseResult responseResult = new ResponseResult();
             sets.forEach(error -> {
-                if (error instanceof FieldError) {
-                    FieldError fieldError = (FieldError) error;
-                    errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+                if (error.getPropertyPath() instanceof PathImpl) {
+                    PathImpl path = (PathImpl) error.getPropertyPath();
+                    errors.put(path.getLeafNode().getName(), error.getMessage());
+                }
+                //取第一个做message
+                if (StringUtils.isEmpty(responseResult.getMessage())) {
+                    responseResult.setMessage(error.getMessage());
                 }
             });
-            ResponseResult responseResult = new ResponseResult();
             responseResult.setCode(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode());
             responseResult.setData(errors);
             return responseResult;
         }
         return null;
-    }
-
-    /**
-     * get请求的对象参数校验失败后抛出的异常是BindException
-     */
-    private ResponseResult getBindExceptionResponseResult(BindException bindException) {
-        List<FieldError> fieldErrorList = bindException.getFieldErrors();
-        return new ResponseResult(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(), fieldErrorList.get(0).getDefaultMessage());
     }
 
     /**
