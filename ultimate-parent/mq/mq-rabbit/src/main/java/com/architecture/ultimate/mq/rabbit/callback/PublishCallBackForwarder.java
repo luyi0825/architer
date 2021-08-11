@@ -5,6 +5,7 @@ import com.architecture.ultimate.mq.rabbit.callback.CallBackMessage;
 import com.architecture.ultimate.mq.rabbit.callback.CallbackCorrelationData;
 import com.architecture.ultimate.mq.rabbit.callback.ConfirmCallbackHandler;
 import com.architecture.ultimate.mq.rabbit.callback.ReturnCallbackHandler;
+import org.springframework.amqp.core.ReturnedMessage;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeansException;
@@ -60,17 +61,15 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
             return;
         }
         if (rabbitProperties != null && rabbitProperties.isPublisherReturns()) {
-            rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
-                if (!(message instanceof CallBackMessage)) {
-                    return;
-                }
-                CallBackMessage callBackMessage = (CallBackMessage) message;
+            rabbitTemplate.setReturnsCallback(returnedMessage -> {
+                CallBackMessage callBackMessage = (CallBackMessage) returnedMessage.getMessage();
                 String returnKey = callBackMessage.getCallBackId();
                 ReturnCallbackHandler returnCallbackHandler = returnCallbackHandlerMap.get(returnKey);
                 if (returnCallbackHandler != null) {
-                    returnCallbackHandler.returnedMessage(message, replyCode, replyText, exchange, routingKey);
+                    returnCallbackHandler.returnedMessage(returnedMessage);
                 }
             });
+
         }
     }
 
