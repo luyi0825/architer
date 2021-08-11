@@ -7,9 +7,12 @@ import com.architecture.ultimate.starter.web.exception.GlobalExceptionHandler;
 import com.architecture.ultimate.utils.JsonUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -20,6 +23,8 @@ import java.text.MessageFormat;
 @SpringBootTest
 @AutoConfigureMockMvc
 class ExceptionTestApiTest {
+
+    private Logger logger = LoggerFactory.getLogger(ExceptionTestApiTest.class);
 
     @Autowired
     private MockMvc mockMvc;
@@ -49,6 +54,7 @@ class ExceptionTestApiTest {
                 .param("test2", "2");
         String str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
         ResponseResult responseResult = JsonUtils.readValue(str, ResponseResult.class);
+        logger.info(JsonUtils.toJsonString(responseResult));
         Assertions.assertEquals(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(), (int) responseResult.getCode());
         Assertions.assertEquals("最小长度为10", responseResult.getMessage());
         //yes
@@ -57,6 +63,33 @@ class ExceptionTestApiTest {
                 .param("test2", "1".repeat(20));
         str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
         responseResult = JsonUtils.readValue(str, ResponseResult.class);
+        logger.info(JsonUtils.toJsonString(responseResult));
         Assertions.assertEquals(ResponseStatusEnum.SUCCESS.getCode(), (int) responseResult.getCode());
+    }
+
+    @Test
+    void methodArgumentNotValidException() throws Exception {
+        User user = new User();
+        user.setUsername("1");
+        user.setPassword("2");
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post(API + "/methodArgumentNotValidException")
+                .contentType(MediaType.APPLICATION_JSON).content(JsonUtils.toJsonString(user));
+        String str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
+        ResponseResult responseResult = JsonUtils.readValue(str, ResponseResult.class);
+        logger.info(JsonUtils.toJsonString(responseResult));
+        Assertions.assertEquals(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(), (int) responseResult.getCode());
+        Assertions.assertEquals("password在5~10位", responseResult.getMessage());
+    }
+
+    @Test
+    void bindException() throws Exception {
+        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(API + "/bindException")
+                .param("username", "12")
+                .param("password", "23");
+        String str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
+        ResponseResult responseResult = JsonUtils.readValue(str, ResponseResult.class);
+        logger.info(JsonUtils.toJsonString(responseResult));
+        Assertions.assertEquals(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(), (int) responseResult.getCode());
+        Assertions.assertEquals("password在5~10位", responseResult.getMessage());
     }
 }

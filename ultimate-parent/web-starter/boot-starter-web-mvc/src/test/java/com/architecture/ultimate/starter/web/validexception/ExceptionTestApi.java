@@ -1,11 +1,9 @@
 package com.architecture.ultimate.starter.web.validexception;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -33,4 +31,18 @@ public class ExceptionTestApi {
                                                @Length(min = 10, message = "最小长度为10") @RequestParam(name = "test2") String test2) {
         return test + "@" + test2;
     }
+
+    /**
+     *
+     */
+    @PostMapping("/methodArgumentNotValidException")
+    public String methodArgumentNotValidException(@RequestBody @Validated User user) {
+        return "methodArgumentNotValidException";
+    }
+
+    @GetMapping("/bindException")
+    public String bindException(@Validated User user) {
+        return "bindException";
+    }
+
 }
