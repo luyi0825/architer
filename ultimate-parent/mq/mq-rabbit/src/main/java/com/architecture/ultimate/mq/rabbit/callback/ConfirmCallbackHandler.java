@@ -1,6 +1,6 @@
 package com.architecture.ultimate.mq.rabbit.callback;
 
-import com.architecture.ultimate.mq.rabbit.callback.SendCallBack;
+
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
