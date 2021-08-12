@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import com.architecture.ultimate.mybatisplus.entity.BaseEntity;
 import lombok.Data;
@@ -47,4 +48,20 @@ public class CaptchaTemplate extends BaseEntity implements Serializable {
     private String content;
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CaptchaTemplate that = (CaptchaTemplate) o;
+        return Objects.equals(id, that.id) && Objects.equals(templateCode, that.templateCode) && Objects.equals(templateName, that.templateName) && Objects.equals(captchaLength, that.captchaLength) && Objects.equals(captchaType, that.captchaType) && Objects.equals(expireTime, that.expireTime) && Objects.equals(content, that.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, templateCode, templateName, captchaLength, captchaType, expireTime, content);
+    }
 }
