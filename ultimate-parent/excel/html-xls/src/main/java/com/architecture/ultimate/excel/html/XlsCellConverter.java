@@ -13,7 +13,7 @@ import com.architecture.ultimate.excel.html.entity.XlsCell;
  */
 public class XlsCellConverter implements Converter<XlsCell> {
     @Override
-    public Class supportJavaTypeKey() {
+    public Class<?> supportJavaTypeKey() {
         return XlsCell.class;
     }
 
@@ -23,13 +23,13 @@ public class XlsCellConverter implements Converter<XlsCell> {
     }
 
     @Override
-    public XlsCell convertToJavaData(CellData cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
+    public XlsCell convertToJavaData(CellData cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         return null;
     }
 
     @Override
-    public CellData convertToExcelData(XlsCell value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) throws Exception {
-        CellData cellData = new CellData();
+    public CellData<XlsCell> convertToExcelData(XlsCell value, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
+        CellData<XlsCell> cellData = new CellData<>();
         cellData.setType(CellDataTypeEnum.STRING);
         cellData.setStringValue(value.getText());
         cellData.setRowIndex(value.getStartRow());
