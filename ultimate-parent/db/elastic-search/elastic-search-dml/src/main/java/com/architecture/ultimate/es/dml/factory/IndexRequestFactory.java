@@ -16,7 +16,7 @@ public class IndexRequestFactory implements FactorySupport<IndexRequest> {
     @Override
     public DocWriteRequest<IndexRequest> get(DocumentRequest documentRequest) {
         IndexRequest indexRequest = new IndexRequest(documentRequest.getIndex());
-        if (!StringUtils.isEmpty(documentRequest.getId())) {
+        if (StringUtils.hasText(documentRequest.getId())) {
             indexRequest.id(documentRequest.getId());
         }
         indexRequest.source(documentRequest.getSource());
