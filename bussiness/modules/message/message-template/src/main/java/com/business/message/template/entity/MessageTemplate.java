@@ -5,6 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.architecture.ultimate.mybatisplus.entity.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+import java.util.Objects;
 
 /**
  * 描述：消息模板
@@ -14,6 +18,7 @@ import lombok.Data;
  */
 @TableName("t_message_template")
 @Data
+@ToString
 public class MessageTemplate extends BaseEntity {
 
     /**
@@ -33,9 +38,20 @@ public class MessageTemplate extends BaseEntity {
      */
     private String content;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        MessageTemplate that = (MessageTemplate) o;
+        return Objects.equals(templateName, that.templateName) && Objects.equals(templateCode, that.templateCode);
+    }
 
-
-
-
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(templateName, templateCode);
+    }
 }
