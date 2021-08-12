@@ -70,7 +70,7 @@ public class IndexMappingServiceImpl implements IndexMappingService {
         Map<String, Object> properties = new HashMap<>(1);
         mappingItems.forEach(mappingItem -> {
             String field = mappingItem.getField();
-            if (StringUtils.isEmpty(field)) {
+            if (!StringUtils.hasText(field)) {
                 throw new ParamsValidException("field is null");
             }
             MappingType mappingType = mappingItem.getMappingType();
