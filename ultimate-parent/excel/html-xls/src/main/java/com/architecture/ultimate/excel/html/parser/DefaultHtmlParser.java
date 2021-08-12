@@ -37,7 +37,7 @@ public class DefaultHtmlParser implements HtmlParser {
         htmlStyleParsers.forEach(htmlStyleParser -> {
             //得到html类型，并放入字符串常量池
             String htmlType = htmlStyleParser.getHtmlType().intern();
-            if (StringUtils.isEmpty(htmlType)) {
+            if (!StringUtils.hasText(htmlType)) {
                 throw new HtmlTypeException("htmlType is null!");
             }
             htmlStyleParserMap.putIfAbsent(htmlType, htmlStyleParser);
@@ -146,10 +146,10 @@ public class DefaultHtmlParser implements HtmlParser {
         String rowspanStr = element.attr("rowspan");
         String colspanStr = element.attr("colspan");
         int rowspan = 1, colspan = 1;
-        if (!StringUtils.isEmpty(rowspanStr)) {
+        if (StringUtils.hasText(rowspanStr)) {
             rowspan = Integer.parseInt(rowspanStr);
         }
-        if (!StringUtils.isEmpty(colspanStr)) {
+        if (StringUtils.hasText(colspanStr)) {
             colspan = Integer.parseInt(colspanStr);
         }
         XlsCell xlsCell = new XlsCell();
@@ -208,7 +208,7 @@ public class DefaultHtmlParser implements HtmlParser {
      * @date 2021/3/16
      */
     protected boolean ignoreCell(String cellClass) {
-        if (StringUtils.isEmpty(cellClass)) {
+        if (!StringUtils.hasText(cellClass)) {
             return false;
         }
         //对隐藏列跳过
