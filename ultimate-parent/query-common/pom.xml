@@ -9,8 +9,8 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>query-common</artifactId>
-    <name>test</name>
-    <description>测试</description>
+    <name>query-common</name>
+    <description>query-common</description>
     <packaging>jar</packaging>
     <dependencies>
 
