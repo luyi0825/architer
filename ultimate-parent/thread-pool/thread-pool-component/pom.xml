@@ -9,9 +9,9 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>thread-pool-config</artifactId>
-    <name>thread-pool-config</name>
-    <description>thread-pool</description>
+    <artifactId>thread-pool-component</artifactId>
+    <name>thread-pool-component</name>
+    <description>thread-pool-component</description>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>

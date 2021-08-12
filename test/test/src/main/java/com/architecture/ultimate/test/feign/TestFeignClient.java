@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface TestFeignClient {
 
     @RequestMapping("/sayHello")
-    public String sayHello();
+    String sayHello();
 
 }
