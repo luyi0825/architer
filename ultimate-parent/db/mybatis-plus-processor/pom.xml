@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>db-mybatis-plus-processor</artifactId>
-    <name>db-parent</name>
+    <name>db-mybatis-plus-processor</name>
     <description>数据库相关</description>
     <packaging>jar</packaging>
     <dependencies>
@@ -19,16 +19,25 @@
             <version>1.0.0</version>
         </dependency>
         <dependency>
+            <groupId>com.squareup</groupId>
+            <artifactId>javapoet</artifactId>
+            <version>1.13.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.google.auto.service</groupId>
             <artifactId>auto-service</artifactId>
             <version>1.0</version>
-            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <artifactId>guava</artifactId>
                     <groupId>com.google.guava</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>30.0-jre</version>
         </dependency>
     </dependencies>
 
