@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.core.log.executor.LogExecutorConfig
+#org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.core.log.executor.LogExecutorConfig
