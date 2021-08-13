@@ -18,11 +18,11 @@ import java.util.concurrent.ThreadPoolExecutor;
  *
  * @author luyi
  */
-public abstract class CommonTaskExecutor extends ThreadPoolTaskExecutor {
+public abstract class BaseTaskExecutor extends ThreadPoolTaskExecutor {
 
     private final ThreadPoolConfig threadPoolConfig;
 
-    public CommonTaskExecutor(ThreadPoolConfig threadPoolConfig) {
+    public BaseTaskExecutor(ThreadPoolConfig threadPoolConfig) {
         this.threadPoolConfig = threadPoolConfig;
     }
 
