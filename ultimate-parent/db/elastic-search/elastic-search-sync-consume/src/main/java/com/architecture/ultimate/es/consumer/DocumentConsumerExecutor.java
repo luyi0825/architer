@@ -10,8 +10,9 @@ import com.architecture.ultimate.thread.properties.ThreadPoolConfig;
  */
 public class DocumentConsumerExecutor extends BaseTaskExecutor {
 
-    public DocumentConsumerExecutor(ThreadPoolConfig threadPoolConfig) {
-        super(threadPoolConfig);
-    }
 
+    @Override
+    public String getConfigId() {
+        return "documentConsumerExecutor";
+    }
 }
