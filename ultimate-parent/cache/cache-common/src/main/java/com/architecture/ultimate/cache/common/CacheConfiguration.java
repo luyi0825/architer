@@ -7,6 +7,7 @@ import com.architecture.ultimate.cache.common.operation.CacheableOperationHandle
 import com.architecture.ultimate.cache.common.operation.DeleteCacheOperationHandler;
 import com.architecture.ultimate.cache.common.operation.PutCacheOperationHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * 缓存配置，存放各种缓存的公共配置
  */
 @Configuration
+@EnableConfigurationProperties(CacheProperties.class)
 public class CacheConfiguration {
 
     @Bean
