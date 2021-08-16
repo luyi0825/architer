@@ -1,29 +1,62 @@
 package com.architecture.ultimate.thread;
 
+import com.architecture.ultimate.thread.properties.TaskExecutorProperties;
 import com.architecture.ultimate.thread.properties.ThreadPoolConfig;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 
+import java.util.Map;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * 公共的线程池：
- * 1.为了解决系统线程池过多的问题
- * 2.可以根据配置修改线程池，不必改代码，增加灵活度
- * 3.可以处理一些异步,用户不需要立即收到任务处理结果的任务，比如系统的定时任务,系统预警发送邮箱,日志等
- * 注意：
- * 1.例如一些查询优化（采用多线程加快查询速度），需要及时响应需要用到线程池的地方，请自定义线程池（防止线程池的队列太长，影响核心业务、用户体验等）
- * 2.如果该服务CommonTaskExecutor其他地方使用的比较少可以用这个
- *
  * @author luyi
+ * 线程池基类
  */
 public abstract class BaseTaskExecutor extends ThreadPoolTaskExecutor {
+    private static final Logger logger = LoggerFactory.getLogger(BaseTaskExecutor.class);
 
-    private final ThreadPoolConfig threadPoolConfig;
+    /**
+     * 得到线程池配置的标识
+     *
+     * @return 线程池标识ID
+     */
+    public abstract String getConfigId();
 
-    public BaseTaskExecutor(ThreadPoolConfig threadPoolConfig) {
-        this.threadPoolConfig = threadPoolConfig;
+    protected ThreadPoolConfig threadPoolConfig;
+    @Autowired
+    protected TaskExecutorProperties taskExecutorProperties;
+
+    public BaseTaskExecutor() {
+        this.initThreadPoolConfig();
+    }
+
+    private void initThreadPoolConfig() {
+        threadPoolConfig = getDefaultThreadPoolConfig();
+        String configId = this.getConfigId();
+        if (!StringUtils.hasText(configId)) {
+            throw new IllegalArgumentException("configId不能为空");
+        }
+        if (taskExecutorProperties != null) {
+            Map<String, ThreadPoolConfig> threadPoolConfigMap = taskExecutorProperties.getConfigs();
+            if (!CollectionUtils.isEmpty(threadPoolConfigMap) && threadPoolConfigMap.get(configId) != null) {
+                threadPoolConfig = threadPoolConfigMap.get(configId);
+                logger.info("线程池【{}】采用属性文件的配置:{}", configId, threadPoolConfig);
+            } else if (threadPoolConfig != null) {
+                logger.info("线程池【{}】采用默认的配置:{}", configId, threadPoolConfig);
+            }
+        }
+        if (threadPoolConfig == null) {
+            throw new IllegalArgumentException("未配置线程池【{}】");
+        }
+
+
     }
 
     @Override
@@ -62,4 +95,22 @@ public abstract class BaseTaskExecutor extends ThreadPoolTaskExecutor {
                 throw new IllegalArgumentException("rejectedHandler配置有误！");
         }
     }
+
+    /**
+     * 得到默认的线程池配置，当属性配置中没有配置的时候就采用此配置
+     */
+    protected ThreadPoolConfig getDefaultThreadPoolConfig() {
+        return new ThreadPoolConfig();
+    }
+
+
+    public ThreadPoolConfig getThreadPoolConfig() {
+        return threadPoolConfig;
+    }
+
+
+    public TaskExecutorProperties getTaskExecutorProperties() {
+        return taskExecutorProperties;
+    }
+
 }

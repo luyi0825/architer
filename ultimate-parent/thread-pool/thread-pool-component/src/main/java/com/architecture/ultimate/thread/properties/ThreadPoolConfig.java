@@ -76,4 +76,15 @@ public class ThreadPoolConfig {
     public void setRejectedHandler(RejectedHandler rejectedHandler) {
         this.rejectedHandler = rejectedHandler;
     }
+
+    @Override
+    public String toString() {
+        return "ThreadPoolConfig{" +
+                "corePoolSize=" + corePoolSize +
+                ", maxPoolSize=" + maxPoolSize +
+                ", queueCapacity=" + queueCapacity +
+                ", keepAlive=" + keepAlive +
+                ", rejectedHandler=" + rejectedHandler +
+                '}';
+    }
 }

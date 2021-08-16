@@ -10,8 +10,12 @@ import java.util.Map;
  *
  * @author luyi
  */
-@ConfigurationProperties(prefix = "customize.thread", ignoreInvalidFields = true)
+@ConfigurationProperties(prefix = "customize.thread-pool", ignoreInvalidFields = true)
 public class TaskExecutorProperties {
+    /**
+     * 是否启用公共的线程池,true则实例化CommonTaskExecutor
+     */
+    private boolean useCommon = false;
     /**
      * key为线程池的标识，value为线程池配置信息
      */
@@ -23,5 +27,13 @@ public class TaskExecutorProperties {
 
     public void setConfigs(Map<String, ThreadPoolConfig> configs) {
         this.configs = configs;
+    }
+
+    public boolean isUseCommon() {
+        return useCommon;
+    }
+
+    public void setUseCommon(boolean useCommon) {
+        this.useCommon = useCommon;
     }
 }
