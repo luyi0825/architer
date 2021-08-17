@@ -1,0 +1,42 @@
+host: 172.31.0.5
+server:
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
+  port: 9008
+spring:
+  rabbitmq:
+    virtual-host: test
+    host: ${host}
+    port: 5672
+    username: luyi
+    password: luyi123
+  redis:
+    host: ${host}
+  data:
+    mongodb:
+      #uri: mongodb://127.0.0.1:27017
+      username: luyi
+      password: 'luyi123'
+      database: search
+      port: 27017
+      host: ${host}
+customize:
+  es:
+    hosts[0]:
+      ip: ${host}
+      port: 9200
+  thread:
+    configs:
+      ##配置es消费数据的队列
+      es_document_consumer:
+        ## 拒绝策略
+        rejectedHandler: callerRunsPolicy
+
+
+
