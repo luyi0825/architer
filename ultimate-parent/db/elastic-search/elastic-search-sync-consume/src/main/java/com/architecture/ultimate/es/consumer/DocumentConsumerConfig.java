@@ -24,20 +24,5 @@ import java.util.Map;
 @EnableRabbit
 @EnableMongoRepositories(basePackages = "com.architecture.ultimate.es.consumer.dao")
 public class DocumentConsumerConfig {
-    private final static String ES_DOCUMENT_CONSUMER = "es_document_consumer";
-    private static final Logger LOG = LoggerFactory.getLogger(DocumentConsumerConfig.class);
 
-    @Bean
-    public DocumentConsumerExecutor documentConsumerExecutor(@Autowired(required = false) TaskExecutorProperties taskExecutorProperties) {
-        ThreadPoolConfig threadPoolConfig = null;
-        if (taskExecutorProperties != null) {
-            Map<String, ThreadPoolConfig> threadPoolConfigMap = taskExecutorProperties.getConfigs();
-            threadPoolConfig = threadPoolConfigMap.get(ES_DOCUMENT_CONSUMER);
-        }
-        if (threadPoolConfig == null) {
-            LOG.error("注意:es消费数据线程池【{}】没有配置,采用默认配置", ES_DOCUMENT_CONSUMER);
-            threadPoolConfig = new ThreadPoolConfig();
-        }
-        return new DocumentConsumerExecutor(threadPoolConfig);
-    }
 }
