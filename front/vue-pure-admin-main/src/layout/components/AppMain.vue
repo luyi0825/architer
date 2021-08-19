@@ -32,6 +32,7 @@ export default defineComponent({
   height: 90vh;
   position: relative;
   overflow-x: hidden;
+  background: #f0f0f0;
 }
 
 .fixed-header + .app-main {
