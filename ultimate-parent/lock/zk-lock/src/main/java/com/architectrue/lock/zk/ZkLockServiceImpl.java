@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,25 +18,24 @@ import java.util.concurrent.TimeUnit;
  */
 @Service(LockService.ZK_LOCK_BEAN)
 public class ZkLockServiceImpl implements LockService {
-    private final Logger logger = LoggerFactory.getLogger(ZkLockServiceImpl.class);
     private CuratorFramework client;
     private final ThreadLocal<InterProcessMutex> interProcessMutexes = new ThreadLocal<>();
+    private static final String ZK_LOCK_START = "/";
 
     @Override
-    public boolean acquire(String lock, long time, TimeUnit timeUnit) {
-        boolean acquire;
-        try {
-            InterProcessMutex mutex = new InterProcessMutex(client, lock);
-            acquire = mutex.acquire(time, timeUnit);
-            if (acquire) {
-                interProcessMutexes.set(mutex);
-            }
-        } catch (Exception e) {
-            logger.error("获取锁失败：{}", lock, e);
-            acquire = false;
+    public boolean acquire(String lock, long time, TimeUnit timeUnit) throws Exception {
+        Assert.hasText(lock, "lock is null");
+        if (!lock.startsWith(ZK_LOCK_START)) {
+            lock = ZK_LOCK_START + lock;
+        }
+        InterProcessMutex mutex = new InterProcessMutex(client, lock);
+        boolean acquire = mutex.acquire(time, timeUnit);
+        if (acquire) {
+            interProcessMutexes.set(mutex);
         }
         return acquire;
     }
+
 
     @Override
     public void release() {
