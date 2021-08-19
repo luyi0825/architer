@@ -43,7 +43,8 @@ export const menusConfig = {
       permissionPage: "页面权限",
       permissionButton: "按钮权限",
       externalLink: "外链",
-      demo: "案例"
+      demo: "案例",
+      area: "行政区划"
     }
   },
   en: {
@@ -81,7 +82,8 @@ export const menusConfig = {
       permissionButton: "Button Permission",
       externalLink: "External Link",
       codemap: "Code Map",
-      demo: "demo"
+      demo: "demo",
+      area: "area"
     }
   }
 };
