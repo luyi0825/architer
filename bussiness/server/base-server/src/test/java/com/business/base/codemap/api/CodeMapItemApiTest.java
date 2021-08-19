@@ -1,13 +1,12 @@
 package com.business.base.codemap.api;
 
 import cn.hutool.core.io.FileUtil;
-import com.architecture.ultimate.module.common.response.ResponseResult;
-import com.architecture.ultimate.utils.JsonUtils;
+import com.architecture.context.common.response.ResponseResult;
+import com.architecture.utils.JsonUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.business.base.ModuleTest;
 import com.business.base.codemap.api.codemapitem.CodeMapItemAddTest;
 import com.business.base.codemap.api.codemapitem.CodeMapItemUpdateTest;
-import com.business.base.codemap.entity.CodeMap;
 import com.business.base.codemap.entity.CodeMapItem;
 import com.business.base.codemap.service.CodeMapItemService;
 import org.junit.jupiter.api.Test;

@@ -3,9 +3,8 @@ package com.business.message.template.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.architecture.ultimate.mybatisplus.entity.BaseEntity;
+import com.architecture.mybatisplus.entity.BaseEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.Objects;

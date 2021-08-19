@@ -1,9 +1,8 @@
 package com.architectrue.lock.zk;
 
-import com.architecture.lock.common.LockService;
+import com.architecture.context.common.lock.LockService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;

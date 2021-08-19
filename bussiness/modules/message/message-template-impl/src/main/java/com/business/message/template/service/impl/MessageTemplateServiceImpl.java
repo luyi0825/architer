@@ -1,7 +1,7 @@
 package com.business.message.template.service.impl;
 
-import com.architecture.ultimate.module.common.exception.ServiceException;
-import com.architecture.ultimate.mybatisplus.service.impl.BaseServiceImpl;
+import com.architecture.context.common.exception.ServiceException;
+import com.architecture.mybatisplus.service.impl.BaseServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 

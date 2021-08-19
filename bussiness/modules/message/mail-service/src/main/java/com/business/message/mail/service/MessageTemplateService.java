@@ -2,7 +2,7 @@ package com.business.message.mail.service;
 
 
 import com.business.message.mail.entity.MessageTemplate;
-import com.architecture.ultimate.mybatisplus.service.BaseService;
+import com.architecture.mybatisplus.service.BaseService;
 
 
 /**

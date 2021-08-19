@@ -1,15 +1,14 @@
 package com.business.base.codemap.api;
 
 import cn.hutool.core.io.FileUtil;
-import com.architecture.ultimate.module.common.response.ResponseResult;
-import com.architecture.ultimate.utils.JsonUtils;
+import com.architecture.context.common.response.ResponseResult;
+import com.architecture.utils.JsonUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.business.base.ModuleTest;
 import com.business.base.codemap.api.codemap.CodeMapApiAdd;
 import com.business.base.codemap.api.codemap.CodeMapApiUpdate;
 import com.business.base.codemap.entity.CodeMap;
 import com.business.base.codemap.service.CodeMapService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-
-import java.io.IOException;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

@@ -1,15 +1,14 @@
 package com.business.base.codemap.api.codemapitem;
 
 import cn.hutool.core.io.FileUtil;
-import com.architecture.ultimate.module.common.ResponseStatusEnum;
-import com.architecture.ultimate.module.common.response.ResponseResult;
-import com.architecture.ultimate.utils.JsonUtils;
+import com.architecture.context.common.ResponseStatusEnum;
+import com.architecture.context.common.response.ResponseResult;
+import com.architecture.utils.JsonUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.business.base.codemap.api.CodeMapItemApiTest;
 import com.business.base.codemap.constants.CodeMapItemValidConstant;
 import com.business.base.codemap.entity.CodeMapItem;
 import com.business.base.codemap.service.CodeMapItemService;
-import com.business.base.codemap.service.CodeMapServiceTest;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +20,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

@@ -1,7 +1,7 @@
 package com.business.base.area.service;
 
 
-import com.architecture.ultimate.mybatisplus.service.BaseService;
+import com.architecture.mybatisplus.service.BaseService;
 import com.business.base.area.entity.StandardArea;
 
 import java.util.List;

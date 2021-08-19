@@ -1,9 +1,9 @@
 package com.business.base.codemap.api;
 
-import com.architecture.ultimate.module.common.valid.group.AddGroup;
-import com.architecture.ultimate.module.common.valid.group.UpdateGroup;
-import com.architecture.ultimate.module.common.web.PostMapping;
-import com.architecture.ultimate.query.common.model.Pager;
+import com.architecture.context.common.valid.group.AddGroup;
+import com.architecture.context.common.valid.group.UpdateGroup;
+import com.architecture.context.common.web.PostMapping;
+import com.architecture.query.common.model.Pager;
 import com.business.base.codemap.entity.CodeMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

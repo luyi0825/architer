@@ -1,6 +1,6 @@
 package com.business.base.codemap.api;
 
-import com.architecture.ultimate.query.common.model.Pager;
+import com.architecture.query.common.model.Pager;
 import com.business.base.codemap.entity.CodeMap;
 import com.business.base.codemap.service.CodeMapService;
 import org.springframework.beans.factory.annotation.Autowired;

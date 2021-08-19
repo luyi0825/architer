@@ -1,6 +1,6 @@
 package com.business.auth.user;
 
-import com.architecture.ultimate.module.common.SubModule;
+import com.architecture.context.common.SubModule;
 import org.mybatis.spring.annotation.MapperScan;
 
 /**

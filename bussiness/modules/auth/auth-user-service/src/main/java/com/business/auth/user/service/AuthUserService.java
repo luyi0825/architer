@@ -1,7 +1,7 @@
 package com.business.auth.user.service;
 
 import com.business.auth.user.entity.AuthUser;
-import com.architecture.ultimate.mybatisplus.service.BaseService;
+import com.architecture.mybatisplus.service.BaseService;
 
 /**
  * @author luyi

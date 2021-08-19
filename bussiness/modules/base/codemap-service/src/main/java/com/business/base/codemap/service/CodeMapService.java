@@ -1,10 +1,8 @@
 package com.business.base.codemap.service;
 
 
-import com.architecture.ultimate.mybatisplus.service.BaseService;
+import com.architecture.mybatisplus.service.BaseService;
 import com.business.base.codemap.entity.CodeMap;
-
-import java.io.Serializable;
 
 /**
  * @author luyi

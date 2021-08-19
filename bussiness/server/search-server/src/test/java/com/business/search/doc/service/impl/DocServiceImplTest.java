@@ -1,15 +1,14 @@
 package com.business.search.doc.service.impl;
 
 
-import com.architecture.ultimate.es.dml.service.DocService;
-import com.architecture.ultimate.es.model.doc.DocumentRequest;
-import com.architecture.ultimate.es.model.doc.DocumentResponse;
+import com.architecture.es.dml.service.DocService;
+import com.architecture.es.model.doc.DocumentRequest;
+import com.architecture.es.model.doc.DocumentResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.HashMap;

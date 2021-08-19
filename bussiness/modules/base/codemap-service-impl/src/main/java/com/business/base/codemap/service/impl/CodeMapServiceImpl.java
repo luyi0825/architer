@@ -1,9 +1,9 @@
 package com.business.base.codemap.service.impl;
 
 
-import com.architecture.ultimate.module.common.exception.ParamsValidException;
-import com.architecture.ultimate.module.common.exception.ServiceException;
-import com.architecture.ultimate.mybatisplus.service.impl.BaseServiceImpl;
+import com.architecture.context.common.exception.ParamsValidException;
+import com.architecture.context.common.exception.ServiceException;
+import com.architecture.mybatisplus.service.impl.BaseServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.business.base.codemap.entity.CodeMap;
 import com.business.base.codemap.service.CodeMapItemService;

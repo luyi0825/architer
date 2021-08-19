@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>ultimate-parent</artifactId>
+        <groupId>com.architecture.ultimate</groupId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>components</artifactId>
+    <name>components</name>
+    <description>components</description>
+    <packaging>pom</packaging>
+    <modules>
+        <module>cloud</module>
+        <module>elastic-search-component</module>
+        <module>mq</module>
+        <module>mybatis-fluent</module>
+        <module>mybatis-plus</module>
+        <module>web-starter</module>
+    </modules>
+</project>

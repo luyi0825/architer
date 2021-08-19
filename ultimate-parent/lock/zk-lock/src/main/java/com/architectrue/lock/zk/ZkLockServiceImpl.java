@@ -1,11 +1,9 @@
 package com.architectrue.lock.zk;
 
-import com.architecture.lock.common.LockService;
-import com.architecture.ultimate.module.common.exception.ServiceException;
+import com.architecture.context.common.lock.LockService;
+import com.architecture.context.common.exception.ServiceException;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;

@@ -1,7 +1,7 @@
 package com.business.base;
 
-import com.architecture.ultimate.cache.common.annotation.EnableCustomCaching;
-import com.architecture.ultimate.starter.web.module.ModulesBuilder;
+import com.architecture.context.common.cache.annotation.EnableCustomCaching;
+import com.architecture.starter.web.module.ModulesBuilder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;

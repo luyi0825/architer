@@ -1,7 +1,7 @@
 package com.business.base.codemap.service;
 
 
-import com.architecture.ultimate.mybatisplus.service.BaseService;
+import com.architecture.mybatisplus.service.BaseService;
 import com.business.base.codemap.entity.CodeMapItem;
 
 import java.util.List;

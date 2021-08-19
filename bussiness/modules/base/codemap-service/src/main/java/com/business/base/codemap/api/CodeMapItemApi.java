@@ -1,10 +1,10 @@
 package com.business.base.codemap.api;
 
 
-import com.architecture.ultimate.cache.common.annotation.Cacheable;
-import com.architecture.ultimate.cache.common.enums.LockType;
-import com.architecture.ultimate.module.common.valid.group.AddGroup;
-import com.architecture.ultimate.module.common.valid.group.UpdateGroup;
+import com.architecture.context.common.cache.annotation.Cacheable;
+import com.architecture.context.common.cache.enums.LockType;
+import com.architecture.context.common.valid.group.AddGroup;
+import com.architecture.context.common.valid.group.UpdateGroup;
 import com.business.base.codemap.entity.CodeMapItem;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

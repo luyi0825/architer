@@ -1,6 +1,6 @@
 package com.business.base.area;
 
-import com.architecture.ultimate.module.common.SubModule;
+import com.architecture.context.common.SubModule;
 import org.mybatis.spring.annotation.MapperScan;
 
 /**

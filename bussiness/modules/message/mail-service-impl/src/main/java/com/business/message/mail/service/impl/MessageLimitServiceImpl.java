@@ -1,9 +1,8 @@
 package com.business.message.mail.service.impl;
 
-import com.architecture.ultimate.mybatisplus.service.impl.BaseServiceImpl;
+import com.architecture.mybatisplus.service.impl.BaseServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
-import com.business.message.mail.dao.MessageLimitDao;
 import com.business.message.mail.entity.MessageLimit;
 import com.business.message.mail.service.MessageLimitService;
 import org.springframework.stereotype.Service;

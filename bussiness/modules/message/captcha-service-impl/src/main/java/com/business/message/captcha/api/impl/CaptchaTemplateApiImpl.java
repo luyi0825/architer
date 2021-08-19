@@ -1,8 +1,8 @@
 package com.business.message.captcha.api.impl;
 
 
-import com.architecture.ultimate.mybatisplus.QueryParam;
-import com.architecture.ultimate.query.common.model.Pagination;
+import com.architecture.mybatisplus.QueryParam;
+import com.architecture.query.common.model.Pagination;
 import com.business.message.captcha.api.CaptchaTemplateApi;
 import com.business.message.captcha.entity.CaptchaTemplate;
 import com.business.message.captcha.service.CaptchaTemplateService;

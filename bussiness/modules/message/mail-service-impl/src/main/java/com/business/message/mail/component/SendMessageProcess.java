@@ -1,8 +1,8 @@
 package com.business.message.mail.component;
 
 
-import com.architecture.ultimate.cache.redis.StringRedisService;
-import com.architecture.ultimate.module.common.exception.ServiceException;
+import com.architecture.cache.redis.StringRedisService;
+import com.architecture.context.common.exception.ServiceException;
 import com.business.message.mail.entity.MessageLimit;
 import com.business.message.mail.entity.MessageTemplate;
 import com.business.message.mail.model.Email;

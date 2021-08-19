@@ -1,10 +1,10 @@
 package com.business.message.captcha.api;
 
 
-import com.architecture.ultimate.module.common.valid.group.AddGroup;
+import com.architecture.context.common.valid.group.AddGroup;
 import com.business.message.captcha.entity.CaptchaTemplate;
-import com.architecture.ultimate.mybatisplus.QueryParam;
-import com.architecture.ultimate.query.common.model.Pagination;
+import com.architecture.mybatisplus.QueryParam;
+import com.architecture.query.common.model.Pagination;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;

@@ -2,10 +2,10 @@ package com.business.message.template.api;
 
 
 
-import com.architecture.ultimate.module.common.valid.group.AddGroup;
-import com.architecture.ultimate.module.common.valid.group.UpdateGroup;
-import com.architecture.ultimate.mybatisplus.QueryParam;
-import com.architecture.ultimate.query.common.model.Pagination;
+import com.architecture.context.common.valid.group.AddGroup;
+import com.architecture.context.common.valid.group.UpdateGroup;
+import com.architecture.mybatisplus.QueryParam;
+import com.architecture.query.common.model.Pagination;
 import com.business.message.template.entity.MessageTemplate;
 import com.business.message.template.service.MessageTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,18 +1,16 @@
 package com.business.search.ddl.service.impl;
 
 
-import com.architecture.ultimate.es.dml.service.IndexMappingService;
-import com.architecture.ultimate.es.model.MappingType;
-import com.architecture.ultimate.es.model.ddl.IndexMapping;
-import com.architecture.ultimate.es.model.ddl.MappingItem;
-import com.architecture.ultimate.module.common.exception.ServiceException;
-import lombok.extern.log4j.Log4j2;
+import com.architecture.es.dml.service.IndexMappingService;
+import com.architecture.es.model.MappingType;
+import com.architecture.es.model.ddl.IndexMapping;
+import com.architecture.es.model.ddl.MappingItem;
+import com.architecture.context.common.exception.ServiceException;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.ArrayList;

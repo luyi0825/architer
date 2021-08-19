@@ -1,7 +1,7 @@
 package com.business.auth.starter;
 
 
-import com.architecture.ultimate.starter.web.module.ModulesBuilder;
+import com.architecture.starter.web.module.ModulesBuilder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

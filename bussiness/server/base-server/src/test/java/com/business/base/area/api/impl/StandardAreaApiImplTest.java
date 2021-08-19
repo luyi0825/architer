@@ -1,7 +1,7 @@
 package com.business.base.area.api.impl;
 
 
-import com.architecture.ultimate.module.common.response.ResponseResult;
+import com.architecture.context.common.response.ResponseResult;
 import com.business.base.area.entity.StandardArea;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

@@ -2,11 +2,11 @@ package com.bussiness;
 
 
 
-import com.architecture.ultimate.module.common.ResponseStatusEnum;
-import com.architecture.ultimate.module.common.exception.ServiceException;
-import com.architecture.ultimate.module.common.response.ResponseResult;
+import com.architecture.context.common.ResponseStatusEnum;
+import com.architecture.context.common.exception.ServiceException;
+import com.architecture.context.common.response.ResponseResult;
 
-import com.architecture.ultimate.module.common.response.R;
+import com.architecture.context.common.response.R;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

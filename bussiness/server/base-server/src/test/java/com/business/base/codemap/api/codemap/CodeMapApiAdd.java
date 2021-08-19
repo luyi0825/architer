@@ -1,8 +1,8 @@
 package com.business.base.codemap.api.codemap;
 
 import cn.hutool.core.io.FileUtil;
-import com.architecture.ultimate.module.common.response.ResponseResult;
-import com.architecture.ultimate.utils.JsonUtils;
+import com.architecture.context.common.response.ResponseResult;
+import com.architecture.utils.JsonUtils;
 import com.business.base.codemap.api.CodeMapApiTest;
 import com.business.base.codemap.constants.CodeMapValidConstant;
 import com.business.base.codemap.entity.CodeMap;

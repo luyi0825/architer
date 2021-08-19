@@ -1,21 +1,17 @@
 package com.business.base.codemap.api.codemapitem;
 
 import cn.hutool.core.io.FileUtil;
-import com.architecture.ultimate.module.common.ResponseStatusEnum;
-import com.architecture.ultimate.module.common.exception.ParamsValidException;
-import com.architecture.ultimate.module.common.response.ResponseResult;
-import com.architecture.ultimate.utils.JsonUtils;
+import com.architecture.context.common.ResponseStatusEnum;
+import com.architecture.context.common.response.ResponseResult;
+import com.architecture.utils.JsonUtils;
 import com.business.base.codemap.api.CodeMapItemApiTest;
 import com.business.base.codemap.constants.CodeMapItemValidConstant;
 import com.business.base.codemap.entity.CodeMapItem;
-import com.business.base.codemap.service.CodeMapItemService;
-import com.business.base.codemap.service.CodeMapService;
 import com.business.base.codemap.service.CodeMapServiceTest;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;

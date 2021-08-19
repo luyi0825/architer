@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>components</artifactId>
+        <groupId>com.architecture.ultimate</groupId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>ultimate-cloud</artifactId>
+    <name>ultimate-cloud</name>
+    <description>boot-cloud相关</description>
+    <packaging>pom</packaging>
+    <modules>
+        <module>nacos-config</module>
+        <module>nacos-discovery</module>
+        <module>sentinel</module>
+        <module>dubbo</module>
+        <module>zookeeper-discovery</module>
+        <module>open-feign</module>
+        <module>rest-template</module>
+    </modules>
+</project>

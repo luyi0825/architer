@@ -14,20 +14,17 @@
         <module>excel</module>
         <module>thread-pool</module>
         <module>cache</module>
-        <module>authority</module>
         <module>utils</module>
-        <module>mq</module>
+        <module>context</module>
         <module>db</module>
-        <module>cloud</module>
         <module>test</module>
-        <module>module</module>
         <module>captcha</module>
         <module>query-common</module>
         <module>log</module>
-        <module>web-starter</module>
         <module>file</module>
         <module>statemachine</module>
         <module>lock</module>
+        <module>context</module>
     </modules>
 
     <dependencies>

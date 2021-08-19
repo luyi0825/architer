@@ -1,7 +1,7 @@
 package com.business.base.codemap.entity;
 
-import com.architecture.ultimate.module.common.valid.group.AddGroup;
-import com.architecture.ultimate.module.common.valid.group.UpdateGroup;
+import com.architecture.context.common.valid.group.AddGroup;
+import com.architecture.context.common.valid.group.UpdateGroup;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.business.base.codemap.constants.CodeMapItemValidConstant;

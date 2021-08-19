@@ -1,16 +1,16 @@
 package com.business.message.captcha.component;
 
-import com.architecture.ultimate.cache.redis.RedisConstants;
-import com.architecture.ultimate.cache.redis.StringRedisService;
-import com.architecture.ultimate.captcha.CharacterGifCaptcha;
-import com.architecture.ultimate.captcha.CharacterStaticCaptcha;
-import com.architecture.ultimate.captcha.base.Captcha;
-import com.architecture.ultimate.captcha.utils.CharacterCaptchaUtil;
+import com.architecture.cache.redis.RedisConstants;
+import com.architecture.cache.redis.StringRedisService;
+import com.architecture.captcha.CharacterGifCaptcha;
+import com.architecture.captcha.CharacterStaticCaptcha;
+import com.architecture.captcha.base.Captcha;
+import com.architecture.captcha.utils.CharacterCaptchaUtil;
 import com.business.message.captcha.CaptchaType;
 import com.business.message.captcha.entity.CaptchaTemplate;
 import com.business.message.captcha.service.CaptchaTemplateService;
 
-import com.architecture.ultimate.module.common.exception.ServiceException;
+import com.architecture.context.common.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
