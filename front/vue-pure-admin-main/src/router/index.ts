@@ -25,9 +25,9 @@ const constantRoutes: Array<any> = [
   flowChartRouter,
   editorRouter,
   componentsRouter,
+  studyRouter,
   nestedRouter,
   externalLink,
-  studyRouter,
   errorRouter
 ];
 

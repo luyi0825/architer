@@ -9,6 +9,7 @@ import {usI18n} from "../src/plugins/i18n";
 
 // 导入公共样式
 import "./style/index.scss";
+import "./style/main.css"
 // 导入字体图标
 import "./assets/iconfont/iconfont.js";
 import "./assets/iconfont/iconfont.css";
