@@ -27,6 +27,7 @@
         <module>web-starter</module>
         <module>file</module>
         <module>statemachine</module>
+        <module>lock</module>
     </modules>
 
     <dependencies>
