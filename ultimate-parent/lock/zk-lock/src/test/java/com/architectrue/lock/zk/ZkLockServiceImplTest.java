@@ -39,6 +39,9 @@ class ZkLockServiceImplTest {
         Assertions.assertTrue(code < 200);
     }
 
+    /**
+     * 测试zk分布式锁
+     */
     @Test
     public void testLock() throws Exception {
         int count = 200;
@@ -47,7 +50,7 @@ class ZkLockServiceImplTest {
             new Thread(() -> {
                 try {
                     addLockCode();
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 countDownLatch.countDown();
@@ -55,7 +58,7 @@ class ZkLockServiceImplTest {
         }
         countDownLatch.await();
         System.out.println(code);
-        assertEquals(200, (long) code);
+        assertEquals(count, (long) code);
 
     }
 
@@ -63,17 +66,19 @@ class ZkLockServiceImplTest {
     /**
      * 减少库存
      */
-    public void addLockCode() throws InterruptedException {
-        if (lockService.acquire("code-lock", 2, TimeUnit.SECONDS)) {
+    public void addLockCode() throws Exception {
+        if (lockService.acquire("/code-lock", 30, TimeUnit.SECONDS)) {
             try {
                 code = code + 1;
+                System.out.println("add");
             } finally {
+                System.out.println("释放锁");
                 lockService.release();
             }
         } else {
             //休眠重新去抢锁
-            Thread.sleep((long) (Math.random() * 10L));
-            addLockCode();
+            // Thread.sleep((long) (Math.random() * 100L));
+            //addLockCode();
         }
     }
 
