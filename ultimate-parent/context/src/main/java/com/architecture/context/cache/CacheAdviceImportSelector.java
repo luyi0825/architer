@@ -3,7 +3,6 @@ package com.architecture.context.cache;
 
 import com.architecture.context.cache.annotation.EnableCustomCaching;
 import com.architecture.context.cache.aspectj.AspectjConfiguration;
-import com.architecture.context.cache.proxy.ProxyConfiguration;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.AdviceModeImportSelector;
 import org.springframework.context.annotation.AutoProxyRegistrar;
@@ -25,9 +24,9 @@ public class CacheAdviceImportSelector extends AdviceModeImportSelector<EnableCu
     @Override
     public String[] selectImports(AdviceMode adviceMode) {
         switch (adviceMode) {
-            case AdviceMode.PROXY:
+            case PROXY:
                 return getProxyImports();
-            case AdviceMode.ASPECTJ:
+            case ASPECTJ:
                 return getAspectjImports();
             default:
                 return null;

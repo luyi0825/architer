@@ -12,7 +12,10 @@ import com.architecture.context.cache.annotation.Caching;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * @author luyi
@@ -21,6 +24,7 @@ import java.util.*;
 public class CacheAnnotationsParser {
 
     private static final Set<Class<? extends Annotation>> CACHE_OPERATION_ANNOTATIONS = new LinkedHashSet<>(8);
+
     static {
         CACHE_OPERATION_ANNOTATIONS.add(Cacheable.class);
         CACHE_OPERATION_ANNOTATIONS.add(DeleteCache.class);
