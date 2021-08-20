@@ -2,7 +2,7 @@ package com.architecture.context.cache.annotation;
 
 
 import com.architecture.context.cache.CacheConstants;
-import com.architecture.context.lock.LockType;
+import com.architecture.context.lock.LockEnum;
 
 import java.lang.annotation.*;
 
@@ -15,6 +15,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
+@Repeatable(PutCaches.class)
 public @interface PutCache {
 
     /**
@@ -40,7 +41,7 @@ public @interface PutCache {
     /**
      * @see Cacheable#lockType()
      */
-    LockType lockType() default LockType.NONE;
+    LockEnum lockType() default LockEnum.NONE;
 
     /**
      * @see Cacheable#lock()

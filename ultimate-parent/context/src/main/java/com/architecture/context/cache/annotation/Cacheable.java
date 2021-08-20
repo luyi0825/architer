@@ -2,7 +2,8 @@ package com.architecture.context.cache.annotation;
 
 
 import com.architecture.context.cache.CacheConstants;
-import com.architecture.context.lock.LockType;
+import com.architecture.context.lock.Locked;
+import com.architecture.context.lock.LockEnum;
 
 import java.lang.annotation.*;
 
@@ -52,7 +53,7 @@ public @interface Cacheable {
      * *我们需要到缓存的时候是否需要加锁
      * </li>
      */
-    LockType lockType() default LockType.NONE;
+    LockEnum lockType() default LockEnum.NONE;
 
     /**
      * 锁的值
@@ -61,6 +62,7 @@ public @interface Cacheable {
      */
     String lock() default "";
 
+    Locked LOCK();
 
     /**
      * 是否异步

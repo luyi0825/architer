@@ -1,7 +1,8 @@
 package com.architecture.context.cache.annotation;
 
 
-import com.architecture.context.lock.LockType;
+import com.architecture.context.lock.Locked;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 
@@ -15,11 +16,17 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
+@Repeatable(DeleteCaches.class)
 public @interface DeleteCache {
+
     /**
      * @see Cacheable#cacheName()
      */
+    @AliasFor("value")
     String[] cacheName() default "";
+
+    @AliasFor("cacheName")
+    String[] value() default "";
 
     /**
      * @see Cacheable#key()
@@ -27,14 +34,9 @@ public @interface DeleteCache {
     String key();
 
     /**
-     * @see Cacheable#lockType()
+     * 锁
      */
-    LockType lockType() default LockType.NONE;
-
-    /**
-     * @see Cacheable#lock()
-     */
-    String lock() default "";
+    Locked[] lock() default {};
 
     /**
      * @see Cacheable#async()
