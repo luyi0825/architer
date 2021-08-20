@@ -1,7 +1,8 @@
 package com.architectrue.lock.zk;
 
-import com.architecture.context.common.lock.LockService;
-import com.architecture.context.common.exception.ServiceException;
+import com.architecture.context.exception.ServiceException;
+import com.architecture.context.lock.LockResponse;
+import com.architecture.context.lock.LockService;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 
 /**
  * @author luyi
@@ -17,38 +19,35 @@ import java.util.concurrent.TimeUnit;
 @Service(LockService.ZK_LOCK_BEAN)
 public class ZkLockServiceImpl implements LockService {
     private CuratorFramework client;
-    private final ThreadLocal<InterProcessMutex> interProcessMutexes = new ThreadLocal<>();
     private static final String ZK_LOCK_START = "/";
 
     @Override
-    public boolean acquire(String lock, long time, TimeUnit timeUnit) throws Exception {
-        Assert.hasText(lock, "lock is null");
-        if (!lock.startsWith(ZK_LOCK_START)) {
-            lock = ZK_LOCK_START + lock;
+    public Lock tryLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
+        Assert.hasText(lockName, "lock is null");
+        if (!lockName.startsWith(ZK_LOCK_START)) {
+            lockName = ZK_LOCK_START + lockName;
         }
-        InterProcessMutex mutex = new InterProcessMutex(client, lock);
-        boolean acquire = mutex.acquire(time, timeUnit);
-        if (acquire) {
-            interProcessMutexes.set(mutex);
+        InterProcessMutex mutex = new InterProcessMutex(client, lockName);
+        if (mutex.acquire(time, timeUnit)) {
+            return new ZookeeperLock(mutex);
         }
-        return acquire;
+        return null;
     }
-
 
     @Override
-    public void release() {
-        InterProcessMutex interProcessMutex = interProcessMutexes.get();
-        if (interProcessMutex != null) {
-            try {
-                interProcessMutex.release();
-            } catch (Exception e) {
-                throw new ServiceException("释放锁失败", e);
-            } finally {
-                interProcessMutexes.remove();
-            }
-        }
+    public Lock tryLock(String lockName) throws Exception {
+        InterProcessMutex mutex = new InterProcessMutex(client, lockName);
+        mutex.acquire();
+        return new ZookeeperLock(mutex);
     }
 
+    @Override
+    public void unLock(Lock lock) {
+        if (lock != null) {
+            lock.unlock();
+        }
+
+    }
 
     @Autowired
     public void setClient(CuratorFramework client) {

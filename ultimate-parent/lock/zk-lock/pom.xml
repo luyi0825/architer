@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>lock-parent</artifactId>
+        <artifactId>lockEnum-parent</artifactId>
         <groupId>com.architecture</groupId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>lock-zk</artifactId>
-    <name>lock-zk</name>
-    <description>lock-zk</description>
+    <artifactId>lockEnum-zk</artifactId>
+    <name>lockEnum-zk</name>
+    <description>lockEnum-zk</description>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
