@@ -2,6 +2,7 @@ package com.architecture.mq.rabbit.callback;
 
 /**
  *
+ * @author luyi
  */
 public interface SendCallBack {
     /**

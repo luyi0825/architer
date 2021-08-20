@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>ultimate-cloud</artifactId>
-        <groupId>com.architecture.ultimate</groupId>
+        <groupId>com.architecture</groupId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -35,7 +35,7 @@
             <version>2.5</version>
         </dependency>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
+            <groupId>com.architecture</groupId>
             <artifactId>ultimate-utils</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>

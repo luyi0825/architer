@@ -1,10 +1,10 @@
 package com.business.base.area.api;
 
 
-import com.architecture.ultimate.module.common.cache.annotation.DeleteCache;
-import com.architecture.ultimate.module.common.cache.enums.LockType;
+import com.architecture.module.common.cache.annotation.DeleteCache;
+import com.architecture.module.common.cache.enums.LockType;
 import com.business.base.area.entity.StandardArea;
-import com.architecture.ultimate.module.common.cache.annotation.Cacheable;
+import com.architecture.module.common.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

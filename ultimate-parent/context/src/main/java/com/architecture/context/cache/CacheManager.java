@@ -1,4 +1,4 @@
-package com.architecture.context.common.cache;
+package com.architecture.context.cache;
 
 /**
  * @author luyi

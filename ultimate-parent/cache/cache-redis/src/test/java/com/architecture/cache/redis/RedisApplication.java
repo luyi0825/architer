@@ -1,6 +1,6 @@
 package com.architecture.cache.redis;
 
-import com.architecture.ultimate.module.common.cache.annotation.EnableCustomCaching;
+import com.architecture.cache.common.annotation.EnableCustomCaching;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AdviceMode;

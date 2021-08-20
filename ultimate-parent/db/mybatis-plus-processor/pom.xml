@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>db</artifactId>
-        <groupId>com.architecture.ultimate</groupId>
+        <groupId>com.architecture</groupId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
+            <groupId>com.architecture</groupId>
             <artifactId>mybatis-plus</artifactId>
             <version>1.0.0</version>
         </dependency>

@@ -1,7 +1,7 @@
-//package com.architecture.ultimate.log.executor;
+//package com.architecture.log.executor;
 //
 //
-//import com.architecture.ultimate.thread.properties.TaskExecutorProperties;
+//import com.architecture.thread.properties.TaskExecutorProperties;
 //import org.springframework.boot.context.properties.ConfigurationProperties;
 //
 ///**

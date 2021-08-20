@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>excel-parent</artifactId>
-        <groupId>com.architecture.ultimate</groupId>
+        <groupId>com.architecture</groupId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -30,7 +30,7 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
+            <groupId>com.architecture</groupId>
             <artifactId>test</artifactId>
             <scope>test</scope>
             <version>${project.version}</version>

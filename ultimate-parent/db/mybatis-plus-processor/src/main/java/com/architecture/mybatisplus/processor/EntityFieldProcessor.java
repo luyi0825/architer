@@ -40,7 +40,7 @@ public class EntityFieldProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> annotationTypes = new HashSet<>();
-        annotationTypes.add("com.architecture.ultimate.mybatisplus.entity.Entity");
+        annotationTypes.add("com.architecture.mybatisplus.entity.Entity");
         return annotationTypes;
     }
 

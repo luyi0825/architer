@@ -1,9 +1,13 @@
-package com.architecture.context.common.lock;
+package com.architecture.context.lock;
 
 /**
  * @author 锁的类型
  */
 public enum LockType {
+    /**
+     * 没有锁
+     */
+    NONE(null),
     /**
      * jdk的本地锁
      */

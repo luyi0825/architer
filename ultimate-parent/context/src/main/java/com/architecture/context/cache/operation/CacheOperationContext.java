@@ -1,4 +1,4 @@
-package com.architecture.context.common.cache.operation;
+package com.architecture.context.cache.operation;
 
 public class CacheOperationContext {
 }

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>lock-parent</artifactId>
-        <groupId>com.architecture.ultimate</groupId>
+        <groupId>com.architecture</groupId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -23,7 +23,7 @@
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
+            <groupId>com.architecture</groupId>
             <artifactId>test</artifactId>
             <version>1.0.0</version>
             <scope>test</scope>

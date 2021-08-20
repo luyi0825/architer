@@ -31,28 +31,28 @@ public class CacheAspectj {
     /**
      * caching切点
      */
-    @Pointcut("@annotation(com.architecture.ultimate.module.common.cache.annotation.Cacheable)")
+    @Pointcut("@annotation(com.architecture.module.common.cache.annotation.Cacheable)")
     public void cacheablePointcut() {
     }
 
     /**
      * 放置putCache切点
      */
-    @Pointcut("@annotation(com.architecture.ultimate.module.common.cache.annotation.PutCache)")
+    @Pointcut("@annotation(com.architecture.module.common.cache.annotation.PutCache)")
     public void putCachePointcut() {
     }
 
     /**
      * 删除deleteCache切点
      */
-    @Pointcut("@annotation(com.architecture.ultimate.module.common.cache.annotation.DeleteCache)")
+    @Pointcut("@annotation(com.architecture.module.common.cache.annotation.DeleteCache)")
     public void deleteCachePointcut() {
     }
 
     /**
      * 多个缓存操作的节点
      */
-    @Pointcut("@annotation(com.architecture.ultimate.module.common.cache.annotation.Caching)")
+    @Pointcut("@annotation(com.architecture.module.common.cache.annotation.Caching)")
     public void cachingPointcut() {
     }
 

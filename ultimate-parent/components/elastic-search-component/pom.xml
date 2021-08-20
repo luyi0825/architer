@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>elastic-search</artifactId>
-        <groupId>com.architecture.ultimate</groupId>
+        <groupId>com.architecture</groupId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
+            <groupId>com.architecture</groupId>
             <artifactId>elastic-search-model</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -23,17 +23,8 @@
             <artifactId>elasticsearch</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.architecture.ultimate</groupId>
-            <artifactId>module-common</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

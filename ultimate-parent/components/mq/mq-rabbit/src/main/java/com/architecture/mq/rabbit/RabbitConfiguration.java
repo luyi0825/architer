@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * mq配置类
  */
 @Configuration
-@ComponentScan("com.architecture.ultimate.mq.rabbit")
+@ComponentScan("com.architecture.mq.rabbit")
 @EnableConfigurationProperties(value = RabbitmqProperties.class)
 public class RabbitConfiguration {
 

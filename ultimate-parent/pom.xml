@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.architecture.ultimate</groupId>
+    <groupId>com.architecture</groupId>
     <artifactId>ultimate-parent</artifactId>
     <version>1.0.0</version>
     <name>ultimate-parent</name>
@@ -15,7 +15,6 @@
         <module>thread-pool</module>
         <module>cache</module>
         <module>utils</module>
-        <module>context</module>
         <module>db</module>
         <module>test</module>
         <module>captcha</module>
@@ -25,6 +24,7 @@
         <module>statemachine</module>
         <module>lock</module>
         <module>context</module>
+        <module>components</module>
     </modules>
 
     <dependencies>
@@ -43,7 +43,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.architecture.ultimate</groupId>
+                <groupId>com.architecture</groupId>
                 <artifactId>additional-dependencies</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>

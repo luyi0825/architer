@@ -1,8 +1,8 @@
-//package com.architecture.ultimate.log.executor;
+//package com.architecture.log.executor;
 //
 //
-//import com.architecture.ultimate.log.common.LogMeta;
-//import com.architecture.ultimate.log.common.service.LogProcessor;
+//import com.architecture.log.common.LogMeta;
+//import com.architecture.log.common.service.LogProcessor;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Component;
 //
@@ -14,7 +14,7 @@
 // * @author 日志执行器
 // */
 //@Component
-//public class LogImpl extends com.architecture.ultimate.lol.common.service.LogAbstract {
+//public class LogImpl extends com.architecture.lol.common.service.LogAbstract {
 //
 //    private final List<LogProcessor> logProcessors;
 //

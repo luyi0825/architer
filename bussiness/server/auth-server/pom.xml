@@ -12,7 +12,7 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
+            <groupId>com.architecture</groupId>
             <artifactId>boot-starter-web-mvc</artifactId>
         </dependency>
         <dependency>
@@ -25,7 +25,7 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 <!--        <dependency>-->
-<!--            <groupId>com.architecture.ultimate</groupId>-->
+<!--            <groupId>com.architecture</groupId>-->
 <!--            <artifactId>cloud-nacos-discovery</artifactId>-->
 <!--            <version>${project.version}</version>-->
 <!--        </dependency>-->
@@ -46,7 +46,7 @@
             <version>4.1.1</version>
         </dependency>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
+            <groupId>com.architecture</groupId>
             <artifactId>test</artifactId>
         </dependency>
     </dependencies>

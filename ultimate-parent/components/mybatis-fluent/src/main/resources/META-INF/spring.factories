@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.architecture.ultimate.mybatisfluent.MybatisPlusConfig
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.architecture.mybatisfluent.MybatisPlusConfig

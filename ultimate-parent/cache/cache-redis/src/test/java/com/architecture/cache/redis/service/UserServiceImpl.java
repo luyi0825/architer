@@ -1,10 +1,10 @@
 package com.architecture.cache.redis.service;
 
-import com.architecture.ultimate.module.common.cache.annotation.Cacheable;
-import com.architecture.ultimate.module.common.cache.annotation.DeleteCache;
-import com.architecture.ultimate.module.common.cache.annotation.PutCache;
+import com.architecture.module.common.cache.annotation.Cacheable;
+import com.architecture.module.common.cache.annotation.DeleteCache;
+import com.architecture.module.common.cache.annotation.PutCache;
 import com.architecture.cache.redis.entity.User;
-import com.architecture.ultimate.module.common.cache.enums.LockType;
+import com.architecture.module.common.cache.enums.LockType;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;

@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
-@SpringBootApplication(scanBasePackages = "com.architecture.ultimate.starter.web")
+@SpringBootApplication(scanBasePackages = "com.architecture.starter.web")
 @Import(StarterWebConfig.class)
 public class ExceptionTestConfig {
     public static void main(String[] args) {

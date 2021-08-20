@@ -10,9 +10,9 @@ public interface LockService {
     /**
      * LockService对应实现类的Bean名称
      */
-    String REDIS_LOCK_BEAN = "com.architecture.ultimate.module.common.lock.redis";
-    String JDK_LOCK_BEAN = "com.architecture.ultimate.module.common.lock.redis";
-    String ZK_LOCK_BEAN = "com.architecture.ultimate.module.common.lock.zk";
+    String REDIS_LOCK_BEAN = "com.architecture.module.common.lock.redis";
+    String JDK_LOCK_BEAN = "com.architecture.module.common.lock.redis";
+    String ZK_LOCK_BEAN = "com.architecture.module.common.lock.zk";
 
     /**
      * 获取锁

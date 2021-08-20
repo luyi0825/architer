@@ -1,6 +1,6 @@
-//package com.architecture.ultimate.test;
+//package com.architecture.test;
 //
-//import com.architecture.ultimate.test.feign.TestFeignClient;
+//import com.architecture.test.feign.TestFeignClient;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.cloud.client.loadbalancer.LoadBalanced;

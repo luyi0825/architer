@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>db</artifactId>
-        <groupId>com.architecture.ultimate</groupId>
+        <groupId>com.architecture</groupId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -13,7 +13,6 @@
     <description>elastic-search</description>
     <packaging>pom</packaging>
     <modules>
-        <module>elastic-search-component</module>
         <module>elastic-search-model</module>
         <module>elastic-search-dml</module>
         <module>elastic-search-sync-produce</module>

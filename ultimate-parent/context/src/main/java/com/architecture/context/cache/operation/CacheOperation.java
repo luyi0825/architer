@@ -1,7 +1,9 @@
 package com.architecture.context.cache.operation;
 
 
-import com.architecture.context.cache.enums.LockType;
+
+import com.architecture.context.cache.annotation.Cacheable;
+import com.architecture.context.lock.LockType;
 import lombok.Data;
 
 import java.lang.annotation.Annotation;

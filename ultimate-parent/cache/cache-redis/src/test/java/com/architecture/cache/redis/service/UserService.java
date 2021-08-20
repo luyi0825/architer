@@ -1,9 +1,9 @@
 package com.architecture.cache.redis.service;
 
-import com.architecture.ultimate.module.common.cache.annotation.Cacheable;
-import com.architecture.ultimate.module.common.cache.annotation.PutCache;
+import com.architecture.module.common.cache.annotation.Cacheable;
+import com.architecture.module.common.cache.annotation.PutCache;
 import com.architecture.cache.redis.entity.User;
-import com.architecture.ultimate.module.common.cache.enums.LockType;
+import com.architecture.module.common.cache.enums.LockType;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 

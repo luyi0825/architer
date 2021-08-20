@@ -1,7 +1,7 @@
 package com.architecture.cache.redis;
 
 
-import com.architecture.cache.Constants;
+
 import com.architecture.utils.JsonUtils;
 import lombok.NonNull;
 import org.springframework.data.redis.core.*;
@@ -50,7 +50,7 @@ public class StringRedisService {
      * @date 2020/12/24 下午11:18
      */
     public void set(String key, Object value, long expire) {
-        if (expire == Constants.NEVER_EXPIRE) {
+        if (expire == CacheCons.NEVER_EXPIRE) {
             this.set(key, value);
         }
         if (expire <= 0) {

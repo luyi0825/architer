@@ -11,7 +11,7 @@ elasticjob:
     connection-timeout-milliseconds: 6000
   jobs:
     firstJob:
-      elasticJobClass: com.architecture.ultimate.es.elasticjob.CallBack
+      elasticJobClass: com.architecture.es.elasticjob.CallBack
       cron: 0/5 * * * * ?
       shardingTotalCount: 3
       shardingItemParameters: 0=Beijing,1=Shanghai,2=Guangzhou

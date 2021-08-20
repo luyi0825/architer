@@ -1,4 +1,4 @@
-//package com.architecture.ultimate.test;
+//package com.architecture.test;
 //
 //
 //import org.springframework.boot.SpringApplication;
@@ -13,7 +13,7 @@
 //@SpringBootApplication
 //@EnableDiscoveryClient
 //@RestController
-//@EnableFeignClients(basePackages = "com.architecture.ultimate.test.feign")
+//@EnableFeignClients(basePackages = "com.architecture.test.feign")
 //public class TestStart {
 //
 //    public static void main(String[] args) {

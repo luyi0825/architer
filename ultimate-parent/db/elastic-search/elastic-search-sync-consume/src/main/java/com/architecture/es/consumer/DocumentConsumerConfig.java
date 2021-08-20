@@ -13,9 +13,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  * 文档消费配置类
  */
 @Configuration
-@ComponentScan("com.architecture.ultimate.es.consumer")
+@ComponentScan("com.architecture.es.consumer")
 @EnableRabbit
-@EnableMongoRepositories(basePackages = "com.architecture.ultimate.es.consumer.dao")
+@EnableMongoRepositories(basePackages = "com.architecture.es.consumer.dao")
 public class DocumentConsumerConfig {
 
 }

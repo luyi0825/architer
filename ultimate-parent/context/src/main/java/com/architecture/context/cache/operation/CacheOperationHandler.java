@@ -3,7 +3,7 @@ package com.architecture.context.cache.operation;
 
 import com.architecture.context.cache.CacheAsyncExecutorService;
 import com.architecture.context.cache.CacheExpressionParser;
-import com.architecture.context.cache.enums.LockType;
+
 
 import com.architecture.context.cache.key.KeyGenerator;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +27,7 @@ public abstract class CacheOperationHandler {
 
     private KeyGenerator keyGenerator;
 
-    private com.architecture.context.common.cache.lock.LockManager lockManager;
+    private LockManager lockManager;
 
     protected CacheExpressionParser cacheExpressionParser;
 

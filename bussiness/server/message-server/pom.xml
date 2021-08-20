@@ -12,7 +12,7 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
+            <groupId>com.architecture</groupId>
             <artifactId>boot-starter-web-mvc</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -27,7 +27,7 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
+            <groupId>com.architecture</groupId>
             <artifactId>db-druid</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -48,7 +48,7 @@
             <version>3.0.2</version>
         </dependency>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
+            <groupId>com.architecture</groupId>
             <artifactId>cloud-nacos-discovery</artifactId>
             <version>${project.version}</version>
         </dependency>

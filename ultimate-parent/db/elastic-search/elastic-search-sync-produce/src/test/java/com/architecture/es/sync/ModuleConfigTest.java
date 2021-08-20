@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@SpringBootApplication(scanBasePackages = "com.architecture.ultimate.es.sync")
+@SpringBootApplication(scanBasePackages = "com.architecture.es.sync")
 public class ModuleConfigTest {
 
     public static void main(String[] args) {

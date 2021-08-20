@@ -1,17 +1,13 @@
-package com.architecture.context.common.cache;
+package com.architecture.context.cache;
 
 
-import com.architecture.context.cache.CacheProcess;
-import com.architecture.context.cache.operation.CacheOperation;
 import com.architecture.context.cache.operation.CacheOperationHandler;
-import com.architecture.context.cache.operation.CacheOperationHandler;
-import com.architecture.context.common.cache.operation.CacheOperationMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.interceptor.CacheOperation;
 import org.springframework.util.CollectionUtils;
 
 
 import java.lang.reflect.Method;
-import java.util.Collection;
 import java.util.List;
 
 /**

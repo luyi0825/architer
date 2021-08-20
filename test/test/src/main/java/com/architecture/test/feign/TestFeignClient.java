@@ -1,4 +1,4 @@
-//package com.architecture.ultimate.test.feign;
+//package com.architecture.test.feign;
 //
 //import org.springframework.cloud.openfeign.FeignClient;
 //import org.springframework.web.bind.annotation.RequestMapping;

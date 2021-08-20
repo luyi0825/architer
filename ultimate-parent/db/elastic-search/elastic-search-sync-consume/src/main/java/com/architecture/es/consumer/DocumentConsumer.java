@@ -8,10 +8,7 @@ import com.architecture.es.model.EsConstant;
 import com.architecture.es.model.dto.BaseSyncDocumentDTO;
 import com.architecture.es.model.dto.BatchSyncDocumentDTO;
 import com.architecture.es.model.dto.SyncDocumentDTO;
-import com.architecture.context.common.exception.ParamsValidException;
-import com.architecture.context.common.exception.ServiceException;
-import com.architecture.mq.rabbit.RetryType;
-import com.architecture.mq.rabbit.RetryUtils;
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;

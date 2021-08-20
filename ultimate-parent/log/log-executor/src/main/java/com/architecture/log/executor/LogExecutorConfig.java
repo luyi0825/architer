@@ -1,4 +1,4 @@
-//package com.architecture.ultimate.log.executor;
+//package com.architecture.log.executor;
 //
 //import org.springframework.boot.context.properties.EnableConfigurationProperties;
 //import org.springframework.context.annotation.Configuration;

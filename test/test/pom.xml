@@ -10,12 +10,12 @@
     <version>1.0.0</version>
     <dependencies>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
+            <groupId>com.architecture</groupId>
             <artifactId>cloud-nacos-discovery</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
+            <groupId>com.architecture</groupId>
             <artifactId>boot-starter-web-mvc</artifactId>
             <version>1.0.0</version>
         </dependency>
@@ -24,7 +24,7 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.architecture.ultimate</groupId>
+            <groupId>com.architecture</groupId>
             <artifactId>cloud-resttemplate</artifactId>
             <version>1.0.0</version>
         </dependency>
@@ -38,14 +38,14 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.architecture.ultimate</groupId>
+                <groupId>com.architecture</groupId>
                 <artifactId>dependencies</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>com.architecture.ultimate</groupId>
+                <groupId>com.architecture</groupId>
                 <artifactId>additional-dependencies</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
