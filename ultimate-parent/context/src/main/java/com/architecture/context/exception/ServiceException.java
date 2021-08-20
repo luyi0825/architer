@@ -1,4 +1,4 @@
-package com.architecture.context.common.exception;
+package com.architecture.context.exception;
 
 /**
  * 业务异常
