@@ -3,6 +3,7 @@ package com.architecture.context.cache;
 
 import com.architecture.context.cache.annotation.EnableCustomCaching;
 import com.architecture.context.cache.aspectj.AspectjConfiguration;
+import com.architecture.context.cache.proxy.ProxyConfiguration;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.AdviceModeImportSelector;
 import org.springframework.context.annotation.AutoProxyRegistrar;

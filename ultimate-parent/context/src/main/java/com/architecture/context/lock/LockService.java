@@ -1,4 +1,4 @@
-package com.architecture.context.common.lock;
+package com.architecture.context.lock;
 
 import java.util.concurrent.TimeUnit;
 

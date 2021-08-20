@@ -1,4 +1,4 @@
-package com.architecture.context.common.lock;
+package com.architecture.context.lock;
 
 public interface MyLock {
 }

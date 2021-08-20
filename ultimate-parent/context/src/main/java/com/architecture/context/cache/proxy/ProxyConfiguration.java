@@ -3,7 +3,7 @@ package com.architecture.context.cache.proxy;
 
 import com.architecture.context.cache.CacheAnnotationsParser;
 import com.architecture.context.cache.CacheProcess;
-import com.architecture.context.common.cache.DefaultCacheProcess;
+import com.architecture.context.cache.DefaultCacheProcess;
 import org.springframework.beans.factory.config.BeanDefinition;
 
 import org.springframework.context.annotation.AutoProxyRegistrar;
@@ -51,8 +51,8 @@ public class ProxyConfiguration {
 
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     @Bean
-    public com.architecture.context.common.cache.proxy.BeanFactoryCacheSourceAdvisor beanFactoryCacheSourceAdvisor(AnnotationCacheOperationSource annotationCacheOperationSource, CacheInterceptor cacheInterceptor) {
-        com.architecture.context.common.cache.proxy.BeanFactoryCacheSourceAdvisor advisor = new com.architecture.context.common.cache.proxy.BeanFactoryCacheSourceAdvisor();
+    public BeanFactoryCacheSourceAdvisor beanFactoryCacheSourceAdvisor(AnnotationCacheOperationSource annotationCacheOperationSource, CacheInterceptor cacheInterceptor) {
+       BeanFactoryCacheSourceAdvisor advisor = new BeanFactoryCacheSourceAdvisor();
         advisor.setCacheOperationSource(annotationCacheOperationSource);
         advisor.setAdvice(cacheInterceptor);
         return advisor;

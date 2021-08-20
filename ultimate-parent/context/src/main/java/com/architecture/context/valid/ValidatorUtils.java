@@ -1,8 +1,8 @@
 
-package com.architecture.context.common.valid;
+package com.architecture.context.valid;
 
 
-import com.architecture.context.common.exception.ParamsValidException;
+import com.architecture.context.exception.ParamsValidException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

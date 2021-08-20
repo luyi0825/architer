@@ -1,8 +1,8 @@
 package com.architecture.context.cache;
 
 import com.architecture.context.cache.operation.CacheOperationMetadata;
-import com.architecture.context.common.cache.key.CacheEvaluationContext;
-import com.architecture.context.common.cache.key.CacheExpressionRootObject;
+import com.architecture.context.cache.key.CacheEvaluationContext;
+import com.architecture.context.cache.key.CacheExpressionRootObject;
 import org.springframework.context.expression.AnnotatedElementKey;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;

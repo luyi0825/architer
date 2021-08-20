@@ -1,7 +1,6 @@
 package com.business.message.captcha.api;
 
 
-import com.architecture.context.common.valid.group.AddGroup;
 import com.business.message.captcha.entity.CaptchaTemplate;
 import com.architecture.mybatisplus.QueryParam;
 import com.architecture.query.common.model.Pagination;
@@ -16,7 +15,7 @@ import io.swagger.annotations.Api;
  *
  * @author luyi
  */
-@RestController()
+@RestController
 @Api(tags = "验证码模板")
 @RequestMapping("/captchaTemplateApi")
 public interface CaptchaTemplateApi {
@@ -30,7 +29,7 @@ public interface CaptchaTemplateApi {
     @ApiOperation(value = "分页查询")
     @ApiOperationSupport(ignoreParameters = {"entity"})
     @PostMapping("/pageQuery")
-    Pagination pageQuery(@RequestBody QueryParam<CaptchaTemplate> queryParam);
+    Pagination<CaptchaTemplate> pageQuery(@RequestBody QueryParam<CaptchaTemplate> queryParam);
 
     /**
      * 添加验证码配置

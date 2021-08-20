@@ -1,4 +1,4 @@
-package com.architecture.context.common;
+package com.architecture.context;
 
 /**
  * 定义service常用异常

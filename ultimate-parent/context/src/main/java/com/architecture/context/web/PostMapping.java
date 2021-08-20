@@ -1,4 +1,4 @@
-package com.architecture.context.common.web;
+package com.architecture.context.web;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

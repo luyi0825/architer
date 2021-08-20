@@ -1,7 +1,7 @@
-package com.architecture.context.common.response;
+package com.architecture.context.response;
 
 
-import com.architecture.context.common.ResponseStatusEnum;
+import com.architecture.context.ResponseStatusEnum;
 
 import java.io.Serializable;
 import java.util.Objects;

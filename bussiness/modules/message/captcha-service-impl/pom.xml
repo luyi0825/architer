@@ -23,17 +23,8 @@
         </dependency>
         <dependency>
             <groupId>com.architecture</groupId>
-            <artifactId>redis-cache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.architecture</groupId>
             <artifactId>test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.architecture</groupId>
-            <artifactId>context</artifactId>
-            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>

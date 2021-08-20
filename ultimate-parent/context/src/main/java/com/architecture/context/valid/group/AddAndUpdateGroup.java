@@ -2,6 +2,9 @@
 package com.architecture.context.common.valid.group;
 
 
+import com.architecture.context.valid.group.AddGroup;
+import com.architecture.context.valid.group.UpdateGroup;
+
 import javax.validation.GroupSequence;
 
 /**

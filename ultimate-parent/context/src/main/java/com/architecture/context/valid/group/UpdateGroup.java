@@ -1,4 +1,4 @@
-package com.architecture.context.common.valid.group;
+package com.architecture.context.valid.group;
 
 /**
  * 参数校验update组

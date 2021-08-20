@@ -1,4 +1,4 @@
-package com.architecture.context.common.cache.proxy;
+package com.architecture.context.cache.proxy;
 
 import org.springframework.aop.ClassFilter;
 import org.springframework.aop.Pointcut;

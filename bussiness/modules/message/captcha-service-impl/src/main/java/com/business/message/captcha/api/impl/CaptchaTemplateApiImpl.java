@@ -23,7 +23,7 @@ public class CaptchaTemplateApiImpl implements CaptchaTemplateApi {
     }
 
     @Override
-    public Pagination pageQuery(QueryParam<CaptchaTemplate> queryParam) {
+    public Pagination<CaptchaTemplate> pageQuery(QueryParam<CaptchaTemplate> queryParam) {
         return captchaTemplateService.pageQuery(queryParam);
     }
 

@@ -1,4 +1,4 @@
-package com.architecture.context.common.valid;
+package com.architecture.context.valid;
 
 
 import javax.validation.Constraint;

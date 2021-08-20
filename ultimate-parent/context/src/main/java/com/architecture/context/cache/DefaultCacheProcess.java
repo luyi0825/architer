@@ -8,6 +8,7 @@ import org.springframework.util.CollectionUtils;
 
 
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.List;
 
 /**

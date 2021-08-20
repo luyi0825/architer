@@ -3,6 +3,7 @@ package com.architecture.context.cache;
 import com.architecture.context.cache.annotation.DeleteCache;
 import com.architecture.context.cache.annotation.PutCache;
 import com.architecture.context.cache.operation.CacheOperation;
+import com.architecture.context.cache.operation.DeleteCacheOperation;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -99,7 +100,7 @@ public class CacheAnnotationsParser {
             }
         }
 
-        com.architecture.context.common.cache.annotation.DeleteCache[] deleteCaches = caching.delete();
+       DeleteCache[] deleteCaches = caching.delete();
         if (ArrayUtils.isNotEmpty(deleteCaches)) {
             for (com.architecture.context.common.cache.annotation.DeleteCache deleteCache : deleteCaches) {
                 this.parseDeleteCacheAnnotation(annotatedElement, deleteCache, ops);
@@ -113,7 +114,7 @@ public class CacheAnnotationsParser {
     private void parsePutCacheAnnotation(AnnotatedElement annotatedElement,
                                          PutCache cachePut,
                                          Collection<CacheOperation> ops) {
-        com.architecture.context.common.cache.operation.PutCacheOperation putCacheOperation = new com.architecture.context.common.cache.operation.PutCacheOperation();
+        PutCacheOperation putCacheOperation = new PutCacheOperation();
         putCacheOperation.setKey(cachePut.key());
         putCacheOperation.setCacheName(cachePut.cacheName());
         putCacheOperation.setLockType(cachePut.lockType());
@@ -129,9 +130,9 @@ public class CacheAnnotationsParser {
      * 解析删除缓存注解
      */
     private void parseDeleteCacheAnnotation(AnnotatedElement annotatedElement,
-                                            com.architecture.context.common.cache.annotation.DeleteCache deleteCache,
+                                            DeleteCache deleteCache,
                                             Collection<CacheOperation> ops) {
-        com.architecture.context.common.cache.operation.DeleteCacheOperation deleteCacheOperation = new com.architecture.context.common.cache.operation.DeleteCacheOperation();
+        DeleteCacheOperation deleteCacheOperation = new com.architecture.context.common.cache.operation.DeleteCacheOperation();
         deleteCacheOperation.setCacheName(deleteCache.cacheName());
         deleteCacheOperation.setLock(deleteCache.lock());
         deleteCacheOperation.setLockType(deleteCache.lockType());

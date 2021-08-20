@@ -1,4 +1,4 @@
-package com.architecture.context.common.valid;
+package com.architecture.context.valid;
 
 /**
  * 描述:ListValue 注解的校验器 -- 数值
