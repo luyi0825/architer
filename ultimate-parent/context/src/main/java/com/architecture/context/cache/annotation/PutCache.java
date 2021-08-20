@@ -40,7 +40,7 @@ public @interface PutCache {
     /**
      * @see Cacheable#lockType()
      */
-    LockType lockType() default LockType.none;
+    LockType lockType() default LockType.NONE;
 
     /**
      * @see Cacheable#lock()

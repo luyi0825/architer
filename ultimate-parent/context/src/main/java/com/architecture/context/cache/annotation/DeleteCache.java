@@ -1,6 +1,8 @@
 package com.architecture.context.cache.annotation;
 
 
+import com.architecture.context.lock.LockType;
+
 import java.lang.annotation.*;
 
 /**
@@ -27,7 +29,7 @@ public @interface DeleteCache {
     /**
      * @see Cacheable#lockType()
      */
-    LockType lockType() default LockType.none;
+    LockType lockType() default LockType.NONE;
 
     /**
      * @see Cacheable#lock()
