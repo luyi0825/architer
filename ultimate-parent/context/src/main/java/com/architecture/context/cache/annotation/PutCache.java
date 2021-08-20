@@ -2,7 +2,7 @@ package com.architecture.context.cache.annotation;
 
 
 import com.architecture.context.cache.CacheConstants;
-import com.architecture.context.cache.enums.LockType;
+import com.architecture.context.lock.LockType;
 
 import java.lang.annotation.*;
 

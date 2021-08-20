@@ -1,16 +1,15 @@
 package com.architecture.cache.redis.service;
 
-import com.architecture.module.common.cache.annotation.Cacheable;
-import com.architecture.module.common.cache.annotation.PutCache;
 import com.architecture.cache.redis.entity.User;
-import com.architecture.module.common.cache.enums.LockType;
+import com.architecture.context.cache.annotation.Cacheable;
+import com.architecture.context.cache.annotation.PutCache;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
 
-    @Cacheable(cacheName = "#root.method.returnType.name", key = "#id", lockType = LockType.reentrant, expireTime = 60)
+    @Cacheable(cacheName = "#root.method.returnType.name", key = "#id", expireTime = 60)
     User findById(@NonNull Long id);
 
     User update(User user);

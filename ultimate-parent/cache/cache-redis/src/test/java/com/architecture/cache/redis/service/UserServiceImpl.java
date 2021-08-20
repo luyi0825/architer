@@ -1,10 +1,10 @@
 package com.architecture.cache.redis.service;
 
-import com.architecture.module.common.cache.annotation.Cacheable;
-import com.architecture.module.common.cache.annotation.DeleteCache;
-import com.architecture.module.common.cache.annotation.PutCache;
+import com.architecture.context.cache.annotation.Cacheable;
+import com.architecture.context.cache.annotation.DeleteCache;
+import com.architecture.context.cache.annotation.PutCache;
+import com.architecture.context.lock.LockType;
 import com.architecture.cache.redis.entity.User;
-import com.architecture.module.common.cache.enums.LockType;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @PutCache(key = "#user.class.name + '::' + #user.name", lockType = LockType.write)
+    @PutCache(key = "#user.class.name + '::' + #user.name")
     public User update(User user) {
         System.out.println("save ..");
         try {
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Cacheable(cacheName = "#root.method.returnType.name", key = "#name", lockType = LockType.read)
+    @Cacheable(cacheName = "#root.method.returnType.name", key = "#name")
     @Override
     public User findByName(String name) {
         System.out.println("read:" + name);

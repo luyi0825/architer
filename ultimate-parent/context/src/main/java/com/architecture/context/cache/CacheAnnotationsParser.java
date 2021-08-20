@@ -3,7 +3,9 @@ package com.architecture.context.cache;
 import com.architecture.context.cache.annotation.DeleteCache;
 import com.architecture.context.cache.annotation.PutCache;
 import com.architecture.context.cache.operation.CacheOperation;
+import com.architecture.context.cache.operation.CacheableOperation;
 import com.architecture.context.cache.operation.DeleteCacheOperation;
+import com.architecture.context.cache.operation.PutCacheOperation;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -71,8 +73,8 @@ public class CacheAnnotationsParser {
         anns.forEach(annotation -> {
             if (annotation instanceof PutCache) {
                 parsePutCacheAnnotation(annotatedElement, (PutCache) annotation, ops);
-            } else if (annotation instanceof com.architecture.context.common.cache.annotation.DeleteCache) {
-                parseDeleteCacheAnnotation(annotatedElement, (com.architecture.context.common.cache.annotation.DeleteCache) annotation, ops);
+            } else if (annotation instanceof DeleteCache) {
+                parseDeleteCacheAnnotation(annotatedElement, (DeleteCache) annotation, ops);
             } else if (annotation instanceof Cacheable) {
                 parseCacheableAnnotation(annotatedElement, (Cacheable) annotation, ops);
             } else if (annotation instanceof Caching) {
@@ -102,7 +104,7 @@ public class CacheAnnotationsParser {
 
        DeleteCache[] deleteCaches = caching.delete();
         if (ArrayUtils.isNotEmpty(deleteCaches)) {
-            for (com.architecture.context.common.cache.annotation.DeleteCache deleteCache : deleteCaches) {
+            for (DeleteCache deleteCache : deleteCaches) {
                 this.parseDeleteCacheAnnotation(annotatedElement, deleteCache, ops);
             }
         }
@@ -132,7 +134,7 @@ public class CacheAnnotationsParser {
     private void parseDeleteCacheAnnotation(AnnotatedElement annotatedElement,
                                             DeleteCache deleteCache,
                                             Collection<CacheOperation> ops) {
-        DeleteCacheOperation deleteCacheOperation = new com.architecture.context.common.cache.operation.DeleteCacheOperation();
+        DeleteCacheOperation deleteCacheOperation = new DeleteCacheOperation();
         deleteCacheOperation.setCacheName(deleteCache.cacheName());
         deleteCacheOperation.setLock(deleteCache.lock());
         deleteCacheOperation.setLockType(deleteCache.lockType());

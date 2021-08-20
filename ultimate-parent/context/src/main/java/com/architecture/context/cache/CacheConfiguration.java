@@ -5,6 +5,7 @@ import com.architecture.context.cache.key.DefaultKeyGenerator;
 import com.architecture.context.cache.key.KeyGenerator;
 import com.architecture.context.cache.operation.CacheableOperationHandler;
 import com.architecture.context.cache.operation.DeleteCacheOperationHandler;
+import com.architecture.context.cache.operation.PutCacheOperationHandler;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -33,7 +34,7 @@ public class CacheConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public CacheProcess cacheProcess() {
-        return new com.architecture.context.common.cache.DefaultCacheProcess();
+        return new DefaultCacheProcess();
     }
 
     @Bean
@@ -47,8 +48,8 @@ public class CacheConfiguration {
     }
 
     @Bean
-    public com.architecture.context.common.cache.operation.PutCacheOperationHandler putCacheOperationHandler() {
-        return new com.architecture.context.common.cache.operation.PutCacheOperationHandler();
+    public PutCacheOperationHandler putCacheOperationHandler() {
+        return new PutCacheOperationHandler();
     }
 
 

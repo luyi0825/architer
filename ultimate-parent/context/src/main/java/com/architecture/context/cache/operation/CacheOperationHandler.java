@@ -5,10 +5,11 @@ import com.architecture.context.cache.CacheAsyncExecutorService;
 import com.architecture.context.cache.CacheExpressionParser;
 
 
+import com.architecture.context.cache.exception.CacheHandlerException;
 import com.architecture.context.cache.key.KeyGenerator;
-import org.apache.commons.lang3.StringUtils;
+import com.architecture.context.cache.lock.LockManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
+import com.architecture.context.cache.CacheManager;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -71,7 +72,7 @@ public abstract class CacheOperationHandler {
      * @param metadata 缓存操作元数据
      * @return 调用方法的返回值
      */
-    protected abstract Object executeCacheHandler(String[] key, com.architecture.context.common.cache.operation.CacheOperationMetadata metadata);
+    protected abstract Object executeCacheHandler(String[] key, CacheOperationMetadata metadata);
 
     /**
      * 执行缓存写操作
@@ -79,7 +80,7 @@ public abstract class CacheOperationHandler {
     public void writeCache(boolean async, CacheWriteExecute cacheWriteExecute) {
         if (async) {
             if (cacheAsyncExecutorService == null) {
-                throw new com.architecture.context.common.cache.exception.CacheHandlerException("cacheAsyncExecutorService is null");
+                throw new CacheHandlerException("cacheAsyncExecutorService is null");
             }
             cacheAsyncExecutorService.submit(cacheWriteExecute::write);
         } else {
@@ -91,24 +92,25 @@ public abstract class CacheOperationHandler {
      * 通过缓存注解得到对应的锁
      */
     protected Lock getLock(CacheOperationMetadata metadata) {
-        if (LockType.none == metadata.getCacheOperation().getLockType()) {
-            return null;
-        }
-        String lock = metadata.getCacheOperation().getLock();
-        if (StringUtils.isEmpty(lock)) {
-            lock = metadata.getTarget().getClass() + "." + metadata.getTargetMethod().getName();
-        }
-        String lockName = "lock." + lock;
-        switch (metadata.getCacheOperation().getLockType()) {
-            case read:
-                return lockManager.getReadLock(lockName);
-            case write:
-                return lockManager.getWriteLock(lockName);
-            case reentrant:
-                return lockManager.getReentrantLock(lockName);
-            default:
-                throw new IllegalArgumentException("lock not match");
-        }
+//        if (LockType.none == metadata.getCacheOperation().getLockType()) {
+//            return null;
+//        }
+//        String lock = metadata.getCacheOperation().getLock();
+//        if (StringUtils.isEmpty(lock)) {
+//            lock = metadata.getTarget().getClass() + "." + metadata.getTargetMethod().getName();
+//        }
+//        String lockName = "lock." + lock;
+//        switch (metadata.getCacheOperation().getLockType()) {
+//            case read:
+//                return lockManager.getReadLock(lockName);
+//            case write:
+//                return lockManager.getWriteLock(lockName);
+//            case reentrant:
+//                return lockManager.getReentrantLock(lockName);
+//            default:
+//                throw new IllegalArgumentException("lock not match");
+//        }
+        return null;
     }
 
     public Object invoke(CacheOperationMetadata metadata) {
@@ -139,7 +141,7 @@ public abstract class CacheOperationHandler {
     }
 
     @Autowired(required = false)
-    public void setLockManager(com.architecture.context.common.cache.lock.LockManager lockManager) {
+    public void setLockManager(LockManager lockManager) {
         this.lockManager = lockManager;
     }
 

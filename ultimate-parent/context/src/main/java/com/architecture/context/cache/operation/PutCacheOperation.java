@@ -1,11 +1,12 @@
 package com.architecture.context.cache.operation;
 
 
+import com.architecture.context.cache.annotation.Cacheable;
 import lombok.Data;
 
 /**
  * @author luyi
- * @see PutCache 对应
+ * @see com.architecture.context.cache.annotation.PutCache
  */
 @Data
 public class PutCacheOperation extends CacheOperation {

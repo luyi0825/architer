@@ -1,7 +1,7 @@
 package com.architecture.cache.redis;
 
 
-import com.architecture.context.common.cache.lock.LockManager;
+import com.architecture.context.cache.lock.LockManager;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;

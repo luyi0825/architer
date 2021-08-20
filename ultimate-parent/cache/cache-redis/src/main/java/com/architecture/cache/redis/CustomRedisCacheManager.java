@@ -1,6 +1,7 @@
 package com.architecture.cache.redis;
 
-import com.architecture.cache.CacheManager;
+import com.architecture.context.cache.CacheManager;
+import com.architecture.context.cache.lock.LockManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

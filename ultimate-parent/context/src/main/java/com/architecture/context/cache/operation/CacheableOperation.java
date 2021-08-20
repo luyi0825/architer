@@ -1,5 +1,6 @@
 package com.architecture.context.cache.operation;
 
+import com.architecture.context.cache.annotation.Cacheable;
 import lombok.Data;
 
 /**

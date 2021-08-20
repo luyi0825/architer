@@ -1,7 +1,5 @@
 package com.architecture.context.cache.annotation;
 
-import com.architecture.context.cache.enums.LockType;
-
 
 import java.lang.annotation.*;
 

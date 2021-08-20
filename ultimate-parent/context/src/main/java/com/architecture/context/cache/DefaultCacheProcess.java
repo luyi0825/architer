@@ -1,9 +1,10 @@
 package com.architecture.context.cache;
 
 
+import com.architecture.context.cache.operation.CacheOperation;
 import com.architecture.context.cache.operation.CacheOperationHandler;
+import com.architecture.context.cache.operation.CacheOperationMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.interceptor.CacheOperation;
 import org.springframework.util.CollectionUtils;
 
 
