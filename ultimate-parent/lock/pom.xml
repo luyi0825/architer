@@ -9,12 +9,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <packaging>pom</packaging>
-    <artifactId>lock-parent</artifactId>
-    <name>lock-parent</name>
-    <description>lock-parent</description>
+    <artifactId>lockEnum-parent</artifactId>
+    <name>lockEnum-parent</name>
+    <description>lockEnum-parent</description>
     <modules>
-        <module>jdk-lock</module>
-        <module>redis-lock</module>
-        <module>zk-lock</module>
+        <module>jdk-lockEnum</module>
+        <module>redis-lockEnum</module>
+        <module>zk-lockEnum</module>
     </modules>
 </project>

@@ -3,7 +3,6 @@ package com.architecture.cache.redis.service;
 import com.architecture.context.cache.annotation.Cacheable;
 import com.architecture.context.cache.annotation.DeleteCache;
 import com.architecture.context.cache.annotation.PutCache;
-import com.architecture.context.lock.LockType;
 import com.architecture.cache.redis.entity.User;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.lang.NonNull;

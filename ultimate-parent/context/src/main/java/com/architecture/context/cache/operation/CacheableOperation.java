@@ -2,11 +2,13 @@ package com.architecture.context.cache.operation;
 
 import com.architecture.context.cache.annotation.Cacheable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author luyi
  * 对应Cacheable
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class CacheableOperation extends CacheOperation {
     /**

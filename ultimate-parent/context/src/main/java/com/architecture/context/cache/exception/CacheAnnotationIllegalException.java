@@ -1,4 +1,4 @@
-package com.architecture.context.common.cache.exception;
+package com.architecture.context.cache.exception;
 
 /**
  * @author luyi

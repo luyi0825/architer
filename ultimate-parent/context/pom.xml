@@ -55,5 +55,10 @@
             <version>1.9.7</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.architecture</groupId>
+            <artifactId>test</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>

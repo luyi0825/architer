@@ -3,7 +3,7 @@ package com.business.base.area.api;
 
 import com.architecture.context.cache.annotation.Cacheable;
 import com.architecture.context.cache.annotation.DeleteCache;
-import com.architecture.context.lock.LockType;
+import com.architecture.context.lock.LockEnum;
 import com.business.base.area.entity.StandardArea;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +23,7 @@ public interface StandardAreaApi {
      * @return parentId区划下的子区划
      */
     @GetMapping("/findByParentId/{parentId}")
-    @Cacheable(cacheName = "'standardAreaApi_findByParentId'", key = "#parentId", lockType = LockType.read)
+    @Cacheable(cacheName = "'standardAreaApi_findByParentId'", key = "#parentId", lockType = LockEnum.read)
     List<StandardArea> findByParentId(@PathVariable("parentId") int parentId);
 
     /**

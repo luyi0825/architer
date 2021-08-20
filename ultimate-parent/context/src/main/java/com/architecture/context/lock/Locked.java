@@ -6,11 +6,11 @@ import java.util.concurrent.TimeUnit;
  * @author luyi
  * 锁注解
  */
-public @interface Lock {
+public @interface Locked {
     /**
      * 锁的类型
      */
-    LockType lockType();
+    LockEnum lock();
 
     /**
      * 锁的名称
@@ -31,12 +31,14 @@ public @interface Lock {
     /**
      * 过期时间：秒
      */
-    double expireTime() default -1;
+    float expireTime() default -1F;
 
     /**
      * 获取锁的时间
      */
-    double tryTime() default 1.5D;
+    float tryTime() default 1.5F;
+
+    LockType lockType() default LockType.REENTRANT;
 
 
 }

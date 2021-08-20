@@ -1,39 +1,26 @@
 package com.architecture.context.lock;
 
 /**
- * @author 锁的类型
+ * 锁的类型
+ *
+ * @author luyi
  */
 public enum LockType {
     /**
      * 没有锁
      */
-    NONE(null),
+    NONE,
     /**
-     * jdk的本地锁
+     * 读
      */
-    JDK("lock_jdk"),
+    READ,
     /**
-     * redis
+     * 写
      */
-    REDIS("lock_redis"),
+    WRITE,
     /**
-     * zookeeper
+     * 重入
      */
-    ZK("lock_zk");
-    private final String beanName;
+    REENTRANT
 
-    LockType(String beanName) {
-        this.beanName = beanName;
-    }
-
-    public String getBeanName() {
-        return beanName;
-    }
-
-    @Override
-    public String toString() {
-        return "LockType{" +
-                "beanName='" + beanName + '\'' +
-                '}';
-    }
 }

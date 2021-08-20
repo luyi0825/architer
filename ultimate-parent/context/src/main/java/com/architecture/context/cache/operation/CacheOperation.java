@@ -3,7 +3,7 @@ package com.architecture.context.cache.operation;
 
 
 import com.architecture.context.cache.annotation.Cacheable;
-import com.architecture.context.lock.LockType;
+import com.architecture.context.lock.LockEnum;
 import lombok.Data;
 
 import java.lang.annotation.Annotation;
@@ -27,7 +27,7 @@ public class CacheOperation {
     /**
      * @see Cacheable#lockType()
      */
-    private LockType lockType;
+    private LockEnum lockEnum;
     /**
      * @see Cacheable#lock()
      */

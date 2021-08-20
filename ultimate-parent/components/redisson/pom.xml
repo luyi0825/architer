@@ -3,16 +3,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>lockEnum-parent</artifactId>
+        <artifactId>components</artifactId>
         <groupId>com.architecture</groupId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>lockEnum-jdk</artifactId>
-    <name>lockEnum-jdk</name>
-    <description>lockEnum-jdk</description>
+    <artifactId>component-redisson</artifactId>
+    <name>component-redisson</name>
+    <description>component-redisson</description>
     <packaging>jar</packaging>
-    <dependencies>
-    </dependencies>
+    <modules>
 
+
+    </modules>
+    <dependencies>
+
+    </dependencies>
 </project>
