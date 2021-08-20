@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.NonNullApi;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -30,7 +32,7 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
 
     private Map<String, ConfirmCallbackHandler> confirmCallbackHandlerMap;
 
-    private Map<String, ReturnCallbackHandler> returnCallbackHandlerMap;
+    private Map<String, ReturnCallbackHandler> returnCallbackHandlerMap = null;
 
 
     public PublishCallBackForwarder(RabbitTemplate rabbitTemplate) {
@@ -82,7 +84,7 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
                 }
                 CallbackCorrelationData confirmCorrelationData = (CallbackCorrelationData) correlationData;
                 String callbackKey = confirmCorrelationData.getCallBackId();
-                if (StringUtils.isEmpty(callbackKey)) {
+                if (!StringUtils.hasText(callbackKey)) {
                     return;
                 }
                 ConfirmCallbackHandler confirmCallbackHandler = confirmCallbackHandlerMap.get(callbackKey);
@@ -97,7 +99,7 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
         this.initConfirmCallbackHandler(applicationContext);
         this.initReturnCallBackHandler(applicationContext);
     }
@@ -112,7 +114,7 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
         returnCallbackHandlerMap = new HashMap<>(returnCallbackHandlers.size());
         for (ReturnCallbackHandler returnCallbackHandler : returnCallbackHandlers) {
             String callbackKey = returnCallbackHandler.getCallBackId();
-            if (StringUtils.isEmpty(callbackKey)) {
+            if (!StringUtils.hasText(callbackKey)) {
                 continue;
             }
             if (returnCallbackHandlerMap.containsKey(callbackKey)) {
@@ -132,7 +134,7 @@ public class PublishCallBackForwarder implements ApplicationContextAware {
         confirmCallbackHandlerMap = new HashMap<>(confirmCallbackHandlers.size());
         for (ConfirmCallbackHandler confirmCallbackHandler : confirmCallbackHandlers) {
             String confirmKey = confirmCallbackHandler.getCallBackId();
-            if (StringUtils.isEmpty(confirmKey)) {
+            if (!StringUtils.hasText(confirmKey)) {
                 continue;
             }
             if (confirmCallbackHandlerMap.containsKey(confirmKey)) {

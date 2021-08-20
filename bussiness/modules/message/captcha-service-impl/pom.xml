@@ -32,7 +32,8 @@
         </dependency>
         <dependency>
             <groupId>com.architecture</groupId>
-            <artifactId>module-model</artifactId>
+            <artifactId>context</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>

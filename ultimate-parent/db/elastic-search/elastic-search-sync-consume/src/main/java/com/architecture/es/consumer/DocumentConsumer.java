@@ -1,6 +1,8 @@
 package com.architecture.es.consumer;
 
 
+import com.architecture.context.exception.ParamsValidException;
+import com.architecture.context.exception.ServiceException;
 import com.architecture.es.consumer.entity.SyncResult;
 import com.architecture.es.consumer.service.SyncResultService;
 import com.architecture.es.dml.service.DocService;
@@ -10,6 +12,8 @@ import com.architecture.es.model.dto.BatchSyncDocumentDTO;
 import com.architecture.es.model.dto.SyncDocumentDTO;
 
 
+import com.architecture.mq.rabbit.RetryType;
+import com.architecture.mq.rabbit.RetryUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
@@ -165,7 +169,7 @@ public class DocumentConsumer {
         this.retryUtils = retryUtils;
     }
 
-    @Autowired
+    @Autowired(required = false)
     public void setExecutor(DocumentConsumerExecutor executor) {
         this.executor = executor;
     }

@@ -22,8 +22,9 @@
             <artifactId>mybatis-plus</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
+            <groupId>com.architecture</groupId>
+            <artifactId>context</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>io.swagger</groupId>
@@ -51,10 +52,6 @@
         <dependency>
             <groupId>com.architecture</groupId>
             <artifactId>redis-cache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.architecture</groupId>
-            <artifactId>module-model</artifactId>
         </dependency>
     </dependencies>
 </project>

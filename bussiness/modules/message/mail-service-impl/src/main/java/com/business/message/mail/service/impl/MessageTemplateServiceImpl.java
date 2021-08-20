@@ -1,6 +1,6 @@
 package com.business.message.mail.service.impl;
 
-import com.architecture.context.common.exception.ServiceException;
+import com.architecture.context.exception.ServiceException;
 import com.architecture.mybatisplus.service.impl.BaseServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 

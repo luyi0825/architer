@@ -14,10 +14,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>druid</module>
-        <module>mybatis-plus</module>
         <module>mybatis-plus-processor</module>
         <module>elastic-search</module>
-        <module>mybatis-fluent</module>
     </modules>
     <dependencyManagement>
         <dependencies>

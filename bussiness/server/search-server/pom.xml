@@ -52,6 +52,12 @@
             <groupId>com.architecture</groupId>
             <artifactId>cloud-nacos-config</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.architecture</groupId>
+            <artifactId>elastic-search-dml</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

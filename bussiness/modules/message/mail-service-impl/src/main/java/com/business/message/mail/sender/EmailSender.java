@@ -2,7 +2,7 @@ package com.business.message.mail.sender;
 
 
 
-import com.architecture.context.common.exception.ServiceException;
+import com.architecture.context.exception.ServiceException;
 import com.business.message.mail.model.Email;
 import com.sun.mail.smtp.SMTPAddressFailedException;
 import org.springframework.beans.factory.annotation.Autowired;

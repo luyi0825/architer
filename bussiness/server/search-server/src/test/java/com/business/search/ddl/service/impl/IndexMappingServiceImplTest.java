@@ -5,7 +5,6 @@ import com.architecture.es.dml.service.IndexMappingService;
 import com.architecture.es.model.MappingType;
 import com.architecture.es.model.ddl.IndexMapping;
 import com.architecture.es.model.ddl.MappingItem;
-import com.architecture.context.common.exception.ServiceException;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
