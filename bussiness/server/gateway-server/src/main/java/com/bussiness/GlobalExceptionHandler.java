@@ -1,12 +1,10 @@
 package com.bussiness;
 
 
-
-import com.architecture.context.common.ResponseStatusEnum;
-import com.architecture.context.common.exception.ServiceException;
-import com.architecture.context.common.response.ResponseResult;
-
-import com.architecture.context.common.response.R;
+import com.architecture.context.ResponseStatusEnum;
+import com.architecture.context.exception.ServiceException;
+import com.architecture.context.response.R;
+import com.architecture.context.response.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,9 +34,9 @@ import java.util.Map;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Value("${spring.application.name:12}")
+    @Value("${spring.application.name}")
     private String applicationName;
 
     /**
@@ -101,16 +99,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
-    public R handleDuplicateKeyException(DuplicateKeyException e){
+    public R handleDuplicateKeyException(DuplicateKeyException e) {
         logger.error(e.getMessage(), e);
         return R.error("数据库中已存在该记录");
     }
 
-//    @ExceptionHandler(AuthorizationException.class)
-//    public R handleAuthorizationException(AuthorizationException e){
-//        logger.error(e.getMessage(), e);
-//        return R.error("没有权限，请联系管理员授权");
-//    }
 
     /**
      * 描述:得到参数校验BindException的返回结果
@@ -121,14 +114,12 @@ public class GlobalExceptionHandler {
     private ResponseResult getBindExceptionBaseResponse(BindingResult bindingResult) {
         List<FieldError> fieldErrorList = bindingResult.getFieldErrors();
         ResponseResult baseResponse = new ResponseResult(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(), fieldErrorList.get(0).getDefaultMessage());
-        if (log.isDebugEnabled()) {
-            Map<String, String> errorInfoMap = new HashMap<>(fieldErrorList.size());
-            //TODO 调试环境开启
-            fieldErrorList.forEach(error -> {
-                errorInfoMap.put(error.getField(), error.getDefaultMessage());
-            });
-            // baseResponse.setTip(JSON.toJSONString(errorInfoMap));
-        }
+        Map<String, String> errorInfoMap = new HashMap<>(fieldErrorList.size());
+        fieldErrorList.forEach(error -> {
+            errorInfoMap.put(error.getField(), error.getDefaultMessage());
+        });
+        baseResponse.setData(errorInfoMap);
+
         return baseResponse;
     }
 
