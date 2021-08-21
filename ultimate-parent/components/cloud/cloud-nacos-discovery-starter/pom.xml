@@ -8,9 +8,9 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>cloud-nacos-discovery</artifactId>
-    <name>cloud-nacos-discovery</name>
-    <description>spring-cloud-alibaba-discovery</description>
+    <artifactId>cloud-nacos-discovery-starter</artifactId>
+    <name>cloud-nacos-discovery-starter</name>
+    <description>cloud-nacos-discovery-starter</description>
     <packaging>jar</packaging>
 
     <dependencies>

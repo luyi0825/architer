@@ -1,7 +1,6 @@
 package com.architectrue.lock.zk;
 
-import com.architecture.context.exception.ServiceException;
-import com.architecture.context.lock.LockResponse;
+
 import com.architecture.context.lock.LockService;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;

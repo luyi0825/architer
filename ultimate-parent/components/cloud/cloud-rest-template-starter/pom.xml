@@ -8,8 +8,8 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>cloud-resttemplate</artifactId>
-    <name>boot-rest-template</name>
+    <artifactId>cloud-rest-template-starter</artifactId>
+    <name>cloud-rest-template-starter</name>
     <description>restTemplate远程调用</description>
     <packaging>jar</packaging>
     <dependencies>
