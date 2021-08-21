@@ -1,0 +1,17 @@
+customize:
+  redisson:
+    client-config:
+      config:
+      enabled: true
+    lock-config:
+      enabled: true
+
+spring:
+  redis:
+    host: 127.0.0.1
+    redisson:
+      singleServerConfig:
+        address: redis://127.0.0.1:6379
+        code: org.redisson.codec.JsonJacksonCodec
+
+
