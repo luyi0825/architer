@@ -3,6 +3,7 @@ package com.architecture.redis;
 
 
 import com.architecture.context.cache.CacheService;
+import com.architecture.context.lock.LockService;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
@@ -79,6 +80,11 @@ public class RedisConfiguration {
     @Bean
     public CacheService redisAnnotationCacheOperation(RedisTemplate<String, Object> redisTemplate) {
         return new RedisCacheServiceImpl(redisTemplate);
+    }
+
+    @Bean("redisLock")
+    public LockService lockService(RedissonClient redissonClient) {
+        return new RedisLockServiceImpl(redissonClient);
     }
 
 }

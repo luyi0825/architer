@@ -4,6 +4,7 @@ package com.architectrue.lock.zk;
 import com.architecture.context.lock.LockService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class ZkLockedServiceImplTest {
 
-    @Resource(name = LockService.ZK_LOCK_BEAN)
+    @Autowired
     private LockService lockService;
 
     private static Long code = 0L;
@@ -96,9 +97,9 @@ class ZkLockedServiceImplTest {
     public void addLockCode(Long time) throws Exception {
         Lock lock;
         if (time != null && time > 0) {
-            lock = lockService.tryLock("/code-lock/timeout", 30, TimeUnit.SECONDS);
+            lock = lockService.tryFairLock("/code-lock/timeout", 30, TimeUnit.SECONDS);
         } else {
-            lock = lockService.tryLock("/code-lock/no-timeout");
+            lock = lockService.tryFairLock("/code-lock/no-timeout");
         }
 
         if (lock != null) {
