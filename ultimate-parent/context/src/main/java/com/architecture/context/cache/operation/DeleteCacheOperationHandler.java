@@ -2,7 +2,6 @@ package com.architecture.context.cache.operation;
 
 
 import com.architecture.context.cache.annotation.DeleteCache;
-import com.architecture.context.cache.operation.CacheOperation;
 
 
 import java.lang.annotation.Annotation;
@@ -27,7 +26,7 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
     protected Object executeCacheHandler(String[] keys, CacheOperationMetadata metadata) {
         CacheOperation cacheOperation = metadata.getCacheOperation();
         for (String key : keys) {
-            writeCache(cacheOperation.isAsync(), () -> cacheManager.deleteCache(key));
+            //writeCache(cacheOperation.isAsync(), () -> cacheService.deleteCache(key));
         }
         return invoke(metadata);
     }

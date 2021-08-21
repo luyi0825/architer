@@ -2,9 +2,6 @@ package com.architecture.context.cache.operation;
 
 
 import com.architecture.context.cache.annotation.PutCache;
-import com.architecture.context.cache.operation.CacheOperationHandler;
-import com.architecture.context.cache.operation.CacheOperationMetadata;
-import com.architecture.context.cache.operation.PutCacheOperation;
 import com.architecture.context.common.cache.utils.CacheUtils;
 import org.springframework.util.StringUtils;
 
@@ -30,14 +27,13 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         long expireTime = CacheUtils.getExpireTime(putCacheOperation.getExpireTime(), putCacheOperation.getRandomExpireTime());
         for (String key : keys) {
             if (StringUtils.isEmpty(cacheValue)) {
-                writeCache(putCacheOperation.isAsync(), () -> cacheManager.putCache(key, value, expireTime));
+               // writeCache(putCacheOperation.isAsync(), () -> cacheService.putCache(key, value, expireTime));
             } else {
                 Object needCacheValue = cacheExpressionParser.executeParse(metadata, cacheValue);
-                writeCache(putCacheOperation.isAsync(), () -> cacheManager.putCache(key, needCacheValue, expireTime));
+                //  writeCache(putCacheOperation.isAsync(), () -> cacheService.putCache(key, needCacheValue, expireTime));
             }
         }
         return value;
     }
-
 
 }

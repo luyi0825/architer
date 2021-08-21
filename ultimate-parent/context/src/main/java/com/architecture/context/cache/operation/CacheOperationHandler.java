@@ -7,9 +7,9 @@ import com.architecture.context.cache.CacheExpressionParser;
 
 import com.architecture.context.cache.exception.CacheHandlerException;
 import com.architecture.context.cache.key.KeyGenerator;
-import com.architecture.context.cache.lock.LockManager;
+import com.architecture.context.lock.LockService;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.architecture.context.cache.CacheManager;
+import com.architecture.context.cache.CacheService;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -24,11 +24,11 @@ public abstract class CacheOperationHandler {
     /**
      * 缓存manager,定义protected，让实现类也可以直接使用
      */
-    protected CacheManager cacheManager;
+    protected CacheService cacheService;
 
     private KeyGenerator keyGenerator;
 
-    private LockManager lockManager;
+    private LockService lockService;
 
     protected CacheExpressionParser cacheExpressionParser;
 
@@ -129,8 +129,8 @@ public abstract class CacheOperationHandler {
     }
 
     @Autowired
-    public CacheOperationHandler setCacheManager(CacheManager cacheManager) {
-        this.cacheManager = cacheManager;
+    public CacheOperationHandler setCacheManager(CacheService cacheService) {
+        this.cacheService = cacheService;
         return this;
     }
 
@@ -140,9 +140,9 @@ public abstract class CacheOperationHandler {
         return this;
     }
 
-    @Autowired(required = false)
-    public void setLockManager(LockManager lockManager) {
-        this.lockManager = lockManager;
+    @Autowired
+    public void setLockService(LockService lockService) {
+        this.lockService = lockService;
     }
 
     @Autowired(required = false)

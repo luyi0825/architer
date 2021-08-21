@@ -2,8 +2,6 @@ package com.architecture.context.cache.operation;
 
 
 import com.architecture.context.cache.annotation.Cacheable;
-import com.architecture.context.cache.operation.CacheOperationHandler;
-import com.architecture.context.cache.operation.CacheOperationMetadata;
 import com.architecture.context.common.cache.utils.CacheUtils;
 import org.springframework.util.StringUtils;
 
@@ -26,7 +24,7 @@ public class CacheableOperationHandler extends CacheOperationHandler {
     @Override
     protected Object executeCacheHandler(String[] keys, CacheOperationMetadata metadata) {
         //从缓存中取值
-        Object value = cacheManager.getCache(keys[0]);
+        Object value = cacheService.get(keys[0]);
         //缓存中没有值，就从数据库得到值或者解析值
         if (value == null) {
             CacheableOperation cacheableOperation = (CacheableOperation) metadata.getCacheOperation();
@@ -37,13 +35,13 @@ public class CacheableOperationHandler extends CacheOperationHandler {
                 value = invoke(metadata);
                 Object finalValue = value;
                 for (String key : keys) {
-                    writeCache(cacheableOperation.isAsync(), () -> cacheManager.putCache(key, finalValue, expireTime));
+                    // writeCache(cacheableOperation.isAsync(), () -> cacheService.putCache(key, finalValue, expireTime));
                 }
             } else {
                 //说明给了默认的缓存值
                 Object needCacheValue = cacheExpressionParser.executeParse(metadata, cacheValue);
                 for (String key : keys) {
-                    writeCache(cacheableOperation.isAsync(), () -> cacheManager.putCache(key, needCacheValue, expireTime));
+                    // writeCache(cacheableOperation.isAsync(), () -> cacheService.putCache(key, needCacheValue, expireTime));
                 }
             }
         }
