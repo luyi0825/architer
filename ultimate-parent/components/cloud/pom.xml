@@ -15,7 +15,6 @@
     <modules>
         <module>cloud-nacos-config-starter</module>
         <module>cloud-nacos-discovery-starter</module>
-
         <module>cloud-rest-template-starter</module>
         <module>cloud-redis-starter</module>
         <module>cloud-zookeeper-discovery-starter</module>
