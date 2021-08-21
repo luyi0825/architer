@@ -14,6 +14,5 @@
     <packaging>pom</packaging>
     <modules>
         <module>cache-local</module>
-        <module>cache-redis</module>
     </modules>
 </project>
