@@ -1,4 +1,4 @@
-package com.architecture.context.common.cache.model;
+package com.architecture.context.cache.model;
 
 import java.io.Serializable;
 
