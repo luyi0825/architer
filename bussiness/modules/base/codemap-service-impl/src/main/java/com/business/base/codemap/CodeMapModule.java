@@ -1,6 +1,7 @@
 package com.business.base.codemap;
 
-import com.architecture.context.common.SubModule;
+
+import com.architecture.context.module.SubModule;
 import org.mybatis.spring.annotation.MapperScan;
 
 /**

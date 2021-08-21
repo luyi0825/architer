@@ -20,5 +20,10 @@
             <groupId>com.architecture</groupId>
             <artifactId>mybatis-plus</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.architecture</groupId>
+            <artifactId>context</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>

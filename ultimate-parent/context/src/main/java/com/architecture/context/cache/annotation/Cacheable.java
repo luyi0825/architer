@@ -55,14 +55,7 @@ public @interface Cacheable {
      */
     LockEnum lockType() default LockEnum.NONE;
 
-    /**
-     * 锁的值
-     * <li>当lockType不为node，默认值为类名（例如com.architecture.xxx）</li>
-     * <li>支持EL表达式</li>
-     */
-    String lock() default "";
-
-    Locked LOCK();
+    Locked lock();
 
     /**
      * 是否异步
