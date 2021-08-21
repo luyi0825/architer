@@ -1,7 +1,7 @@
 //package com.architecture.log.executor;
 //
-//import com.architecture.thread.CommonTaskExecutor;
-//import com.architecture.thread.properties.ThreadPoolConfig;
+//import com.architecture.context.thread.CommonTaskExecutor;
+//import com.architecture.context.thread.properties.ThreadPoolConfig;
 //
 ///**
 // * @author luyi

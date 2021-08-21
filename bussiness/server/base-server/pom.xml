@@ -25,11 +25,7 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.architecture</groupId>
-            <artifactId>redis-cache</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>com.bussiness</groupId>
             <artifactId>module-base-area-service-impl</artifactId>
@@ -42,7 +38,8 @@
         </dependency>
         <dependency>
             <groupId>com.architecture</groupId>
-            <artifactId>cloud-nacos-discovery</artifactId>
+            <artifactId>cloud-nacos-discovery-starter</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.architecture</groupId>

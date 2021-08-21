@@ -25,26 +25,7 @@
                 <artifactId>boot-starter-web-flux</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.architecture</groupId>
-                <artifactId>redis-cache</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.architecture</groupId>
-                <artifactId>cloud-nacos-config</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.architecture</groupId>
-                <artifactId>cloud-nacos-discovery</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.architecture</groupId>
-                <artifactId>cloud-open-feign</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>com.architecture</groupId>
                 <artifactId>cloud-zookeeper-discovery</artifactId>
@@ -74,11 +55,6 @@
             <dependency>
                 <groupId>com.architecture</groupId>
                 <artifactId>test</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.architecture</groupId>
-                <artifactId>cloud-resttemplate</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

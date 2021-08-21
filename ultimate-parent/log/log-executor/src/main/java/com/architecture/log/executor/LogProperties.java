@@ -1,7 +1,7 @@
 //package com.architecture.log.executor;
 //
 //
-//import com.architecture.thread.properties.TaskExecutorProperties;
+//import com.architecture.context.thread.properties.TaskExecutorProperties;
 //import org.springframework.boot.context.properties.ConfigurationProperties;
 //
 ///**

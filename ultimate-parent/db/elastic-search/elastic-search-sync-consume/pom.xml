@@ -50,11 +50,6 @@
         </dependency>
         <dependency>
             <groupId>com.architecture</groupId>
-            <artifactId>cloud-resttemplate</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.architecture</groupId>
             <artifactId>context</artifactId>
             <version>${project.version}</version>
         </dependency>

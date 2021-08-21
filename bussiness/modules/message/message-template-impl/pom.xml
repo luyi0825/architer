@@ -49,9 +49,6 @@
             <artifactId>module-message-template</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.architecture</groupId>
-            <artifactId>redis-cache</artifactId>
-        </dependency>
+
     </dependencies>
 </project>

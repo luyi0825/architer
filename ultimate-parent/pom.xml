@@ -22,7 +22,7 @@
         <module>log</module>
         <module>file</module>
         <module>statemachine</module>
-        <module>lockEnum</module>
+        <module>lock</module>
         <module>context</module>
         <module>components</module>
     </modules>

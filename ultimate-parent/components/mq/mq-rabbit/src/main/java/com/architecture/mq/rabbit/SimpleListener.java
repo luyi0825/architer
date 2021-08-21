@@ -1,7 +1,7 @@
 package com.architecture.mq.rabbit;
 
 
-import com.architecture.cache.redis.StringRedisService;
+import com.architecture.context.cache.CacheService;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class SimpleListener {
     }
 
     @Autowired
-    private StringRedisService redisService;
+    private CacheService cacheService;
 
     protected void process(Message message, Channel channel) {
         if (canProcess(message.getMessageProperties().getMessageId())) {
@@ -41,7 +41,7 @@ public class SimpleListener {
     public boolean canProcess(String messageId) {
         String consumeCacheKey = queue + "::" + messageId;
         //判断是否已经消费
-        if (redisService.get(consumeCacheKey) != null) {
+        if (cacheService.get(consumeCacheKey) != null) {
             return false;
         }
         return true;
