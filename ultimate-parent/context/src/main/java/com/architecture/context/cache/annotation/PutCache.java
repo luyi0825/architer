@@ -3,8 +3,10 @@ package com.architecture.context.cache.annotation;
 
 import com.architecture.context.cache.CacheConstants;
 import com.architecture.context.lock.LockEnum;
+import com.architecture.context.lock.Locked;
 
 import java.lang.annotation.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 向缓存中放数据
@@ -24,6 +26,11 @@ public @interface PutCache {
     String[] cacheName() default "";
 
     /**
+     * @see Cacheable#cacheValue()
+     */
+    String cacheValue() default "";
+
+    /**
      * @see Cacheable#key()
      */
     String key();
@@ -31,32 +38,27 @@ public @interface PutCache {
     /**
      * @see Cacheable#randomExpireTime()
      */
-    long randomExpireTime() default -1;
+    long randomExpireTime() default CacheConstants.DEFAULT_CONFIG_TIME;
 
     /**
      * @see Cacheable#expireTime()
      */
-    long expireTime() default CacheConstants.DEFAULT_CACHE_EXPIRE_TIME;
+    long expireTime() default CacheConstants.DEFAULT_CONFIG_TIME;
 
     /**
-     * @see Cacheable#lockType()
+     * @see Cacheable#timeUnit()
      */
-    LockEnum lockType() default LockEnum.NONE;
+    TimeUnit timeUnit() default TimeUnit.MINUTES;
 
     /**
-     * @see Cacheable#lock()
+     * @see Cacheable#locked()
      */
-    String lock() default "";
+    Locked locked() default @Locked(lock = LockEnum.NONE, key = "");
 
     /**
      * @see Cacheable#async()
      */
     boolean async() default false;
-
-    /**
-     * @see Cacheable#cacheValue()
-     */
-    String cacheValue() default "";
 
     /**
      * @see Cacheable#condition()

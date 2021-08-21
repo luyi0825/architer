@@ -1,6 +1,7 @@
 package com.architecture.context.cache.annotation;
 
 
+import com.architecture.context.lock.LockEnum;
 import com.architecture.context.lock.Locked;
 import org.springframework.core.annotation.AliasFor;
 
@@ -34,9 +35,9 @@ public @interface DeleteCache {
     String key();
 
     /**
-     * 锁
+     * 默认没有锁
      */
-    Locked[] lock() default {};
+    Locked locked() default @Locked(lock = LockEnum.NONE, key = "");
 
     /**
      * @see Cacheable#async()
