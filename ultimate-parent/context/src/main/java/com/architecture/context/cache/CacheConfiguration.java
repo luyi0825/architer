@@ -6,11 +6,14 @@ import com.architecture.context.cache.operation.DeleteCacheOperationHandler;
 import com.architecture.context.cache.operation.PutCacheOperationHandler;
 import com.architecture.context.expression.ExpressionParser;
 import com.architecture.context.lock.LockFactory;
+import com.architecture.context.lock.LockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 /**
  * @author luyi
@@ -23,6 +26,14 @@ public class CacheConfiguration {
     @Bean
     public ExpressionParser keyExpressionParser() {
         return new ExpressionParser();
+    }
+
+    @Bean
+    public LockFactory lockFactory(List<LockService> lockServices) {
+        LockFactory lockFactory = new LockFactory();
+        lockFactory.setExpressionParser(new ExpressionParser());
+        lockFactory.setLockServiceMap(null);
+        return lockFactory;
     }
 
     @Bean

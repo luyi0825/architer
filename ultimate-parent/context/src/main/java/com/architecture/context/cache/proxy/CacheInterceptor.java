@@ -2,7 +2,6 @@ package com.architecture.context.cache.proxy;
 
 
 import com.architecture.context.cache.CacheAnnotationsParser;
-import com.architecture.context.cache.CacheService;
 import com.architecture.context.cache.model.InvalidCache;
 import com.architecture.context.cache.operation.CacheOperation;
 import com.architecture.context.cache.operation.CacheOperationHandler;
@@ -59,24 +58,31 @@ public class CacheInterceptor implements MethodInterceptor {
     private Object execute(MethodInvocation invocation, Collection<CacheOperation> cacheOperations) throws Throwable {
         ExpressionMetadata expressionMetadata = new ExpressionMetadata(Objects.requireNonNull(invocation.getThis()), invocation.getMethod(), invocation.getArguments());
         AtomicReference<Object> returnValue = new AtomicReference<>();
-        MethodInvocationFunction methodInvocationFunction = new MethodInvocationFunction() {
+        ReturnValueFunction returnValueFunction = new ReturnValueFunction() {
             @Override
-            public synchronized Object proceed() throws Throwable {
-                if (returnValue.get() == null) {
-                    Object value = invocation.proceed();
-                    if (value == null) {
-                        value = InvalidCache.INVALID_CACHE;
+            public Object proceed() throws Throwable {
+                synchronized (this) {
+                    if (returnValue.get() == null) {
+                        Object value = invocation.proceed();
+                        if (value == null) {
+                            value = InvalidCache.INVALID_CACHE;
+                        }
+                        returnValue.set(value);
                     }
-                    returnValue.set(value);
+                    return returnValue.get();
                 }
-                return returnValue.get();
+            }
+
+            @Override
+            public void setValue(Object value) {
+                returnValue.set(value);
             }
         };
         for (CacheOperation cacheOperation : cacheOperations) {
             if (cacheOperation instanceof CacheableOperation) {
                 for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
                     if (cacheOperationHandler.match(cacheOperation)) {
-                        cacheOperationHandler.handler(cacheOperation, methodInvocationFunction, expressionMetadata);
+                        cacheOperationHandler.handler(cacheOperation, returnValueFunction, expressionMetadata);
                     }
                 }
             }

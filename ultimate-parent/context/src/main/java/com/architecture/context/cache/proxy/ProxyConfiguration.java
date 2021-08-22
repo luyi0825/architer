@@ -24,25 +24,21 @@ public class ProxyConfiguration {
 
 
     @Bean
+    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     public CacheAnnotationsParser cacheAnnotationsParser() {
         return new CacheAnnotationsParser();
     }
 
-    @Bean
-    public LockFactory lockFactory(List<LockService> lockServices) {
-        LockFactory lockFactory = new LockFactory();
-        lockFactory.setExpressionParser(new ExpressionParser());
-        lockFactory.setLockServiceMap(null);
-        return lockFactory;
-    }
 
     @Bean
+    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     public AnnotationCacheOperationSource annotationCacheOperationSource() {
         return new AnnotationCacheOperationSource(cacheAnnotationsParser());
     }
 
 
     @Bean
+    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     public CacheInterceptor cacheInterceptor(List<CacheOperationHandler> cacheOperationHandlers, CacheAnnotationsParser cacheAnnotationsParser) {
         CacheInterceptor cacheInterceptor = new CacheInterceptor();
         cacheInterceptor.setCacheOperationHandlers(cacheOperationHandlers);
@@ -51,6 +47,7 @@ public class ProxyConfiguration {
     }
 
     @Bean
+    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     public BeanFactoryCacheSourceAdvisor beanFactoryCacheSourceAdvisor(AnnotationCacheOperationSource annotationCacheOperationSource, CacheInterceptor cacheInterceptor) {
         BeanFactoryCacheSourceAdvisor advisor = new BeanFactoryCacheSourceAdvisor();
         advisor.setCacheOperationSource(annotationCacheOperationSource);

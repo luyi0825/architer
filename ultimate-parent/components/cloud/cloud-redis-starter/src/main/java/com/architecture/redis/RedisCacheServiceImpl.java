@@ -1,6 +1,7 @@
 package com.architecture.redis;
 
 
+import com.architecture.context.cache.CacheConstants;
 import com.architecture.context.cache.CacheService;
 import com.architecture.utils.JsonUtils;
 import org.springframework.data.redis.core.*;
@@ -48,7 +49,11 @@ public class RedisCacheServiceImpl implements CacheService {
 
     @Override
     public void set(String key, Object value, long expire, TimeUnit timeUnit) {
-        valueOperations.set(key, value, expire, timeUnit);
+        if (expire == CacheConstants.NEVER_EXPIRE) {
+            this.set(key, value);
+        } else {
+            valueOperations.set(key, value, expire, timeUnit);
+        }
     }
 
     @Override

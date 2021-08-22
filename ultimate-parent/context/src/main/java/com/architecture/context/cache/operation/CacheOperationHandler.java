@@ -1,7 +1,7 @@
 package com.architecture.context.cache.operation;
 
 
-import com.architecture.context.cache.proxy.MethodInvocationFunction;
+import com.architecture.context.cache.proxy.ReturnValueFunction;
 import com.architecture.context.expression.ExpressionParser;
 
 import com.architecture.context.exception.ServiceException;
@@ -66,16 +66,16 @@ public abstract class CacheOperationHandler {
     }
 
 
-    public void handler(CacheOperation operation, MethodInvocationFunction methodInvocationFunction, ExpressionMetadata expressionMetadata) throws Throwable {
+    public void handler(CacheOperation operation, ReturnValueFunction returnValueFunction, ExpressionMetadata expressionMetadata) throws Throwable {
         if (this.canHandler(operation, expressionMetadata)) {
             Lock lock = lockFactory.get(operation.getLocked(), expressionMetadata);
             if (lock == null) {
-                this.execute(operation, expressionMetadata, methodInvocationFunction);
+                this.execute(operation, expressionMetadata, returnValueFunction);
             } else if (lock instanceof FailLock) {
                 throw new ServiceException("获取锁失败");
             } else {
                 try {
-                    this.execute(operation, expressionMetadata, methodInvocationFunction);
+                    this.execute(operation, expressionMetadata, returnValueFunction);
                 } finally {
                     //释放锁
                     lock.unlock();
@@ -105,7 +105,7 @@ public abstract class CacheOperationHandler {
         return true;
     }
 
-    protected abstract void execute(CacheOperation operation, ExpressionMetadata expressionMetadata, MethodInvocationFunction methodInvocationFunction) throws Throwable;
+    protected abstract void execute(CacheOperation operation, ExpressionMetadata expressionMetadata, ReturnValueFunction returnValueFunction) throws Throwable;
 
 
     public CacheOperationHandler setCacheService(CacheService cacheService) {

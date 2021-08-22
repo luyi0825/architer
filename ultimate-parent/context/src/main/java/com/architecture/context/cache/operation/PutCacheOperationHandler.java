@@ -2,7 +2,7 @@ package com.architecture.context.cache.operation;
 
 
 
-import com.architecture.context.cache.proxy.MethodInvocationFunction;
+import com.architecture.context.cache.proxy.ReturnValueFunction;
 import com.architecture.context.cache.utils.CacheUtils;
 import com.architecture.context.expression.ExpressionMetadata;
 
@@ -21,7 +21,7 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
     }
 
     @Override
-    protected void execute(CacheOperation operation, ExpressionMetadata expressionMetadata, MethodInvocationFunction methodInvocationFunction) throws Throwable {
+    protected void execute(CacheOperation operation, ExpressionMetadata expressionMetadata, ReturnValueFunction returnValueFunction) throws Throwable {
         PutCacheOperation putCacheOperation = (PutCacheOperation) operation;
         List<String> cacheKeys = getCacheKeys(operation, expressionMetadata);
         long expireTime = CacheUtils.getExpireTime(putCacheOperation.getExpireTime(), putCacheOperation.getRandomTime());
@@ -29,6 +29,6 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         for (String cacheKey : cacheKeys) {
             cacheService.set(cacheKey, value, expireTime, putCacheOperation.getExpireTimeUnit());
         }
-        methodInvocationFunction.proceed();
+        returnValueFunction.proceed();
     }
 }

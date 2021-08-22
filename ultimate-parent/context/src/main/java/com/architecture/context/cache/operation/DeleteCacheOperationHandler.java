@@ -2,7 +2,7 @@ package com.architecture.context.cache.operation;
 
 
 import com.architecture.context.cache.annotation.DeleteCache;
-import com.architecture.context.cache.proxy.MethodInvocationFunction;
+import com.architecture.context.cache.proxy.ReturnValueFunction;
 import com.architecture.context.expression.ExpressionMetadata;
 
 
@@ -27,9 +27,9 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
     }
 
     @Override
-    protected void execute(CacheOperation operation, ExpressionMetadata expressionMetadata, MethodInvocationFunction methodInvocationFunction) throws Throwable {
+    protected void execute(CacheOperation operation, ExpressionMetadata expressionMetadata, ReturnValueFunction returnValueFunction) throws Throwable {
         List<String> cacheKeys = this.getCacheKeys(operation, expressionMetadata);
         cacheService.multiDelete(cacheKeys);
-        methodInvocationFunction.proceed();
+        returnValueFunction.proceed();
     }
 }
