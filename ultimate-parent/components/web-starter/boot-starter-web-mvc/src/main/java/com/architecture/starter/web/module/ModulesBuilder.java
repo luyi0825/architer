@@ -1,7 +1,7 @@
 package com.architecture.starter.web.module;
 
 
-import com.architecture.context.common.SubModule;
+import com.architecture.context.module.SubModule;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
