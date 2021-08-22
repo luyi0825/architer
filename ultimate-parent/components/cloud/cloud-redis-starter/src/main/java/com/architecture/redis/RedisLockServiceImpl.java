@@ -23,7 +23,7 @@ public class RedisLockServiceImpl implements LockService {
         if (lock.tryLock(time, timeUnit)) {
             return lock;
         }
-        return null;
+        return LockService.FAIL_LOCK;
     }
 
 
@@ -33,7 +33,7 @@ public class RedisLockServiceImpl implements LockService {
         if (lock.tryLock()) {
             return lock;
         }
-        return null;
+        return LockService.FAIL_LOCK;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class RedisLockServiceImpl implements LockService {
         if (lock.tryLock()) {
             return lock;
         }
-        return null;
+        return LockService.FAIL_LOCK;
     }
 
     @Override
@@ -51,42 +51,42 @@ public class RedisLockServiceImpl implements LockService {
         if (lock.tryLock(time, timeUnit)) {
             return lock;
         }
-        return null;
+        return LockService.FAIL_LOCK;
     }
 
     @Override
-    public Lock getWriteLock(String lockName) throws Exception {
+    public Lock tryWriteLock(String lockName) throws Exception {
         Lock lock = redissonClient.getReadWriteLock(lockName).writeLock();
         if (lock.tryLock()) {
             return lock;
         }
-        return null;
+        return LockService.FAIL_LOCK;
     }
 
     @Override
-    public Lock getWriteLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
+    public Lock tryWriteLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
         Lock lock = redissonClient.getReadWriteLock(lockName).writeLock();
         if (lock.tryLock(time, timeUnit)) {
             return lock;
         }
-        return null;
+        return LockService.FAIL_LOCK;
     }
 
     @Override
-    public Lock getReadLock(String lockName) throws Exception {
+    public Lock tryReadLock(String lockName) throws Exception {
         Lock lock = redissonClient.getReadWriteLock(lockName).readLock();
         if (lock.tryLock()) {
             return lock;
         }
-        return null;
+        return LockService.FAIL_LOCK;
     }
 
     @Override
-    public Lock getReadLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
+    public Lock tryReadLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
         Lock lock = redissonClient.getReadWriteLock(lockName).readLock();
         if (lock.tryLock()) {
             return lock;
         }
-        return null;
+        return LockService.FAIL_LOCK;
     }
 }

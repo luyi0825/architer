@@ -4,7 +4,11 @@ package com.architecture.redis;
 import com.architecture.context.cache.CacheService;
 import com.architecture.utils.JsonUtils;
 import org.springframework.data.redis.core.*;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2020-12-24
  */
 public class RedisCacheServiceImpl implements CacheService {
+    private static final String REDIS_SPLIT = "::";
 
     private final RedisTemplate<String, Object> redisTemplate;
     private final ValueOperations<String, Object> valueOperations;
@@ -26,15 +31,23 @@ public class RedisCacheServiceImpl implements CacheService {
     }
 
     @Override
+    public String getSplit() {
+        return REDIS_SPLIT;
+    }
+
+    @Override
     public void set(String key, Object value) {
         valueOperations.set(key, value);
     }
 
     @Override
+    public void set(Map<String, Object> map) {
+        valueOperations.multiSet(map);
+    }
+
+
+    @Override
     public void set(String key, Object value, long expire, TimeUnit timeUnit) {
-        if (expire <= 0) {
-            throw new IllegalArgumentException("expire必须大于0");
-        }
         valueOperations.set(key, value, expire, timeUnit);
     }
 
@@ -88,6 +101,11 @@ public class RedisCacheServiceImpl implements CacheService {
     }
 
     @Override
+    public List<Object> multiGet(Collection<String> keys) {
+        return valueOperations.multiGet(keys);
+    }
+
+    @Override
     public <T> T get(String key, Class<T> clazz) {
         Object value = valueOperations.get(key);
         if (value instanceof String) {
@@ -98,11 +116,28 @@ public class RedisCacheServiceImpl implements CacheService {
 
 
     @Override
-    public void delete(String key) {
+    public boolean delete(String key) {
         if (key == null) {
-            return;
+            return false;
         }
-        redisTemplate.delete(key);
+        Boolean bool = redisTemplate.delete(key);
+        if (bool == null) {
+            return false;
+        }
+        return bool;
     }
+
+    @Override
+    public long multiDelete(Collection<String> keys) {
+        if (CollectionUtils.isEmpty(keys)) {
+            return 0L;
+        }
+        Long count = redisTemplate.delete(keys);
+        if (count == null) {
+            return 0;
+        }
+        return count;
+    }
+
 
 }

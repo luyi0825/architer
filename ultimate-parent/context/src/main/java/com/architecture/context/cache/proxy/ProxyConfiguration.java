@@ -8,6 +8,7 @@ import com.architecture.context.lock.LockFactory;
 import com.architecture.context.lock.LockService;
 import org.springframework.beans.factory.config.BeanDefinition;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.AutoProxyRegistrar;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,13 +20,7 @@ import java.util.List;
  * @author luyi
  **/
 @Configuration
-@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 public class ProxyConfiguration {
-
-    @Bean
-    public AutoProxyRegistrar autoProxyRegistrar() {
-        return new AutoProxyRegistrar();
-    }
 
 
     @Bean

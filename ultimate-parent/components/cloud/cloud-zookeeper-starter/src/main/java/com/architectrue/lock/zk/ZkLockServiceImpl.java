@@ -34,7 +34,7 @@ public class ZkLockServiceImpl implements LockService {
         if (mutex.acquire(time, timeUnit)) {
             return new ZookeeperLock(mutex);
         }
-        return null;
+        return LockService.FAIL_LOCK;
     }
 
     @Override
@@ -48,12 +48,12 @@ public class ZkLockServiceImpl implements LockService {
     }
 
     @Override
-    public Lock getWriteLock(String lockName) throws Exception {
-        return getWriteLock(lockName, -1, null);
+    public Lock tryWriteLock(String lockName) throws Exception {
+        return tryWriteLock(lockName, -1, null);
     }
 
     @Override
-    public Lock getWriteLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
+    public Lock tryWriteLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
         lockName = getPathLock(lockName);
         InterProcessReadWriteLock interProcessReadWriteLock = new InterProcessReadWriteLock(client, lockName);
         InterProcessMutex mutex = interProcessReadWriteLock.writeLock();
@@ -61,16 +61,16 @@ public class ZkLockServiceImpl implements LockService {
         if (acquire) {
             return new ZookeeperLock(mutex);
         }
-        return null;
+        return LockService.FAIL_LOCK;
     }
 
     @Override
-    public Lock getReadLock(String lockName) throws Exception {
-        return getReadLock(lockName, -1, null);
+    public Lock tryReadLock(String lockName) throws Exception {
+        return tryReadLock(lockName, -1, null);
     }
 
     @Override
-    public Lock getReadLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
+    public Lock tryReadLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
         lockName = getPathLock(lockName);
         InterProcessReadWriteLock interProcessReadWriteLock = new InterProcessReadWriteLock(client, lockName);
         InterProcessMutex mutex = interProcessReadWriteLock.readLock();
@@ -78,7 +78,7 @@ public class ZkLockServiceImpl implements LockService {
         if (acquire) {
             return new ZookeeperLock(mutex);
         }
-        return null;
+        return LockService.FAIL_LOCK;
     }
 
     private String getPathLock(String lockName) {

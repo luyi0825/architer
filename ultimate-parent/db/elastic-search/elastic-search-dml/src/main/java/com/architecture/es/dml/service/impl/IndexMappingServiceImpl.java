@@ -1,12 +1,13 @@
 package com.architecture.es.dml.service.impl;
 
+import com.architecture.context.exception.ParamsValidException;
+import com.architecture.context.exception.ServiceException;
 import com.architecture.es.dml.dao.IndexMappingDao;
 import com.architecture.es.dml.service.IndexMappingService;
 import com.architecture.es.model.MappingType;
 import com.architecture.es.model.ddl.IndexMapping;
 import com.architecture.es.model.ddl.MappingItem;
-import com.architecture.context.common.exception.ParamsValidException;
-import com.architecture.context.common.exception.ServiceException;
+
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.core.CountRequest;

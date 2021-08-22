@@ -11,18 +11,10 @@
 
 
     <modules>
-        <module>excel</module>
-        <module>thread-pool</module>
-        <module>cache</module>
         <module>utils</module>
         <module>db</module>
         <module>test</module>
-        <module>captcha</module>
         <module>query-common</module>
-        <module>log</module>
-        <module>file</module>
-        <module>statemachine</module>
-        <module>lock</module>
         <module>context</module>
         <module>components</module>
     </modules>

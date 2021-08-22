@@ -57,7 +57,7 @@ public interface CodeMapItemApi {
      * @return 代码级项信息
      */
     @GetMapping("/getById/{id}")
-    @Cacheable(cacheName = "'codeMapItemApi_getById'", key = "#id", expireTime = 60 * 60 * 48, lock =)
+    @Cacheable(cacheName = "'codeMapItemApi_getById'", key = "#id", expireTime = 60 * 60 * 48)
     CodeMapItem getById(@PathVariable(name = "id") Long id);
 
 

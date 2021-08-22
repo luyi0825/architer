@@ -9,7 +9,7 @@ import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.config.Config;
 import org.redisson.spring.data.connection.RedissonConnectionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,6 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -29,11 +28,12 @@ import java.util.Objects;
  *
  * @author luyi
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfiguration {
 
     @Bean(destroyMethod = "shutdown")
+    @ConditionalOnMissingBean
     public RedissonClient redissonClient(RedisProperties redisProperties) {
         Config config;
         if (redisProperties != null && redisProperties.getConfig() != null) {
@@ -72,13 +72,12 @@ public class RedisConfiguration {
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(Objects.requireNonNull(redisTemplate.getConnectionFactory()));
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisTemplate.getValueSerializer()));
-        RedisCacheManager redisCacheManager;
         return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
     }
 
 
     @Bean
-    public CacheService redisAnnotationCacheOperation(RedisTemplate<String, Object> redisTemplate) {
+    public CacheService redisCacheServiceImpl(RedisTemplate<String, Object> redisTemplate) {
         return new RedisCacheServiceImpl(redisTemplate);
     }
 

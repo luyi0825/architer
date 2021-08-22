@@ -26,7 +26,6 @@ public class BeanFactoryCacheSourceAdvisor extends AbstractBeanFactoryPointcutAd
 
     }
 
-
     public BeanFactoryCacheSourceAdvisor(CacheOperationSource cacheOperationSource, CacheOperationSourcePointcut pointcut) {
         this.cacheOperationSource = cacheOperationSource;
         this.pointcut = pointcut;
