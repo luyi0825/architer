@@ -53,5 +53,10 @@
             <artifactId>context</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.architecture</groupId>
+            <artifactId>ultimate-utils</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>
