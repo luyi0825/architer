@@ -3,13 +3,7 @@ package com.architecture.context.cache.proxy;
 
 import com.architecture.context.cache.CacheAnnotationsParser;
 import com.architecture.context.cache.operation.CacheOperationHandler;
-import com.architecture.context.expression.ExpressionParser;
-import com.architecture.context.lock.LockFactory;
-import com.architecture.context.lock.LockService;
 import org.springframework.beans.factory.config.BeanDefinition;
-
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.AutoProxyRegistrar;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Role;
