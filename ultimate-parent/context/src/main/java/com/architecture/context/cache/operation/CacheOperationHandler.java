@@ -1,7 +1,6 @@
 package com.architecture.context.cache.operation;
 
 
-import com.architecture.context.cache.CacheAsyncExecutorService;
 import com.architecture.context.cache.proxy.MethodInvocationFunction;
 import com.architecture.context.expression.ExpressionParser;
 
@@ -33,7 +32,6 @@ public abstract class CacheOperationHandler {
     private LockFactory lockFactory;
     @Autowired(required = false)
     protected ExpressionParser expressionParser;
-    protected CacheAsyncExecutorService cacheAsyncExecutorService;
 
 
     public Object value(String valueExpression, ExpressionMetadata expressionMetadata) {
@@ -125,8 +123,4 @@ public abstract class CacheOperationHandler {
         return this;
     }
 
-    public CacheOperationHandler setCacheAsyncExecutorService(CacheAsyncExecutorService cacheAsyncExecutorService) {
-        this.cacheAsyncExecutorService = cacheAsyncExecutorService;
-        return this;
-    }
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * @author luyi
  */
-@SpringBootTest
+//@SpringBootTest
 public class CacheableTest {
     @Autowired
     private CacheableUserInfoService cacheableUserInfoService;
