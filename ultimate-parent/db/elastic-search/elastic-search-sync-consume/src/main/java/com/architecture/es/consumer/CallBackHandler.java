@@ -1,12 +1,13 @@
 package com.architecture.es.consumer;
 
 
+import com.architecture.context.response.ResponseResult;
 import com.architecture.es.consumer.entity.SyncResult;
 import com.architecture.es.model.CallBackWay;
 import com.architecture.es.model.EsConstant;
 import com.architecture.es.model.dto.BaseSyncDocumentDTO;
-import com.architecture.context.common.ResponseStatusEnum;
-import com.architecture.context.common.response.ResponseResult;
+import com.architecture.context.ResponseStatusEnum;
+import com.architecture.context.response.ResponseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
