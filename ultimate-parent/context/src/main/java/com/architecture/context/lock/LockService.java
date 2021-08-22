@@ -9,6 +9,9 @@ import java.util.concurrent.locks.Lock;
  */
 public interface LockService {
 
+    FailLock FAIL_LOCK = new FailLock();
+
+
     /**
      * 获取公平锁，直到获取到锁
      *
@@ -17,6 +20,7 @@ public interface LockService {
      * @throws Exception 获取锁失败后抛出的异常
      */
     Lock tryFairLock(String lockName) throws Exception;
+
 
     /**
      * 获取公平锁：在指定的时间获取不到锁，就会返回空
@@ -56,7 +60,7 @@ public interface LockService {
      * @return 不为空，说明成功获取到锁
      * @throws Exception 获取锁失败的异常
      */
-    Lock getWriteLock(String lockName) throws Exception;
+    Lock tryWriteLock(String lockName) throws Exception;
 
 
     /**
@@ -68,7 +72,7 @@ public interface LockService {
      * @return 不为空，说明成功获取到锁
      * @throws Exception 获取锁失败的异常
      */
-    Lock getWriteLock(String lockName, long time, TimeUnit timeUnit) throws Exception;
+    Lock tryWriteLock(String lockName, long time, TimeUnit timeUnit) throws Exception;
 
     /**
      * 得到读锁，直到获取到
@@ -77,7 +81,7 @@ public interface LockService {
      * @return 不为空，说明成功获取到锁
      * @throws Exception 获取锁失败的异常
      */
-    Lock getReadLock(String lockName) throws Exception;
+    Lock tryReadLock(String lockName) throws Exception;
 
     /**
      * 得到读锁，直到获取到
@@ -88,7 +92,7 @@ public interface LockService {
      * @return 不为空，说明成功获取到锁
      * @throws Exception 获取锁失败的异常
      */
-    Lock getReadLock(String lockName, long time, TimeUnit timeUnit) throws Exception;
+    Lock tryReadLock(String lockName, long time, TimeUnit timeUnit) throws Exception;
 
 
     /**
@@ -96,7 +100,7 @@ public interface LockService {
      *
      * @param lock tryLock获取到的锁
      */
-    default void unLock(Lock lock) {
+    default void releaseLock(Lock lock) {
         if (lock != null) {
             lock.unlock();
         }

@@ -11,10 +11,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "customize.cache")
 public class CacheProperties {
     /**
-     * 缓存过期时间
-     */
-    private long expireTime;
-    /**
      * 使用什么锁
      */
     private LockEnum lockEnum = LockEnum.JDK;
@@ -27,11 +23,4 @@ public class CacheProperties {
         this.lockEnum = lockEnum;
     }
 
-    public long getExpireTime() {
-        return expireTime;
-    }
-
-    public void setExpireTime(long expireTime) {
-        this.expireTime = expireTime;
-    }
 }

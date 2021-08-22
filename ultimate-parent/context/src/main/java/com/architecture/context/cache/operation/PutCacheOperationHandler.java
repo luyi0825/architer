@@ -1,12 +1,12 @@
 package com.architecture.context.cache.operation;
 
 
-import com.architecture.context.cache.annotation.PutCache;
-import com.architecture.context.common.cache.utils.CacheUtils;
-import org.springframework.util.StringUtils;
 
-import java.lang.annotation.Annotation;
+import com.architecture.context.cache.proxy.MethodInvocationFunction;
+import com.architecture.context.cache.utils.CacheUtils;
+import com.architecture.context.expression.ExpressionMetadata;
 
+import java.util.List;
 
 /**
  * 对应PutCacheOperation
@@ -14,26 +14,21 @@ import java.lang.annotation.Annotation;
  * @author luyi
  */
 public class PutCacheOperationHandler extends CacheOperationHandler {
+
     @Override
-    public boolean match(Annotation operationAnnotation) {
-        return operationAnnotation instanceof PutCache;
+    public boolean match(CacheOperation operation) {
+        return operation instanceof PutCacheOperation;
     }
 
     @Override
-    protected Object executeCacheHandler(String[] keys, CacheOperationMetadata metadata) {
-        Object value = invoke(metadata);
-        PutCacheOperation putCacheOperation = (PutCacheOperation) metadata.getCacheOperation();
-        String cacheValue = putCacheOperation.getCacheValue();
-        long expireTime = CacheUtils.getExpireTime(putCacheOperation.getExpireTime(), putCacheOperation.getRandomExpireTime());
-        for (String key : keys) {
-            if (StringUtils.isEmpty(cacheValue)) {
-               // writeCache(putCacheOperation.isAsync(), () -> cacheService.putCache(key, value, expireTime));
-            } else {
-                Object needCacheValue = cacheExpressionParser.executeParse(metadata, cacheValue);
-                //  writeCache(putCacheOperation.isAsync(), () -> cacheService.putCache(key, needCacheValue, expireTime));
-            }
+    protected void execute(CacheOperation operation, ExpressionMetadata expressionMetadata, MethodInvocationFunction methodInvocationFunction) throws Throwable {
+        PutCacheOperation putCacheOperation = (PutCacheOperation) operation;
+        List<String> cacheKeys = getCacheKeys(operation, expressionMetadata);
+        long expireTime = CacheUtils.getExpireTime(putCacheOperation.getExpireTime(), putCacheOperation.getRandomTime());
+        Object value = expressionParser.parserExpression(expressionMetadata, putCacheOperation.getCacheValue());
+        for (String cacheKey : cacheKeys) {
+            cacheService.set(cacheKey, value, expireTime, putCacheOperation.getExpireTimeUnit());
         }
-        return value;
+        methodInvocationFunction.proceed();
     }
-
 }

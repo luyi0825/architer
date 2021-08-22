@@ -1,8 +1,9 @@
 package com.architecture.context.cache;
 
 
-import org.springframework.lang.Nullable;
-
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -11,6 +12,9 @@ import java.util.concurrent.TimeUnit;
  */
 public interface CacheService {
 
+    String getSplit();
+
+
     /**
      * 描述:向redis中放入值:永不过期
      *
@@ -18,6 +22,13 @@ public interface CacheService {
      * @param value 缓存的值
      */
     void set(String key, Object value);
+
+    /**
+     * 批量设置，设置的值不会过期
+     *
+     * @param map 缓存数据，key为缓存key,value为缓存值
+     */
+    void set(Map<String, Object> map);
 
     /**
      * 描述:向缓存中存放值
@@ -90,6 +101,11 @@ public interface CacheService {
     Object get(String key);
 
     /**
+     * 批量获取
+     */
+    List<Object> multiGet(Collection<String> keys);
+
+    /**
      * 只适合指定类型的值
      *
      * @param key   缓存的key
@@ -102,6 +118,17 @@ public interface CacheService {
      * 描述:删除缓存
      *
      * @param key 缓存的key
+     * @return 是否删除成功
      */
-    void delete(String key);
+    boolean delete(String key);
+
+    /**
+     * 批量删除
+     *
+     * @param keys 需要删除key
+     * @return 删除的数量
+     */
+    long multiDelete(Collection<String> keys);
+
+
 }

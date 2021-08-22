@@ -1,5 +1,4 @@
-package com.architecture.context.cache.operation;
-
+package com.architecture.context.expression;
 
 import com.architecture.context.cache.operation.CacheOperation;
 import org.springframework.aop.support.AopUtils;
@@ -11,16 +10,15 @@ import java.lang.reflect.Proxy;
 /**
  * @author luyi
  */
-public class CacheOperationMetadata {
-    private final CacheOperation cacheOperation;
+public class ExpressionMetadata {
     private final Class<?> targetClass;
     private final Method targetMethod;
     private final Object[] args;
     private final Object target;
     private final AnnotatedElementKey methodKey;
 
-    public CacheOperationMetadata(CacheOperation cacheOperation, Object target, Method method, Object[] args) {
-        this.cacheOperation = cacheOperation;
+    public ExpressionMetadata(Object target, Method method, Object[] args) {
+        ;
         this.target = target;
         this.targetClass = target.getClass();
         this.targetMethod = (!Proxy.isProxyClass(targetClass) ?
@@ -29,9 +27,6 @@ public class CacheOperationMetadata {
         this.methodKey = new AnnotatedElementKey(this.targetMethod, targetClass);
     }
 
-    public CacheOperation getCacheOperation() {
-        return cacheOperation;
-    }
 
 
     public Class<?> getTargetClass() {

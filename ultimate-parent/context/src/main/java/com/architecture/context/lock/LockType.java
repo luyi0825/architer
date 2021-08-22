@@ -19,8 +19,13 @@ public enum LockType {
      */
     WRITE,
     /**
-     * 重入
+     * 重入公平锁
      */
-    REENTRANT
+    REENTRANT_FAIR,
+    /**
+     * 重入非公平锁
+     */
+    REENTRANT_UNFAIR;
+
 
 }

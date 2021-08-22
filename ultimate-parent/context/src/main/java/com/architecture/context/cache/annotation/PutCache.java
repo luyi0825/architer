@@ -26,7 +26,7 @@ public @interface PutCache {
     String[] cacheName() default "";
 
     /**
-     * @see Cacheable#cacheValue()
+     * 缓存值，支持EL表达式
      */
     String cacheValue() default "";
 
@@ -36,19 +36,24 @@ public @interface PutCache {
     String key();
 
     /**
-     * @see Cacheable#randomExpireTime()
+     * @see Cacheable#randomTime()
      */
-    long randomExpireTime() default CacheConstants.DEFAULT_CONFIG_TIME;
+    long randomTime() default 0;
+
+    /**
+     * @see Cacheable#randomTimeUnit()
+     */
+    long randomTimeUnit() default 0;
 
     /**
      * @see Cacheable#expireTime()
      */
-    long expireTime() default CacheConstants.DEFAULT_CONFIG_TIME;
+    long expireTime() default -1;
 
     /**
-     * @see Cacheable#timeUnit()
+     * @see Cacheable#expireTimeUnit()
      */
-    TimeUnit timeUnit() default TimeUnit.MINUTES;
+    TimeUnit expireTimeUnit() default TimeUnit.MINUTES;
 
     /**
      * @see Cacheable#locked()

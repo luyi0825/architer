@@ -9,8 +9,14 @@ import java.util.concurrent.TimeUnit;
 public @interface Locked {
     /**
      * 锁的类型
+     * <li>防止用户在系统中时候多种锁</li>
      */
-    LockEnum lock();
+    LockEnum lock() default LockEnum.DEFAULT;
+
+    /**
+     * 是否公平锁：默认值是
+     */
+    boolean fair() default true;
 
     /**
      * 锁的名称
@@ -21,7 +27,7 @@ public @interface Locked {
     /**
      * 锁的key,支持EL表达式
      */
-    String lockKey();
+    String key();
 
     /**
      * 时间单位
@@ -38,7 +44,10 @@ public @interface Locked {
      */
     float tryTime() default 1.5F;
 
-    LockType lockType() default LockType.REENTRANT;
+    /**
+     * 默认重入锁
+     */
+    LockType lockType() default LockType.REENTRANT_FAIR;
 
 
 }

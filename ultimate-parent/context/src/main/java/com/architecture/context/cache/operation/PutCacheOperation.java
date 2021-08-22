@@ -2,7 +2,11 @@ package com.architecture.context.cache.operation;
 
 
 import com.architecture.context.cache.annotation.Cacheable;
+import com.architecture.context.lock.Locked;
 import lombok.Data;
+
+import java.lang.annotation.Annotation;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author luyi
@@ -10,18 +14,26 @@ import lombok.Data;
  */
 @Data
 public class PutCacheOperation extends CacheOperation {
-    /**
-     * @see Cacheable#randomExpireTime()
-     */
-    private long randomExpireTime;
 
     /**
-     * 缓存失效时间
-     *
+     * @see Cacheable#randomTime()
+     */
+    private long randomTime;
+
+    /**
+     * @see Cacheable#randomTimeUnit()
+     */
+    private TimeUnit randomTimeUnit;
+
+    /**
      * @see Cacheable#expireTime()
      */
     private long expireTime;
 
+    /**
+     * @see Cacheable#expireTimeUnit()
+     */
+    private TimeUnit expireTimeUnit;
     /**
      * 缓存值
      *

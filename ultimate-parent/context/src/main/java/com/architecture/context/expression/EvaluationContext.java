@@ -1,4 +1,4 @@
-package com.architecture.context.cache.key;
+package com.architecture.context.expression;
 
 
 import org.springframework.context.expression.MethodBasedEvaluationContext;
@@ -11,12 +11,13 @@ import java.util.Set;
 
 /**
  * 缓存解析的context
+ *
  * @author luyi
  */
-public class CacheEvaluationContext extends MethodBasedEvaluationContext {
+public class EvaluationContext extends MethodBasedEvaluationContext {
     private final Set<String> unavailableVariables = new HashSet<>(1);
 
-    public CacheEvaluationContext(Object rootObject, Method method, Object[] arguments, ParameterNameDiscoverer parameterNameDiscoverer) {
+    public EvaluationContext(Object rootObject, Method method, Object[] arguments, ParameterNameDiscoverer parameterNameDiscoverer) {
         super(rootObject, method, arguments, parameterNameDiscoverer);
     }
 

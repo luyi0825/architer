@@ -1,11 +1,12 @@
 package com.architecture.context.cache.operation;
 
 
-import com.architecture.context.cache.annotation.Cacheable;
-import com.architecture.context.common.cache.utils.CacheUtils;
-import org.springframework.util.StringUtils;
+import com.architecture.context.cache.model.InvalidCache;
+import com.architecture.context.cache.proxy.MethodInvocationFunction;
+import com.architecture.context.cache.utils.CacheUtils;
+import com.architecture.context.expression.ExpressionMetadata;
 
-import java.lang.annotation.Annotation;
+import java.util.List;
 
 
 /**
@@ -17,34 +18,32 @@ public class CacheableOperationHandler extends CacheOperationHandler {
 
 
     @Override
-    public boolean match(Annotation operationAnnotation) {
-        return operationAnnotation instanceof Cacheable;
+    public boolean match(CacheOperation operation) {
+        return operation instanceof CacheableOperation;
     }
 
     @Override
-    protected Object executeCacheHandler(String[] keys, CacheOperationMetadata metadata) {
-        //从缓存中取值
-        Object value = cacheService.get(keys[0]);
-        //缓存中没有值，就从数据库得到值或者解析值
-        if (value == null) {
-            CacheableOperation cacheableOperation = (CacheableOperation) metadata.getCacheOperation();
-            String cacheValue = cacheableOperation.getCacheValue();
-            long expireTime = CacheUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomExpireTime());
-            //cacheValue为空，就将方法返回值作为缓存值
-            if (StringUtils.isEmpty(cacheValue)) {
-                value = invoke(metadata);
-                Object finalValue = value;
-                for (String key : keys) {
-                    // writeCache(cacheableOperation.isAsync(), () -> cacheService.putCache(key, finalValue, expireTime));
-                }
-            } else {
-                //说明给了默认的缓存值
-                Object needCacheValue = cacheExpressionParser.executeParse(metadata, cacheValue);
-                for (String key : keys) {
-                    // writeCache(cacheableOperation.isAsync(), () -> cacheService.putCache(key, needCacheValue, expireTime));
-                }
+    protected void execute(CacheOperation operation, ExpressionMetadata expressionMetadata, MethodInvocationFunction methodInvocationFunction) throws Throwable {
+        CacheableOperation cacheableOperation = (CacheableOperation) operation;
+        List<String> cacheKeys = getCacheKeys(cacheableOperation, expressionMetadata);
+        List<Object> values = cacheService.multiGet(cacheKeys);
+        Object cacheValue = null;
+        for (Object value : values) {
+            if (!isNullValue(value)) {
+                cacheValue = value;
+                break;
             }
         }
-        return value;
+        if (cacheValue == null) {
+            cacheValue = methodInvocationFunction.proceed();
+            long expireTime = CacheUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomTime());
+            for (String cacheKey : cacheKeys) {
+                cacheService.set(cacheKey, cacheValue, expireTime, cacheableOperation.getExpireTimeUnit());
+            }
+        }
+    }
+
+    private boolean isNullValue(Object value) {
+        return value == null || value instanceof InvalidCache;
     }
 }

@@ -8,5 +8,5 @@ import java.io.Serializable;
  * @author luyi
  */
 public class InvalidCache implements Serializable {
-
+    public static final InvalidCache INVALID_CACHE = new InvalidCache();
 }

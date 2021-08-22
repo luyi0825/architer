@@ -1,7 +1,8 @@
-package com.architecture.context.common.cache.utils;
+package com.architecture.context.cache.utils;
 
 
 import com.architecture.context.cache.CacheConstants;
+import com.architecture.context.cache.operation.CacheOperation;
 
 /**
  * @author luyi

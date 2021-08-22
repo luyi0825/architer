@@ -2,9 +2,11 @@ package com.architecture.context.cache.operation;
 
 
 import com.architecture.context.cache.annotation.DeleteCache;
+import com.architecture.context.cache.proxy.MethodInvocationFunction;
+import com.architecture.context.expression.ExpressionMetadata;
 
 
-import java.lang.annotation.Annotation;
+import java.util.List;
 
 
 /**
@@ -17,19 +19,17 @@ import java.lang.annotation.Annotation;
  * @author luyi
  */
 public class DeleteCacheOperationHandler extends CacheOperationHandler {
+
+
     @Override
-    public boolean match(Annotation operationAnnotation) {
-        return operationAnnotation instanceof DeleteCache;
+    public boolean match(CacheOperation operation) {
+        return operation instanceof DeleteCache;
     }
 
     @Override
-    protected Object executeCacheHandler(String[] keys, CacheOperationMetadata metadata) {
-        CacheOperation cacheOperation = metadata.getCacheOperation();
-        for (String key : keys) {
-            //writeCache(cacheOperation.isAsync(), () -> cacheService.deleteCache(key));
-        }
-        return invoke(metadata);
+    protected void execute(CacheOperation operation, ExpressionMetadata expressionMetadata, MethodInvocationFunction methodInvocationFunction) throws Throwable {
+        List<String> cacheKeys = this.getCacheKeys(operation, expressionMetadata);
+        cacheService.multiDelete(cacheKeys);
+        methodInvocationFunction.proceed();
     }
-
-
 }

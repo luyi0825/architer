@@ -1,4 +1,4 @@
-package com.architecture.context.cache.key;
+package com.architecture.context.expression;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
  * @author luyi
  * 缓存表达式的根对象（spEl支持的语法都在这个里边）
  */
-public class CacheExpressionRootObject {
+public class ExpressionRootObject {
     private final Method method;
 
     private final Object[] args;
@@ -16,7 +16,7 @@ public class CacheExpressionRootObject {
 
     private final Class<?> targetClass;
 
-    public CacheExpressionRootObject(Method method, Object[] args, Object target, Class<?> targetClass) {
+    public ExpressionRootObject(Method method, Object[] args, Object target, Class<?> targetClass) {
         this.method = method;
         this.args = args;
         this.target = target;
@@ -42,13 +42,6 @@ public class CacheExpressionRootObject {
      */
     public Method getMethod(String methodName, Class<?>... parameterTypes) throws NoSuchMethodException {
         return this.targetClass.getMethod(methodName, parameterTypes);
-    }
-
-    /**
-     * 获取指定方法的名称
-     */
-    public String getMethodName(String methodName, Class<?>... parameterTypes) throws NoSuchMethodException {
-        return getMethod(methodName,parameterTypes).getName();
     }
 
     public Method getMethod() {

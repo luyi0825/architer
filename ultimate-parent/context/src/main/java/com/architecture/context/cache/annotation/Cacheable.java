@@ -19,7 +19,8 @@ import java.util.concurrent.TimeUnit;
  * <li>b.如果cacheName不为空，就为cacheName+缓存分隔符+key的取值</li>
  * -----------------------------------取默认配置值---------------------------
  * 当值为CacheConstants.DEFAULT_CONFIG_TIME的时候，会根据默认的配置取值，用户可以配置全局值
- * ------------------------------------------------------------------
+ * -----------------------------------缓存过期时间-------------------------------
+ * <li>缓存过期时间：expireTime加上randomTime范围内随机生成的时间</li>
  *
  * @author luyi
  */
@@ -41,25 +42,26 @@ public @interface Cacheable {
     String key();
 
     /**
-     * 缓存值,默认为方法返回值，支持spEL表达式
+     * 缓存随机时间
+     * ps:主要用户解决缓存雪崩，同一时刻大量缓存数据失效，大量请求到达数据库
      */
-    String cacheValue() default "";
+    long randomTime() default 0;
 
     /**
      * 缓存随机失效时间
      * ps:主要用户解决缓存雪崩，同一时刻大量缓存数据失效，大量请求到达数据库
      */
-    long randomExpireTime() default CacheConstants.DEFAULT_CONFIG_TIME;
+    TimeUnit randomTimeUnit() default TimeUnit.MINUTES;
 
     /**
      * 缓存失效时间
      */
-    long expireTime() default CacheConstants.DEFAULT_CONFIG_TIME;
+    long expireTime() default -1;
 
     /**
-     * 时间单位
+     * 过期时间单位
      */
-    TimeUnit timeUnit() default TimeUnit.MINUTES;
+    TimeUnit expireTimeUnit() default TimeUnit.MINUTES;
 
     /**
      * 默认没有锁
