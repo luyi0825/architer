@@ -18,9 +18,10 @@ import java.util.List;
 
 /**
  * @author luyi
+ * 缓存代理配置类
  **/
 @Configuration
-public class ProxyConfiguration {
+public class CacheProxyConfiguration {
 
 
     @Bean
