@@ -1,7 +1,8 @@
 package com.business.message.mail.component;
 
 
-import com.architecture.cache.redis.StringRedisService;
+
+import com.architecture.context.cache.CacheService;
 import com.architecture.context.exception.ServiceException;
 import com.business.message.mail.entity.MessageLimit;
 import com.business.message.mail.entity.MessageTemplate;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author luyi
@@ -30,7 +32,7 @@ public class SendMessageProcess {
 
     private List<SendMessageAdapter> sendMessageAdapters;
 
-    private StringRedisService redisService;
+    private CacheService cacheService;
 
 
     public void send(Email email) {
@@ -80,7 +82,7 @@ public class SendMessageProcess {
         if (isIntervals(messageLimit)) {
             //将前缀放入常量池
             String intervalsKey = (email.getTemplateCode() + "intervals::").intern() + ip;
-            if (redisService.get(intervalsKey) != null) {
+            if (cacheService.get(intervalsKey) != null) {
                 throw new ServiceException("请稍后再试!");
             }
         }
@@ -107,7 +109,7 @@ public class SendMessageProcess {
     private void sendAfterProcess(Email email, MessageLimit messageLimit) {
         if (isIntervals(messageLimit)) {
             String intervalsKey = (email.getTemplateCode() + "intervals::").intern() + email.getIp();
-            redisService.set(intervalsKey, "1", messageLimit.getIntervals());
+            cacheService.set(intervalsKey, "1", messageLimit.getIntervals(), TimeUnit.SECONDS);
         }
     }
 
@@ -126,8 +128,9 @@ public class SendMessageProcess {
         this.sendMessageAdapters = sendMessageAdapters;
     }
 
-    @Autowired(required = false)
-    public void setRedisService(StringRedisService redisService) {
-        this.redisService = redisService;
+    @Autowired
+    public SendMessageProcess setCacheService(CacheService cacheService) {
+        this.cacheService = cacheService;
+        return this;
     }
 }

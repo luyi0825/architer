@@ -1,18 +1,19 @@
 package com.business.message.mail.component;
 
 
+import com.architecture.context.cache.CacheService;
 import com.architecture.context.exception.ServiceException;
 import com.business.message.mail.MessageConstants;
 import com.business.message.mail.entity.MessageLimit;
 import com.business.message.mail.entity.MessageTemplate;
 import com.business.message.mail.model.Email;
 import com.business.message.mail.sender.EmailSender;
-import com.architecture.cache.redis.StringRedisService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 发送验证码适配器实现类
@@ -22,7 +23,7 @@ import java.text.MessageFormat;
 @Component
 public class SendVerificationCodeMessageAdapterImpl implements SendMessageAdapter {
 
-    private StringRedisService redisService;
+    private CacheService cacheService;
 
     private EmailSender emailSender;
 
@@ -73,7 +74,7 @@ public class SendVerificationCodeMessageAdapterImpl implements SendMessageAdapte
         //生成key
         String codeKey = email.getTemplateCode() + "::" + email.getReceivers();
         //设置有效期
-        redisService.set(codeKey, verificationCode, messageTemplate.getExpireTime() * 60L);
+        cacheService.set(codeKey, verificationCode, messageTemplate.getExpireTime() * 60L, TimeUnit.SECONDS);
         return true;
     }
 
@@ -95,10 +96,10 @@ public class SendVerificationCodeMessageAdapterImpl implements SendMessageAdapte
         return verificationCode.toString();
     }
 
-
-    @Autowired(required = false)
-    public void setRedisService(StringRedisService redisService) {
-        this.redisService = redisService;
+    @Autowired
+    public SendVerificationCodeMessageAdapterImpl setCacheService(CacheService cacheService) {
+        this.cacheService = cacheService;
+        return this;
     }
 
     @Autowired
