@@ -38,12 +38,8 @@ public @interface PutCache {
     /**
      * @see Cacheable#randomTime()
      */
-    long randomTime() default 0;
+    long randomTime() default 0L;
 
-    /**
-     * @see Cacheable#randomTimeUnit()
-     */
-    long randomTimeUnit() default 0;
 
     /**
      * @see Cacheable#expireTime()
