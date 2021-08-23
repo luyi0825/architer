@@ -7,7 +7,7 @@ import lombok.Data;
  * 多个缓存注解操作
  */
 @Data
-public class CachingOperation extends CacheOperation {
-    private CacheOperation[] operations;
+public class CachingOperation extends BaseCacheOperation {
+    private BaseCacheOperation[] operations;
 
 }
