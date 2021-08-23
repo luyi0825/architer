@@ -1,10 +1,10 @@
 package com.architecture.context.cache.operation;
 
 
-
 import com.architecture.context.cache.proxy.ReturnValueFunction;
 import com.architecture.context.cache.utils.CacheUtils;
 import com.architecture.context.expression.ExpressionMetadata;
+import org.springframework.core.Ordered;
 
 import java.util.List;
 
@@ -14,6 +14,8 @@ import java.util.List;
  * @author luyi
  */
 public class PutCacheOperationHandler extends CacheOperationHandler {
+
+    private static final int SECOND_ORDER = 2;
 
     @Override
     public boolean match(CacheOperation operation) {
@@ -30,5 +32,10 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
             cacheService.set(cacheKey, value, expireTime, putCacheOperation.getExpireTimeUnit());
         }
         returnValueFunction.proceed();
+    }
+
+    @Override
+    public int getOrder() {
+        return SECOND_ORDER;
     }
 }

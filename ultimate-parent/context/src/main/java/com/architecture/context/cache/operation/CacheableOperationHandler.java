@@ -5,6 +5,7 @@ import com.architecture.context.cache.model.InvalidCache;
 import com.architecture.context.cache.proxy.ReturnValueFunction;
 import com.architecture.context.cache.utils.CacheUtils;
 import com.architecture.context.expression.ExpressionMetadata;
+import org.springframework.core.Ordered;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public class CacheableOperationHandler extends CacheOperationHandler {
 
+    private static final int FIRST_ORDER = 1;
 
     @Override
     public boolean match(CacheOperation operation) {
@@ -47,5 +49,10 @@ public class CacheableOperationHandler extends CacheOperationHandler {
 
     private boolean isNullValue(Object value) {
         return value == null || value instanceof InvalidCache;
+    }
+
+    @Override
+    public int getOrder() {
+        return FIRST_ORDER;
     }
 }

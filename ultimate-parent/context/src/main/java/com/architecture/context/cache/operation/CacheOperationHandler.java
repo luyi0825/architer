@@ -12,6 +12,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.architecture.context.cache.CacheService;
+import org.springframework.core.Ordered;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -21,9 +22,10 @@ import java.util.concurrent.locks.Lock;
 
 /**
  * @author luyi
- * 缓存operation
+ * 缓存operation处理基类
+ * <li>对于实现类order排序,按照操作的频率排好序，增加程序效率：比如缓存读多，就把cacheable对应的处理器放最前边</li>
  */
-public abstract class CacheOperationHandler {
+public abstract class CacheOperationHandler implements Ordered {
 
     @Autowired(required = false)
     protected CacheService cacheService;

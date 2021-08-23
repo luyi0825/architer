@@ -4,6 +4,7 @@ package com.architecture.context.cache.operation;
 import com.architecture.context.cache.annotation.DeleteCache;
 import com.architecture.context.cache.proxy.ReturnValueFunction;
 import com.architecture.context.expression.ExpressionMetadata;
+import org.springframework.core.Ordered;
 
 
 import java.util.List;
@@ -18,8 +19,9 @@ import java.util.List;
  *
  * @author luyi
  */
-public class DeleteCacheOperationHandler extends CacheOperationHandler {
+public class DeleteCacheOperationHandler extends CacheOperationHandler  {
 
+    private static final int END_ORDER = 3;
 
     @Override
     public boolean match(CacheOperation operation) {
@@ -31,5 +33,10 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
         List<String> cacheKeys = this.getCacheKeys(operation, expressionMetadata);
         cacheService.multiDelete(cacheKeys);
         returnValueFunction.proceed();
+    }
+
+    @Override
+    public int getOrder() {
+        return END_ORDER;
     }
 }
