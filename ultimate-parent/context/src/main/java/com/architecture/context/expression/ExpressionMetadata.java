@@ -8,6 +8,7 @@ import java.lang.reflect.Proxy;
 
 /**
  * @author luyi
+ * 表达式元数据
  */
 public class ExpressionMetadata {
     private final Class<?> targetClass;
@@ -17,7 +18,7 @@ public class ExpressionMetadata {
     private final AnnotatedElementKey methodKey;
 
     public ExpressionMetadata(Object target, Method method, Object[] args) {
-        ;
+
         this.target = target;
         this.targetClass = target.getClass();
         this.targetMethod = (!Proxy.isProxyClass(targetClass) ?
@@ -25,7 +26,6 @@ public class ExpressionMetadata {
         this.args = args;
         this.methodKey = new AnnotatedElementKey(this.targetMethod, targetClass);
     }
-
 
 
     public Class<?> getTargetClass() {
