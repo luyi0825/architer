@@ -23,7 +23,7 @@ public class ExpressionParser {
 
     private final SpelExpressionParser parser = new SpelExpressionParser();
     private final Map<ExpressionKey, Expression> keyCache = new ConcurrentHashMap<>(64);
-    private final Map<ExpressionKey, Object> valueCache = new ConcurrentHashMap<>();
+    private final Map<ExpressionKey, Object> valueCache = new ConcurrentHashMap<>(64);
 
     /**
      * 执行解析
@@ -34,10 +34,11 @@ public class ExpressionParser {
      */
     @Nullable
     public Object parserExpression(ExpressionMetadata expressionMetadata, String expression) {
-        EvaluationContext evaluationContext = createEvaluationContext(expressionMetadata);
+        ExpressionEvaluationContext expressionEvaluationContext = createEvaluationContext(expressionMetadata);
         Expression ex = getExpression(keyCache, expressionMetadata.getMethodKey(), expression);
-        return ex.getValue(evaluationContext);
+        return ex.getValue(expressionEvaluationContext);
     }
+
 
     public List<Object> parserExpression(ExpressionMetadata expressionMetadata, String[] expressions) {
         List<Object> objects = new ArrayList<>(expressions.length);
@@ -58,9 +59,9 @@ public class ExpressionParser {
             ExpressionKey expressionKey = createKey(expressionMetadata.getMethodKey(), expression);
             Object value = valueCache.get(expressionKey);
             if (value == null) {
-                org.springframework.expression.EvaluationContext evaluationContext = createEvaluationContext(expressionMetadata);
+                ExpressionEvaluationContext expressionEvaluationContext = createEvaluationContext(expressionMetadata);
                 Expression ex = getExpression(keyCache, expressionKey);
-                value = Objects.requireNonNull(ex.getValue(evaluationContext));
+                value = Objects.requireNonNull(ex.getValue(expressionEvaluationContext));
                 valueCache.putIfAbsent(expressionKey, value);
             }
             objects.add(value);
@@ -69,10 +70,15 @@ public class ExpressionParser {
     }
 
 
-    private EvaluationContext createEvaluationContext(ExpressionMetadata metadata) {
+    public static ExpressionEvaluationContext createEvaluationContext(ExpressionMetadata metadata) {
+        if (metadata.getEvaluationContext() != null) {
+            return metadata.getEvaluationContext();
+        }
         ExpressionRootObject rootObject = new ExpressionRootObject(metadata.getTargetMethod(), metadata.getArgs(), metadata.getTarget(), metadata.getTargetClass());
-        return new EvaluationContext(
+        ExpressionEvaluationContext expressionEvaluationContext = new ExpressionEvaluationContext(
                 rootObject, metadata.getTargetMethod(), metadata.getArgs(), new DefaultParameterNameDiscoverer());
+        expressionEvaluationContext.setVariables(metadata.getVariables());
+        return expressionEvaluationContext;
     }
 
 

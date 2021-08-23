@@ -26,11 +26,12 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         PutCacheOperation putCacheOperation = (PutCacheOperation) operation;
         List<String> cacheKeys = getCacheKeys(operation, expressionMetadata);
         long expireTime = CacheUtils.getExpireTime(putCacheOperation.getExpireTime(), putCacheOperation.getRandomTime());
-        Object value = expressionParser.parserExpression(expressionMetadata, putCacheOperation.getCacheValue());
+        String cacheValue = putCacheOperation.getCacheValue();
+        returnValueFunction.proceed();
+        Object value = expressionParser.parserExpression(expressionMetadata, cacheValue);
         for (String cacheKey : cacheKeys) {
             cacheService.set(cacheKey, value, expireTime, putCacheOperation.getExpireTimeUnit());
         }
-        returnValueFunction.proceed();
     }
 
     @Override

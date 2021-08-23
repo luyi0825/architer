@@ -7,9 +7,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.CollectionUtils;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -52,7 +52,7 @@ public class LockFactory implements ApplicationContextAware {
         } else if (LockType.WRITE.equals(lockType)) {
             return lockService.tryWriteLock(lockName);
         } else if (LockType.REENTRANT_FAIR.equals(lockType)) {
-            return lockService.tryFairLock(lockName);
+            return lockService.tryFairLock(lockName,30L, TimeUnit.SECONDS);
         } else if (LockType.REENTRANT_UNFAIR.equals(lockType)) {
             return lockService.tryUnfairLock(lockName);
         } else {

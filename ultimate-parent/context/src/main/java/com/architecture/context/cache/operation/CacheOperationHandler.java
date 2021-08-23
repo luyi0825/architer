@@ -68,8 +68,8 @@ public abstract class CacheOperationHandler implements Ordered {
     }
 
 
-    public void handler(BaseCacheOperation operation, ReturnValueFunction returnValueFunction, ExpressionMetadata expressionMetadata) throws Throwable {
-        if (this.canHandler(operation, expressionMetadata)) {
+    public void handler(BaseCacheOperation operation, ReturnValueFunction returnValueFunction,ExpressionMetadata expressionMetadata) throws Throwable {
+        if (this.canHandler(operation,expressionMetadata)) {
             Lock lock = lockFactory.get(operation.getLocked(), expressionMetadata);
             if (lock == null) {
                 this.execute(operation, expressionMetadata, returnValueFunction);
