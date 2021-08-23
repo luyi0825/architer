@@ -2,8 +2,13 @@ package com.architecture.context.lock;
 
 import com.architecture.context.expression.ExpressionParser;
 import com.architecture.context.expression.ExpressionMetadata;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
@@ -11,7 +16,7 @@ import java.util.concurrent.locks.Lock;
  * @author luyi
  * 锁的key的解析器
  */
-public class LockFactory {
+public class LockFactory implements ApplicationContextAware {
 
     private ExpressionParser expressionParser;
     private Map<LockEnum, LockService> lockServiceMap;
@@ -53,5 +58,19 @@ public class LockFactory {
         } else {
             return LockService.FAIL_LOCK;
         }
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        Map<String, LockService> lockServiceMap = applicationContext.getBeansOfType(LockService.class);
+        if (CollectionUtils.isEmpty(lockServiceMap)) {
+            return;
+        }
+        this.lockServiceMap = new HashMap<>(lockServiceMap.size());
+        lockServiceMap.forEach((key, value) -> {
+            if (key.startsWith("redis")) {
+                this.lockServiceMap.put(LockEnum.REDIS, value);
+            }
+        });
     }
 }
