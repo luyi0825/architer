@@ -46,10 +46,10 @@ public abstract class CacheOperationHandler implements Ordered {
      * @param operation operation对应的缓存操作
      * @return 是否匹配，如果true就对这个operation的进行缓存处理
      */
-    public abstract boolean match(CacheOperation operation);
+    public abstract boolean match(BaseCacheOperation operation);
 
 
-    protected List<String> getCacheKeys(CacheOperation operation, ExpressionMetadata expressionMetadata) {
+    protected List<String> getCacheKeys(BaseCacheOperation operation, ExpressionMetadata expressionMetadata) {
         List<Object> cacheNames = null;
         if (ArrayUtils.isNotEmpty(operation.getCacheName())) {
             cacheNames = expressionParser.parserFixExpression(expressionMetadata, operation.getCacheName());
@@ -68,7 +68,7 @@ public abstract class CacheOperationHandler implements Ordered {
     }
 
 
-    public void handler(CacheOperation operation, ReturnValueFunction returnValueFunction, ExpressionMetadata expressionMetadata) throws Throwable {
+    public void handler(BaseCacheOperation operation, ReturnValueFunction returnValueFunction, ExpressionMetadata expressionMetadata) throws Throwable {
         if (this.canHandler(operation, expressionMetadata)) {
             Lock lock = lockFactory.get(operation.getLocked(), expressionMetadata);
             if (lock == null) {
@@ -86,7 +86,7 @@ public abstract class CacheOperationHandler implements Ordered {
         }
     }
 
-    protected boolean canHandler(CacheOperation operation, ExpressionMetadata expressionMetadata) {
+    protected boolean canHandler(BaseCacheOperation operation, ExpressionMetadata expressionMetadata) {
         if (StringUtils.isBlank(operation.getCondition()) && StringUtils.isBlank(operation.getUnless())) {
             return true;
         }
@@ -107,7 +107,7 @@ public abstract class CacheOperationHandler implements Ordered {
         return true;
     }
 
-    protected abstract void execute(CacheOperation operation, ExpressionMetadata expressionMetadata, ReturnValueFunction returnValueFunction) throws Throwable;
+    protected abstract void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, ReturnValueFunction returnValueFunction) throws Throwable;
 
 
     public CacheOperationHandler setCacheService(CacheService cacheService) {
