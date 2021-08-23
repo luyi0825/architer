@@ -31,19 +31,6 @@ public class CacheInterceptor implements MethodInterceptor {
     private List<CacheOperationHandler> cacheOperationHandlers;
 
 
-    public CacheAnnotationsParser getCacheAnnotationsParser() {
-        return cacheAnnotationsParser;
-    }
-
-    public List<CacheOperationHandler> getCacheOperationHandlers() {
-        return cacheOperationHandlers;
-    }
-
-    public CacheInterceptor setCacheOperationHandlers(List<CacheOperationHandler> cacheOperationHandlers) {
-        this.cacheOperationHandlers = cacheOperationHandlers;
-        return this;
-    }
-
     @Override
     @Nullable
     public Object invoke(final MethodInvocation invocation) throws Throwable {
@@ -64,7 +51,7 @@ public class CacheInterceptor implements MethodInterceptor {
         ExpressionEvaluationContext expressionEvaluationContext = ExpressionParser.createEvaluationContext(expressionMetadata);
         expressionMetadata.setEvaluationContext(expressionEvaluationContext);
         AtomicReference<Object> returnValue = new AtomicReference<>();
-        ReturnValueFunction returnValueFunction = new ReturnValueFunction() {
+        MethodReturnValueFunction methodReturnValueFunction = new MethodReturnValueFunction() {
             @Override
             public Object proceed() throws Throwable {
                 synchronized (this) {
@@ -92,7 +79,7 @@ public class CacheInterceptor implements MethodInterceptor {
         for (BaseCacheOperation baseCacheOperation : baseCacheOperations) {
             for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
                 if (cacheOperationHandler.match(baseCacheOperation)) {
-                    cacheOperationHandler.handler(baseCacheOperation, returnValueFunction, expressionMetadata);
+                    cacheOperationHandler.handler(baseCacheOperation, methodReturnValueFunction, expressionMetadata);
                     continue;
                 }
             }
@@ -111,5 +98,18 @@ public class CacheInterceptor implements MethodInterceptor {
 
     public void setCacheAnnotationsParser(CacheAnnotationsParser cacheAnnotationsParser) {
         this.cacheAnnotationsParser = cacheAnnotationsParser;
+    }
+
+    public CacheAnnotationsParser getCacheAnnotationsParser() {
+        return cacheAnnotationsParser;
+    }
+
+    public List<CacheOperationHandler> getCacheOperationHandlers() {
+        return cacheOperationHandlers;
+    }
+
+    public CacheInterceptor setCacheOperationHandlers(List<CacheOperationHandler> cacheOperationHandlers) {
+        this.cacheOperationHandlers = cacheOperationHandlers;
+        return this;
     }
 }
