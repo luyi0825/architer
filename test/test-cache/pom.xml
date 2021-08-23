@@ -14,11 +14,13 @@
             <artifactId>cloud-redis-starter</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
         <dependency>
-            <groupId>com.architecture</groupId>
-            <artifactId>boot-starter-web-mvc</artifactId>
-            <version>1.0.0</version>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.29</version>
         </dependency>
+
     </dependencies>
 
     <properties>
