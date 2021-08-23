@@ -40,7 +40,17 @@ public class CacheInterceptor implements MethodInterceptor {
                 //当多余一个注解的时候，排序，让cacheable操作在最前边
                 baseCacheOperations = baseCacheOperations.stream().sorted(Comparator.comparing(BaseCacheOperation::getOrder)).collect(Collectors.toList());
             }
-            return execute(invocation, baseCacheOperations);
+            Object returnValue = execute(invocation, baseCacheOperations);
+            //已经调用了方法，缓存中放的空值
+            if (returnValue instanceof InvalidCache) {
+                return null;
+            }
+            //获取到返回值
+            if (returnValue != null) {
+                return returnValue;
+            }
+            //没有调用过方法，调用一次
+            return invocation.proceed();
         }
         return invocation.proceed();
     }
@@ -50,9 +60,13 @@ public class CacheInterceptor implements MethodInterceptor {
      * 执行拦截的操作
      */
     private Object execute(MethodInvocation invocation, Collection<BaseCacheOperation> baseCacheOperations) throws Throwable {
-        ExpressionMetadata expressionMetadata = new ExpressionMetadata(Objects.requireNonNull(invocation.getThis()), invocation.getMethod(), invocation.getArguments());
-        ExpressionEvaluationContext expressionEvaluationContext = ExpressionParser.createEvaluationContext(expressionMetadata);
-        expressionMetadata.setEvaluationContext(expressionEvaluationContext);
+        /*
+         *构建表达式的元数据
+         *1.由于对于同一个线程的ExpressionEvaluationContext一样，可能存在多个注解，再次构建，减少对象的创建
+         *2.方便不同注解拓展变量值传递
+         */
+        ExpressionMetadata expressionMetadata = this.buildExpressionMeta(invocation);
+        //返回值构建，也方便多个注解的时候，重复调用方法
         AtomicReference<Object> returnValue = new AtomicReference<>();
         MethodReturnValueFunction methodReturnValueFunction = new MethodReturnValueFunction() {
             @Override
@@ -73,7 +87,7 @@ public class CacheInterceptor implements MethodInterceptor {
             public void setValue(Object value) {
                 synchronized (this) {
                     if (value != null && !(value instanceof InvalidCache)) {
-                        expressionEvaluationContext.setVariable("result", value);
+                        expressionMetadata.getEvaluationContext().setVariable("result", value);
                     }
                     if (value != null) {
                         returnValue.set(value);
@@ -89,15 +103,20 @@ public class CacheInterceptor implements MethodInterceptor {
                 }
             }
         }
-        Object value = returnValue.get();
-        if (value == null) {
-            return invocation.proceed();
-        }
-        if (value instanceof InvalidCache) {
-            return null;
-        }
-        return value;
+        return returnValue.get();
+    }
 
+    /**
+     * 构建缓存的表达式元数据
+     *
+     * @param invocation 方法代理的信息
+     * @return 表达式元数据
+     */
+    private ExpressionMetadata buildExpressionMeta(MethodInvocation invocation) {
+        ExpressionMetadata expressionMetadata = new ExpressionMetadata(Objects.requireNonNull(invocation.getThis()), invocation.getMethod(), invocation.getArguments());
+        ExpressionEvaluationContext expressionEvaluationContext = ExpressionParser.createEvaluationContext(expressionMetadata);
+        expressionMetadata.setEvaluationContext(expressionEvaluationContext);
+        return expressionMetadata;
     }
 
 
@@ -113,8 +132,7 @@ public class CacheInterceptor implements MethodInterceptor {
         return cacheOperationHandlers;
     }
 
-    public CacheInterceptor setCacheOperationHandlers(List<CacheOperationHandler> cacheOperationHandlers) {
+    public void setCacheOperationHandlers(List<CacheOperationHandler> cacheOperationHandlers) {
         this.cacheOperationHandlers = cacheOperationHandlers;
-        return this;
     }
 }
