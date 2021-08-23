@@ -3,6 +3,7 @@ package com.architecture.context.cache;
 import com.architecture.context.cache.annotation.*;
 import com.architecture.context.cache.operation.BaseCacheOperation;
 import com.architecture.context.cache.operation.CacheableOperation;
+import com.architecture.context.cache.operation.DeleteCacheOperation;
 import com.architecture.context.cache.operation.PutCacheOperation;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -70,48 +71,48 @@ public class CacheAnnotationsParser {
         }
         final Collection<BaseCacheOperation> ops = new ArrayList<>(anns.size());
         anns.forEach(annotation -> {
-            if (annotation instanceof PutCache) {
-                parsePutCacheAnnotation(annotatedElement, (PutCache) annotation, ops);
-            } else if (annotation instanceof PutCaches) {
-                parsePutCachesAnnotation(annotatedElement, (PutCaches) annotation, ops);
-            } else if (annotation instanceof DeleteCache) {
-                parseDeleteCacheAnnotation(annotatedElement, (DeleteCache) annotation, ops);
-            } else if (annotation instanceof DeleteCaches) {
-                parseDeletesCacheAnnotation(annotatedElement, (DeleteCaches) annotation, ops);
-            } else if (annotation instanceof Cacheable) {
-                parseCacheableAnnotation(annotatedElement, (Cacheable) annotation, ops);
+            if (annotation instanceof Cacheable) {
+                parseCacheableAnnotation((Cacheable) annotation, ops);
             } else if (annotation instanceof Cacheables) {
-                parseCacheablesAnnotation(annotatedElement, (Cacheables) annotation, ops);
+                parseCacheablesAnnotation((Cacheables) annotation, ops);
+            } else if (annotation instanceof PutCache) {
+                parsePutCacheAnnotation((PutCache) annotation, ops);
+            } else if (annotation instanceof PutCaches) {
+                parsePutCachesAnnotation((PutCaches) annotation, ops);
+            } else if (annotation instanceof DeleteCache) {
+                parseDeleteCacheAnnotation((DeleteCache) annotation, ops);
+            } else if (annotation instanceof DeleteCaches) {
+                parseDeletesCacheAnnotation((DeleteCaches) annotation, ops);
             } else if (annotation instanceof Caching) {
-                parseCachingAnnotation(annotatedElement, (Caching) annotation, ops);
+                parseCachingAnnotation((Caching) annotation, ops);
             }
         });
         return ops;
     }
 
-    private void parseCacheablesAnnotation(AnnotatedElement annotatedElement, Cacheables cacheables, Collection<BaseCacheOperation> ops) {
+    private void parseCacheablesAnnotation(Cacheables cacheables, Collection<BaseCacheOperation> ops) {
         Cacheable[] ables = cacheables.value();
         if (ArrayUtils.isNotEmpty(ables)) {
             for (Cacheable cacheable : ables) {
-                parseCacheableAnnotation(annotatedElement, cacheable, ops);
+                parseCacheableAnnotation(cacheable, ops);
             }
         }
     }
 
-    private void parseDeletesCacheAnnotation(AnnotatedElement annotatedElement, DeleteCaches deleteCaches, Collection<BaseCacheOperation> ops) {
+    private void parseDeletesCacheAnnotation(DeleteCaches deleteCaches, Collection<BaseCacheOperation> ops) {
         DeleteCache[] deletes = deleteCaches.value();
         if (ArrayUtils.isNotEmpty(deletes)) {
             for (DeleteCache deleteCache : deletes) {
-                parseDeleteCacheAnnotation(annotatedElement, deleteCache, ops);
+                parseDeleteCacheAnnotation(deleteCache, ops);
             }
         }
     }
 
-    private void parsePutCachesAnnotation(AnnotatedElement annotatedElement, PutCaches putCaches, Collection<BaseCacheOperation> ops) {
+    private void parsePutCachesAnnotation(PutCaches putCaches, Collection<BaseCacheOperation> ops) {
         PutCache[] puts = putCaches.value();
         if (ArrayUtils.isNotEmpty(puts)) {
             for (PutCache put : puts) {
-                parsePutCacheAnnotation(annotatedElement, put, ops);
+                parsePutCacheAnnotation(put, ops);
             }
         }
     }
@@ -119,25 +120,24 @@ public class CacheAnnotationsParser {
     /**
      * 解析@Caching注解
      */
-    private void parseCachingAnnotation(AnnotatedElement annotatedElement, Caching caching, Collection<BaseCacheOperation> ops) {
+    private void parseCachingAnnotation(Caching caching, Collection<BaseCacheOperation> ops) {
         Cacheable[] cacheables = caching.cacheable();
         if (ArrayUtils.isNotEmpty(cacheables)) {
             for (Cacheable cacheable : cacheables) {
-                this.parseCacheableAnnotation(annotatedElement, cacheable, ops);
-
+                this.parseCacheableAnnotation(cacheable, ops);
             }
         }
         PutCache[] putCaches = caching.put();
         if (ArrayUtils.isNotEmpty(putCaches)) {
             for (PutCache putCache : putCaches) {
-                this.parsePutCacheAnnotation(annotatedElement, putCache, ops);
+                this.parsePutCacheAnnotation(putCache, ops);
             }
         }
 
         DeleteCache[] deleteCaches = caching.delete();
         if (ArrayUtils.isNotEmpty(deleteCaches)) {
             for (DeleteCache deleteCache : deleteCaches) {
-                this.parseDeleteCacheAnnotation(annotatedElement, deleteCache, ops);
+                this.parseDeleteCacheAnnotation(deleteCache, ops);
             }
         }
     }
@@ -145,8 +145,7 @@ public class CacheAnnotationsParser {
     /**
      * 解析@PutCache注解
      */
-    private void parsePutCacheAnnotation(AnnotatedElement annotatedElement,
-                                         PutCache cachePut,
+    private void parsePutCacheAnnotation(PutCache cachePut,
                                          Collection<BaseCacheOperation> ops) {
         PutCacheOperation putCacheOperation = new PutCacheOperation();
         putCacheOperation.setKey(cachePut.key());
@@ -157,6 +156,7 @@ public class CacheAnnotationsParser {
         putCacheOperation.setExpireTimeUnit(cachePut.expireTimeUnit());
         putCacheOperation.setRandomTime(cachePut.randomTime());
         putCacheOperation.setAnnotation(cachePut);
+        putCacheOperation.setCondition(cachePut.condition());
         putCacheOperation.setUnless(cachePut.unless());
         putCacheOperation.setCacheValue(cachePut.cacheValue());
         ops.add(putCacheOperation);
@@ -165,23 +165,21 @@ public class CacheAnnotationsParser {
     /**
      * 解析删除缓存注解
      */
-    private void parseDeleteCacheAnnotation(AnnotatedElement annotatedElement,
-                                            DeleteCache deleteCache,
+    private void parseDeleteCacheAnnotation(DeleteCache deleteCache,
                                             Collection<BaseCacheOperation> ops) {
-//        DeleteCacheOperation deleteCacheOperation = new DeleteCacheOperation();
-//        deleteCacheOperation.setCacheName(deleteCache.cacheName());
-////        deleteCacheOperation.setLockEnum(deleteCache.lock());
-////        deleteCacheOperation.setLockEnum(deleteCache.lockType());
-//        deleteCacheOperation.setAsync(deleteCache.async());
-//        deleteCacheOperation.setKey(deleteCache.key());
-//        deleteCacheOperation.setAnnotation(deleteCache);
-//        ops.add(deleteCacheOperation);
+        DeleteCacheOperation deleteCacheOperation = new DeleteCacheOperation();
+        deleteCacheOperation.setCacheName(deleteCache.cacheName());
+        deleteCacheOperation.setKey(deleteCache.key());
+        deleteCacheOperation.setLocked(deleteCache.locked());
+        deleteCacheOperation.setAsync(deleteCache.async());
+        deleteCacheOperation.setAnnotation(deleteCache);
+        ops.add(deleteCacheOperation);
     }
 
     /**
      * 解析@Cacheable解析
      */
-    private void parseCacheableAnnotation(AnnotatedElement annotatedElement, Cacheable cacheable, Collection<BaseCacheOperation> ops) {
+    private void parseCacheableAnnotation(Cacheable cacheable, Collection<BaseCacheOperation> ops) {
         CacheableOperation operation = new CacheableOperation();
         operation.setCacheName(cacheable.cacheName());
         operation.setAnnotation(cacheable);
