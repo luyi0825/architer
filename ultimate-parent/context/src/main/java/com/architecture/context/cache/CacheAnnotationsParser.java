@@ -191,6 +191,8 @@ public class CacheAnnotationsParser {
         operation.setLocked(cacheable.locked());
         operation.setCondition(cacheable.condition());
         operation.setUnless(cacheable.unless());
+        //设置成最小，让cacheable最先执行
+        operation.setOrder(-1);
         ops.add(operation);
     }
 }
