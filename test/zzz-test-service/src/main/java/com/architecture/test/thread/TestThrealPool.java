@@ -1,7 +1,8 @@
 package com.architecture.test.thread;
 
 
-import com.architecture.context.thread.client.annotation.ThreadPoolClient;
+
+import com.architecture.thread.client.annotation.ThreadPoolClient;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
