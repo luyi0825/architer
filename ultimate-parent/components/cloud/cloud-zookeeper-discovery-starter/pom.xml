@@ -8,8 +8,8 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>cloud-zookeeper-discovery</artifactId>
-    <name>cloud-zookeeper-discovery</name>
+    <artifactId>cloud-zookeeper-discovery-starter</artifactId>
+    <name>cloud-zookeeper-discovery-starter</name>
     <description>zookeeper-discovery服务发现</description>
     <packaging>jar</packaging>
     <version>1.0.0</version>

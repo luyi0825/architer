@@ -8,9 +8,9 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>cloud-zookeeper-boot-starter</artifactId>
-    <name>cloud-zookeeper-boot-starter</name>
-    <description>cloud-zookeeper-boot-starter</description>
+    <artifactId>cloud-zookeeper-starter</artifactId>
+    <name>cloud-zookeeper-starter</name>
+    <description>cloud-zookeeper-starter</description>
     <packaging>jar</packaging>
     <version>1.0.0</version>
     <dependencies>
