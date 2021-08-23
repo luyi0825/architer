@@ -2,10 +2,8 @@ package com.architecture.context.cache.operation;
 
 
 import com.architecture.context.cache.annotation.Cacheable;
-import com.architecture.context.lock.Locked;
 import lombok.Data;
 
-import java.lang.annotation.Annotation;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -13,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  * @see com.architecture.context.cache.annotation.PutCache
  */
 @Data
-public class PutCacheOperation extends CacheOperation {
+public class PutCacheOperation extends BaseCacheOperation {
 
     /**
      * @see Cacheable#randomTime()
