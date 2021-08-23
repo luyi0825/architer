@@ -2,7 +2,7 @@ package com.architecture.context.cache.operation;
 
 
 import com.architecture.context.cache.annotation.DeleteCache;
-import com.architecture.context.cache.proxy.ReturnValueFunction;
+import com.architecture.context.cache.proxy.MethodReturnValueFunction;
 import com.architecture.context.expression.ExpressionMetadata;
 
 
@@ -18,20 +18,20 @@ import java.util.List;
  *
  * @author luyi
  */
-public class DeleteCacheOperationHandler extends CacheOperationHandler  {
+public class DeleteCacheOperationHandler extends CacheOperationHandler {
 
     private static final int END_ORDER = 3;
 
     @Override
     public boolean match(BaseCacheOperation operation) {
-        return operation instanceof DeleteCache;
+        return operation instanceof DeleteCacheOperation;
     }
 
     @Override
-    protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, ReturnValueFunction returnValueFunction) throws Throwable {
+    protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
+        methodReturnValueFunction.proceed();
         List<String> cacheKeys = this.getCacheKeys(operation, expressionMetadata);
         cacheService.multiDelete(cacheKeys);
-        returnValueFunction.proceed();
     }
 
     @Override
