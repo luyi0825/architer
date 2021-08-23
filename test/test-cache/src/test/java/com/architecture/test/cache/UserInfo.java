@@ -6,11 +6,14 @@ import java.util.UUID;
 public class UserInfo implements Serializable {
     private String username;
     private String password;
+    private String phone;
 
     public static UserInfo getRandomUserInfo() {
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername(UUID.randomUUID().toString());
         userInfo.setPassword("testPassword");
+        int num = (int) (Math.random() * 10);
+        userInfo.setPhone((num + "").repeat(11));
         return userInfo;
     }
 
@@ -19,7 +22,17 @@ public class UserInfo implements Serializable {
         return "UserInfo{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
                 '}';
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public UserInfo setPhone(String phone) {
+        this.phone = phone;
+        return this;
     }
 
     public String getUsername() {

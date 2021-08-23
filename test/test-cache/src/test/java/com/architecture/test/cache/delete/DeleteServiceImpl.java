@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DeleteServiceImpl implements DeleteService {
-    private Logger logger = LoggerFactory.getLogger(DeleteServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(DeleteServiceImpl.class);
 
     @Override
     public void oneDelete(UserInfo userInfo) {
