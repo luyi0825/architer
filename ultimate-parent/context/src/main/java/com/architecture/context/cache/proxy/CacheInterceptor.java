@@ -3,9 +3,8 @@ package com.architecture.context.cache.proxy;
 
 import com.architecture.context.cache.CacheAnnotationsParser;
 import com.architecture.context.cache.model.InvalidCache;
-import com.architecture.context.cache.operation.CacheOperation;
+import com.architecture.context.cache.operation.BaseCacheOperation;
 import com.architecture.context.cache.operation.CacheOperationHandler;
-import com.architecture.context.cache.operation.CacheableOperation;
 import com.architecture.context.expression.ExpressionMetadata;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -44,9 +43,9 @@ public class CacheInterceptor implements MethodInterceptor {
     @Override
     @Nullable
     public Object invoke(final MethodInvocation invocation) throws Throwable {
-        Collection<CacheOperation> cacheOperations = cacheAnnotationsParser.parse(invocation.getMethod());
-        if (!CollectionUtils.isEmpty(cacheOperations)) {
-            return execute(invocation, cacheOperations);
+        Collection<BaseCacheOperation> baseCacheOperations = cacheAnnotationsParser.parse(invocation.getMethod());
+        if (!CollectionUtils.isEmpty(baseCacheOperations)) {
+            return execute(invocation, baseCacheOperations);
         }
         return invocation.proceed();
     }
@@ -55,7 +54,7 @@ public class CacheInterceptor implements MethodInterceptor {
     /**
      * 执行拦截的操作
      */
-    private Object execute(MethodInvocation invocation, Collection<CacheOperation> cacheOperations) throws Throwable {
+    private Object execute(MethodInvocation invocation, Collection<BaseCacheOperation> baseCacheOperations) throws Throwable {
         ExpressionMetadata expressionMetadata = new ExpressionMetadata(Objects.requireNonNull(invocation.getThis()), invocation.getMethod(), invocation.getArguments());
         AtomicReference<Object> returnValue = new AtomicReference<>();
         ReturnValueFunction returnValueFunction = new ReturnValueFunction() {
@@ -78,12 +77,11 @@ public class CacheInterceptor implements MethodInterceptor {
                 returnValue.set(value);
             }
         };
-        for (CacheOperation cacheOperation : cacheOperations) {
-            if (cacheOperation instanceof CacheableOperation) {
-                for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
-                    if (cacheOperationHandler.match(cacheOperation)) {
-                        cacheOperationHandler.handler(cacheOperation, returnValueFunction, expressionMetadata);
-                    }
+        for (BaseCacheOperation baseCacheOperation : baseCacheOperations) {
+            for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
+                if (cacheOperationHandler.match(baseCacheOperation)) {
+                    cacheOperationHandler.handler(baseCacheOperation, returnValueFunction, expressionMetadata);
+                    continue;
                 }
             }
         }
