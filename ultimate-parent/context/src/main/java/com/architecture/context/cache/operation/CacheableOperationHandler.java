@@ -35,8 +35,8 @@ public class CacheableOperationHandler extends CacheOperationHandler {
             }
         }
         if (cacheValue == null) {
-            cacheValue = returnValueFunction.proceed();
             long expireTime = CacheUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomTime());
+            cacheValue = returnValueFunction.proceed();
             for (String cacheKey : cacheKeys) {
                 cacheService.set(cacheKey, cacheValue, expireTime, cacheableOperation.getExpireTimeUnit());
             }
