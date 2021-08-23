@@ -5,5 +5,5 @@ package com.architecture.context.cache.operation;
  *
  * @author luyi
  */
-public class DeleteCacheOperation extends CacheOperation {
+public class DeleteCacheOperation extends BaseCacheOperation {
 }
