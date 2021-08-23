@@ -154,19 +154,20 @@ public class CacheableTest {
         for (int i = 0; i < count; i++) {
             executorService.submit(() -> {
                 try {
-                    cacheableService.testLockToGather(userName);
+                    UserInfo userInfo = cacheableService.testLockToGather(userName);
+                    Assertions.assertNotNull(userInfo);
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
                     countDownLatch.countDown();
                 }
-
-
             });
         }
         countDownLatch.await();
 
     }
+
+
 
 
 }
