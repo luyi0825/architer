@@ -36,7 +36,10 @@ public class CacheInterceptor implements MethodInterceptor {
     public Object invoke(final MethodInvocation invocation) throws Throwable {
         Collection<BaseCacheOperation> baseCacheOperations = cacheAnnotationsParser.parse(invocation.getMethod());
         if (!CollectionUtils.isEmpty(baseCacheOperations)) {
-            baseCacheOperations = baseCacheOperations.stream().sorted(Comparator.comparing(BaseCacheOperation::getOrder)).collect(Collectors.toList());
+            if (baseCacheOperations.size() > 1) {
+                //当多余一个注解的时候，排序，让cacheable操作在最前边
+                baseCacheOperations = baseCacheOperations.stream().sorted(Comparator.comparing(BaseCacheOperation::getOrder)).collect(Collectors.toList());
+            }
             return execute(invocation, baseCacheOperations);
         }
         return invocation.proceed();
@@ -72,7 +75,9 @@ public class CacheInterceptor implements MethodInterceptor {
                     if (value != null && !(value instanceof InvalidCache)) {
                         expressionEvaluationContext.setVariable("result", value);
                     }
-                    returnValue.set(value);
+                    if (value != null) {
+                        returnValue.set(value);
+                    }
                 }
             }
         };
