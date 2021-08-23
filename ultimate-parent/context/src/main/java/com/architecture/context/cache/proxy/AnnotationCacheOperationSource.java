@@ -2,7 +2,7 @@ package com.architecture.context.cache.proxy;
 
 
 import com.architecture.context.cache.CacheAnnotationsParser;
-import com.architecture.context.cache.operation.CacheOperation;
+import com.architecture.context.cache.operation.BaseCacheOperation;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -28,7 +28,7 @@ public class AnnotationCacheOperationSource implements CacheOperationSource {
     }
 
     @Override
-    public Collection<CacheOperation> getCacheOperations(Method method, Class<?> targetClass) {
+    public Collection<BaseCacheOperation> getCacheOperations(Method method, Class<?> targetClass) {
         return cacheAnnotationsParser.parse(method);
     }
 }
