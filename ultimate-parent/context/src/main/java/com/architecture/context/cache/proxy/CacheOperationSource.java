@@ -1,7 +1,7 @@
 package com.architecture.context.cache.proxy;
 
 
-import com.architecture.context.cache.operation.CacheOperation;
+import com.architecture.context.cache.operation.BaseCacheOperation;
 import org.springframework.lang.Nullable;
 
 import java.lang.reflect.Method;
@@ -30,5 +30,5 @@ public interface CacheOperationSource {
      * @return 解析的注解操作
      */
     @Nullable
-    Collection<CacheOperation> getCacheOperations(Method method, @Nullable Class<?> targetClass);
+    Collection<BaseCacheOperation> getCacheOperations(Method method, @Nullable Class<?> targetClass);
 }
