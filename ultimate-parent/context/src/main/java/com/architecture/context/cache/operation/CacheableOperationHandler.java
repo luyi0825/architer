@@ -2,7 +2,7 @@ package com.architecture.context.cache.operation;
 
 
 import com.architecture.context.cache.model.InvalidCache;
-import com.architecture.context.cache.proxy.ReturnValueFunction;
+import com.architecture.context.cache.proxy.MethodReturnValueFunction;
 import com.architecture.context.cache.utils.CacheUtils;
 import com.architecture.context.expression.ExpressionMetadata;
 
@@ -24,7 +24,7 @@ public class CacheableOperationHandler extends CacheOperationHandler {
     }
 
     @Override
-    protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, ReturnValueFunction returnValueFunction) throws Throwable {
+    protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         CacheableOperation cacheableOperation = (CacheableOperation) operation;
         List<String> cacheKeys = getCacheKeys(cacheableOperation, expressionMetadata);
         List<Object> values = cacheService.multiGet(cacheKeys);
@@ -37,12 +37,12 @@ public class CacheableOperationHandler extends CacheOperationHandler {
         }
         if (cacheValue == null) {
             long expireTime = CacheUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomTime());
-            cacheValue = returnValueFunction.proceed();
+            cacheValue = methodReturnValueFunction.proceed();
             for (String cacheKey : cacheKeys) {
                 cacheService.set(cacheKey, cacheValue, expireTime, cacheableOperation.getExpireTimeUnit());
             }
         } else {
-            returnValueFunction.setValue(cacheValue);
+            methodReturnValueFunction.setValue(cacheValue);
         }
     }
 
