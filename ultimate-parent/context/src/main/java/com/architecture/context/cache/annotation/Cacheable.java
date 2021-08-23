@@ -42,16 +42,10 @@ public @interface Cacheable {
     String key();
 
     /**
-     * 缓存随机时间
+     * 缓存随机时间,时间单位跟expireTime一致
      * ps:主要用户解决缓存雪崩，同一时刻大量缓存数据失效，大量请求到达数据库
      */
     long randomTime() default 0;
-
-    /**
-     * 缓存随机失效时间
-     * ps:主要用户解决缓存雪崩，同一时刻大量缓存数据失效，大量请求到达数据库
-     */
-    TimeUnit randomTimeUnit() default TimeUnit.MINUTES;
 
     /**
      * 缓存失效时间

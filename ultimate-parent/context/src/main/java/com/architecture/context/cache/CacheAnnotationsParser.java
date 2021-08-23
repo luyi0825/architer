@@ -185,7 +185,6 @@ public class CacheAnnotationsParser {
         operation.setExpireTime(cacheable.expireTime());
         operation.setExpireTimeUnit(cacheable.expireTimeUnit());
         operation.setRandomTime(cacheable.randomTime());
-        operation.setRandomTimeUnit(cacheable.randomTimeUnit());
         operation.setAsync(cacheable.async());
         operation.setKey(cacheable.key());
         operation.setLocked(cacheable.locked());
