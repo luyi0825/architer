@@ -1,7 +1,7 @@
 package com.architecture.context.cache.operation;
 
 
-import com.architecture.context.cache.proxy.ReturnValueFunction;
+import com.architecture.context.cache.proxy.MethodReturnValueFunction;
 import com.architecture.context.expression.ExpressionParser;
 
 import com.architecture.context.exception.ServiceException;
@@ -49,6 +49,13 @@ public abstract class CacheOperationHandler implements Ordered {
     public abstract boolean match(BaseCacheOperation operation);
 
 
+    /**
+     * 得到缓存的key
+     *
+     * @param operation          注解操作
+     * @param expressionMetadata 表达式元数据
+     * @return 解析后的缓存key
+     */
     protected List<String> getCacheKeys(BaseCacheOperation operation, ExpressionMetadata expressionMetadata) {
         List<Object> cacheNames = null;
         if (ArrayUtils.isNotEmpty(operation.getCacheName())) {
@@ -59,7 +66,7 @@ public abstract class CacheOperationHandler implements Ordered {
         if (cacheNames != null) {
             cacheKeys = new ArrayList<>(cacheNames.size());
             for (Object cacheName : cacheNames) {
-                cacheKeys.add(cacheName + ":" + key);
+                cacheKeys.add(cacheName + cacheService.getSplit() + key);
             }
         } else {
             cacheKeys = List.of(key);
@@ -67,17 +74,24 @@ public abstract class CacheOperationHandler implements Ordered {
         return cacheKeys;
     }
 
-
-    public void handler(BaseCacheOperation operation, ReturnValueFunction returnValueFunction,ExpressionMetadata expressionMetadata) throws Throwable {
-        if (this.canHandler(operation,expressionMetadata)) {
+    /**
+     * 处理缓存operation
+     *
+     * @param operation
+     * @param methodReturnValueFunction
+     * @param expressionMetadata
+     * @throws Throwable
+     */
+    public void handler(BaseCacheOperation operation, MethodReturnValueFunction methodReturnValueFunction, ExpressionMetadata expressionMetadata) throws Throwable {
+        if (this.canHandler(operation, expressionMetadata, true)) {
             Lock lock = lockFactory.get(operation.getLocked(), expressionMetadata);
             if (lock == null) {
-                this.execute(operation, expressionMetadata, returnValueFunction);
+                this.execute(operation, expressionMetadata, methodReturnValueFunction);
             } else if (lock instanceof FailLock) {
                 throw new ServiceException("获取锁失败");
             } else {
                 try {
-                    this.execute(operation, expressionMetadata, returnValueFunction);
+                    this.execute(operation, expressionMetadata, methodReturnValueFunction);
                 } finally {
                     //释放锁
                     lock.unlock();
@@ -86,28 +100,53 @@ public abstract class CacheOperationHandler implements Ordered {
         }
     }
 
-    protected boolean canHandler(BaseCacheOperation operation, ExpressionMetadata expressionMetadata) {
-        if (StringUtils.isBlank(operation.getCondition()) && StringUtils.isBlank(operation.getUnless())) {
+    /**
+     * 能否处理
+     *
+     * @param excludeResult 是否排除#result
+     * @return true标识condition满足，unless为false
+     */
+    protected boolean canHandler(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, boolean excludeResult) {
+        String condition = operation.getCondition(), unless = operation.getUnless();
+        if (StringUtils.isBlank(condition) && StringUtils.isBlank(unless)) {
             return true;
         }
-        if (StringUtils.isNotEmpty(operation.getCondition())) {
+        if (StringUtils.isNotEmpty(condition)) {
+            if (excludeResult && isContainsResult(condition)) {
+                return true;
+            }
             Object isCondition = expressionParser.parserExpression(expressionMetadata, operation.getCondition());
             if (!(isCondition instanceof Boolean)) {
                 throw new IllegalArgumentException(MessageFormat.format("condition[{0}]有误,必须为Boolean类型", operation.getCondition()));
             }
             return (boolean) isCondition;
         }
-        if (StringUtils.isNotEmpty(operation.getUnless())) {
-            Object isUnless = expressionParser.parserExpression(expressionMetadata, operation.getUnless());
+
+        if (StringUtils.isNotEmpty(unless)) {
+            if (excludeResult && isContainsResult(unless)) {
+                return true;
+            }
+            Object isUnless = expressionParser.parserExpression(expressionMetadata, unless);
             if (!(isUnless instanceof Boolean)) {
-                throw new IllegalArgumentException(MessageFormat.format("unless[{0}]有误,必须为Boolean类型", operation.getCondition()));
+                throw new IllegalArgumentException(MessageFormat.format("unless[{0}]有误,必须为Boolean类型", unless));
             }
             return !(boolean) isUnless;
         }
         return true;
     }
 
-    protected abstract void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, ReturnValueFunction returnValueFunction) throws Throwable;
+    private boolean isContainsResult(String expression) {
+        return expression.contains("#result");
+    }
+
+    /**
+     * 执行缓存处理
+     *
+     * @param operation                 缓存操作对应的数据
+     * @param expressionMetadata        表达式元数据
+     * @param methodReturnValueFunction 返回值功能函数
+     */
+    protected abstract void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable;
 
 
     public CacheOperationHandler setCacheService(CacheService cacheService) {
@@ -115,9 +154,8 @@ public abstract class CacheOperationHandler implements Ordered {
         return this;
     }
 
-    public CacheOperationHandler setLockFactory(LockFactory lockFactory) {
+    public void setLockFactory(LockFactory lockFactory) {
         this.lockFactory = lockFactory;
-        return this;
     }
 
     public CacheOperationHandler setExpressionParser(ExpressionParser expressionParser) {
