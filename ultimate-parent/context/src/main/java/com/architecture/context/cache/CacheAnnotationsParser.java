@@ -188,6 +188,8 @@ public class CacheAnnotationsParser {
         operation.setAsync(cacheable.async());
         operation.setKey(cacheable.key());
         operation.setLocked(cacheable.locked());
+        operation.setCondition(cacheable.condition());
+        operation.setUnless(cacheable.unless());
         ops.add(operation);
     }
 }
