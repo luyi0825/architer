@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
+@Repeatable(Cacheables.class)
 public @interface Cacheable {
 
     /**
