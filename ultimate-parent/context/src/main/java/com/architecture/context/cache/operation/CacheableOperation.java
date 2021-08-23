@@ -12,17 +12,12 @@ import java.util.concurrent.TimeUnit;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class CacheableOperation extends CacheOperation {
+public class CacheableOperation extends BaseCacheOperation {
     /**
      * @see Cacheable#randomTime()
      */
     private long randomTime;
-
-    /**
-     * @see Cacheable#randomTimeUnit()
-     */
-    private TimeUnit randomTimeUnit;
-
+    
     /**
      * @see Cacheable#expireTime()
      */
