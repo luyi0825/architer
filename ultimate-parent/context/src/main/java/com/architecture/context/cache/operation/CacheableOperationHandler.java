@@ -5,7 +5,6 @@ import com.architecture.context.cache.model.InvalidCache;
 import com.architecture.context.cache.proxy.ReturnValueFunction;
 import com.architecture.context.cache.utils.CacheUtils;
 import com.architecture.context.expression.ExpressionMetadata;
-import org.springframework.core.Ordered;
 
 import java.util.List;
 
@@ -20,12 +19,12 @@ public class CacheableOperationHandler extends CacheOperationHandler {
     private static final int FIRST_ORDER = 1;
 
     @Override
-    public boolean match(CacheOperation operation) {
+    public boolean match(BaseCacheOperation operation) {
         return operation instanceof CacheableOperation;
     }
 
     @Override
-    protected void execute(CacheOperation operation, ExpressionMetadata expressionMetadata, ReturnValueFunction returnValueFunction) throws Throwable {
+    protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, ReturnValueFunction returnValueFunction) throws Throwable {
         CacheableOperation cacheableOperation = (CacheableOperation) operation;
         List<String> cacheKeys = getCacheKeys(cacheableOperation, expressionMetadata);
         List<Object> values = cacheService.multiGet(cacheKeys);
