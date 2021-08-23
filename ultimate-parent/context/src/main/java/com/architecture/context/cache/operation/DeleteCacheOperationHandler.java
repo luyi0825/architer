@@ -31,7 +31,10 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
     protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         methodReturnValueFunction.proceed();
         List<String> cacheKeys = this.getCacheKeys(operation, expressionMetadata);
-        cacheService.multiDelete(cacheKeys);
+        if (this.canHandler(operation, expressionMetadata, false)) {
+            cacheService.multiDelete(cacheKeys);
+        }
+
     }
 
     @Override
