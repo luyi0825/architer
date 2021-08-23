@@ -11,11 +11,15 @@ import java.lang.annotation.Annotation;
 
 /**
  * @author luyi
- * 缓存操作
+ * 缓存操作实体基类
  * @see org.springframework.cache.interceptor.CacheOperation 参考的这个类
  */
 @Data
-public class CacheOperation {
+public abstract class BaseCacheOperation {
+    /**
+     * 用于排序的字段顺序
+     */
+    private int order;
     /**
      * 操作的注解
      */
