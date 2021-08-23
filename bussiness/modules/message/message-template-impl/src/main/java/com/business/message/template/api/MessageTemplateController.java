@@ -2,6 +2,8 @@ package com.business.message.template.api;
 
 
 
+import com.architecture.context.valid.group.AddGroup;
+import com.architecture.context.valid.group.UpdateGroup;
 import com.architecture.mybatisplus.QueryParam;
 import com.architecture.query.common.model.Pagination;
 import com.business.message.template.entity.MessageTemplate;
