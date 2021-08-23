@@ -1,6 +1,8 @@
 package com.architecture.test.cache;
 
 import com.architecture.context.cache.annotation.Cacheable;
+import com.architecture.context.lock.LockEnum;
+import com.architecture.context.lock.Locked;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -45,4 +47,23 @@ public interface CacheableService {
      */
     @Cacheable(cacheName = "'condition'", key = "#userName", condition = "#userName.length>10")
     UserInfo condition(String userName);
+
+    /**
+     * unless的不缓存
+     */
+    @Cacheable(cacheName = "'unless'", key = "#userName", unless = "#userName.startsWith('unless')")
+    UserInfo unless(String userName);
+
+    /**
+     * 测试并发，没有锁
+     */
+    @Cacheable(cacheName = "'toGather'", key = "#userName", expireTime = 2)
+    UserInfo toGather(String userName);
+
+    /**
+     * 测试并发，加锁
+     */
+    @Cacheable(cacheName = "'testLockToGather'", key = "#userName", expireTime = 2,
+            locked = @Locked(key = "'lock_testLockToGather'", lock = LockEnum.REDIS))
+    UserInfo testLockToGather(String userName);
 }

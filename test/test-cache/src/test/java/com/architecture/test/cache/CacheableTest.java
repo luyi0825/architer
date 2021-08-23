@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author luyi
@@ -103,5 +106,67 @@ public class CacheableTest {
         userInfo = cacheableService.condition(userName);
         Assertions.assertNotNull(userInfo);
     }
+
+    /**
+     * 测试unless
+     */
+    @Test
+    public void testUnless() {
+        //缓存，查询1次
+        String userName = "no_unless";
+        cacheableService.unless(userName);
+        UserInfo userInfo = cacheableService.unless(userName);
+        Assertions.assertNotNull(userInfo);
+        //不缓存：查询db两次
+        userName = "unless";
+        cacheableService.unless(userName);
+        userInfo = cacheableService.unless(userName);
+        Assertions.assertNotNull(userInfo);
+    }
+
+    /**
+     * 测试并发
+     */
+    @Test
+    public void testToGather() throws InterruptedException {
+        int count = 100;
+        ExecutorService executorService = Executors.newFixedThreadPool(count);
+        String userName = UUID.randomUUID().toString();
+        CountDownLatch countDownLatch = new CountDownLatch(count);
+        for (int i = 0; i < count; i++) {
+            executorService.submit(() -> {
+                cacheableService.toGather(userName);
+                countDownLatch.countDown();
+            });
+        }
+        countDownLatch.await();
+    }
+
+    /**
+     * 测试并发
+     */
+    @Test
+    public void testLockToGather() throws InterruptedException {
+        int count = 100;
+        ExecutorService executorService = Executors.newFixedThreadPool(count);
+        String userName = UUID.randomUUID().toString();
+        CountDownLatch countDownLatch = new CountDownLatch(count);
+        for (int i = 0; i < count; i++) {
+            executorService.submit(() -> {
+                try {
+                    cacheableService.testLockToGather(userName);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    countDownLatch.countDown();
+                }
+
+
+            });
+        }
+        countDownLatch.await();
+
+    }
+
 
 }
