@@ -1,20 +1,21 @@
 package com.business.message.captcha.component;
 
-import com.architecture.cache.redis.RedisConstants;
-import com.architecture.cache.redis.StringRedisService;
+
 import com.architecture.captcha.CharacterGifCaptcha;
 import com.architecture.captcha.CharacterStaticCaptcha;
 import com.architecture.captcha.base.Captcha;
 import com.architecture.captcha.utils.CharacterCaptchaUtil;
+import com.architecture.context.cache.CacheService;
+import com.architecture.context.exception.ServiceException;
 import com.business.message.captcha.CaptchaType;
 import com.business.message.captcha.entity.CaptchaTemplate;
 import com.business.message.captcha.service.CaptchaTemplateService;
 
-import com.architecture.context.common.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 验证码生成器
@@ -24,13 +25,13 @@ import javax.servlet.http.HttpSession;
 @Component
 public class CaptchaProducer {
     private final CaptchaTemplateService captchaTemplateService;
-    private final StringRedisService redisService;
+    private final CacheService cacheService;
     private final static String SESSION_CAPTCHA = "session_captcha";
 
     public CaptchaProducer(CaptchaTemplateService captchaTemplateService,
-                           StringRedisService redisService) {
+                           CacheService cacheService) {
         this.captchaTemplateService = captchaTemplateService;
-        this.redisService = redisService;
+        this.cacheService = cacheService;
     }
 
     /**
@@ -53,9 +54,10 @@ public class CaptchaProducer {
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
         try {
+            assert captcha != null;
             String code = captcha.out(response.getOutputStream(), null);
-            String key = SESSION_CAPTCHA + RedisConstants.SPLIT + session.getId();
-            redisService.set(key, code, captchaEntity.getExpireTime() * 60);
+            String key = SESSION_CAPTCHA + "::" + session.getId();
+            cacheService.set(key, code, captchaEntity.getExpireTime(), TimeUnit.MINUTES);
             return code;
         } catch (Exception e) {
             throw new ServiceException("生成验证码失败", e);

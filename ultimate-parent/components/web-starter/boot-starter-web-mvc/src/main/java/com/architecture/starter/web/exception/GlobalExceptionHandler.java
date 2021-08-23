@@ -1,11 +1,11 @@
 package com.architecture.starter.web.exception;
 
 
-import com.architecture.context.common.ResponseStatusEnum;
-import com.architecture.context.common.exception.ParamsValidException;
-import com.architecture.context.common.exception.ServiceException;
-import com.architecture.context.common.response.ResponseResult;
-import com.architecture.context.common.response.R;
+import com.architecture.context.ResponseStatusEnum;
+import com.architecture.context.exception.ParamsValidException;
+import com.architecture.context.exception.ServiceException;
+import com.architecture.context.response.R;
+import com.architecture.context.response.ResponseResult;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.slf4j.Logger;

@@ -46,11 +46,13 @@
         </dependency>
         <dependency>
             <groupId>com.architecture</groupId>
-            <artifactId>cloud-nacos-discovery</artifactId>
+            <artifactId>cloud-nacos-discovery-starter</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.architecture</groupId>
-            <artifactId>cloud-nacos-config</artifactId>
+            <artifactId>cloud-nacos-config-starter</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.architecture</groupId>
@@ -97,14 +99,14 @@
                         <image>
 
                             <!-- 镜像名:版本号 -->
-<!--                            <name>192.168.3.222:5000/${project.artifactId}:${project.version}</name>-->
+                            <!--                            <name>192.168.3.222:5000/${project.artifactId}:${project.version}</name>-->
                             <name>192.168.3.222:5000/luyi0825/search-server:${project.version}</name>
                             <alias>${project.name}</alias>
                             <!--
                      镜像仓库（公共仓库、阿里云仓库、私有自建仓库）配置，用于推送/拉取镜像
                      如果不想推送至镜像仓库则无需配置
                  -->
-<!--                            <registry>hub.docker.com</registry>-->
+                            <!--                            <registry>hub.docker.com</registry>-->
                             <!-- 镜像 build 相关配置 -->
                             <build>
                                 <!-- 使用 Dockerfile 文件，默认地址是 src/main/docker -->

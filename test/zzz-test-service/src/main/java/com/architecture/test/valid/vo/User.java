@@ -1,8 +1,8 @@
 package com.architecture.test.valid.vo;
 
 
-import com.architecture.context.common.valid.ListValue;
-import com.architecture.context.common.valid.group.AddGroup;
+import com.architecture.context.valid.ListValue;
+import com.architecture.context.valid.group.AddGroup;
 
 /**
  * @author luyi

@@ -50,13 +50,13 @@
         </dependency>
         <dependency>
             <groupId>com.architecture</groupId>
-            <artifactId>cloud-resttemplate</artifactId>
+            <artifactId>context</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.architecture</groupId>
-            <artifactId>context</artifactId>
-            <version>${project.version}</version>
+            <artifactId>ultimate-utils</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>

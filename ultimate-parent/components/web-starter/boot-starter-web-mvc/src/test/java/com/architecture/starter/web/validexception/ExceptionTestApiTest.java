@@ -1,8 +1,8 @@
 package com.architecture.starter.web.validexception;
 
 
-import com.architecture.context.common.ResponseStatusEnum;
-import com.architecture.context.common.response.ResponseResult;
+import com.architecture.context.ResponseStatusEnum;
+import com.architecture.context.response.ResponseResult;
 import com.architecture.starter.web.exception.GlobalExceptionHandler;
 import com.architecture.utils.JsonUtils;
 import org.junit.jupiter.api.Assertions;

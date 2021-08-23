@@ -1,14 +1,16 @@
 package com.business.base.codemap.api;
 
 
-import com.architecture.context.common.cache.annotation.Cacheable;
-import com.architecture.context.common.cache.enums.LockType;
-import com.architecture.context.common.valid.group.AddGroup;
-import com.architecture.context.common.valid.group.UpdateGroup;
+import com.architecture.context.cache.annotation.Cacheable;
+import com.architecture.context.lock.LockEnum;
+import com.architecture.context.lock.LockType;
+import com.architecture.context.valid.group.AddGroup;
+import com.architecture.context.valid.group.UpdateGroup;
 import com.business.base.codemap.entity.CodeMapItem;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 
 /**
@@ -44,7 +46,7 @@ public interface CodeMapItemApi {
      * @return 对应的代码集项
      */
     @GetMapping("/findByCode/{code}")
-    @Cacheable(cacheName = "'codeMapItemApi_findByCode'", key = "#code", expireTime = 60 * 60 * 48, lockType = LockType.reentrant)
+    @Cacheable(cacheName = "'codeMapItemApi_findByCode'", key = "#code", expireTime = 60 * 60 * 48)
     List<CodeMapItem> findByCode(@PathVariable(name = "code") String code);
 
 
@@ -55,7 +57,7 @@ public interface CodeMapItemApi {
      * @return 代码级项信息
      */
     @GetMapping("/getById/{id}")
-    @Cacheable(cacheName = "'codeMapItemApi_getById'", key = "#id", expireTime = 60 * 60 * 48, lockType = LockType.reentrant)
+    @Cacheable(cacheName = "'codeMapItemApi_getById'", key = "#id", expireTime = 60 * 60 * 48)
     CodeMapItem getById(@PathVariable(name = "id") Long id);
 
 

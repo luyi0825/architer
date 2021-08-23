@@ -49,8 +49,8 @@
         </dependency>
         <dependency>
             <groupId>com.architecture</groupId>
-            <artifactId>cloud-nacos-discovery</artifactId>
-            <version>${project.version}</version>
+            <artifactId>cloud-nacos-discovery-starter</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba.nacos</groupId>

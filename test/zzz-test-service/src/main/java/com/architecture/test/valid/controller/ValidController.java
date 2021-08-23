@@ -1,7 +1,7 @@
 package com.architecture.test.valid.controller;
 
 
-import com.architecture.context.common.valid.group.AddGroup;
+import com.architecture.context.valid.group.AddGroup;
 import com.architecture.test.valid.vo.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

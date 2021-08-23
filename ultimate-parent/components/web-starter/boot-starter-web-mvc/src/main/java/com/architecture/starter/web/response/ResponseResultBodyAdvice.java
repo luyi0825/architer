@@ -1,7 +1,8 @@
 package com.architecture.starter.web.response;
 
-import com.architecture.context.common.response.R;
-import com.architecture.context.common.response.ResponseResult;
+import com.architecture.context.response.R;
+import com.architecture.context.response.ResponseResult;
+import com.architecture.context.response.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;

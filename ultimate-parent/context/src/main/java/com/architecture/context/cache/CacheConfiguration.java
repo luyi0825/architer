@@ -1,15 +1,19 @@
 package com.architecture.context.cache;
 
 
-import com.architecture.context.cache.key.DefaultKeyGenerator;
-import com.architecture.context.cache.key.KeyGenerator;
 import com.architecture.context.cache.operation.CacheableOperationHandler;
 import com.architecture.context.cache.operation.DeleteCacheOperationHandler;
+import com.architecture.context.cache.operation.PutCacheOperationHandler;
+import com.architecture.context.expression.ExpressionParser;
+import com.architecture.context.lock.LockFactory;
+import com.architecture.context.lock.LockService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 /**
  * @author luyi
@@ -20,25 +24,27 @@ import org.springframework.context.annotation.Configuration;
 public class CacheConfiguration {
 
     @Bean
-    public CacheExpressionParser cacheExpressionParser() {
-        return new CacheExpressionParser();
+    public ExpressionParser keyExpressionParser() {
+        return new ExpressionParser();
     }
 
     @Bean
-    @ConditionalOnMissingBean
-    public KeyGenerator keyGenerator(CacheExpressionParser cacheExpressionParser) {
-        return new DefaultKeyGenerator(cacheExpressionParser);
+    public LockFactory lockFactory(List<LockService> lockServices) {
+        LockFactory lockFactory = new LockFactory();
+        lockFactory.setExpressionParser(new ExpressionParser());
+        lockFactory.setLockServiceMap(null);
+        return lockFactory;
     }
 
     @Bean
-    @ConditionalOnMissingBean
-    public CacheProcess cacheProcess() {
-        return new com.architecture.context.common.cache.DefaultCacheProcess();
-    }
-
-    @Bean
-    public CacheableOperationHandler cacheableOperationHandler() {
-        return new CacheableOperationHandler();
+    public CacheableOperationHandler cacheableOperationHandler(
+            @Autowired(required = false) CacheService cacheService,
+            LockFactory lockFactory) {
+        CacheableOperationHandler cacheableOperationHandler = new CacheableOperationHandler();
+        cacheableOperationHandler.setCacheService(cacheService);
+        cacheableOperationHandler.setLockFactory(lockFactory);
+        cacheableOperationHandler.setExpressionParser(new ExpressionParser());
+        return cacheableOperationHandler;
     }
 
     @Bean
@@ -47,8 +53,8 @@ public class CacheConfiguration {
     }
 
     @Bean
-    public com.architecture.context.common.cache.operation.PutCacheOperationHandler putCacheOperationHandler() {
-        return new com.architecture.context.common.cache.operation.PutCacheOperationHandler();
+    public PutCacheOperationHandler putCacheOperationHandler() {
+        return new PutCacheOperationHandler();
     }
 
 

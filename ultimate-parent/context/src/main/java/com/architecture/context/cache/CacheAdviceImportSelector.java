@@ -3,7 +3,7 @@ package com.architecture.context.cache;
 
 import com.architecture.context.cache.annotation.EnableCustomCaching;
 import com.architecture.context.cache.aspectj.AspectjConfiguration;
-import com.architecture.context.cache.proxy.ProxyConfiguration;
+import com.architecture.context.cache.proxy.CacheProxyConfiguration;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.AdviceModeImportSelector;
 import org.springframework.context.annotation.AutoProxyRegistrar;
@@ -35,7 +35,7 @@ public class CacheAdviceImportSelector extends AdviceModeImportSelector<EnableCu
     }
 
     private String[] getProxyImports() {
-        return new String[]{ProxyConfiguration.class.getName(), AutoProxyRegistrar.class.getName()};
+        return new String[]{CacheProxyConfiguration.class.getName(), AutoProxyRegistrar.class.getName()};
     }
 
     /**

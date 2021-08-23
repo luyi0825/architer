@@ -1,4 +1,4 @@
-package com.architecture.context.common.cache.model;
+package com.architecture.context.cache.model;
 
 import java.io.Serializable;
 
@@ -8,5 +8,5 @@ import java.io.Serializable;
  * @author luyi
  */
 public class InvalidCache implements Serializable {
-
+    public static final InvalidCache INVALID_CACHE = new InvalidCache();
 }

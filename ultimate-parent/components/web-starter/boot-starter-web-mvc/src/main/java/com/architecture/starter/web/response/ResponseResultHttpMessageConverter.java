@@ -1,6 +1,6 @@
 package com.architecture.starter.web.response;
 
-import com.architecture.context.common.response.ResponseResult;
+import com.architecture.context.response.ResponseResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;

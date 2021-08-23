@@ -1,30 +1,37 @@
 package com.architecture.context.cache.operation;
 
+import com.architecture.context.cache.annotation.Cacheable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author luyi
  * 对应Cacheable
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class CacheableOperation extends CacheOperation {
     /**
-     * @see Cacheable#randomExpireTime()
+     * @see Cacheable#randomTime()
      */
-    private long randomExpireTime;
+    private long randomTime;
 
     /**
-     * 缓存失效时间
-     *
+     * @see Cacheable#randomTimeUnit()
+     */
+    private TimeUnit randomTimeUnit;
+
+    /**
      * @see Cacheable#expireTime()
      */
     private long expireTime;
 
     /**
-     * 缓存值
-     *
-     * @see Cacheable#cacheValue()
+     * @see Cacheable#expireTimeUnit()
      */
-    private String cacheValue;
+    private TimeUnit expireTimeUnit;
+
 
 }

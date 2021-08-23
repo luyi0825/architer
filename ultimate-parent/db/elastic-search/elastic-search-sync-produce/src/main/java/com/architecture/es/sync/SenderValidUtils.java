@@ -1,7 +1,7 @@
 package com.architecture.es.sync;
 
-import cn.hutool.core.exceptions.ValidateException;
 
+import com.architecture.context.exception.ServiceException;
 import com.architecture.es.model.doc.DocumentRequest;
 import com.architecture.es.model.dto.BaseSyncDocumentDTO;
 import com.architecture.es.model.dto.BatchSyncDocumentDTO;
@@ -24,7 +24,7 @@ public class SenderValidUtils {
         validHead(documentDTO);
         DocumentRequest documentRequest = documentDTO.getDoc();
         if (documentRequest == null) {
-            throw new ValidateException("doc is null");
+            throw new ServiceException("doc is null");
         }
         validRequestBody(documentRequest);
     }
@@ -35,7 +35,7 @@ public class SenderValidUtils {
     public static void validBatchSyncDocumentDTO(BatchSyncDocumentDTO documentDTO) {
         validHead(documentDTO);
         if (CollectionUtils.isEmpty(documentDTO.getDocs())) {
-            throw new ValidateException("docs size must >0");
+            throw new ServiceException("docs size must >0");
         }
         documentDTO.getDocs().forEach(SenderValidUtils::validRequestBody);
     }
@@ -45,10 +45,10 @@ public class SenderValidUtils {
      */
     private static void validHead(BaseSyncDocumentDTO documentDTO) {
         if (StringUtils.isEmpty(documentDTO.getBusinessKey())) {
-            throw new ValidateException("business key is null");
+            throw new ServiceException("business key is null");
         }
         if (StringUtils.isEmpty(documentDTO.getBatchId())) {
-            throw new ValidateException("batch key is null");
+            throw new ServiceException("batch key is null");
         }
     }
 
@@ -57,19 +57,19 @@ public class SenderValidUtils {
      */
     private static void validRequestBody(DocumentRequest request) {
         if (request == null) {
-            throw new ValidateException("doc");
+            throw new ServiceException("doc");
         }
         if (StringUtils.isEmpty(request.getIndex())) {
-            throw new ValidateException("index is null");
+            throw new ServiceException("index is null");
         }
         if (StringUtils.isEmpty(request.getIndex())) {
-            throw new ValidateException("id is null");
+            throw new ServiceException("id is null");
         }
         if (CollectionUtils.isEmpty(request.getSource())) {
-            throw new ValidateException("source is null");
+            throw new ServiceException("source is null");
         }
         if (StringUtils.isEmpty(request.getRequestType())) {
-            throw new ValidateException("requestType is null");
+            throw new ServiceException("requestType is null");
         }
     }
 }

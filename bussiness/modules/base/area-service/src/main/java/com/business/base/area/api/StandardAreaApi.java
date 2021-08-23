@@ -1,10 +1,13 @@
 package com.business.base.area.api;
 
 
-import com.architecture.module.common.cache.annotation.DeleteCache;
-import com.architecture.module.common.cache.enums.LockType;
+import com.architecture.context.cache.annotation.Cacheable;
+import com.architecture.context.cache.annotation.DeleteCache;
+import com.architecture.context.cache.annotation.DeleteCaches;
+import com.architecture.context.lock.LockEnum;
+import com.architecture.context.lock.LockType;
+import com.architecture.context.lock.Locked;
 import com.business.base.area.entity.StandardArea;
-import com.architecture.module.common.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +26,7 @@ public interface StandardAreaApi {
      * @return parentId区划下的子区划
      */
     @GetMapping("/findByParentId/{parentId}")
-    @Cacheable(cacheName = "'standardAreaApi_findByParentId'", key = "#parentId", lockType = LockType.read)
+    @Cacheable(cacheName = "'standardAreaApi_findByParentId'", key = "#parentId", locked = @Locked(lockType = LockType.READ, key = "#parentId", lockName = "standardAreaApi"))
     List<StandardArea> findByParentId(@PathVariable("parentId") int parentId);
 
     /**
@@ -51,8 +54,9 @@ public interface StandardAreaApi {
      * @param id 区划的主键ID
      */
     @PostMapping("delete/{id}")
-    //@DeleteCache(cacheName = "'standardAreaApi_findByParentId'", key = "#id", before = false)
-    @Cacheable(cacheName = "'standardAreaApi_delete'", key = "#id")
-    @DeleteCache(cacheName = "'standardAreaApi_findById'", key = "#id", before = false)
+    @DeleteCaches(value = {
+            @DeleteCache(cacheName = "'standardAreaApi_findByParentId'", key = "#id", before = false),
+            @DeleteCache(cacheName = "'standardAreaApi_findById'", key = "#id", before = false)
+    })
     void delete(@PathVariable(name = "id") int id);
 }

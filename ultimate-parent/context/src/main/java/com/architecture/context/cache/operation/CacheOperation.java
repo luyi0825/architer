@@ -1,9 +1,9 @@
 package com.architecture.context.cache.operation;
 
 
-
 import com.architecture.context.cache.annotation.Cacheable;
-import com.architecture.context.lock.LockType;
+import com.architecture.context.lock.LockEnum;
+import com.architecture.context.lock.Locked;
 import lombok.Data;
 
 import java.lang.annotation.Annotation;
@@ -25,14 +25,6 @@ public class CacheOperation {
      */
     private String[] cacheName;
     /**
-     * @see Cacheable#lockType()
-     */
-    private LockType lockType;
-    /**
-     * @see Cacheable#lock()
-     */
-    private String lock;
-    /**
      * @see Cacheable#key()
      */
     private String key;
@@ -40,6 +32,20 @@ public class CacheOperation {
      * @see Cacheable#async()
      */
     private boolean async;
+    /**
+     * @see Cacheable#locked()
+     */
+    private Locked locked;
+
+    /**
+     * 条件满足的时候，进行缓存操作
+     */
+    private String condition;
+
+    /**
+     * 条件满足的时候，不进行缓存操作
+     */
+    private String unless;
 
 
 }

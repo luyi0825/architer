@@ -58,19 +58,19 @@ excel操作的模块。技术选型用的easyexcel(poi容易引发oom)
 - 支持复杂的合并
 - 支持自定义的html样式解析（还没有完善）
 
-## lock
+## lockEnum
 
 锁
 
-### base-lock
+### base-lockEnum
 
 锁的接口层
 
-### lock-distributed
+### lockEnum-distributed
 
 分布式锁
 
-### jdk-lock
+### jdk-lockEnum
 
 jdk锁
 

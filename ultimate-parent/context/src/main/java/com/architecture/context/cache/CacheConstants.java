@@ -12,8 +12,5 @@ public class CacheConstants {
      * 缓存不过期
      */
     public static final long NEVER_EXPIRE = -1;
-    /**
-     * 默认缓存失效的时间：12小时
-     */
-    public static final long DEFAULT_CACHE_EXPIRE_TIME = 60 * 60 * 12;
+
 }

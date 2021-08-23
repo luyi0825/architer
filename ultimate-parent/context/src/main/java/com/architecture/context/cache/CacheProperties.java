@@ -1,5 +1,6 @@
-package com.architecture.context.common.cache;
+package com.architecture.context.cache;
 
+import com.architecture.context.lock.LockEnum;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -10,15 +11,16 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "customize.cache")
 public class CacheProperties {
     /**
-     * 缓存过期时间
+     * 使用什么锁
      */
-    private long expireTime;
+    private LockEnum lockEnum = LockEnum.JDK;
 
-    public long getExpireTime() {
-        return expireTime;
+    public LockEnum getLock() {
+        return lockEnum;
     }
 
-    public void setExpireTime(long expireTime) {
-        this.expireTime = expireTime;
+    public void setLock(LockEnum lockEnum) {
+        this.lockEnum = lockEnum;
     }
+
 }

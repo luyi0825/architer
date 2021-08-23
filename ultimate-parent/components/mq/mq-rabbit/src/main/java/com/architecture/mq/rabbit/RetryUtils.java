@@ -1,6 +1,6 @@
 package com.architecture.mq.rabbit;
 
-import com.architecture.cache.redis.StringRedisService;
+import com.architecture.context.cache.CacheService;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @Component
 public class RetryUtils {
-    private StringRedisService redisService;
+    private CacheService cacheService;
     private final Logger logger = LoggerFactory.getLogger(RetryUtils.class);
 
     /**
@@ -38,25 +38,25 @@ public class RetryUtils {
                 String queue = message.getMessageProperties().getConsumerQueue();
                 String messageId = message.getMessageProperties().getHeader(RabbitmqConstants.RETRY_KEY);
                 String key = "mq_retry_" + queue + "::" + messageId;
-                Integer tryCount = (Integer) redisService.get(key, 60 * 30L);
-                if (tryCount == null) {
-                    tryCount = 0;
-                }
-                if (tryCount >= maxTryCount) {
-                    //达到最大的重试次数
-                    channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false);
-                    logger.info("basicNack消息：{},{}", queue, messageId);
-                }
-                //重试次数加1
-                redisService.increment(key, 1);
-                if (RetryType.REQUEUE_SELF.equals(retryType)) {
-                    channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
-                    logger.info("重回队列：{},{}（重试{}次）", queue, messageId, tryCount);
-                } else if (RetryType.REQUEUE.equals(retryType)) {
-                    //重回对列,并让其他消费者消费
-                    channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
-                    logger.info("重回队列：{},{}（重试{}次）", queue, messageId, tryCount);
-                }
+                //  Integer tryCount = (Integer) cacheService.get(key, 60 * 30L);
+//                if (tryCount == null) {
+//                    tryCount = 0;
+//                }
+//                if (tryCount >= maxTryCount) {
+//                    //达到最大的重试次数
+//                    channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false);
+//                    logger.info("basicNack消息：{},{}", queue, messageId);
+//                }
+//                //重试次数加1
+//              //  cacheService.increment(key, 1);
+//                if (RetryType.REQUEUE_SELF.equals(retryType)) {
+//                    channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
+//                    logger.info("重回队列：{},{}（重试{}次）", queue, messageId, tryCount);
+//                } else if (RetryType.REQUEUE.equals(retryType)) {
+//                    //重回对列,并让其他消费者消费
+//                    channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
+//                    logger.info("重回队列：{},{}（重试{}次）", queue, messageId, tryCount);
+//                }
             }
         } catch (Exception e) {
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
@@ -65,7 +65,7 @@ public class RetryUtils {
     }
 
     @Autowired(required = false)
-    public void setRedisService(StringRedisService redisService) {
-        this.redisService = redisService;
+    public void setRedisService(CacheService cacheService) {
+        this.cacheService = cacheService;
     }
 }

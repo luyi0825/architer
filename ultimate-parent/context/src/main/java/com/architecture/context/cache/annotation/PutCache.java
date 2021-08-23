@@ -2,9 +2,11 @@ package com.architecture.context.cache.annotation;
 
 
 import com.architecture.context.cache.CacheConstants;
-import com.architecture.context.cache.enums.LockType;
+import com.architecture.context.lock.LockEnum;
+import com.architecture.context.lock.Locked;
 
 import java.lang.annotation.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 向缓存中放数据
@@ -15,6 +17,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
+@Repeatable(PutCaches.class)
 public @interface PutCache {
 
     /**
@@ -23,39 +26,44 @@ public @interface PutCache {
     String[] cacheName() default "";
 
     /**
+     * 缓存值，支持EL表达式
+     */
+    String cacheValue() default "";
+
+    /**
      * @see Cacheable#key()
      */
     String key();
 
     /**
-     * @see Cacheable#randomExpireTime()
+     * @see Cacheable#randomTime()
      */
-    long randomExpireTime() default -1;
+    long randomTime() default 0;
+
+    /**
+     * @see Cacheable#randomTimeUnit()
+     */
+    long randomTimeUnit() default 0;
 
     /**
      * @see Cacheable#expireTime()
      */
-    long expireTime() default CacheConstants.DEFAULT_CACHE_EXPIRE_TIME;
+    long expireTime() default -1;
 
     /**
-     * @see Cacheable#lockType()
+     * @see Cacheable#expireTimeUnit()
      */
-    LockType lockType() default LockType.none;
+    TimeUnit expireTimeUnit() default TimeUnit.MINUTES;
 
     /**
-     * @see Cacheable#lock()
+     * @see Cacheable#locked()
      */
-    String lock() default "";
+    Locked locked() default @Locked(lock = LockEnum.NONE, key = "");
 
     /**
      * @see Cacheable#async()
      */
     boolean async() default false;
-
-    /**
-     * @see Cacheable#cacheValue()
-     */
-    String cacheValue() default "";
 
     /**
      * @see Cacheable#condition()
