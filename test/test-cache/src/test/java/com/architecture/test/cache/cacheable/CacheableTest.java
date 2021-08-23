@@ -1,7 +1,8 @@
-package com.architecture.test.cache;
+package com.architecture.test.cache.cacheable;
 
 
 import com.architecture.context.cache.CacheService;
+import com.architecture.test.cache.UserInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
-package com.architecture.test.cache;
+package com.architecture.test.cache.cacheable;
 
+import com.architecture.test.cache.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

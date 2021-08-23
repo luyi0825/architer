@@ -1,11 +1,18 @@
 package com.architecture.test.cache;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class UserInfo implements Serializable {
     private String username;
     private String password;
 
+    public static UserInfo getRandomUserInfo() {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername(UUID.randomUUID().toString());
+        userInfo.setPassword("testPassword");
+        return userInfo;
+    }
 
     @Override
     public String toString() {
