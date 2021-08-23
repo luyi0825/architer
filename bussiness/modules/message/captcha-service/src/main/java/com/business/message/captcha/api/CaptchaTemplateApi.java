@@ -1,6 +1,7 @@
 package com.business.message.captcha.api;
 
 
+import com.architecture.context.valid.group.AddGroup;
 import com.business.message.captcha.entity.CaptchaTemplate;
 import com.architecture.mybatisplus.QueryParam;
 import com.architecture.query.common.model.Pagination;
