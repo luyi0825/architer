@@ -99,7 +99,7 @@ public class CacheInterceptor implements MethodInterceptor {
             for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
                 if (cacheOperationHandler.match(baseCacheOperation)) {
                     cacheOperationHandler.handler(baseCacheOperation, methodReturnValueFunction, expressionMetadata);
-                    continue;
+                    break;
                 }
             }
         }
