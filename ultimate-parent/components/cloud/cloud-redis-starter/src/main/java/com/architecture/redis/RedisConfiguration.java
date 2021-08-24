@@ -2,17 +2,22 @@
 package com.architecture.redis;
 
 
-import com.architecture.context.cache.CacheService;
+import com.architecture.context.cache.Cache;
 import com.architecture.context.lock.LockService;
+import com.architecture.redis.support.cache.RedisCacheManagerImpl;
+import com.architecture.redis.support.cache.RedisValueService;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.config.Config;
 import org.redisson.spring.data.connection.RedissonConnectionFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Role;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
@@ -28,7 +33,8 @@ import java.util.Objects;
  *
  * @author luyi
  */
-@Configuration(proxyBeanMethods = false)
+@Configuration()
+@ComponentScan("com.architecture.redis")
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfiguration {
 
@@ -67,19 +73,26 @@ public class RedisConfiguration {
     }
 
 
+//    @Bean
+//    public RedisCacheManager redisCacheManager(RedisTemplate<String, Object> redisTemplate) {
+//        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+//        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+//                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisTemplate.getValueSerializer()));
+//        return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
+//    }
+
     @Bean
-    public RedisCacheManager redisCacheManager(RedisTemplate<String, Object> redisTemplate) {
-        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(Objects.requireNonNull(redisTemplate.getConnectionFactory()));
-        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisTemplate.getValueSerializer()));
-        return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
+    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    public RedisValueService redisValueService(RedisTemplate<String, Object> redisTemplate) {
+        return new RedisValueService(redisTemplate);
     }
 
-
     @Bean
-    public CacheService redisCacheServiceImpl(RedisTemplate<String, Object> redisTemplate) {
-        return new RedisCacheServiceImpl(redisTemplate);
+    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    public RedisCacheManagerImpl redisCacheManager(RedisValueService redisValueService, RedissonClient redissonClient) {
+        return new RedisCacheManagerImpl(redissonClient, redisValueService);
     }
+
 
     @Bean("redisLock")
     public LockService lockService(RedissonClient redissonClient) {
