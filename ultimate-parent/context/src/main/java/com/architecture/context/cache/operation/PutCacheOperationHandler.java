@@ -5,7 +5,8 @@ import com.architecture.context.cache.proxy.MethodReturnValueFunction;
 import com.architecture.context.cache.utils.CacheUtils;
 import com.architecture.context.expression.ExpressionMetadata;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 对应PutCacheOperation
@@ -24,14 +25,15 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
     @Override
     protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         PutCacheOperation putCacheOperation = (PutCacheOperation) operation;
-        List<String> cacheKeys = getCacheKeys(operation, expressionMetadata);
+        Collection<String> cacheNames = getCacheNames(operation, expressionMetadata);
         long expireTime = CacheUtils.getExpireTime(putCacheOperation.getExpireTime(), putCacheOperation.getRandomTime());
         String cacheValue = putCacheOperation.getCacheValue();
         methodReturnValueFunction.proceed();
         Object value = expressionParser.parserExpression(expressionMetadata, cacheValue);
         if (this.canHandler(operation, expressionMetadata, false)) {
-            for (String cacheKey : cacheKeys) {
-                cacheService.set(cacheKey, value, expireTime, putCacheOperation.getExpireTimeUnit());
+            String key = (String) expressionParser.parserExpression(expressionMetadata, operation.getKey());
+            for (String cacheName : cacheNames) {
+                cacheManager.getSimpleCache(cacheName).set(key, value, expireTime, TimeUnit.MINUTES);
             }
         }
     }

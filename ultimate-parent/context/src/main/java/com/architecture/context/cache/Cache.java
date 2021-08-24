@@ -1,19 +1,14 @@
 package com.architecture.context.cache;
 
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author luyi
- * 注解缓存操作service接口层
- */
-public interface CacheService {
+public interface Cache {
 
-    String getSplit();
-
+    String getCacheName();
 
     /**
      * 描述:向redis中放入值:永不过期
@@ -103,7 +98,7 @@ public interface CacheService {
     /**
      * 批量获取
      */
-    List<Object> multiGet(Collection<String> keys);
+    Collection<Object> multiGet(Set<String> keys);
 
     /**
      * 只适合指定类型的值
@@ -130,5 +125,5 @@ public interface CacheService {
      */
     long multiDelete(Collection<String> keys);
 
-
+    Map<Object, Object> getAll();
 }

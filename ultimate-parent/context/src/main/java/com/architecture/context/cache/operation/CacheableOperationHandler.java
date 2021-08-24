@@ -1,12 +1,16 @@
 package com.architecture.context.cache.operation;
 
 
+import com.architecture.context.cache.Cache;
 import com.architecture.context.cache.model.InvalidCache;
 import com.architecture.context.cache.proxy.MethodReturnValueFunction;
 import com.architecture.context.cache.utils.CacheUtils;
 import com.architecture.context.expression.ExpressionMetadata;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -25,11 +29,13 @@ public class CacheableOperationHandler extends CacheOperationHandler {
 
     @Override
     protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
+
         CacheableOperation cacheableOperation = (CacheableOperation) operation;
-        List<String> cacheKeys = getCacheKeys(cacheableOperation, expressionMetadata);
-        List<Object> values = cacheService.multiGet(cacheKeys);
+        Collection<String> cacheNames = getCacheNames(cacheableOperation, expressionMetadata);
         Object cacheValue = null;
-        for (Object value : values) {
+        for (String cacheName : cacheNames) {
+            Cache cache = cacheManager.getSimpleCache(cacheName);
+            Object value = cache.get(cacheName);
             if (!isNullValue(value)) {
                 cacheValue = value;
                 break;
@@ -38,8 +44,9 @@ public class CacheableOperationHandler extends CacheOperationHandler {
         if (cacheValue == null) {
             long expireTime = CacheUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomTime());
             cacheValue = methodReturnValueFunction.proceed();
-            for (String cacheKey : cacheKeys) {
-                cacheService.set(cacheKey, cacheValue, expireTime, cacheableOperation.getExpireTimeUnit());
+            for (String cacheName : cacheableOperation.getCacheName()) {
+                Cache cache = cacheManager.getSimpleCache(cacheableOperation.getCacheName()[0]);
+                cache.set(cacheName, cacheValue, expireTime, ((CacheableOperation) operation).getExpireTimeUnit());
             }
         } else {
             methodReturnValueFunction.setValue(cacheValue);

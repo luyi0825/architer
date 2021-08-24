@@ -8,16 +8,14 @@ import com.architecture.context.exception.ServiceException;
 import com.architecture.context.expression.ExpressionMetadata;
 import com.architecture.context.lock.FailLock;
 import com.architecture.context.lock.LockFactory;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.architecture.context.cache.CacheService;
+import com.architecture.context.cache.CacheManager;
 import org.springframework.core.Ordered;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -28,7 +26,7 @@ import java.util.concurrent.locks.Lock;
 public abstract class CacheOperationHandler implements Ordered {
 
     @Autowired(required = false)
-    protected CacheService cacheService;
+    protected CacheManager cacheManager;
 
     @Autowired(required = false)
     private LockFactory lockFactory;
@@ -50,28 +48,14 @@ public abstract class CacheOperationHandler implements Ordered {
 
 
     /**
-     * 得到缓存的key
+     * 得到缓存的名称
      *
      * @param operation          注解操作
      * @param expressionMetadata 表达式元数据
      * @return 解析后的缓存key
      */
-    protected List<String> getCacheKeys(BaseCacheOperation operation, ExpressionMetadata expressionMetadata) {
-        List<Object> cacheNames = null;
-        if (ArrayUtils.isNotEmpty(operation.getCacheName())) {
-            cacheNames = expressionParser.parserFixExpression(expressionMetadata, operation.getCacheName());
-        }
-        String key = Objects.requireNonNull(expressionParser.parserExpression(expressionMetadata, operation.getKey())).toString();
-        List<String> cacheKeys;
-        if (cacheNames != null) {
-            cacheKeys = new ArrayList<>(cacheNames.size());
-            for (Object cacheName : cacheNames) {
-                cacheKeys.add(cacheName + cacheService.getSplit() + key);
-            }
-        } else {
-            cacheKeys = List.of(key);
-        }
-        return cacheKeys;
+    protected Collection<String> getCacheNames(BaseCacheOperation operation, ExpressionMetadata expressionMetadata) {
+        return expressionParser.parserFixExpressionForString(expressionMetadata, operation.getCacheName());
     }
 
     /**
@@ -149,8 +133,9 @@ public abstract class CacheOperationHandler implements Ordered {
     protected abstract void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable;
 
 
-    public CacheOperationHandler setCacheService(CacheService cacheService) {
-        this.cacheService = cacheService;
+    @Autowired
+    public CacheOperationHandler setCacheManager(CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
         return this;
     }
 

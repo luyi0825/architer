@@ -1,12 +1,13 @@
 package com.architecture.context.cache.operation;
 
 
-import com.architecture.context.cache.annotation.DeleteCache;
 import com.architecture.context.cache.proxy.MethodReturnValueFunction;
 import com.architecture.context.expression.ExpressionMetadata;
 
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -30,11 +31,13 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
     @Override
     protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         methodReturnValueFunction.proceed();
-        List<String> cacheKeys = this.getCacheKeys(operation, expressionMetadata);
         if (this.canHandler(operation, expressionMetadata, false)) {
-            cacheService.multiDelete(cacheKeys);
+            Collection<String> cacheNames = this.getCacheNames(operation, expressionMetadata);
+            for (String cacheName : cacheNames) {
+                String key = Objects.requireNonNull(expressionParser.parserExpression(expressionMetadata, operation.getKey())).toString();
+                cacheManager.getSimpleCache(cacheName).delete(key);
+            }
         }
-
     }
 
     @Override
