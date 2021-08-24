@@ -5,5 +5,13 @@ package com.architecure.caffeine;
  * 驱逐策略
  */
 public enum EvictionStrategy {
+    /**
+     *
+     */
+    WEIGHT,
+    /**
+     * 过期
+     */
+    EXPIRE,
 
 }
