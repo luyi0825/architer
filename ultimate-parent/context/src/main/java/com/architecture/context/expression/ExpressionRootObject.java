@@ -2,6 +2,8 @@ package com.architecture.context.expression;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author luyi
@@ -15,6 +17,10 @@ public class ExpressionRootObject {
     private final Object target;
 
     private final Class<?> targetClass;
+    /**
+     * 缓存字段，防止重复反射
+     */
+    private final Map<String, Object> fieldsCache = new HashMap<>(2);
 
     public ExpressionRootObject(Method method, Object[] args, Object target, Class<?> targetClass) {
         this.method = method;
@@ -31,10 +37,15 @@ public class ExpressionRootObject {
      * @throws NoSuchFieldException   没有这个字段
      * @throws IllegalAccessException 不能访问
      */
-    public Object getVariable(String fieldName) throws NoSuchFieldException, IllegalAccessException {
+    public Object fieldValue(String fieldName) throws NoSuchFieldException, IllegalAccessException {
+        if (fieldsCache.containsKey(fieldName)) {
+            return fieldsCache.get(fieldName);
+        }
         Field field = this.getTargetClass().getDeclaredField(fieldName);
         field.setAccessible(true);
-        return field.get(this.target);
+        Object fieldValue = field.get(this.target);
+        fieldsCache.put(fieldName, fieldValue);
+        return fieldValue;
     }
 
     /**
