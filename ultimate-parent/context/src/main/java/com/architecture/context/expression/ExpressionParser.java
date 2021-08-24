@@ -50,7 +50,7 @@ public class ExpressionParser {
                 value = Objects.requireNonNull(ex.getValue(expressionEvaluationContext));
                 valueCache.putIfAbsent(expressionKey, value);
             }
-            objects.add((String) value);
+            objects.add(value.toString());
         }
         return objects;
     }

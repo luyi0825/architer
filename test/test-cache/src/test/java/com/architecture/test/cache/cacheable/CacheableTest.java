@@ -1,7 +1,7 @@
 package com.architecture.test.cache.cacheable;
 
 
-import com.architecture.context.cache.CacheService;
+import com.architecture.context.cache.CacheManager;
 import com.architecture.test.cache.UserInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ public class CacheableTest {
     private CacheableService cacheableService;
 
     @Autowired
-    private CacheService cacheService;
+    private CacheManager cacheManager;
 
     /**
      * 测试一个注解
@@ -44,7 +44,7 @@ public class CacheableTest {
         String userId = UUID.randomUUID().toString();
         for (int i = 0; i < 5; i++) {
             //删除一个，再获取
-            cacheService.delete(userId);
+            cacheManager.getSimpleCache("twoCacheable").delete(userId);
             UserInfo userInfo = cacheableService.twoCacheable(userId);
             Assertions.assertNotNull(userInfo);
         }
@@ -167,8 +167,6 @@ public class CacheableTest {
         countDownLatch.await();
 
     }
-
-
 
 
 }

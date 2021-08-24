@@ -6,5 +6,5 @@ package com.architecture.redis;
  * @author luyi
  */
 public final class RedisConstants {
-    public final static String SPLIT = "::";
+    public final static String SPLIT = ":";
 }

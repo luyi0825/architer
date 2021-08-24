@@ -17,7 +17,7 @@ public abstract class RedisCache implements Cache {
     }
 
     protected String getCacheKey(String key) {
-        return cacheName + RedisConstants.SPLIT + key;
+        return String.join(RedisConstants.SPLIT, cacheName, key);
     }
 
     @Override

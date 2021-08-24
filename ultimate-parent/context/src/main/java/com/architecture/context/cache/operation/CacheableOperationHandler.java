@@ -7,10 +7,7 @@ import com.architecture.context.cache.proxy.MethodReturnValueFunction;
 import com.architecture.context.cache.utils.CacheUtils;
 import com.architecture.context.expression.ExpressionMetadata;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -32,10 +29,11 @@ public class CacheableOperationHandler extends CacheOperationHandler {
 
         CacheableOperation cacheableOperation = (CacheableOperation) operation;
         Collection<String> cacheNames = getCacheNames(cacheableOperation, expressionMetadata);
+        String key = Objects.requireNonNull(expressionParser.parserExpression(expressionMetadata, operation.getKey())).toString();
         Object cacheValue = null;
         for (String cacheName : cacheNames) {
             Cache cache = cacheManager.getSimpleCache(cacheName);
-            Object value = cache.get(cacheName);
+            Object value = cache.get(key);
             if (!isNullValue(value)) {
                 cacheValue = value;
                 break;
@@ -44,9 +42,9 @@ public class CacheableOperationHandler extends CacheOperationHandler {
         if (cacheValue == null) {
             long expireTime = CacheUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomTime());
             cacheValue = methodReturnValueFunction.proceed();
-            for (String cacheName : cacheableOperation.getCacheName()) {
-                Cache cache = cacheManager.getSimpleCache(cacheableOperation.getCacheName()[0]);
-                cache.set(cacheName, cacheValue, expireTime, ((CacheableOperation) operation).getExpireTimeUnit());
+            for (String cacheName : cacheNames) {
+                Cache cache = cacheManager.getSimpleCache(cacheName);
+                cache.set(key, cacheValue, expireTime, ((CacheableOperation) operation).getExpireTimeUnit());
             }
         } else {
             methodReturnValueFunction.setValue(cacheValue);

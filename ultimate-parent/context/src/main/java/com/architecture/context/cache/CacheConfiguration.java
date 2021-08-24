@@ -37,11 +37,8 @@ public class CacheConfiguration {
     }
 
     @Bean
-    public CacheableOperationHandler cacheableOperationHandler(
-            @Autowired(required = false) Cache cache,
-            LockFactory lockFactory) {
+    public CacheableOperationHandler cacheableOperationHandler(LockFactory lockFactory) {
         CacheableOperationHandler cacheableOperationHandler = new CacheableOperationHandler();
-        cacheableOperationHandler.setCacheService(cache);
         cacheableOperationHandler.setLockFactory(lockFactory);
         cacheableOperationHandler.setExpressionParser(new ExpressionParser());
         return cacheableOperationHandler;
