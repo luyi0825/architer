@@ -1,7 +1,7 @@
 package com.architecture.context.cache.annotation;
 
 
-import com.architecture.context.cache.CacheConstants;
+import com.architecture.context.cache.CacheMode;
 import com.architecture.context.lock.LockEnum;
 import com.architecture.context.lock.Locked;
 
@@ -70,4 +70,9 @@ public @interface PutCache {
      * @see Cacheable#unless()
      */
     String unless() default "";
+
+    /**
+     * 缓存模式
+     */
+    CacheMode cacheMode() default CacheMode.SIMPLE;
 }
