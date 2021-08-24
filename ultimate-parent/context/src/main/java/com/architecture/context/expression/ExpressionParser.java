@@ -8,10 +8,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -39,22 +36,11 @@ public class ExpressionParser {
         return ex.getValue(expressionEvaluationContext);
     }
 
-
-    public List<Object> parserExpression(ExpressionMetadata expressionMetadata, String[] expressions) {
-        List<Object> objects = new ArrayList<>(expressions.length);
-        for (String expression : expressions) {
-            org.springframework.expression.EvaluationContext evaluationContext = createEvaluationContext(expressionMetadata);
-            Expression ex = getExpression(keyCache, expressionMetadata.getMethodKey(), expression);
-            objects.add(Objects.requireNonNull(ex.getValue(evaluationContext)));
-        }
-        return objects;
-    }
-
     /**
      * 解析固定的表达式:表达式的值不会变
      */
-    public List<Object> parserFixExpression(ExpressionMetadata expressionMetadata, String[] expressions) {
-        List<Object> objects = new ArrayList<>(expressions.length);
+    public Collection<String> parserFixExpressionForString(ExpressionMetadata expressionMetadata, String[] expressions) {
+        Collection<String> objects = new ArrayList<>(expressions.length);
         for (String expression : expressions) {
             ExpressionKey expressionKey = createKey(expressionMetadata.getMethodKey(), expression);
             Object value = valueCache.get(expressionKey);
@@ -64,7 +50,7 @@ public class ExpressionParser {
                 value = Objects.requireNonNull(ex.getValue(expressionEvaluationContext));
                 valueCache.putIfAbsent(expressionKey, value);
             }
-            objects.add(value);
+            objects.add((String) value);
         }
         return objects;
     }
