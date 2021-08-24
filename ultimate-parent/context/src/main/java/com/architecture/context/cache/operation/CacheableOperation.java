@@ -1,5 +1,6 @@
 package com.architecture.context.cache.operation;
 
+import com.architecture.context.cache.CacheMode;
 import com.architecture.context.cache.annotation.Cacheable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +18,7 @@ public class CacheableOperation extends BaseCacheOperation {
      * @see Cacheable#randomTime()
      */
     private long randomTime;
-    
+
     /**
      * @see Cacheable#expireTime()
      */
@@ -27,6 +28,9 @@ public class CacheableOperation extends BaseCacheOperation {
      * @see Cacheable#expireTimeUnit()
      */
     private TimeUnit expireTimeUnit;
-
+    /**
+     * 缓存模式
+     */
+    private CacheMode cacheMode;
 
 }
