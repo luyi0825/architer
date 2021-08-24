@@ -1,6 +1,0 @@
-spring:
-  profiles:
-    active: template
-
-##测试的api地址
-api-host: http://localhost:9092
