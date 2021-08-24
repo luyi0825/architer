@@ -20,5 +20,6 @@
         <module>mybatis-plus</module>
         <module>web-starter</module>
         <module>thread-pool-component</module>
+        <module>cache-caffeine-starter</module>
     </modules>
 </project>
