@@ -8,8 +8,4 @@ public class RedissonApplicationTest {
     public static void main(String[] args) {
         SpringApplication.run(RedissonApplicationTest.class);
     }
-
-    public RedissonApplicationTest() {
-        System.out.println(11);
-    }
 }
