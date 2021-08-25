@@ -1,4 +1,4 @@
-package com.architecture.redis;
+package com.architecture.redis.support.lock;
 
 import com.architecture.context.lock.LockService;
 import org.redisson.api.RedissonClient;
@@ -28,7 +28,7 @@ public class RedisLockServiceImpl implements LockService {
 
 
     @Override
-    public Lock tryFairLock(String lockName) throws Exception {
+    public Lock tryFairLock(String lockName) {
         Lock lock = redissonClient.getFairLock(lockName);
         if (lock.tryLock()) {
             return lock;
@@ -37,7 +37,7 @@ public class RedisLockServiceImpl implements LockService {
     }
 
     @Override
-    public Lock tryUnfairLock(String lockName) throws Exception {
+    public Lock tryUnfairLock(String lockName) {
         Lock lock = redissonClient.getLock(lockName);
         if (lock.tryLock()) {
             return lock;
@@ -55,7 +55,7 @@ public class RedisLockServiceImpl implements LockService {
     }
 
     @Override
-    public Lock tryWriteLock(String lockName) throws Exception {
+    public Lock tryWriteLock(String lockName) {
         Lock lock = redissonClient.getReadWriteLock(lockName).writeLock();
         if (lock.tryLock()) {
             return lock;
@@ -73,7 +73,7 @@ public class RedisLockServiceImpl implements LockService {
     }
 
     @Override
-    public Lock tryReadLock(String lockName) throws Exception {
+    public Lock tryReadLock(String lockName) {
         Lock lock = redissonClient.getReadWriteLock(lockName).readLock();
         if (lock.tryLock()) {
             return lock;
@@ -82,7 +82,7 @@ public class RedisLockServiceImpl implements LockService {
     }
 
     @Override
-    public Lock tryReadLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
+    public Lock tryReadLock(String lockName, long time, TimeUnit timeUnit) {
         Lock lock = redissonClient.getReadWriteLock(lockName).readLock();
         if (lock.tryLock()) {
             return lock;
