@@ -11,10 +11,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class RedisMapCache extends RedisCache {
 
-    private RedissonClient client;
+    private final RedissonClient client;
 
-    public RedisMapCache(String cacheName) {
+    public RedisMapCache(String cacheName, RedissonClient client) {
         super(cacheName);
+        this.client = client;
     }
 
 
