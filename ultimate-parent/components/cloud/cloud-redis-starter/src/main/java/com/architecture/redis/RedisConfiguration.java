@@ -2,10 +2,10 @@
 package com.architecture.redis;
 
 
-import com.architecture.context.cache.Cache;
 import com.architecture.context.lock.LockService;
 import com.architecture.redis.support.cache.RedisCacheManagerImpl;
 import com.architecture.redis.support.cache.RedisValueService;
+import com.architecture.redis.support.lock.RedisLockServiceImpl;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
@@ -18,15 +18,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Role;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
-import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import java.util.Objects;
 
 /**
  * Redis配置

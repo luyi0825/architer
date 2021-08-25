@@ -26,7 +26,7 @@ public interface Cache {
     void set(Map<String, Object> map);
 
     /**
-     * 描述:向缓存中存放值
+     * 描述:向缓存中存放值，并设置过期时间
      *
      * @param expire   过期时间
      * @param timeUnit 单位
