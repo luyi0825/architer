@@ -4,8 +4,6 @@ import com.architecture.context.cache.CacheConstants;
 import com.architecture.utils.JsonUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
@@ -196,14 +194,11 @@ public class RedisValueService {
      * @return 是否删除成功
      */
     public boolean delete(String key) {
-        if (key == null) {
-            return false;
-        }
         Boolean bool = redisTemplate.delete(key);
-        if (bool == null) {
-            return false;
+        if (bool != null) {
+            return bool;
         }
-        return bool;
+        return false;
     }
 
     /**
