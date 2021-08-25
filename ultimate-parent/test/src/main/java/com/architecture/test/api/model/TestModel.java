@@ -21,7 +21,7 @@ public class TestModel {
      */
     private String remark;
 
-    static TestModel build() {
+    public static TestModel build() {
         return new TestModel();
     }
 
