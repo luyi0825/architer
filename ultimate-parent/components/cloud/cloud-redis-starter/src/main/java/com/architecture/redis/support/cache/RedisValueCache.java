@@ -1,10 +1,8 @@
 package com.architecture.redis.support.cache;
 
 
-import com.architecture.context.cache.Cache;
 import com.architecture.context.exception.ServiceException;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
+
 
 import java.util.Collection;
 import java.util.List;
@@ -21,13 +19,13 @@ import java.util.stream.Collectors;
  * @author luyi
  * @date 2020-12-24
  */
-public class ValueRedisCache extends RedisCache {
+public class RedisValueCache extends RedisCache {
 
 
-    private RedisValueService valueService;
+    private final RedisValueService valueService;
 
 
-    public ValueRedisCache(String cacheName, RedisValueService redisValueService) {
+    public RedisValueCache(String cacheName, RedisValueService redisValueService) {
         super(cacheName);
         this.valueService = redisValueService;
     }

@@ -35,19 +35,20 @@ public @interface Locked {
     TimeUnit timeUnit() default TimeUnit.SECONDS;
 
     /**
-     * 过期时间：秒
-     */
-    float expireTime() default -1F;
-
-    /**
      * 获取锁的时间
      */
-    float tryTime() default 1.5F;
+    float tryTime() default 5L;
 
     /**
      * 默认重入锁
      */
     LockType lockType() default LockType.REENTRANT_FAIR;
+
+    /**
+     * 获取不到锁，回调的方法
+     * bean的
+     */
+    String callBack() default "";
 
 
 }
