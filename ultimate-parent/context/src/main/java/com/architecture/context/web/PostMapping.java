@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.*;
 public @interface PostMapping {
 
     /*自定义的属性**/
-
     /**
      * 编码
      */
