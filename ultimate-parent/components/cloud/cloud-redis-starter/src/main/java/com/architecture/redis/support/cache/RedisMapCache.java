@@ -65,7 +65,7 @@ public class RedisMapCache extends RedisCache {
 
     @Override
     public Object get(String key) {
-        return client.getMap(cacheName);
+        return client.getMap(cacheName).get(key);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class RedisMapCache extends RedisCache {
 
     @Override
     public boolean delete(String key) {
-        return client.getKeys().delete(getCacheKey(key)) == 1;
+        return client.getMap(cacheName).remove(key) != null;
     }
 
     @Override
