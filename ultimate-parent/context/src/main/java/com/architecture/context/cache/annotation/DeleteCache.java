@@ -61,5 +61,10 @@ public @interface DeleteCache {
      */
     String unless() default "";
 
+    /**
+     * 缓存模式
+     */
+    CacheMode cacheMode() default CacheMode.SIMPLE;
+
 
 }

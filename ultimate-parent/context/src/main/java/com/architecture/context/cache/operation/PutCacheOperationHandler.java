@@ -33,7 +33,7 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         if (this.canHandler(operation, expressionMetadata, false)) {
             String key = (String) expressionParser.parserExpression(expressionMetadata, operation.getKey());
             for (String cacheName : cacheNames) {
-                cacheManager.getSimpleCache(cacheName).set(key, value, expireTime, TimeUnit.MINUTES);
+                chooseCache(operation, cacheName).set(key, value, expireTime, TimeUnit.MINUTES);
             }
         }
     }

@@ -35,7 +35,7 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
             Collection<String> cacheNames = this.getCacheNames(operation, expressionMetadata);
             for (String cacheName : cacheNames) {
                 String key = Objects.requireNonNull(expressionParser.parserExpression(expressionMetadata, operation.getKey())).toString();
-                cacheManager.getSimpleCache(cacheName).delete(key);
+                chooseCache(operation, cacheName).delete(key);
             }
         }
     }

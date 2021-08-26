@@ -1,6 +1,7 @@
 package com.architecture.context.cache.operation;
 
 
+import com.architecture.context.cache.CacheMode;
 import com.architecture.context.cache.annotation.Cacheable;
 import com.architecture.context.lock.LockEnum;
 import com.architecture.context.lock.Locked;
@@ -50,6 +51,8 @@ public abstract class BaseCacheOperation {
      * 条件满足的时候，不进行缓存操作
      */
     private String unless;
+
+    private CacheMode cacheMode;
 
 
 }

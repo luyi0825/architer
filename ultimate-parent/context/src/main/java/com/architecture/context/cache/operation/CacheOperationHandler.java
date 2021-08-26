@@ -1,6 +1,8 @@
 package com.architecture.context.cache.operation;
 
 
+import com.architecture.context.cache.Cache;
+import com.architecture.context.cache.CacheMode;
 import com.architecture.context.cache.proxy.MethodReturnValueFunction;
 import com.architecture.context.expression.ExpressionParser;
 
@@ -36,6 +38,17 @@ public abstract class CacheOperationHandler implements Ordered {
 
     public Object value(String valueExpression, ExpressionMetadata expressionMetadata) {
         return expressionParser.parserExpression(expressionMetadata, valueExpression);
+    }
+
+    /**
+     * 选择缓存
+     */
+    public Cache chooseCache(BaseCacheOperation operation, String cacheName) {
+        CacheMode cacheMode = operation.getCacheMode();
+        if (CacheMode.SIMPLE.equals(cacheMode)) {
+            return cacheManager.getSimpleCache(cacheName);
+        }
+        return cacheManager.getMapCache(cacheName);
     }
 
     /**

@@ -32,7 +32,7 @@ public class CacheableOperationHandler extends CacheOperationHandler {
         String key = Objects.requireNonNull(expressionParser.parserExpression(expressionMetadata, operation.getKey())).toString();
         Object cacheValue = null;
         for (String cacheName : cacheNames) {
-            Cache cache = cacheManager.getSimpleCache(cacheName);
+            Cache cache = chooseCache(operation, cacheName);
             Object value = cache.get(key);
             if (!isNullValue(value)) {
                 cacheValue = value;
@@ -43,7 +43,7 @@ public class CacheableOperationHandler extends CacheOperationHandler {
             long expireTime = CacheUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomTime());
             cacheValue = methodReturnValueFunction.proceed();
             for (String cacheName : cacheNames) {
-                Cache cache = cacheManager.getSimpleCache(cacheName);
+                Cache cache = chooseCache(operation, cacheName);
                 cache.set(key, cacheValue, expireTime, ((CacheableOperation) operation).getExpireTimeUnit());
             }
         } else {
