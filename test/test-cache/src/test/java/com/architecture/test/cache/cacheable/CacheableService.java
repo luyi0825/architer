@@ -1,11 +1,9 @@
 package com.architecture.test.cache.cacheable;
 
 import com.architecture.context.cache.annotation.Cacheable;
-import com.architecture.context.lock.LockEnum;
-import com.architecture.context.lock.Locked;
+import com.architecture.context.cache.lock.LockEnum;
+import com.architecture.context.cache.lock.Locked;
 import com.architecture.test.cache.UserInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;

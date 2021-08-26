@@ -1,6 +1,4 @@
-package com.architecture.context.lock;
-
-import com.architecture.context.cache.annotation.Cacheable;
+package com.architecture.context.cache.lock;
 
 public class TestService {
 

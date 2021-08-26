@@ -1,27 +1,27 @@
 package com.architecture.context.cache;
 
 import com.architecture.context.cache.annotation.*;
-import com.architecture.context.cache.operation.BaseCacheOperation;
-import com.architecture.context.cache.operation.CacheableOperation;
-import com.architecture.context.cache.operation.DeleteCacheOperation;
-import com.architecture.context.cache.operation.PutCacheOperation;
+import com.architecture.context.cache.lock.Locked;
+import com.architecture.context.cache.operation.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.lang.Nullable;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.lang.reflect.Method;
+import java.util.*;
 
 /**
  * @author luyi
  * 缓存注解解析,解析方法有哪些缓存操作的注解
  */
 public class CacheAnnotationsParser {
+
+    Map<AnnotatedElement, Collection<BaseCacheOperation>> operationCache = new HashMap<>(16);
+    Map<AnnotatedElement, Locked> lockedCache = new HashMap<>(8);
 
     private static final Set<Class<? extends Annotation>> CACHE_OPERATION_ANNOTATIONS = new LinkedHashSet<>(8);
 
@@ -35,21 +35,31 @@ public class CacheAnnotationsParser {
         CACHE_OPERATION_ANNOTATIONS.add(Caching.class);
     }
 
+    private Class<? extends Annotation> lockedAnnotation = Locked.class;
+
 
     public boolean isCandidateClass(Class<?> targetClass) {
-        return AnnotationUtils.isCandidateClass(targetClass, CACHE_OPERATION_ANNOTATIONS);
+        return AnnotationUtils.isCandidateClass(targetClass, CACHE_OPERATION_ANNOTATIONS) || AnnotationUtils.isCandidateClass(targetClass, lockedAnnotation);
     }
 
 
     public Collection<BaseCacheOperation> parse(AnnotatedElement annotatedElement) {
-        Collection<BaseCacheOperation> ops = parseCacheAnnotations(annotatedElement, false);
+        Collection<BaseCacheOperation> ops = operationCache.get(annotatedElement);
+        if (ops != null) {
+            return ops;
+        }
+        ops = parseCacheAnnotations(annotatedElement, false);
         if (ops != null && ops.size() > 1) {
             // More than one operation found -> local declarations override interface-declared ones...
             Collection<BaseCacheOperation> localOps = parseCacheAnnotations(annotatedElement, true);
             if (localOps != null) {
-                return localOps;
+                ops = localOps;
             }
         }
+        if (!CollectionUtils.isEmpty(ops)) {
+            operationCache.put(annotatedElement, ops);
+        }
+
         return ops;
     }
 
@@ -155,7 +165,6 @@ public class CacheAnnotationsParser {
         putCacheOperation.setExpireTime(cachePut.expireTime());
         putCacheOperation.setExpireTimeUnit(cachePut.expireTimeUnit());
         putCacheOperation.setRandomTime(cachePut.randomTime());
-        putCacheOperation.setAnnotation(cachePut);
         putCacheOperation.setCondition(cachePut.condition());
         putCacheOperation.setUnless(cachePut.unless());
         putCacheOperation.setCacheValue(cachePut.cacheValue());
@@ -173,7 +182,6 @@ public class CacheAnnotationsParser {
         deleteCacheOperation.setKey(deleteCache.key());
         deleteCacheOperation.setLocked(deleteCache.locked());
         deleteCacheOperation.setAsync(deleteCache.async());
-        deleteCacheOperation.setAnnotation(deleteCache);
         deleteCacheOperation.setCacheMode(deleteCache.cacheMode());
         ops.add(deleteCacheOperation);
     }
@@ -184,7 +192,6 @@ public class CacheAnnotationsParser {
     private void parseCacheableAnnotation(Cacheable cacheable, Collection<BaseCacheOperation> ops) {
         CacheableOperation operation = new CacheableOperation();
         operation.setCacheName(cacheable.cacheName());
-        operation.setAnnotation(cacheable);
         operation.setExpireTime(cacheable.expireTime());
         operation.setExpireTimeUnit(cacheable.expireTimeUnit());
         operation.setRandomTime(cacheable.randomTime());
@@ -197,5 +204,24 @@ public class CacheAnnotationsParser {
         //设置成最小，让cacheable最先执行
         operation.setOrder(-1);
         ops.add(operation);
+    }
+
+    /**
+     * @param annotatedElement
+     * @return
+     */
+    public Locked parseLocked(AnnotatedElement annotatedElement) {
+        Locked locked = lockedCache.get(annotatedElement);
+        if (locked != null) {
+            return locked;
+        }
+        Set<Annotation> annotations = AnnotatedElementUtils.findAllMergedAnnotations(annotatedElement, Set.of(Locked.class));
+        for (Annotation annotation : annotations) {
+            if (annotation instanceof Locked) {
+                lockedCache.put(annotatedElement, (Locked) annotation);
+                return locked;
+            }
+        }
+        return null;
     }
 }
