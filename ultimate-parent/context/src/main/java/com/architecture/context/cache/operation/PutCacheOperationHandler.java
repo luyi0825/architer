@@ -6,7 +6,7 @@ import com.architecture.context.cache.utils.CacheUtils;
 import com.architecture.context.expression.ExpressionMetadata;
 
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
+
 
 /**
  * 对应PutCacheOperation
@@ -33,7 +33,7 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         if (this.canHandler(operation, expressionMetadata, false)) {
             String key = (String) expressionParser.parserExpression(expressionMetadata, operation.getKey());
             for (String cacheName : cacheNames) {
-                chooseCache(operation, cacheName).set(key, value, expireTime, TimeUnit.MINUTES);
+                chooseCache(operation, cacheName).set(key, value, expireTime, putCacheOperation.getExpireTimeUnit());
             }
         }
     }
