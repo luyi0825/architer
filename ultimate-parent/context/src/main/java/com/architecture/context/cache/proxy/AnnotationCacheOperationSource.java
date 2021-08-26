@@ -3,6 +3,7 @@ package com.architecture.context.cache.proxy;
 
 import com.architecture.context.cache.CacheAnnotationsParser;
 import com.architecture.context.cache.operation.BaseCacheOperation;
+import com.architecture.context.cache.operation.Operation;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
