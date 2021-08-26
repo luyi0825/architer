@@ -159,6 +159,7 @@ public class CacheAnnotationsParser {
         putCacheOperation.setCondition(cachePut.condition());
         putCacheOperation.setUnless(cachePut.unless());
         putCacheOperation.setCacheValue(cachePut.cacheValue());
+        putCacheOperation.setCacheMode(cachePut.cacheMode());
         ops.add(putCacheOperation);
     }
 
@@ -173,6 +174,7 @@ public class CacheAnnotationsParser {
         deleteCacheOperation.setLocked(deleteCache.locked());
         deleteCacheOperation.setAsync(deleteCache.async());
         deleteCacheOperation.setAnnotation(deleteCache);
+        deleteCacheOperation.setCacheMode(deleteCache.cacheMode());
         ops.add(deleteCacheOperation);
     }
 
@@ -191,6 +193,7 @@ public class CacheAnnotationsParser {
         operation.setLocked(cacheable.locked());
         operation.setCondition(cacheable.condition());
         operation.setUnless(cacheable.unless());
+        operation.setCacheMode(cacheable.cacheMode());
         //设置成最小，让cacheable最先执行
         operation.setOrder(-1);
         ops.add(operation);
