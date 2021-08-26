@@ -18,7 +18,7 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
     private static final int SECOND_ORDER = 2;
 
     @Override
-    public boolean match(BaseCacheOperation operation) {
+    public boolean match(Operation operation) {
         return operation instanceof PutCacheOperation;
     }
 
@@ -31,10 +31,13 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         methodReturnValueFunction.proceed();
         Object value = expressionParser.parserExpression(expressionMetadata, cacheValue);
         if (this.canHandler(operation, expressionMetadata, false)) {
-            String key = (String) expressionParser.parserExpression(expressionMetadata, operation.getKey());
-            for (String cacheName : cacheNames) {
-                chooseCache(operation, cacheName).set(key, value, expireTime, putCacheOperation.getExpireTimeUnit());
-            }
+            lockExecute.execute(operation.getLocked(), expressionMetadata, () -> {
+                String key = (String) expressionParser.parserExpression(expressionMetadata, operation.getKey());
+                for (String cacheName : cacheNames) {
+                    chooseCache(operation, cacheName).set(key, value, expireTime, putCacheOperation.getExpireTimeUnit());
+                }
+                return null;
+            });
         }
     }
 

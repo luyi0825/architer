@@ -1,6 +1,7 @@
 package com.architecture.context.cache.operation;
 
 
+import com.architecture.context.cache.lock.LockExecuteFunction;
 import com.architecture.context.cache.proxy.MethodReturnValueFunction;
 import com.architecture.context.expression.ExpressionMetadata;
 
@@ -24,7 +25,7 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
     private static final int END_ORDER = 3;
 
     @Override
-    public boolean match(BaseCacheOperation operation) {
+    public boolean match(Operation operation) {
         return operation instanceof DeleteCacheOperation;
     }
 
@@ -32,11 +33,14 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
     protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         methodReturnValueFunction.proceed();
         if (this.canHandler(operation, expressionMetadata, false)) {
-            Collection<String> cacheNames = this.getCacheNames(operation, expressionMetadata);
-            for (String cacheName : cacheNames) {
-                String key = Objects.requireNonNull(expressionParser.parserExpression(expressionMetadata, operation.getKey())).toString();
-                chooseCache(operation, cacheName).delete(key);
-            }
+            lockExecute.execute(operation.getLocked(), expressionMetadata, () -> {
+                Collection<String> cacheNames = getCacheNames(operation, expressionMetadata);
+                for (String cacheName : cacheNames) {
+                    String key = Objects.requireNonNull(expressionParser.parserExpression(expressionMetadata, operation.getKey())).toString();
+                    chooseCache(operation, cacheName).delete(key);
+                }
+                return null;
+            });
         }
     }
 

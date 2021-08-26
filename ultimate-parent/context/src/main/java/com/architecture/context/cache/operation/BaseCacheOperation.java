@@ -3,11 +3,8 @@ package com.architecture.context.cache.operation;
 
 import com.architecture.context.cache.CacheMode;
 import com.architecture.context.cache.annotation.Cacheable;
-import com.architecture.context.lock.LockEnum;
-import com.architecture.context.lock.Locked;
+import com.architecture.context.cache.lock.Locked;
 import lombok.Data;
-
-import java.lang.annotation.Annotation;
 
 
 /**
@@ -16,15 +13,11 @@ import java.lang.annotation.Annotation;
  * @see org.springframework.cache.interceptor.CacheOperation 参考的这个类
  */
 @Data
-public abstract class BaseCacheOperation {
+public abstract class BaseCacheOperation implements Operation {
     /**
      * 用于排序的字段顺序
      */
     private int order;
-    /**
-     * 操作的注解
-     */
-    private Annotation annotation;
     /**
      * @see Cacheable#cacheName()
      */

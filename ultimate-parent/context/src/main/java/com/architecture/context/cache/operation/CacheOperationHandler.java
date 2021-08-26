@@ -3,13 +3,14 @@ package com.architecture.context.cache.operation;
 
 import com.architecture.context.cache.Cache;
 import com.architecture.context.cache.CacheMode;
+import com.architecture.context.cache.lock.LockExecute;
 import com.architecture.context.cache.proxy.MethodReturnValueFunction;
 import com.architecture.context.expression.ExpressionParser;
 
 import com.architecture.context.exception.ServiceException;
 import com.architecture.context.expression.ExpressionMetadata;
-import com.architecture.context.lock.FailLock;
-import com.architecture.context.lock.LockFactory;
+import com.architecture.context.cache.lock.FailLock;
+import com.architecture.context.cache.lock.LockFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.architecture.context.cache.CacheManager;
@@ -17,8 +18,7 @@ import org.springframework.core.Ordered;
 
 import java.text.MessageFormat;
 import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.locks.Lock;
+
 
 /**
  * @author luyi
@@ -31,7 +31,7 @@ public abstract class CacheOperationHandler implements Ordered {
     protected CacheManager cacheManager;
 
     @Autowired(required = false)
-    private LockFactory lockFactory;
+    protected LockExecute lockExecute;
     @Autowired(required = false)
     protected ExpressionParser expressionParser;
 
@@ -57,7 +57,7 @@ public abstract class CacheOperationHandler implements Ordered {
      * @param operation operation对应的缓存操作
      * @return 是否匹配，如果true就对这个operation的进行缓存处理
      */
-    public abstract boolean match(BaseCacheOperation operation);
+    public abstract boolean match(Operation operation);
 
 
     /**
@@ -80,22 +80,12 @@ public abstract class CacheOperationHandler implements Ordered {
      * @throws Throwable
      */
     public void handler(BaseCacheOperation operation, MethodReturnValueFunction methodReturnValueFunction, ExpressionMetadata expressionMetadata) throws Throwable {
+        //这里初次过滤,没有包含result
         if (this.canHandler(operation, expressionMetadata, true)) {
-            Lock lock = lockFactory.get(operation.getLocked(), expressionMetadata);
-            if (lock == null) {
-                this.execute(operation, expressionMetadata, methodReturnValueFunction);
-            } else if (lock instanceof FailLock) {
-                throw new ServiceException("获取锁失败");
-            } else {
-                try {
-                    this.execute(operation, expressionMetadata, methodReturnValueFunction);
-                } finally {
-                    //释放锁
-                    lock.unlock();
-                }
-            }
+            this.execute(operation, expressionMetadata, methodReturnValueFunction);
         }
     }
+
 
     /**
      * 能否处理
@@ -150,10 +140,6 @@ public abstract class CacheOperationHandler implements Ordered {
     public CacheOperationHandler setCacheManager(CacheManager cacheManager) {
         this.cacheManager = cacheManager;
         return this;
-    }
-
-    public void setLockFactory(LockFactory lockFactory) {
-        this.lockFactory = lockFactory;
     }
 
     public CacheOperationHandler setExpressionParser(ExpressionParser expressionParser) {

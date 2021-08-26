@@ -20,13 +20,12 @@ public class CacheableOperationHandler extends CacheOperationHandler {
     private static final int FIRST_ORDER = 1;
 
     @Override
-    public boolean match(BaseCacheOperation operation) {
+    public boolean match(Operation operation) {
         return operation instanceof CacheableOperation;
     }
 
     @Override
     protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
-
         CacheableOperation cacheableOperation = (CacheableOperation) operation;
         Collection<String> cacheNames = getCacheNames(cacheableOperation, expressionMetadata);
         String key = Objects.requireNonNull(expressionParser.parserExpression(expressionMetadata, operation.getKey())).toString();
@@ -40,12 +39,15 @@ public class CacheableOperationHandler extends CacheOperationHandler {
             }
         }
         if (cacheValue == null) {
-            long expireTime = CacheUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomTime());
-            cacheValue = methodReturnValueFunction.proceed();
-            for (String cacheName : cacheNames) {
-                Cache cache = chooseCache(operation, cacheName);
-                cache.set(key, cacheValue, expireTime, ((CacheableOperation) operation).getExpireTimeUnit());
-            }
+            lockExecute.execute(operation.getLocked(), expressionMetadata, () -> {
+                long expireTime = CacheUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomTime());
+                Object returnValue = methodReturnValueFunction.proceed();
+                for (String cacheName : cacheNames) {
+                    Cache cache = chooseCache(operation, cacheName);
+                    cache.set(key, returnValue, expireTime, ((CacheableOperation) operation).getExpireTimeUnit());
+                }
+                return null;
+            });
         } else {
             methodReturnValueFunction.setValue(cacheValue);
         }
