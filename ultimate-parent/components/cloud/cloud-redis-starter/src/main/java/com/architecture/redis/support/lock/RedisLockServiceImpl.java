@@ -1,6 +1,6 @@
 package com.architecture.redis.support.lock;
 
-import com.architecture.context.lock.LockService;
+import com.architecture.context.cache.lock.LockService;
 import org.redisson.api.RedissonClient;
 
 import java.util.concurrent.TimeUnit;

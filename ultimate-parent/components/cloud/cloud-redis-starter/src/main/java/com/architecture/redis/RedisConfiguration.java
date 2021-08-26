@@ -2,7 +2,7 @@
 package com.architecture.redis;
 
 
-import com.architecture.context.lock.LockService;
+import com.architecture.context.cache.lock.LockService;
 import com.architecture.redis.support.cache.RedisCacheManagerImpl;
 import com.architecture.redis.support.cache.RedisValueService;
 import com.architecture.redis.support.lock.RedisLockServiceImpl;

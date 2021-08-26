@@ -1,6 +1,6 @@
 package com.architecture.context.cache;
 
-import com.architecture.context.lock.LockEnum;
+import com.architecture.context.cache.lock.LockEnum;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
