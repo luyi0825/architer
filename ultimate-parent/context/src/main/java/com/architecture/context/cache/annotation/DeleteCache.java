@@ -2,8 +2,8 @@ package com.architecture.context.cache.annotation;
 
 
 import com.architecture.context.cache.CacheMode;
-import com.architecture.context.lock.LockEnum;
-import com.architecture.context.lock.Locked;
+import com.architecture.context.cache.lock.LockEnum;
+import com.architecture.context.cache.lock.Locked;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
