@@ -1,4 +1,4 @@
-package com.architecture.context.lock;
+package com.architecture.context.cache.lock;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

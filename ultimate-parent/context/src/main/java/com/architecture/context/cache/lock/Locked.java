@@ -1,4 +1,4 @@
-package com.architecture.context.lock;
+package com.architecture.context.cache.lock;
 
 import java.util.concurrent.TimeUnit;
 
@@ -43,6 +43,8 @@ public @interface Locked {
      * 默认重入锁
      */
     LockType lockType() default LockType.REENTRANT_FAIR;
+
+    FailStrategy failStrategy() default FailStrategy.EXCEPTION;
 
     /**
      * 获取不到锁，回调的方法

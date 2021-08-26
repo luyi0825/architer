@@ -1,4 +1,4 @@
-package com.architecture.context.lock;
+package com.architecture.context.cache.lock;
 
 import com.architecture.context.expression.ExpressionParser;
 import com.architecture.context.expression.ExpressionMetadata;

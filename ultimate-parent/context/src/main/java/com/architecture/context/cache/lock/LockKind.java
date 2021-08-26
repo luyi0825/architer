@@ -1,4 +1,4 @@
-package com.architecture.context.lock;
+package com.architecture.context.cache.lock;
 
 /**
  * @author luyi

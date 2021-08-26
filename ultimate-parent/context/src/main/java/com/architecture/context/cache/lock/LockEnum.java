@@ -1,4 +1,4 @@
-package com.architecture.context.lock;
+package com.architecture.context.cache.lock;
 
 /**
  * 使用的锁（用什么作为锁）
