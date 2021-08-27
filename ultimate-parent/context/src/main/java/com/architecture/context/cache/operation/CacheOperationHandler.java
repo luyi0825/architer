@@ -6,11 +6,7 @@ import com.architecture.context.cache.CacheMode;
 import com.architecture.context.cache.lock.LockExecute;
 import com.architecture.context.cache.proxy.MethodReturnValueFunction;
 import com.architecture.context.expression.ExpressionParser;
-
-import com.architecture.context.exception.ServiceException;
 import com.architecture.context.expression.ExpressionMetadata;
-import com.architecture.context.cache.lock.FailLock;
-import com.architecture.context.cache.lock.LockFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.architecture.context.cache.CacheManager;
@@ -132,6 +128,7 @@ public abstract class CacheOperationHandler implements Ordered {
      * @param operation                 缓存操作对应的数据
      * @param expressionMetadata        表达式元数据
      * @param methodReturnValueFunction 返回值功能函数
+     * @throws Throwable
      */
     protected abstract void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable;
 
