@@ -1,6 +1,7 @@
 package com.architecture.context.cache;
 
 import com.architecture.context.cache.annotation.*;
+import com.architecture.context.cache.lock.LockType;
 import com.architecture.context.cache.lock.Locked;
 import com.architecture.context.cache.operation.*;
 import org.apache.commons.lang3.ArrayUtils;
@@ -11,7 +12,6 @@ import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
-import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -215,12 +215,24 @@ public class CacheAnnotationsParser {
         if (locked != null) {
             return locked;
         }
-        Set<Annotation> annotations = AnnotatedElementUtils.findAllMergedAnnotations(annotatedElement, Set.of(Locked.class));
+        Set<Annotation> annotations = AnnotatedElementUtils.getAllMergedAnnotations(annotatedElement, Set.of(Locked.class));
         for (Annotation annotation : annotations) {
             if (annotation instanceof Locked) {
                 lockedCache.put(annotatedElement, (Locked) annotation);
-                return locked;
+                return (Locked) annotation;
             }
+        }
+        return null;
+    }
+
+    /**
+     * @param annotatedElement
+     * @return
+     */
+    public LockOperation parseLockOperation(AnnotatedElement annotatedElement) {
+        Locked locked = parseLocked(annotatedElement);
+        if (locked != null && !LockType.NONE.equals(locked.lockType())) {
+            return new LockOperation();
         }
         return null;
     }
