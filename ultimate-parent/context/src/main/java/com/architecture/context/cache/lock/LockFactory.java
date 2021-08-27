@@ -1,11 +1,13 @@
 package com.architecture.context.cache.lock;
 
+
 import com.architecture.context.expression.ExpressionParser;
 import com.architecture.context.expression.ExpressionMetadata;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,45 +16,30 @@ import java.util.concurrent.locks.Lock;
 
 /**
  * @author luyi
- * 锁的key的解析器
+ * 锁的简单工厂，根据锁的注解信息@Locked， 生成对应的锁
  */
 public class LockFactory implements ApplicationContextAware {
 
     private ExpressionParser expressionParser;
     private Map<LockEnum, LockService> lockServiceMap;
 
-
-    public ExpressionParser getExpressionParser() {
-        return expressionParser;
-    }
-
-    public LockFactory setExpressionParser(ExpressionParser expressionParser) {
-        this.expressionParser = expressionParser;
-        return this;
-    }
-
-    public Map<LockEnum, LockService> getLockServiceMap() {
-        return lockServiceMap;
-    }
-
-    public LockFactory setLockServiceMap(Map<LockEnum, LockService> lockServiceMap) {
-        this.lockServiceMap = lockServiceMap;
-        return this;
-    }
-
     public Lock get(Locked locked, ExpressionMetadata expressionMetadata) throws Exception {
         if (locked == null || LockEnum.NONE.equals(locked.lock())) {
             return null;
         }
-        String lockName = (String) expressionParser.parserExpression(expressionMetadata, locked.key());
         LockService lockService = lockServiceMap.get(locked.lock());
+        String lockName = expressionParser.parserFixExpressionForString(expressionMetadata, locked.lockName());
+        if (StringUtils.hasText(locked.key())) {
+            String key = (String) expressionParser.parserExpression(expressionMetadata, locked.key());
+            lockName = String.join(lockService.getLockSplit(), lockName, key);
+        }
         LockType lockType = locked.lockType();
         if (LockType.READ.equals(lockType)) {
             return lockService.tryReadLock(lockName);
         } else if (LockType.WRITE.equals(lockType)) {
             return lockService.tryWriteLock(lockName);
         } else if (LockType.REENTRANT_FAIR.equals(lockType)) {
-            return lockService.tryFairLock(lockName,30L, TimeUnit.SECONDS);
+            return lockService.tryFairLock(lockName, 30L, TimeUnit.SECONDS);
         } else if (LockType.REENTRANT_UNFAIR.equals(lockType)) {
             return lockService.tryUnfairLock(lockName);
         } else {
@@ -71,6 +58,13 @@ public class LockFactory implements ApplicationContextAware {
             if (key.startsWith("redis")) {
                 this.lockServiceMap.put(LockEnum.REDIS, value);
             }
+            this.lockServiceMap.put(LockEnum.DEFAULT, value);
         });
     }
+
+
+    public void setExpressionParser(ExpressionParser expressionParser) {
+        this.expressionParser = expressionParser;
+    }
+
 }
