@@ -1,10 +1,15 @@
 package com.architecture.test.cache.lock;
 
+import com.architecture.test.cache.UserInfo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @SpringBootTest
 public class LockTest {
@@ -15,7 +20,23 @@ public class LockTest {
      * 测试外部注解锁
      */
     @Test
-    public void test1() {
-        cacheLockService.test1(UUID.randomUUID().toString());
+    public void test1() throws InterruptedException {
+        int count = 100;
+        ExecutorService executorService = Executors.newFixedThreadPool(count);
+        String userName = UUID.randomUUID().toString();
+        CountDownLatch countDownLatch = new CountDownLatch(count);
+        for (int i = 0; i < count; i++) {
+            executorService.submit(() -> {
+                try {
+                    cacheLockService.test1(userName);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    countDownLatch.countDown();
+                }
+            });
+        }
+        countDownLatch.await();
+
     }
 }
