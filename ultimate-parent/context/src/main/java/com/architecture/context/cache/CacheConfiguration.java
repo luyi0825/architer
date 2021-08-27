@@ -31,7 +31,6 @@ public class CacheConfiguration {
     public LockFactory lockFactory(ExpressionParser expressionParser) {
         LockFactory lockFactory = new LockFactory();
         lockFactory.setExpressionParser(expressionParser);
-        lockFactory.setLockServiceMap(null);
         return lockFactory;
     }
 
