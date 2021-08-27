@@ -1,11 +1,17 @@
 package com.architecture.context.cache.lock;
 
+
+import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author luyi
  * 锁注解
  */
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
 public @interface Locked {
     /**
      * 锁的类型
