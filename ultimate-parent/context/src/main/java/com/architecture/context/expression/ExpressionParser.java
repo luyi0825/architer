@@ -42,17 +42,29 @@ public class ExpressionParser {
     public Collection<String> parserFixExpressionForString(ExpressionMetadata expressionMetadata, String[] expressions) {
         Collection<String> objects = new ArrayList<>(expressions.length);
         for (String expression : expressions) {
-            ExpressionKey expressionKey = createKey(expressionMetadata.getMethodKey(), expression);
-            Object value = valueCache.get(expressionKey);
-            if (value == null) {
-                ExpressionEvaluationContext expressionEvaluationContext = createEvaluationContext(expressionMetadata);
-                Expression ex = getExpression(keyCache, expressionKey);
-                value = Objects.requireNonNull(ex.getValue(expressionEvaluationContext));
-                valueCache.putIfAbsent(expressionKey, value);
-            }
-            objects.add(value.toString());
+            objects.add(parserFixExpressionForString(expressionMetadata, expression));
         }
         return objects;
+    }
+
+    /**
+     * 解析固定值的表达式，解析后的值会被缓存下来
+     *
+     * @param expressionMetadata 表达式元数据
+     * @param expression         表达式
+     * @return 字符串类型
+     */
+    public String parserFixExpressionForString(ExpressionMetadata expressionMetadata, String expression) {
+        Assert.hasText(expression, "expression不能为空");
+        ExpressionKey expressionKey = createKey(expressionMetadata.getMethodKey(), expression);
+        Object value = valueCache.get(expressionKey);
+        if (value == null) {
+            ExpressionEvaluationContext expressionEvaluationContext = createEvaluationContext(expressionMetadata);
+            Expression ex = getExpression(keyCache, expressionKey);
+            value = Objects.requireNonNull(ex.getValue(expressionEvaluationContext));
+            valueCache.putIfAbsent(expressionKey, value);
+        }
+        return value.toString();
     }
 
 
