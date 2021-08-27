@@ -23,6 +23,11 @@ public class ZkLockServiceImpl implements LockService {
     private static final String ZK_LOCK_START = "/";
 
     @Override
+    public String getLockSplit() {
+        return ZK_LOCK_START;
+    }
+
+    @Override
     public Lock tryFairLock(String lockName) throws Exception {
         return tryFairLock(lockName, -1, null);
     }

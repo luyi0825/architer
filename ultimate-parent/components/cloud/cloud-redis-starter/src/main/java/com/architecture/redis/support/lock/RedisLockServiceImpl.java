@@ -1,6 +1,7 @@
 package com.architecture.redis.support.lock;
 
 import com.architecture.context.cache.lock.LockService;
+import com.architecture.redis.RedisConstants;
 import org.redisson.api.RedissonClient;
 
 import java.util.concurrent.TimeUnit;
@@ -26,6 +27,11 @@ public class RedisLockServiceImpl implements LockService {
         return LockService.FAIL_LOCK;
     }
 
+
+    @Override
+    public String getLockSplit() {
+        return RedisConstants.SPLIT;
+    }
 
     @Override
     public Lock tryFairLock(String lockName) {

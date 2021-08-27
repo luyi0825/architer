@@ -11,6 +11,13 @@ public interface LockService {
 
     FailLock FAIL_LOCK = new FailLock();
 
+    /**
+     * 得到锁的分割符号
+     *
+     * @return lockName和key的分隔符号
+     */
+    String getLockSplit();
+
 
     /**
      * 获取公平锁，直到获取到锁
