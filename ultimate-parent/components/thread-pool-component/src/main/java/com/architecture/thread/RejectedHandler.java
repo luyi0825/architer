@@ -13,7 +13,7 @@ public enum RejectedHandler {
     callerRunsPolicy(),
 
     /**
-     * 抛出{@code RejectedExecutionException}的拒绝任务的处理程序，这个是默认的拒绝策略
+     * 抛出{@code RejectedExecutionException}的拒绝任务的处理程序
      */
     abortPolicy(),
     /**

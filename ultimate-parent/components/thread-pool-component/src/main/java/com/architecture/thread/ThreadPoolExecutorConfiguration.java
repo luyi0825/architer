@@ -1,6 +1,5 @@
 package com.architecture.thread;
 
-import com.architecture.thread.CommonTaskExecutor;
 import com.architecture.thread.properties.TaskExecutorProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

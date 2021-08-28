@@ -1,6 +1,5 @@
 package com.architecture.thread;
 
-import com.architecture.thread.RejectedHandler;
 import com.architecture.thread.properties.TaskExecutorProperties;
 import com.architecture.thread.properties.ThreadPoolConfig;
 import org.slf4j.Logger;
@@ -55,8 +54,6 @@ public abstract class BaseTaskExecutor extends ThreadPoolTaskExecutor {
         if (threadPoolConfig == null) {
             throw new IllegalArgumentException("未配置线程池【{}】");
         }
-
-
     }
 
     @Override
