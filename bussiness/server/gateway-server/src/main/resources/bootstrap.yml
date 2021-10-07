@@ -1,0 +1,36 @@
+nacos-host: 180.163.98.12
+
+##应用名称配置
+spring:
+  application:
+    name: gateway
+  ## nacos配置
+  cloud:
+    nacos:
+      config:
+        server-addr: ${192.168.2.222}:8848
+        ##配置文件拓展名
+        file-extension: yml
+        ## 命名空间
+        namespace: public
+        ## 分组,表示激活的配置文件（dev|test|prod）
+        #group: dev
+        extensionConfigs[0]:
+          ## mysql数据库配置
+          dataId: mysql.yml
+          # group: DEFAULT_GROUP
+          ## 配置自动刷新
+          refresh: true
+        extensionConfigs[1]:
+          ## redis的配置信息
+          dataId: redis.yml
+          #group: DEFAULT_GROUP
+          ## 配置自动刷新
+          refresh: true
+      discovery:
+        server-addr: ${nacos-host}:8848
+        namespace: public
+
+
+
+

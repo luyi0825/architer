@@ -1,0 +1,56 @@
+host: 180.163.98.12
+server:
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
+  port: 9092
+  shutdown: graceful
+
+mybatis-plus:
+  #type-aliases-package: com.ly.*
+  mapper-locations: classpath*:/com.business.base/*/mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+spring:
+  datasource:
+    druid:
+      stat-view-servlet:
+        url-pattern: /druid/*
+        login-username: test
+        login-password: test
+        enabled: true
+      username: root
+      password: luyi123
+      url: jdbc:mysql://${host}:3305/t_base?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      filter:
+        log4j2:
+          enabled: true
+          statement-prepare-after-log-enabled: false
+        wall:
+          ## 防止sql注入
+          enabled: true
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: localhost
+    #password: redis123.
+  output:
+    ansi:
+      enabled: "%clr"
+customize:
+  redisson:
+    enabled: true
+    config:
+      singleServerConfig:
+        address: redis://${host}:6379
+        password: "redis123."
+##
+debug: true
+
+
+

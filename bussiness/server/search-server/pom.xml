@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>server-parent</artifactId>
+        <groupId>com.bussiness</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>search-server</artifactId>
+    <name>search-server</name>
+    <packaging>jar</packaging>
+    <properties>
+        <app.profiles>local,test,pro</app.profiles>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.architecture</groupId>
+            <artifactId>boot-starter-web-mvc</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.architecture</groupId>
+            <artifactId>elastic-search-dml</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.architecture</groupId>
+            <artifactId>elastic-search-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.architecture</groupId>
+            <artifactId>elastic-search-mq-consumer</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.architecture</groupId>
+            <artifactId>test</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.architecture</groupId>
+            <artifactId>elastic-search-job-elastic</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.architecture</groupId>
+            <artifactId>cloud-nacos-discovery-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.architecture</groupId>
+            <artifactId>cloud-nacos-config-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.architecture</groupId>
+            <artifactId>elastic-search-dml</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- 跳过单元测试 -->
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <!-- spring-boot-maven-plugin -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.9</version>
+                <configuration>
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
+                    <fork>true</fork>
+                    <mainClass>${start-class}</mainClass>
+                </configuration>
+            </plugin>
+            <!-- fabric8 的 docker-maven-plugin -->
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.36.1</version>
+                <!-- 全局配置 -->
+                <configuration>
+                    <!-- 配置远程 Docker 守护进程 url -->
+                    <dockerHost>http://192.168.3.222:2375</dockerHost>
+                    <!-- 镜像相关配置，支持多镜像 -->
+                    <images>
+                        <!-- 单个镜像配置 -->
+                        <image>
+
+                            <!-- 镜像名:版本号 -->
+                            <!--                            <name>192.168.3.222:5000/${project.artifactId}:${project.version}</name>-->
+                            <name>192.168.3.222:5000/luyi0825/search-server:${project.version}</name>
+                            <alias>${project.name}</alias>
+                            <!--
+                     镜像仓库（公共仓库、阿里云仓库、私有自建仓库）配置，用于推送/拉取镜像
+                     如果不想推送至镜像仓库则无需配置
+                 -->
+                            <!--                            <registry>hub.docker.com</registry>-->
+                            <!-- 镜像 build 相关配置 -->
+                            <build>
+                                <!-- 使用 Dockerfile 文件，默认地址是 src/main/docker -->
+                                <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                                <tags>
+                                    <tag>latest</tag>
+                                </tags>
+                            </build>
+                        </image>
+                    </images>
+                    <!-- 认证配置，用于镜像仓库认证 -->
+                    <!--
+                    <authConfig>
+                        <username>用户名</username>
+                        <password>密码</password>
+                    </authConfig>
+                    -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <name>Spring milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <name>Spring snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+</project>
