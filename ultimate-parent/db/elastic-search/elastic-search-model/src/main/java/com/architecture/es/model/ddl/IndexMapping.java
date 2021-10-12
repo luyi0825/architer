@@ -1,7 +1,6 @@
 package com.architecture.es.model.ddl;
 
 
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,7 +12,11 @@ public class IndexMapping implements Serializable {
     /**
      * index项
      */
-    private String index;
+    private String dbIndex;
+    /**
+     * apiIndex
+     */
+    private String apiIndex;
     /**
      * 数据分片数
      */
@@ -45,12 +48,32 @@ public class IndexMapping implements Serializable {
     }
 
 
-    public String getIndex() {
-        return index;
+    public String getDbIndex() {
+        return dbIndex;
     }
 
-    public void setIndex(String index) {
-        this.index = index;
+    public IndexMapping setDbIndex(String dbIndex) {
+        this.dbIndex = dbIndex;
+        return this;
+    }
+
+    public String getApiIndex() {
+        return apiIndex;
+    }
+
+    public IndexMapping setApiIndex(String apiIndex) {
+        this.apiIndex = apiIndex;
+        return this;
+    }
+
+    public IndexMapping setShards(Integer shards) {
+        this.shards = shards;
+        return this;
+    }
+
+    public IndexMapping setReplicas(Integer replicas) {
+        this.replicas = replicas;
+        return this;
     }
 
     public List<MappingItem> getMappingItems() {
@@ -60,4 +83,6 @@ public class IndexMapping implements Serializable {
     public void setMappingItems(List<MappingItem> mappingItems) {
         this.mappingItems = mappingItems;
     }
+
+
 }
