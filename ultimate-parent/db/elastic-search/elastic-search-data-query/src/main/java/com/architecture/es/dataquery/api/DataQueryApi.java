@@ -5,4 +5,5 @@ package com.architecture.es.dataquery.api;
  * 数据查询的接口
  */
 public class DataQueryApi {
+
 }
