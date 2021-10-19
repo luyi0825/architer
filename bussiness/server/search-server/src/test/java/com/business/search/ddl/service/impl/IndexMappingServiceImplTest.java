@@ -1,6 +1,7 @@
 package com.business.search.ddl.service.impl;
 
 
+import com.architecture.context.exception.ServiceException;
 import com.architecture.es.dml.service.IndexMappingService;
 import com.architecture.es.model.MappingType;
 import com.architecture.es.model.ddl.IndexMapping;
@@ -26,7 +27,8 @@ public class IndexMappingServiceImplTest {
     @Test
     public void createIndexMapping() throws IOException {
         IndexMapping indexMapping = new IndexMapping();
-        indexMapping.setIndex("test2");
+        indexMapping.setDbIndex("test2");
+        indexMapping.setApiIndex("test2");
         List<MappingItem> mappingItems = new ArrayList<>();
         MappingItem mappingItem = new MappingItem();
         mappingItem.setField("name");
@@ -51,7 +53,8 @@ public class IndexMappingServiceImplTest {
     @Test
     public void rebuildIndexMapping() throws IOException {
         IndexMapping indexMapping = new IndexMapping();
-        indexMapping.setIndex("test");
+        indexMapping.setDbIndex("test");
+        indexMapping.setApiIndex("test");
         List<MappingItem> mappingItems = new ArrayList<>();
         MappingItem mappingItem = new MappingItem();
         mappingItem.setField("name");

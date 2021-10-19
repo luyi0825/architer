@@ -8,18 +8,6 @@ package com.architecture.es.model;
 public class EsConstant {
 
     /**
-     * 同步数据到es的交换机
-     */
-    public static final String EXCHANGE_SYNC_ES_DOCUMENT = "exchange_sync_es_document";
-    /**
-     * 同步document的常量
-     * QUEUE_BATCH_SYNC_ES_DOCUMENT为批量同步
-     * QUEUE_SYNC_ES_DOCUMENT为单个同步
-     */
-    public static final String QUEUE_BATCH_SYNC_ES_DOCUMENT = "queue_batch_sync_es_document";
-    public static final String QUEUE_SYNC_ES_DOCUMENT = "queue_sync_es_document";
-
-    /**
      * 回调参数的key
      *
      * @see com.core.es.model.dto.BaseSyncDocumentDTO#callBackWay

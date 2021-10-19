@@ -25,18 +25,18 @@
         <redisson.version>3.16.1</redisson.version>
         <jedis.version>3.6.0</jedis.version>
         <jackson.version>2.12.2</jackson.version>
-        <spring.version>5.3.9</spring.version>
+        <spring.version>5.3.10</spring.version>
         <spring-boot.version>2.4.9</spring-boot.version>
         <!--spring-cloud-alibaba的版本-->
         <alibaba-cloud.version>2021.1</alibaba-cloud.version>
         <!--spring-cloud的版本-->
-        <spring-cloud.version>2020.0.3</spring-cloud.version>
+        <spring-cloud.version>2020.0.4</spring-cloud.version>
         <!-- log4j2的版本-->
         <okHttp.version>4.9.1</okHttp.version>
         <hibernate-validator.version>6.1.2.Final</hibernate-validator.version>
         <zookeeper.version>3.7.0</zookeeper.version>
         <hutool.version>5.6.5</hutool.version>
-        <nacos-client.version>1.4.2</nacos-client.version>
+        <nacos-client.version>2.0.3</nacos-client.version>
         <mybaits-plus.version>3.4.3</mybaits-plus.version>
         <mysql.version>8.0.25</mysql.version>
         <elasticsearch.version>7.9.3</elasticsearch.version>
@@ -185,6 +185,11 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>1.7.25</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos-client.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
