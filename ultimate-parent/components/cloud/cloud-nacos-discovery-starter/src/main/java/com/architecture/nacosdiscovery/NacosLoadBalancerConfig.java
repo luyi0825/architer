@@ -2,6 +2,7 @@ package com.architecture.nacosdiscovery;
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.NacosServiceManager;
+import com.architecture.nacosdiscovery.loadbalace.NacosClusterWeightLoadBalance;
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
@@ -16,14 +17,14 @@ import org.springframework.core.env.Environment;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnDiscoveryEnabled
-public class NacosWeightLoadBalancerConfig extends LoadBalancerClientFactory {
+public class NacosLoadBalancerConfig extends LoadBalancerClientFactory {
     @Bean
     public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(
             Environment environment,
             NacosDiscoveryProperties discoveryProperties,
             NacosServiceManager nacosServiceManager) {
         String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
-        return new NacosWeightReactiveLoadBalancer(discoveryProperties, nacosServiceManager, name);
+        return new NacosClusterWeightLoadBalance(discoveryProperties, nacosServiceManager, name);
     }
 
 

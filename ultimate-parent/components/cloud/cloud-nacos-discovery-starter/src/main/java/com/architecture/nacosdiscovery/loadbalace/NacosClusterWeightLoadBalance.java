@@ -14,6 +14,7 @@ import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
 import reactor.core.publisher.Mono;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -40,10 +41,12 @@ public class NacosClusterWeightLoadBalance implements ReactorServiceInstanceLoad
     @Override
     public Mono<Response<ServiceInstance>> choose(Request request) {
         Properties properties = discoveryProperties.getNacosProperties();
+        String clusterName = discoveryProperties.getClusterName();
         NamingService namingService = nacosServiceManager.getNamingService(properties);
-        List<Instance> instanceList = namingService.getAllInstances(serviceId, discoveryProperties.getGroup());
-
-        Instance instance = namingService.selectOneHealthyInstance(serviceId, discoveryProperties.getGroup());
+        Instance instance = namingService.selectOneHealthyInstance(serviceId, discoveryProperties.getGroup(), Collections.singletonList(clusterName));
+        if (instance == null) {
+            instance = namingService.selectOneHealthyInstance(serviceId, discoveryProperties.getGroup());
+        }
         ServiceInstance serviceInstance = NacosServiceDiscovery.hostToServiceInstance(instance, serviceId);
         if (serviceInstance == null) {
             return Mono.just(new EmptyResponse());

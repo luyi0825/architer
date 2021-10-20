@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnDiscoveryEnabled
-@LoadBalancerClients(defaultConfiguration = NacosWeightLoadBalancerConfig.class)
+@LoadBalancerClients(defaultConfiguration = NacosLoadBalancerConfig.class)
 public class NacosDiscoveryConfig {
 
 
