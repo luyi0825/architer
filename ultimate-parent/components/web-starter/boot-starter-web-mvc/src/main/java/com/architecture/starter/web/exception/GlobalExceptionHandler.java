@@ -1,10 +1,9 @@
 package com.architecture.starter.web.exception;
 
 
-import com.architecture.context.ResponseStatusEnum;
+import com.architecture.context.response.ResponseStatusEnum;
 import com.architecture.context.exception.ParamsValidException;
 import com.architecture.context.exception.ServiceException;
-import com.architecture.context.response.R;
 import com.architecture.context.response.ResponseResult;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.internal.engine.path.PathImpl;
@@ -153,9 +152,11 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(DuplicateKeyException.class)
-    public R handleDuplicateKeyException(DuplicateKeyException e) {
+    public ResponseResult handleDuplicateKeyException(DuplicateKeyException e) {
         logger.error(e.getMessage(), e);
-        return R.error("数据库中已存在该记录");
+        ResponseResult responseResult = ResponseResult.fail();
+        responseResult.setMessage("数据库中已存在该记录");
+        return responseResult;
     }
 
 

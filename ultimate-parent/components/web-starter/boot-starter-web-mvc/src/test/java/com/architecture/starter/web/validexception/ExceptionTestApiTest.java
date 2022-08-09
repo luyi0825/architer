@@ -1,7 +1,7 @@
 package com.architecture.starter.web.validexception;
 
 
-import com.architecture.context.ResponseStatusEnum;
+import com.architecture.context.response.ResponseStatusEnum;
 import com.architecture.context.response.ResponseResult;
 import com.architecture.starter.web.exception.GlobalExceptionHandler;
 import com.architecture.utils.JsonUtils;
