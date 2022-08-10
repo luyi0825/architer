@@ -18,13 +18,7 @@ import java.util.List;
  *
  * @author luyi
  */
-public class JsonUtils {
-    /**
-     * 防止被new
-     */
-    private JsonUtils() {
-
-    }
+public final class JsonUtils {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
