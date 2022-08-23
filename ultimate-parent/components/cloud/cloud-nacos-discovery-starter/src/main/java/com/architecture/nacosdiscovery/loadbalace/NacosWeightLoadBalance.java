@@ -41,7 +41,6 @@ public class NacosWeightLoadBalance implements ReactorServiceInstanceLoadBalance
     @SneakyThrows
     @Override
     public Mono<Response<ServiceInstance>> choose(Request request) {
-        BeanDefinition.SCOPE_PROTOTYPE
         NamingService namingService = nacosServiceManager.getNamingService(discoveryProperties.getNacosProperties());
         Instance instance = namingService.selectOneHealthyInstance(serviceId, discoveryProperties.getGroup());
         ServiceInstance serviceInstance = NacosServiceDiscovery.hostToServiceInstance(instance, serviceId);

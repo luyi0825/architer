@@ -1,6 +1,7 @@
 package com.architecture.context.exception;
 
 import com.architecture.context.response.ResponseStatusEnum;
+import lombok.Getter;
 
 /**
  * 参数校验异常
