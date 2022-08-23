@@ -8,20 +8,22 @@ package com.architecture.context.response;
  */
 public enum ResponseStatusEnum {
     /**
-     * 构造状态码信息
+     * 业务异常
      */
-    SYSTEM_EXCEPTION(500, "亲,服务器开小差啦,请稍后再试"),
-    SERVICE_EXCEPTION(400, "操作失败"),
-    SUCCESS(200, "操作成功"),
-    NO_LOGIN(401, "请登录"),
+    BUS_EXCEPTION(500, "操作失败"),
+    /**
+     * 参数与控制器层所需要的参数不符合
+     * <li>请求参数校验异常(不记录异常栈信息)</li>
+     */
+    REQUEST_PARAMS_VALID_FAIL(400, "参数校验失败"),
+    SUCCESS(200, "操作成功"), NO_LOGIN(401, "请登录"),
+
+
     /**
      * 没有权限
      */
-    NO_PERMISSION(403, "没有权限"),
-    /**
-     * 参数校验抛出的异常
-     */
-    PARAMS_VALID_EXCEPTION(100, "参数校验异常");
+    NO_PERMISSION(403, "没有权限");
+
 
     ResponseStatusEnum(int code, String message) {
         this.code = code;

@@ -2,7 +2,7 @@
 package com.architecture.context.valid;
 
 
-import com.architecture.context.exception.ParamsValidException;
+import com.architecture.context.exception.RequestParamsValidException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -16,7 +16,7 @@ import java.util.Set;
  *
  * @author luyi
  */
-public final class ValidatorUtils {
+public final class BeanValidatorUtils {
     private static final Validator VALIDATOR = Validation.buildDefaultValidatorFactory().getValidator();
 
     /**
@@ -24,7 +24,7 @@ public final class ValidatorUtils {
      *
      * @param object 待校验对象
      * @param groups 待校验的组
-     * @throws ParamsValidException 校验不通过，则报ParamsValidException异常
+     * @throws RequestParamsValidException 校验不通过，则报ParamsValidException异常
      */
     public static void validateEntity(Object object, Class<?>... groups) {
         Set<ConstraintViolation<Object>> constraintViolations = VALIDATOR.validate(object, groups);
@@ -33,7 +33,7 @@ public final class ValidatorUtils {
             for (ConstraintViolation<Object> constraint : constraintViolations) {
                 msg.append(constraint.getMessage()).append("<br>");
             }
-            throw new ParamsValidException(msg.toString());
+            throw new RequestParamsValidException(msg.toString());
         }
     }
 }

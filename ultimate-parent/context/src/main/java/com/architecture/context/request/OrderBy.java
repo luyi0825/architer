@@ -14,7 +14,7 @@ public class OrderBy {
      */
     private String fieldName;
     /**
-     * 默认升序
+     * 是否升序(true升序，false降序，默认true)
      */
-    private boolean asc = true;
+    private Boolean asc;
 }
