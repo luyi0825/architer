@@ -1,7 +1,8 @@
-package com.test.file.controller;
+package com.test.objectstorage.controller;
 
-import com.test.file.PutFileResponse;
-import com.test.file.service.FileStorage;
+import com.test.objectstorage.ObjectStorageType;
+import com.test.objectstorage.PutFileResponse;
+import com.test.objectstorage.ObjectStorage;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,8 +14,8 @@ import java.io.IOException;
 @RequestMapping("/file")
 public class FileController {
 
-    @Resource
-    private FileStorage fileStorage;
+    @Resource(name = ObjectStorageType.MINIO)
+    private ObjectStorage objectStorage;
 
     /**
      * 上传文件
@@ -22,7 +23,7 @@ public class FileController {
     @PostMapping("/uploadFile")
     public PutFileResponse uploadFile(MultipartFile file) throws IOException {
         String key = file.getOriginalFilename();
-        return fileStorage.uploadFile(file.getInputStream(), key);
+        return objectStorage.putObject(file.getInputStream(), key);
     }
 
     /**
@@ -31,7 +32,7 @@ public class FileController {
     @GetMapping("/downloadFile")
     public void downloadFile(HttpServletResponse response, String key) throws Exception {
 
-        fileStorage.downloadFile(response.getOutputStream(),  key);
+        objectStorage.getObject(response.getOutputStream(),  key);
     }
 
     /**
@@ -39,6 +40,6 @@ public class FileController {
      */
     @DeleteMapping("/deleteFile")
     public boolean deleteFile(@RequestParam("fileName") String fileName) {
-        return fileStorage.delete(fileName);
+        return objectStorage.deleteObject(fileName);
     }
 }

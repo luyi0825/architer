@@ -1,5 +1,6 @@
-package com.test.file;
+package com.test.objectstorage.minio;
 
+import com.test.objectstorage.CommonProperties;
 import lombok.Data;
 
 /**

@@ -1,12 +1,12 @@
-package com.test.file;
+package com.test.objectstorage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FileApplication {
+public class ObjectStorageApplication {
 
     public static void main(String[] args) {
-        new SpringApplication(FileApplication.class).run(args);
+        new SpringApplication(ObjectStorageApplication.class).run(args);
     }
 }

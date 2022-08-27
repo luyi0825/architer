@@ -1,5 +1,6 @@
-package com.test.file;
+package com.test.objectstorage.oss;
 
+import com.test.objectstorage.CommonProperties;
 import lombok.Data;
 
 /**
@@ -8,4 +9,8 @@ import lombok.Data;
  */
 @Data
 public class OssProperties extends CommonProperties {
+
+
+
+
 }

@@ -1,34 +1,32 @@
-package com.test.file.service.impl;
+package com.test.objectstorage.minio;
 
-import com.test.file.FileStorageConfig;
-import com.test.file.MinioProperties;
-import com.test.file.PutFileResponse;
-import com.test.file.service.FileStorage;
+import com.test.objectstorage.PutFileResponse;
+import com.test.objectstorage.ObjectStorage;
 import io.minio.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 
 /**
- * monio文件操作
+ * minio对象存储操作
  *
  * @author luyi
  */
 @Slf4j
-public class MinioFileStorageImpl implements FileStorage {
+public class MinioObjectStorage implements ObjectStorage {
 
     private final MinioProperties minioProperties;
 
     private final MinioClient client;
 
-    public MinioFileStorageImpl(MinioClient client, MinioProperties minioProperties) {
+    public MinioObjectStorage(MinioClient client, MinioProperties minioProperties) {
         this.client = client;
         this.minioProperties = minioProperties;
     }
 
 
     @Override
-    public PutFileResponse putFile(File file, String key) {
+    public PutFileResponse putObject(File file, String key) {
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
             PutObjectArgs putObjectArgs = PutObjectArgs.builder().stream(fileInputStream, file.length(), -1)
                     .bucket(minioProperties.getDefaultBucket()).build();
@@ -42,7 +40,7 @@ public class MinioFileStorageImpl implements FileStorage {
     }
 
     @Override
-    public PutFileResponse uploadFile(InputStream inputStream, String key) {
+    public PutFileResponse putObject(InputStream inputStream, String key) {
         try {
             PutObjectArgs putObjectArgs = PutObjectArgs.builder()
                     .stream(inputStream, inputStream.available(), -1)
@@ -55,11 +53,10 @@ public class MinioFileStorageImpl implements FileStorage {
             log.error("上传文件到minio失败", e);
             return PutFileResponse.fail().setErrorMessage(e.getMessage());
         }
-
     }
 
     @Override
-    public void downloadFile(OutputStream outputStream, String key) throws Exception {
+    public void getObject(OutputStream outputStream, String key) throws Exception {
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
         GetObjectArgs getObjectArgs = GetObjectArgs.builder().bucket(minioProperties.getDefaultBucket())
                 .object(key).build();
@@ -68,17 +65,15 @@ public class MinioFileStorageImpl implements FileStorage {
     }
 
     @Override
-    public boolean delete(String fileName) {
+    public boolean deleteObject(String key) {
         try {
             RemoveObjectArgs removeObjectArgs = RemoveObjectArgs.builder()
-                    .bucket(minioProperties.getDefaultBucket()).object(fileName).build();
+                    .bucket(minioProperties.getDefaultBucket()).object(key).build();
             client.removeObject(removeObjectArgs);
             return true;
         } catch (Exception e) {
-            log.error("删除minio文件失败:{}", fileName, e);
+            log.error("删除minio文件失败:{}", key, e);
         }
         return false;
-
-
     }
 }
