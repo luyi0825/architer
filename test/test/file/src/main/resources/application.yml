@@ -1,0 +1,17 @@
+server:
+  port: 8000
+
+architecture:
+  file-storage:
+    minio:
+      enabled: false
+      endpoint: http://120.48.170.201:9000
+      accessKey: "test"
+      secretKey: testtest
+      defaultBucket: luyi-dev
+    oss:
+      enabled: true
+      endpoint: "https://oss-cn-hangzhou.aliyuncs.com"
+      accessKey: "LTAI5tNYseX7zPTFRqQqsExv"
+      secretKey: "sOQVMVdThQNRwMNpo0hMfxT0QXgmrR"
+      defaultBucket: "0825test"
