@@ -20,7 +20,7 @@
         <mybatis-plus.version>3.4.1</mybatis-plus.version>
         <lombok.version>1.18.20</lombok.version>
         <easyexcel.verion>2.2.8</easyexcel.verion>
-        <jsoup.verion>1.13.1</jsoup.verion>
+        <jsoup.verion>1.14.2</jsoup.verion>
         <zookeeper.version>3.7.0</zookeeper.version>
         <redisson.version>3.16.1</redisson.version>
         <jedis.version>3.6.0</jedis.version>
