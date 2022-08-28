@@ -9,19 +9,29 @@ public enum HealthStatus {
     /**
      * 健康
      */
-    healthy,
+    healthy(1),
 
     /**
      * 亚健康
      */
-    half_healthy,
+    half_healthy(2),
 
     /**
      * 濒临死亡
      */
-    dying,
+    dying(3),
     /**
      * 死亡
      */
-    dead
+    dead(4);
+
+    private final Integer status;
+
+    HealthStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
 }

@@ -37,7 +37,7 @@ import javax.naming.NamingException;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(Session.class)
-@ConditionalOnProperty(prefix = "spring.mail", name = "jndi-name")
+@ConditionalOnProperty(prefix = "architecture.mail", name = "jndi-name")
 @ConditionalOnJndi
 class MailSenderJndiConfiguration {
 

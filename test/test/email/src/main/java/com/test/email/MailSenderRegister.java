@@ -17,46 +17,31 @@
 package com.test.email;
 
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.NonNullApi;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.context.ConfigurableApplicationContext;
+
 import org.springframework.util.CollectionUtils;
 
-import java.util.LinkedHashMap;
+import javax.mail.MessagingException;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-/**
- * Auto-configure a {@link MailSender} based on properties configuration.
- *
- * @author Oliver Gierke
- * @author Eddú Meléndez
- * @author Stephane Nicoll
- */
-@Configuration(proxyBeanMethods = false)
-@ConditionalOnProperty(prefix = "spring.mail", name = "host")
-class MailSenderPropertiesConfiguration implements BeanFactoryPostProcessor {
+
+class MailSenderRegister implements ApplicationContextAware {
 
 
-    private ApplicationContext applicationContext;
-
+    //  @Resource
     private MailProperties mailProperties;
 
-    public MailSenderPropertiesConfiguration(com.test.email.MailProperties mailProperties) {
+    private MailSenderSelector mailSenderSelector;
+
+    public MailSenderRegister(MailProperties mailProperties, MailSenderSelector mailSenderSelector) {
         this.mailProperties = mailProperties;
+        this.mailSenderSelector = mailSenderSelector;
     }
 
 
@@ -67,8 +52,22 @@ class MailSenderPropertiesConfiguration implements BeanFactoryPostProcessor {
     }
 
 
+    private String getRegisterBeanName(String group, int num) {
+        return group + "_mailSend" + num;
+    }
+
+
     @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        ConfigurableApplicationContext context = (ConfigurableApplicationContext) applicationContext;
+        this.registerSingletonMailSender(context.getBeanFactory());
+    }
+
+
+    /**
+     * 注册单例邮件发送器
+     */
+    public void registerSingletonMailSender(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
 
         Map<String, MailProperties.MailServer> servers = mailProperties.getServers();
         if (CollectionUtils.isEmpty(servers)) {
@@ -97,16 +96,20 @@ class MailSenderPropertiesConfiguration implements BeanFactoryPostProcessor {
                     sender.setJavaMailProperties(asProperties(mailServer.getProperties()));
                 }
                 String beanName = this.getRegisterBeanName(group, ++num);
+                validateConnection(sender);
                 //注册单例bean
                 configurableListableBeanFactory.registerSingleton(beanName, sender);
+                mailSenderSelector.register(sender);
             }
         });
 
     }
 
-    private String getRegisterBeanName(String group, int num) {
-        return group + "_mailSend" + num;
+    public void validateConnection(MailSender mailSender) {
+        try {
+            mailSender.testConnection();
+        } catch (MessagingException ex) {
+          //  throw new IllegalStateException("Mail server is not available", ex);
+        }
     }
-
-
 }

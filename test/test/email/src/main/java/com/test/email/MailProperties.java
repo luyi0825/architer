@@ -32,6 +32,11 @@ public class MailProperties {
      */
     private String jndiName;
 
+    /**
+     * 是否测试连接
+     */
+    private boolean testConnection = true;
+
     @Data
     static class MailServer {
         /**

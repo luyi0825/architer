@@ -16,7 +16,7 @@ public interface MailSender extends JavaMailSender {
      *
      * @return 该发送器的健康状态
      */
-    HealthStatus healthStatus();
+    Integer getHealthyStatus();
 
     /**
      * 测试连接
@@ -31,6 +31,11 @@ public interface MailSender extends JavaMailSender {
      * @return 分组标识
      */
     String getGroup();
+
+    /**
+     * 得到用户名
+     */
+    String getUsername();
 
 
 }

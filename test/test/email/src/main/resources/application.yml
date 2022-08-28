@@ -1,6 +1,31 @@
 server:
   port: 8001
 
-spring:
+
+architecture:
   mail:
-    username:
+    test-connection: true
+    servers:
+      qq:
+        host: "smtp.qq.com"
+        port: 465
+        protocol: "smtp"
+        mail-users:
+         # - username: "893431435@qq.com"
+         #   password: "puywjwptevqbbebd"
+          - username: "luyi.1023@qq.com"
+            password: "puywjwptevqbbebd"
+        properties:
+
+          mail:
+
+
+            #配置SSL 加密工厂
+            smtp:
+              ssl:
+                #本地测试，先放开ssl
+                enable: true
+                required: false
+              #开启debug模式，这样邮件发送过程的日志会在控制台打印出来，方便排查错误
+            debug: true
+
