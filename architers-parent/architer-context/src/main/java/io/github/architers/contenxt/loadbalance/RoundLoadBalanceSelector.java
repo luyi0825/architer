@@ -3,6 +3,7 @@ package io.github.architers.contenxt.loadbalance;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
@@ -26,7 +27,7 @@ public class RoundLoadBalanceSelector implements LoadBalanceSelector {
         int index = selectKeyIndex.getAndIncrement();
         if (index >= data.size()) {
             //说明已经到达了最大的长度,重置下表
-            boolean reset = selectKeyIndex.compareAndSet(index + 1, 0);
+            boolean reset = selectKeyIndex.compareAndSet(index + 1, 1);
             if (reset) {
                 return data.get(0);
             }
@@ -37,16 +38,14 @@ public class RoundLoadBalanceSelector implements LoadBalanceSelector {
     }
 
     private AtomicInteger initSelectKeyIndex(String selectKey) {
-        Lock lock = new ReentrantLock();
-        lock.lock();
-        try {
+        //以多个key为锁，防止最开始锁住其他的数据初始化
+        synchronized (selectKey.intern()) {
             AtomicInteger selectKeyIndex = roundIndex.get(selectKey);
-            if (selectKeyIndex != null) {
-                return selectKeyIndex;
+            if (selectKeyIndex == null) {
+                selectKeyIndex = new AtomicInteger(0);
+                roundIndex.put(selectKey, selectKeyIndex);
             }
-            return new AtomicInteger(0);
-        } finally {
-            lock.unlock();
+            return selectKeyIndex;
         }
     }
 
@@ -57,7 +56,13 @@ public class RoundLoadBalanceSelector implements LoadBalanceSelector {
         }
         LoadBalanceSelector loadBalanceSelector = new RoundLoadBalanceSelector();
         for (int i = 0; i < 100; i++) {
-            System.out.println(loadBalanceSelector.selectOne("test", list));
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.print(loadBalanceSelector.selectOne("test", list));
+                }
+            }).start();
+
         }
 
     }

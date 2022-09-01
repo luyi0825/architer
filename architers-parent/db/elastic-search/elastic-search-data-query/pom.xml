@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>elastic-search</artifactId>
-        <groupId>com.architecture</groupId>
+        <groupId>io.github.architers</groupId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.architecture</groupId>
+            <groupId>io.github.architers</groupId>
             <artifactId>elastic-search-model</artifactId>
             <version>1.0.0</version>
             <scope>compile</scope>
@@ -32,7 +32,7 @@
             <artifactId>spring-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.architecture</groupId>
+            <groupId>io.github.architers</groupId>
             <artifactId>elastic-search-dml</artifactId>
             <version>1.0.0</version>
             <scope>compile</scope>

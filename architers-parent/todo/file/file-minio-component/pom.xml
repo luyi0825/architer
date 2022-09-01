@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>ultimate-file</artifactId>
-        <groupId>com.architecture</groupId>
+        <groupId>io.github.architers</groupId>
         <version>1.0.0</version>
     </parent>
-    <groupId>com.architecture</groupId>
+    <groupId>io.github.architers</groupId>
     <artifactId>file-minio-component</artifactId>
     <version>1.0.0</version>
     <name>file-minio-component</name>

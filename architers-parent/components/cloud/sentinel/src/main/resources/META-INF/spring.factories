@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.architecture.cloud.sentinel.SentinelConfig
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.github.architers.cloud.sentinel.SentinelConfig

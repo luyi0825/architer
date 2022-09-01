@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.architecture.nacosdiscovery.NacosDiscoveryConfig
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.github.architers.nacosdiscovery.NacosDiscoveryConfig

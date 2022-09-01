@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>components</artifactId>
-        <groupId>com.architecture</groupId>
+        <groupId>io.github.architers</groupId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -44,7 +44,7 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.architecture</groupId>
+            <groupId>io.github.architers</groupId>
             <artifactId>query-common</artifactId>
             <version>1.0.0</version>
             <scope>compile</scope>

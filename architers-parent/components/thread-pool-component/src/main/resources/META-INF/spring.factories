@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.architecture.context.thread.ThreadPoolExecutorConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.github.architers.context.thread.ThreadPoolExecutorConfiguration

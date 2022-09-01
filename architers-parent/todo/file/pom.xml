@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>ultimate-parent</artifactId>
-        <groupId>com.architecture</groupId>
+        <groupId>io.github.architers</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -34,7 +34,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.architecture</groupId>
+                <groupId>io.github.architers</groupId>
                 <artifactId>additional-dependencies</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>

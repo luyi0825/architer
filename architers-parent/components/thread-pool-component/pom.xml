@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.architecture</groupId>
+        <groupId>io.github.architers</groupId>
         <artifactId>components</artifactId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
@@ -24,7 +24,7 @@
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.architecture</groupId>
+            <groupId>io.github.architers</groupId>
             <artifactId>test</artifactId>
             <version>1.0.0</version>
             <scope>test</scope>

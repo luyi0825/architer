@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.architecture.excel.html.configuration.Html2ExcelConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.github.architers.excel.html.configuration.Html2ExcelConfiguration

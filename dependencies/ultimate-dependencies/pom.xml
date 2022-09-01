@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>dependencies</artifactId>
-        <groupId>com.architecture</groupId>
+        <groupId>io.github.architers</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -16,44 +16,44 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.architecture</groupId>
+                <groupId>io.github.architers</groupId>
                 <artifactId>boot-starter-web-mvc</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.architecture</groupId>
+                <groupId>io.github.architers</groupId>
                 <artifactId>boot-starter-web-flux</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
 <!--            <dependency>-->
-<!--                <groupId>com.architecture</groupId>-->
+<!--                <groupId>io.github.architers</groupId>-->
 <!--                <artifactId>cloud-zookeeper-discovery</artifactId>-->
 <!--                <version>${project.version}</version>-->
 <!--            </dependency>-->
             <dependency>
-                <groupId>com.architecture</groupId>
+                <groupId>io.github.architers</groupId>
                 <artifactId>cloud-sentinel</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.architecture</groupId>
+                <groupId>io.github.architers</groupId>
                 <artifactId>mq-rabbit</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.architecture</groupId>
+                <groupId>io.github.architers</groupId>
                 <artifactId>mybatis-plus</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.architecture</groupId>
+                <groupId>io.github.architers</groupId>
                 <artifactId>db-druid</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.architecture</groupId>
+                <groupId>io.github.architers</groupId>
                 <artifactId>test</artifactId>
                 <version>${project.version}</version>
             </dependency>

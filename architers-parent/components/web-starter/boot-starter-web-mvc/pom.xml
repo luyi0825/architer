@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>boot-starter-web</artifactId>
-        <groupId>com.architecture</groupId>
+        <groupId>io.github.architers</groupId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -42,17 +42,17 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.architecture</groupId>
+            <groupId>io.github.architers</groupId>
             <artifactId>test</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
-            <groupId>com.architecture</groupId>
+            <groupId>io.github.architers</groupId>
             <artifactId>ultimate-utils</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
-            <groupId>com.architecture</groupId>
+            <groupId>io.github.architers</groupId>
             <artifactId>context</artifactId>
             <version>1.0.0</version>
             <scope>compile</scope>

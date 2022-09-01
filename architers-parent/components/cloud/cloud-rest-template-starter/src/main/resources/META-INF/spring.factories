@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
- com.architecture.resttemplate.RestTemplateConfiguration
+ io.github.architers.resttemplate.RestTemplateConfiguration

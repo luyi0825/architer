@@ -87,8 +87,8 @@ public class ResponseResult implements Serializable {
      */
     public static ResponseResult fail() {
         ResponseResult baseResponse = new ResponseResult();
-        baseResponse.setCode(ResponseStatusEnum.SERVICE_EXCEPTION.getCode());
-        baseResponse.setMessage(ResponseStatusEnum.SERVICE_EXCEPTION.getMessage());
+       // baseResponse.setCode(ResponseStatusEnum.SERVICE_EXCEPTION.getCode());
+       // baseResponse.setMessage(ResponseStatusEnum.SERVICE_EXCEPTION.getMessage());
         return baseResponse;
     }
 
