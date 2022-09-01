@@ -1,8 +1,8 @@
-package com.architecture.test.valid.controller;
+package io.github.architers.test.valid.controller;
 
 
-import com.architecture.context.valid.group.AddGroup;
-import com.architecture.test.valid.vo.User;
+import io.github.architers.context.valid.group.AddGroup;
+import io.github.architers.test.valid.vo.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

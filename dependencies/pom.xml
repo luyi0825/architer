@@ -13,6 +13,6 @@
         <module>ultimate-dependencies</module>
     </modules>
     <properties>
-        <ultimate.version>1.0.0</ultimate.version>
+        <ultimate.version>${project.version}</ultimate.version>
     </properties>
 </project>

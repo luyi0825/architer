@@ -1,4 +1,4 @@
-package com.architecture.test.sentinel;
+package io.github.architers.test.sentinel;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,9 +1,9 @@
-package com.architecture.test.mq;
+package io.github.architers.test.mq;
 
 
-import com.architecture.mq.rabbit.callback.CallBackMessage;
-import com.architecture.mq.rabbit.callback.CallbackCorrelationData;
-import com.architecture.utils.JsonUtils;
+import io.github.architers.mq.rabbit.callback.CallBackMessage;
+import io.github.architers.mq.rabbit.callback.CallbackCorrelationData;
+import io.github.architers.utils.JsonUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;

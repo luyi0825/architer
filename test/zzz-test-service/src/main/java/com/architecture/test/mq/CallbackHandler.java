@@ -1,8 +1,8 @@
-package com.architecture.test.mq;
+package io.github.architers.test.mq;
 
 
-import com.architecture.mq.rabbit.callback.ConfirmCallbackHandler;
-import com.architecture.mq.rabbit.callback.ReturnCallbackHandler;
+import io.github.architers.mq.rabbit.callback.ConfirmCallbackHandler;
+import io.github.architers.mq.rabbit.callback.ReturnCallbackHandler;
 import org.springframework.amqp.core.ReturnedMessage;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.stereotype.Component;

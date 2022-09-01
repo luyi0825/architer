@@ -1,4 +1,4 @@
-package com.architecture.test.mq;
+package io.github.architers.test.mq;
 
 
 import com.rabbitmq.client.Channel;

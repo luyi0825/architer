@@ -1,8 +1,8 @@
-package com.architecture.test.valid.vo;
+package io.github.architers.test.valid.vo;
 
 
-import com.architecture.context.valid.ListValue;
-import com.architecture.context.valid.group.AddGroup;
+import io.github.architers.context.valid.ListValue;
+import io.github.architers.context.valid.group.AddGroup;
 
 /**
  * @author luyi

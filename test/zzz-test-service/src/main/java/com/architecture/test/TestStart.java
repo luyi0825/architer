@@ -1,4 +1,4 @@
-package com.architecture.test;
+package io.github.architers.test;
 
 
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;

@@ -1,4 +1,4 @@
-package com.architecture.test.elasticsearch;
+package io.github.architers.test.elasticsearch;
 
 /**
  * 文档发送

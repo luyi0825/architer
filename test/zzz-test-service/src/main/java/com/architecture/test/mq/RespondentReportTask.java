@@ -1,4 +1,4 @@
-package com.architecture.test.mq;
+package io.github.architers.test.mq;
 
 
 import org.springframework.data.annotation.Id;
