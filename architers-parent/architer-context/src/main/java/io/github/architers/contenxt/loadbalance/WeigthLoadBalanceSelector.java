@@ -10,11 +10,11 @@ import java.util.List;
  */
 public class WeigthLoadBalanceSelector implements LoadBalanceSelector {
     @Override
-    public Object selectOne(String selectKey, List<? extends LoadBalance> data) {
+    public Object selectOne(String selectKey, List<?> data) {
 
-         Math.random();
+        Math.random();
 
-        Arrays.binarySearch()
+        // Arrays.binarySearch()
 
         return null;
     }
