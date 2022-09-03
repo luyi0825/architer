@@ -14,7 +14,6 @@ import java.util.Set;
  * 描述:ListValue 注解的校验类对应的抽象类
  *
  * @author luyi
- * @date 2020/12/20 上午1:13
  */
 public abstract class AbstractListValueValidator<T> implements ConstraintValidator<ListValue, T> {
 
@@ -41,8 +40,6 @@ public abstract class AbstractListValueValidator<T> implements ConstraintValidat
      * 描述:是否检验通过
      *
      * @param val 需要校验的值
-     * @author luyi
-     * @date 2020/12/20 上午1:25
      */
     @Override
     public boolean isValid(T val, ConstraintValidatorContext constraintValidatorContext) {
