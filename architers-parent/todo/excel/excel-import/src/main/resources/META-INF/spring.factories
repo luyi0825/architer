@@ -1,1 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.github.architers.core.excel.configuration.Html2ExcelConfiguration

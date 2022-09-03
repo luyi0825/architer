@@ -1,4 +1,0 @@
-customize:
-  thread-pool:
-    useCommon: true
-    configs:
