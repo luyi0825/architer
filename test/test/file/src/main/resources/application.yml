@@ -12,13 +12,13 @@ architecture:
     oss:
       enabled: true
       endpoint: "https://oss-cn-hangzhou.aliyuncs.com"
-      accessKey: "LTAI5tNYseX7zPTFRqQqsExv"
-      secretKey: "sOQVMVdThQNRwMNpo0hMfxT0QXgmrR"
+      accessKey: "66LTAI5tNYseX7zPTFRqQqsExv66"
+      secretKey: "66sOQVMVdThQNRwMNpo0hMfxT0QXgmrR66"
       defaultBucket: "0825test"
     cos:
       enabled: true
       endpoint: "https://luyi-dev-1300135689.cos.ap-nanjing.myqcloud.com"
-      accessKey: "AKIDylKdhW6RWMTQ7ZmjRwCDzVllV0GI5cuw"
-      secretKey: "pOhkX5NSN3UfaIlywgAON6aonW0FEdni"
+      accessKey: "6AKIDylKdhW6RWMTQ7ZmjRwCDzVllV0GI5cuw6"
+      secretKey: "6pOhkX5NSN3UfaIlywgAON6aonW0FEdni6"
       defaultBucket: "luyi-dev-1300135689"
       region: "ap-nanjing"
