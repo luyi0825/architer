@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>components</artifactId>
+        <artifactId>architer-cache</artifactId>
         <groupId>io.github.architers</groupId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>cache-caffeine-starter</artifactId>
-    <name>cache-caffeine-starter</name>
-    <description>cache-caffeine-starter</description>
+    <artifactId>cache-caffeine-boot-starter</artifactId>
+    <name>cache-caffeine-boot-starter</name>
+    <description>cache-caffeine-boot-starter</description>
     <packaging>jar</packaging>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine -->
@@ -30,9 +30,8 @@
         </dependency>
         <dependency>
             <groupId>io.github.architers</groupId>
-            <artifactId>context</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
+            <artifactId>architer-context</artifactId>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 </project>

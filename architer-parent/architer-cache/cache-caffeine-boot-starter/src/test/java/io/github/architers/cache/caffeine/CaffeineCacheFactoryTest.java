@@ -1,4 +1,4 @@
-package com.architecure.caffeine;
+package io.github.architers.cache.caffeine;
 
 
 import com.github.benmanes.caffeine.cache.Cache;
