@@ -10,9 +10,7 @@ import java.lang.annotation.Target;
  * @author luyi
  * 自动生成字段
  */
-
-
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.TYPE)
 public @interface AutoSqlField {
 
