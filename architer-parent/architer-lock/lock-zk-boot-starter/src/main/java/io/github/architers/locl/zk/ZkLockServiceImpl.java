@@ -1,7 +1,7 @@
 package io.github.architers.locl.zk;
 
 
-import io.github.architers.contenxt.lock.LockService;
+import io.github.architers.context.lock.LockService;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.framework.recipes.locks.InterProcessReadWriteLock;

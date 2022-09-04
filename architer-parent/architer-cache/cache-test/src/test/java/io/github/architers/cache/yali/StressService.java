@@ -1,7 +1,7 @@
 package io.github.architers.cache.yali;
 
 import io.github.architers.cache.UserInfo;
-import io.github.architers.contenxt.cache.annotation.Cacheable;
+import io.github.architers.context.cache.annotation.Cacheable;
 
 public interface StressService {
 

@@ -1,7 +1,7 @@
 package io.github.architers.cache.put;
 
 import io.github.architers.cache.UserInfo;
-import io.github.architers.contenxt.cache.annotation.PutCache;
+import io.github.architers.context.cache.annotation.PutCache;
 
 public interface PutService {
     @PutCache(cacheName = "onePut", key = "#userInfo.username", cacheValue = "#userInfo")

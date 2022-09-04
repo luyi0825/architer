@@ -1,7 +1,7 @@
 package io.github.architers.es.sync;
 
 
-import io.github.architers.contenxt.exception.ServiceException;
+import io.github.architers.context.exception.ServiceException;
 import io.github.architers.es.model.doc.DocumentRequest;
 import io.github.architers.es.model.dto.BaseSyncDocumentDTO;
 import io.github.architers.es.model.dto.BatchSyncDocumentDTO;

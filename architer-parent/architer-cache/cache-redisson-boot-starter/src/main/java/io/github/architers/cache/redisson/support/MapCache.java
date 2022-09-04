@@ -1,8 +1,8 @@
 package io.github.architers.cache.redisson.support;
 
 
-import io.github.architers.contenxt.Symbol;
-import io.github.architers.contenxt.cache.batch.BatchValueFactory;
+import io.github.architers.context.Symbol;
+import io.github.architers.context.cache.batch.BatchValueFactory;
 import org.redisson.api.RBatch;
 import org.redisson.api.RFuture;
 import org.redisson.api.RMap;

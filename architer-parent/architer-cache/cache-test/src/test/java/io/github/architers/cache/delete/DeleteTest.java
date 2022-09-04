@@ -1,9 +1,9 @@
 package io.github.architers.cache.delete;
 
 
-import io.github.architers.contenxt.cache.Cache;
+import io.github.architers.context.cache.Cache;
 import io.github.architers.cache.UserInfo;
-import io.github.architers.contenxt.cache.CacheManager;
+import io.github.architers.context.cache.CacheManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

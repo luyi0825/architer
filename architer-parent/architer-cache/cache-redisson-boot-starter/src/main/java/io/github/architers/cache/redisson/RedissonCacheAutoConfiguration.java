@@ -4,7 +4,7 @@ package io.github.architers.cache.redisson;
 
 import io.github.architers.cache.redisson.support.RedisCacheManager;
 import io.github.architers.cache.redisson.support.RedisTemplateCacheService;
-import io.github.architers.contenxt.cache.annotation.EnableCustomCaching;
+import io.github.architers.context.cache.annotation.EnableCustomCaching;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;

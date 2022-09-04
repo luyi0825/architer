@@ -1,11 +1,11 @@
 package io.github.architers.cache.mapvalue;
 
 
-import io.github.architers.contenxt.cache.CacheMode;
+import io.github.architers.context.cache.CacheMode;
 import io.github.architers.cache.UserInfo;
 
-import io.github.architers.contenxt.cache.annotation.Cacheable;
-import io.github.architers.contenxt.cache.annotation.DeleteCache;
+import io.github.architers.context.cache.annotation.Cacheable;
+import io.github.architers.context.cache.annotation.DeleteCache;
 
 public interface MapValueService {
 

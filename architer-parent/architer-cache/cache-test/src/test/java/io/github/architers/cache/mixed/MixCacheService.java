@@ -2,8 +2,8 @@ package io.github.architers.cache.mixed;
 
 
 import io.github.architers.cache.UserInfo;
-import io.github.architers.contenxt.cache.annotation.Cacheable;
-import io.github.architers.contenxt.cache.annotation.PutCache;
+import io.github.architers.context.cache.annotation.Cacheable;
+import io.github.architers.context.cache.annotation.PutCache;
 
 public interface MixCacheService {
     /**

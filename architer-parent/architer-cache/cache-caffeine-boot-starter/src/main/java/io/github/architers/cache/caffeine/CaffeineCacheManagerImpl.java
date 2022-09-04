@@ -1,7 +1,7 @@
 package io.github.architers.cache.caffeine;
 
-import io.github.architers.contenxt.cache.Cache;
-import io.github.architers.contenxt.cache.CacheManager;
+import io.github.architers.context.cache.Cache;
+import io.github.architers.context.cache.CacheManager;
 
 
 

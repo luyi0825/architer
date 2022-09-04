@@ -1,22 +1,14 @@
 package io.github.architers.cache.redisson.support;
 
-import io.github.architers.cache.redisson.support.CacheTest;
-import io.github.architers.cache.redisson.support.RedisCacheManager;
-import io.github.architers.contenxt.cache.Cache;
-import io.github.architers.contenxt.cache.CacheManager;
+import io.github.architers.context.cache.Cache;
 import org.junit.jupiter.api.Test;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import javax.annotation.Resource;
-import java.util.*;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
 class SimpleCacheTest implements ApplicationContextAware {

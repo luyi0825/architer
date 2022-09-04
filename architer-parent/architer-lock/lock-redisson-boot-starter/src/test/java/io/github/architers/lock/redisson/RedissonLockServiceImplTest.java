@@ -1,12 +1,11 @@
 package io.github.architers.lock.redisson;
 
 
-import io.github.architers.contenxt.lock.LockService;
+import io.github.architers.context.lock.LockService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
 import java.util.concurrent.locks.Lock;
 
 @SpringBootTest

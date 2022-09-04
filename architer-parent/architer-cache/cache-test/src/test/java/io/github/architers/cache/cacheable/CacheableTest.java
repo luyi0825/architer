@@ -1,7 +1,7 @@
 package io.github.architers.cache.cacheable;
 
 
-import io.github.architers.contenxt.cache.CacheManager;
+import io.github.architers.context.cache.CacheManager;
 import io.github.architers.cache.UserInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

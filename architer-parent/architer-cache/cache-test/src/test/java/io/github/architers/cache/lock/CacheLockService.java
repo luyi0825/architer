@@ -1,9 +1,9 @@
 package io.github.architers.cache.lock;
 
 
-import io.github.architers.contenxt.cache.annotation.Cacheable;
-import io.github.architers.contenxt.cache.annotation.PutCache;
-import io.github.architers.contenxt.lock.Locked;
+import io.github.architers.context.cache.annotation.Cacheable;
+import io.github.architers.context.cache.annotation.PutCache;
+import io.github.architers.context.lock.Locked;
 
 import java.util.concurrent.TimeUnit;
 

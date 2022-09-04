@@ -1,7 +1,7 @@
 package io.github.architers.lock.redisson;
 
-import io.github.architers.contenxt.Symbol;
-import io.github.architers.contenxt.lock.LockService;
+import io.github.architers.context.Symbol;
+import io.github.architers.context.lock.LockService;
 import org.redisson.api.RedissonClient;
 
 import java.util.concurrent.TimeUnit;
