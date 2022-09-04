@@ -68,6 +68,8 @@
     <modules>
         <module>architer-context</module>
         <module>architer-cache</module>
+        <module>architer-lock</module>
+        <module>architer-cloud</module>
     </modules>
 
     <dependencies>

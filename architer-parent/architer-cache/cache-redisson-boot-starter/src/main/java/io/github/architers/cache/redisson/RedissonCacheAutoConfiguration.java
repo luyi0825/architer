@@ -10,6 +10,7 @@ import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.config.Config;
 import org.redisson.spring.data.connection.RedissonConnectionFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -72,7 +73,7 @@ public class RedissonCacheAutoConfiguration {
 
 
     @Bean
-    public RedissonConnectionFactory redissonConnectionFactory(RedissonClient redisson) {
+    public RedissonConnectionFactory redissonConnectionFactory(@Qualifier("redissonCacheClient") RedissonClient redisson) {
         return new RedissonConnectionFactory(redisson);
     }
 
@@ -120,7 +121,7 @@ public class RedissonCacheAutoConfiguration {
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     public RedisCacheManager redisCacheManager(RedisTemplateCacheService redisTemplateCacheService,
-                                               RedissonClient redissonClient) {
+                                              @Qualifier("redissonCacheClient") RedissonClient redissonClient) {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisTemplateService(redisTemplateCacheService);
         redisCacheManager.setRedissonClient(redissonClient);
