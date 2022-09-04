@@ -237,11 +237,6 @@ public class RedissonCacheConfig extends Config implements Serializable {
     }
 
     @Override
-    public String toJSON() throws IOException {
-        return super.toJSON();
-    }
-
-    @Override
     public String toYAML() throws IOException {
         return super.toYAML();
     }

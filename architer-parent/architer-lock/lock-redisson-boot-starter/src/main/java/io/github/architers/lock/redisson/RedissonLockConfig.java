@@ -236,10 +236,7 @@ public class RedissonLockConfig extends Config implements Serializable {
         return super.getAddressResolverGroupFactory();
     }
 
-    @Override
-    public String toJSON() throws IOException {
-        return super.toJSON();
-    }
+
 
     @Override
     public String toYAML() throws IOException {
