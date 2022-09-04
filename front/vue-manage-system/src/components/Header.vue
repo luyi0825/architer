@@ -7,7 +7,7 @@
         </div>
         <div class="logo">后台管理系统</div>
         <div class="header-right">
-            <div class="header-user-con">
+            <div class="header-cacheUser-con">
                 <!-- 消息中心 -->
                 <div class="btn-bell">
                     <el-tooltip
@@ -22,11 +22,11 @@
                     <span class="btn-bell-badge" v-if="message"></span>
                 </div>
                 <!-- 用户头像 -->
-                <div class="user-avator">
+                <div class="cacheUser-avator">
                     <img src="../assets/img/img.jpg" />
                 </div>
                 <!-- 用户名下拉菜单 -->
-                <el-dropdown class="user-name" trigger="click" @command="handleCommand">
+                <el-dropdown class="cacheUser-name" trigger="click" @command="handleCommand">
                     <span class="el-dropdown-link">
                         {{username}}
                         <i class="el-icon-caret-bottom"></i>
@@ -106,7 +106,7 @@ export default {
     float: right;
     padding-right: 50px;
 }
-.header-user-con {
+.header-cacheUser-con {
     display: flex;
     height: 70px;
     align-items: center;
@@ -138,13 +138,13 @@ export default {
 .btn-bell .el-icon-bell {
     color: #fff;
 }
-.user-name {
+.cacheUser-name {
     margin-left: 10px;
 }
-.user-avator {
+.cacheUser-avator {
     margin-left: 20px;
 }
-.user-avator img {
+.cacheUser-avator img {
     display: block;
     width: 40px;
     height: 40px;

@@ -7,7 +7,7 @@ import {reactive} from "vue";
 import {VxeGridProps} from "vxe-table";
 
 export default {
-  name: "user",
+  name: "cacheUser",
   setup() {
     const gridOptions = reactive({
       border: true,

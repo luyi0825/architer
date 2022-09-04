@@ -6,7 +6,7 @@
           clearable
           v-model="model.userName"
           placeholder="请输入用户名"
-          prefix-icon="el-icon-user"
+          prefix-icon="el-icon-cacheUser"
         ></el-input>
       </el-form-item>
       <el-form-item prop="passWord">
