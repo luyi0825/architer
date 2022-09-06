@@ -1,7 +1,10 @@
+
+##应用名称配置
 spring:
   application:
-    name: next-service
-  ## nacos配置
+    ##会员服务
+    name: ups-service
+## nacos配置
   cloud:
     nacos:
       config:
@@ -17,8 +20,6 @@ spring:
         namespace: public
         group: DEFAULT_GROUP
         enabled: true
-        metadata:
-          version: 1
 
 
 

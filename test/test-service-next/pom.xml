@@ -8,11 +8,10 @@
         <version>${revision}</version>
         <relativePath/>
     </parent>
-
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>test-service-next</artifactId>
-    <groupId>test-service-next</groupId>
-    <name>test-service</name>
-    <description>测试service</description>
+    <name>test-service-next</name>
+    <description>测试服务-下游服务</description>
     <packaging>jar</packaging>
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>

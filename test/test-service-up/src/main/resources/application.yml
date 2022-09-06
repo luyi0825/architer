@@ -1,8 +1,5 @@
-
-
-
 server:
-  port: 8888
+  port: 8880
   servlet:
     context-path: /
     encoding:
@@ -15,11 +12,4 @@ server:
 spring:
   profiles:
     active: test
-
-
-
-
-
-
-
 
