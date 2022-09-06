@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>test-service-main</artifactId>
+    <groupId>test-service-main</groupId>
+    <name>test-service-main</name>
+    <description>测试service</description>
+    <packaging>jar</packaging>
+    <version>${project.version}</version>
+    <dependencies>
+
+
+    </dependencies>
+
+    <properties>
+        <core.version>1.0.0</core.version>
+        <jackson.version>2.11.4</jackson.version>
+    </properties>
+
+
+</project>
