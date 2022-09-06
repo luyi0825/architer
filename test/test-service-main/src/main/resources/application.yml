@@ -12,28 +12,8 @@ server:
 spring:
   profiles:
     active: test
-  rabbitmq:
-    host: 124.71.110.204
-    port: 5672
-    username: luyi
-    password: 123
-    virtual-host: stats3
-    listener:
-      simple:
-        retry:
-          ####开启消费者异常重试
-          enabled: true
-          ####最大重试次数
-          max-attempts: 3
-          initial-interval: 2000
-          max-interval: 5000
-        ####开启手动ack
-        acknowledge-mode: manual
-        prefetch: 1
-    publisher-confirm-type: correlated
-    publisher-returns: true
-    template:
-      mandatory: true
+  application:
+    name: main-service
   cloud:
     sentinel:
       transport:
@@ -47,19 +27,12 @@ spring:
             groupId: DEFAULT_GROUP
             dataType: json
             ruleType: flow
+    nacos:
+      discovery:
+        namespace:
+        server-addr: 增量和全量
 
-  datasource:
-    druid:
-      stat-view-servlet:
-        url-pattern: /druid/*
-        login-username: test
-        login-password: test
-        enabled: true
-      username: luyi
-      password: 19940825Ls.
-      url: jdbc:mysql://124.71.110.204:3306/shop_sys?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
+
 
 
 #    # 当exchange无法找到任何一个合适的queue时，将消息return给生产者

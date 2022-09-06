@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <artifactId>architer-parent</artifactId>
@@ -10,9 +9,9 @@
         <relativePath/>
     </parent>
 
-    <artifactId>test-service-main</artifactId>
-    <groupId>test-service-main</groupId>
-    <name>test-service-main</name>
+    <artifactId>test-service-next</artifactId>
+    <groupId>test-service-next</groupId>
+    <name>test-service</name>
     <description>测试service</description>
     <packaging>jar</packaging>
     <properties>
@@ -42,13 +41,8 @@
             <artifactId>architer-cloud-discovery-nacos-starter</artifactId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>architer-cloud-openfeign-starter</artifactId>
-            <version>${revision}</version>
-        </dependency>
+
 
     </dependencies>
-
 
 </project>
