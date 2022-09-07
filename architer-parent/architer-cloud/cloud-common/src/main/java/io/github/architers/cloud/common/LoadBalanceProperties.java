@@ -1,7 +1,6 @@
-package io.github.architers.nacosdiscovery;
+package io.github.architers.cloud.common;
 
-import io.github.architers.nacosdiscovery.loadbalace.LoadBalanceStrategy;
-import io.github.architers.nacosdiscovery.loadbalace.VisitCluster;
+
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -12,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "spring.cloud.architer.load-balance")
 @Data
-public class NacosDiscoveryLoadProperties {
+public class LoadBalanceProperties {
 
     /**
      * 负载均衡策略(默认为权重)

@@ -5,7 +5,8 @@ import com.alibaba.cloud.nacos.discovery.NacosServiceDiscovery;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.alibaba.nacos.api.naming.pojo.ListView;
-import io.github.architers.nacosdiscovery.loadbalace.VisitCluster;
+import io.github.architers.cloud.common.LoadBalanceProperties;
+import io.github.architers.cloud.common.VisitCluster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.client.ServiceInstance;
@@ -34,14 +35,14 @@ public class NacosDiscoveryClient implements DiscoveryClient {
 
     private final NamingService namingService;
 
-    private final NacosDiscoveryLoadProperties loadProperties;
+    private final LoadBalanceProperties loadBalanceProperties;
 
     public NacosDiscoveryClient(NacosDiscoveryProperties discoveryProperties,
-                                NacosDiscoveryLoadProperties loadProperties,
+                                LoadBalanceProperties loadBalanceProperties,
                                 NamingService namingService) {
         this.discoveryProperties = discoveryProperties;
         this.namingService = namingService;
-        this.loadProperties = loadProperties;
+        this.loadBalanceProperties = loadBalanceProperties;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class NacosDiscoveryClient implements DiscoveryClient {
     public List<ServiceInstance> getInstances(String serviceId) {
         String clusterName = discoveryProperties.getClusterName();
         //判断集群方式
-        VisitCluster visitCluster = loadProperties.getVisitCluster();
+        VisitCluster visitCluster = loadBalanceProperties.getVisitCluster();
         List<Instance> instances = Collections.emptyList();
         try {
             if (VisitCluster.all.equals(visitCluster)) {
@@ -73,9 +74,9 @@ public class NacosDiscoveryClient implements DiscoveryClient {
             throw new RuntimeException("get Nacos instances exception");
         }
         //判断是否启动灰色发布
-        if (instances.size() > 0 && loadProperties.isGrayscaleRelease()) {
-            String release = discoveryProperties.getMetadata().get(loadProperties.getGrayscaleField());
-            instances = instances.stream().filter(e -> release.equals(e.getMetadata().get(loadProperties.getGrayscaleField()))).collect(Collectors.toList());
+        if (instances.size() > 0 && loadBalanceProperties.isGrayscaleRelease()) {
+            String release = discoveryProperties.getMetadata().get(loadBalanceProperties.getGrayscaleField());
+            instances = instances.stream().filter(e -> release.equals(e.getMetadata().get(loadBalanceProperties.getGrayscaleField()))).collect(Collectors.toList());
         }
         if (CollectionUtils.isEmpty(instances)) {
             throw new RuntimeException("get Nacos instances exception");

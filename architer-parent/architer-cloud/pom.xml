@@ -20,5 +20,6 @@
         <module>cloud-zookeeper-discovery-starter</module>
         <module>cloud-dubbo</module>
         <module>cloud-sentinel</module>
+        <module>cloud-common</module>
     </modules>
 </project>

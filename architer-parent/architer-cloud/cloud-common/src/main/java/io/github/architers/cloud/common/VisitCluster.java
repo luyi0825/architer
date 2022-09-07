@@ -1,4 +1,4 @@
-package io.github.architers.nacosdiscovery.loadbalace;
+package io.github.architers.cloud.common;
 
 /**
  * 访问的集群

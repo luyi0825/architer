@@ -1,4 +1,4 @@
-package io.github.architers.nacosdiscovery.loadbalace;
+package io.github.architers.cloud.common;
 
 /***
  * 负载均衡策略
