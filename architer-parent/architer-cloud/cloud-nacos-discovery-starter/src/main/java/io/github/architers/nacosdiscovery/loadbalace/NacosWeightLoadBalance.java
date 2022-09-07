@@ -4,12 +4,14 @@ package io.github.architers.nacosdiscovery.loadbalace;
 ;
 import com.alibaba.nacos.client.naming.utils.Chooser;
 import com.alibaba.nacos.client.naming.utils.Pair;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.DefaultResponse;
 import org.springframework.cloud.client.loadbalancer.Request;
 import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.cloud.loadbalancer.core.*;
+import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
@@ -22,12 +24,17 @@ import java.util.List;
  *
  * @author luyi
  */
+@Slf4j
 public class NacosWeightLoadBalance implements ReactorServiceInstanceLoadBalancer {
 
     ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
 
-    public NacosWeightLoadBalance(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider) {
+    private final String serviceId;
+
+    public NacosWeightLoadBalance(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
+                                  String serviceId) {
         this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
+        this.serviceId = serviceId;
     }
 
 
@@ -45,9 +52,13 @@ public class NacosWeightLoadBalance implements ReactorServiceInstanceLoadBalance
     }
 
     private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> instances) {
-        List<Pair<ServiceInstance>> hostsWithWeight = new ArrayList<>();
+        if (CollectionUtils.isEmpty(instances)) {
+            log.warn("instance is empty: {}", serviceId);
+            throw new RuntimeException("instance is empty:" + serviceId);
+        }
+        List<Pair<ServiceInstance>> hostsWithWeight = new ArrayList<>(instances.size());
         for (ServiceInstance serviceInstance : instances) {
-            hostsWithWeight.add(new Pair<ServiceInstance>(serviceInstance, Double.parseDouble(serviceInstance.getMetadata().get("nacos.weight"))));
+            hostsWithWeight.add(new Pair<>(serviceInstance, Double.parseDouble(serviceInstance.getMetadata().get("nacos.weight"))));
         }
         Chooser<String, ServiceInstance> vipChooser = new Chooser<>("www.taobao.com");
         vipChooser.refresh(hostsWithWeight);

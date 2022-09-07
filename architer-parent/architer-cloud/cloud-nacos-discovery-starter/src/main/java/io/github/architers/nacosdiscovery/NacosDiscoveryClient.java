@@ -30,16 +30,18 @@ public class NacosDiscoveryClient implements DiscoveryClient {
      */
     public static final String DESCRIPTION = "Spring Cloud Nacos Discovery Client";
 
-    private NacosServiceDiscovery serviceDiscovery;
+    private final NacosDiscoveryProperties discoveryProperties;
 
-    private NacosDiscoveryProperties discoveryProperties;
+    private final NamingService namingService;
 
-    private NamingService namingService;
+    private final NacosDiscoveryLoadProperties loadProperties;
 
-    private NacosDiscoveryLoadProperties loadProperties;
-
-    public NacosDiscoveryClient(NacosServiceDiscovery nacosServiceDiscovery) {
-        this.serviceDiscovery = nacosServiceDiscovery;
+    public NacosDiscoveryClient(NacosDiscoveryProperties discoveryProperties,
+                                NacosDiscoveryLoadProperties loadProperties,
+                                NamingService namingService) {
+        this.discoveryProperties = discoveryProperties;
+        this.namingService = namingService;
+        this.loadProperties = loadProperties;
     }
 
     @Override

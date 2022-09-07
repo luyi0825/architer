@@ -10,19 +10,19 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author luyi
  */
-@ConfigurationProperties(prefix = "architer.cloud.nacos.discovery")
+@ConfigurationProperties(prefix = "spring.cloud.architer.load-balance")
 @Data
 public class NacosDiscoveryLoadProperties {
 
     /**
-     * 负载均衡策略
+     * 负载均衡策略(默认为权重)
      */
-    private LoadBalanceStrategy loadBalanceStrategy;
+    private LoadBalanceStrategy strategy = LoadBalanceStrategy.weight;
 
     /**
      * 访问的集群
      */
-    private VisitCluster visitCluster;
+    private VisitCluster visitCluster = VisitCluster.current;
 
     /**
      * 是否启用灰色发布

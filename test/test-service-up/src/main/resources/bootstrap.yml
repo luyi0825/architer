@@ -1,6 +1,8 @@
 
 ##应用名称配置
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     ##会员服务
     name: test-service
@@ -20,6 +22,9 @@ spring:
         namespace: public
         group: DEFAULT_GROUP
         enabled: true
+    architer:
+      load-balance:
+        strategy: round
 
 
 
