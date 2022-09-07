@@ -22,9 +22,12 @@ spring:
         namespace: public
         group: DEFAULT_GROUP
         enabled: true
+        metadata:
+          version: 1
     architer:
       load-balance:
         strategy: round
+        grayscale-release: true
 
 
 
