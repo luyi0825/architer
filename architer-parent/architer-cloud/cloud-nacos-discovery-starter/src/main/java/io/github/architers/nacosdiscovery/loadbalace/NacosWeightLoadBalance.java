@@ -1,52 +1,57 @@
 package io.github.architers.nacosdiscovery.loadbalace;
 
-import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
-import com.alibaba.cloud.nacos.NacosServiceManager;
-import com.alibaba.cloud.nacos.discovery.NacosServiceDiscovery;
-import com.alibaba.nacos.api.naming.NamingService;
-import com.alibaba.nacos.api.naming.pojo.Instance;
-import lombok.SneakyThrows;
-import org.springframework.beans.factory.config.BeanDefinition;
+
+;
+import com.alibaba.nacos.client.naming.utils.Chooser;
+import com.alibaba.nacos.client.naming.utils.Pair;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.DefaultResponse;
-import org.springframework.cloud.client.loadbalancer.EmptyResponse;
 import org.springframework.cloud.client.loadbalancer.Request;
 import org.springframework.cloud.client.loadbalancer.Response;
-import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
+import org.springframework.cloud.loadbalancer.core.*;
 import reactor.core.publisher.Mono;
 
-import java.util.Collections;
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
- * nacos基于权重的负载均衡
- * <li>从对应的组中选择一个健康的实例</li>
+ * nacos基于集群权重的负载均衡
+ * <li>首先在集群中环境中进行负载均衡，如果集群中没有示例，则从集群外中选取示例</li>
  *
  * @author luyi
  */
-
 public class NacosWeightLoadBalance implements ReactorServiceInstanceLoadBalancer {
-    private final String serviceId;
 
-    private final NacosDiscoveryProperties discoveryProperties;
+    ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
 
-    private final NacosServiceManager nacosServiceManager;
-
-    public NacosWeightLoadBalance(NacosDiscoveryProperties discoveryProperties, NacosServiceManager nacosServiceManager, String serviceId) {
-        this.discoveryProperties = discoveryProperties;
-        this.nacosServiceManager = nacosServiceManager;
-        this.serviceId = serviceId;
+    public NacosWeightLoadBalance(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider) {
+        this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
     }
 
-    @SneakyThrows
-    @Override
+
     public Mono<Response<ServiceInstance>> choose(Request request) {
-        NamingService namingService = nacosServiceManager.getNamingService(discoveryProperties.getNacosProperties());
-        Instance instance = namingService.selectOneHealthyInstance(serviceId, discoveryProperties.getGroup());
-        ServiceInstance serviceInstance = NacosServiceDiscovery.hostToServiceInstance(instance, serviceId);
-        if (serviceInstance == null) {
-            return Mono.just(new EmptyResponse());
+        ServiceInstanceListSupplier supplier = this.serviceInstanceListSupplierProvider.getIfAvailable(NoopServiceInstanceListSupplier::new);
+        return supplier.get(request).next().map((serviceInstances) -> this.processInstanceResponse(supplier, serviceInstances));
+    }
+
+    private Response<ServiceInstance> processInstanceResponse(ServiceInstanceListSupplier supplier, List<ServiceInstance> serviceInstances) {
+        Response<ServiceInstance> serviceInstanceResponse = this.getInstanceResponse(serviceInstances);
+        if (supplier instanceof SelectedInstanceCallback && serviceInstanceResponse.hasServer()) {
+            ((SelectedInstanceCallback) supplier).selectedServiceInstance(serviceInstanceResponse.getServer());
         }
-        return Mono.just(new DefaultResponse(serviceInstance));
+        return serviceInstanceResponse;
+    }
+
+    private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> instances) {
+        List<Pair<ServiceInstance>> hostsWithWeight = new ArrayList<>();
+        for (ServiceInstance serviceInstance : instances) {
+            hostsWithWeight.add(new Pair<ServiceInstance>(serviceInstance, Double.parseDouble(serviceInstance.getMetadata().get("nacos.weight"))));
+        }
+        Chooser<String, ServiceInstance> vipChooser = new Chooser<>("www.taobao.com");
+        vipChooser.refresh(hostsWithWeight);
+        ServiceInstance serviceInstance = vipChooser.randomWithWeight();
+        return new DefaultResponse(serviceInstance);
     }
 }

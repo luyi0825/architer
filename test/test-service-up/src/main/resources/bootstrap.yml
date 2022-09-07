@@ -3,7 +3,7 @@
 spring:
   application:
     ##会员服务
-    name: ups-service
+    name: test-service
 ## nacos配置
   cloud:
     nacos:

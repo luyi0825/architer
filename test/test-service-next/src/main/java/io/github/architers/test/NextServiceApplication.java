@@ -10,7 +10,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author luyi
  */
 @SpringBootApplication
-@EnableCaching
 @EnableDiscoveryClient
 public class NextServiceApplication {
     public static void main(String[] args) {

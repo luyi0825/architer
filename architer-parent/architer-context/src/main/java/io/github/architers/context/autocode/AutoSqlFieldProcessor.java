@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 @Slf4j
 @SupportedAnnotationTypes("io.github.architers.context.autocode.*")
 @SupportedSourceVersion(SourceVersion.RELEASE_11)
-//@AutoService(Processor.class)
+@AutoService(Processor.class)
 public class AutoSqlFieldProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
@@ -26,9 +26,7 @@ public class AutoSqlFieldProcessor extends AbstractProcessor {
         for (Element element : elements) {
             try {
                 this.generateFile(element);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }

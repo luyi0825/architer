@@ -1,15 +1,14 @@
 package io.github.architers.nacosdiscovery;
 
-import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
-import com.alibaba.cloud.nacos.NacosServiceManager;
-import io.github.architers.nacosdiscovery.loadbalace.NacosClusterLoadBalance;
+import io.github.architers.nacosdiscovery.loadbalace.NacosWeightLoadBalance;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
-import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
+import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 /**
  * @author luyi
@@ -17,15 +16,11 @@ import org.springframework.core.env.Environment;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnDiscoveryEnabled
+@EnableConfigurationProperties(NacosDiscoveryLoadProperties.class)
 public class NacosLoadBalancerConfig {
     @Bean
-    public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(
-            Environment environment,
-            NacosDiscoveryProperties discoveryProperties,
-            NacosServiceManager nacosServiceManager) {
-        String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
-        return new NacosClusterLoadBalance(discoveryProperties, nacosServiceManager, name);
+    public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider) {
+        return new NacosWeightLoadBalance(serviceInstanceListSupplierProvider);
     }
-
 
 }
