@@ -31,5 +31,5 @@ public class LoadBalanceProperties {
     /**
      * 灰度发布字段标识
      */
-    private String grayscaleField = "version";
+    private String releaseVersion = "1.0.0";
 }

@@ -1,31 +1,27 @@
-package io.github.architers.nacosdiscovery;
+package io.github.architers.nacosdiscovery.loadbalace;
 
 import com.alibaba.cloud.nacos.ConditionalOnNacosDiscoveryEnabled;
-import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
-import com.alibaba.cloud.nacos.NacosServiceManager;
-import io.github.architers.cloud.common.LoadBalanceProperties;
-import io.github.architers.nacosdiscovery.loadbalace.NacosWeightLoadBalance;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClients;
-import org.springframework.cloud.loadbalancer.core.*;
+import org.springframework.cloud.loadbalancer.core.RandomLoadBalancer;
+import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
+import org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer;
+import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 /**
+ * 负载均衡配置
+ *
  * @author luyi
- * nacos权重负载均衡配置类
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnNacosDiscoveryEnabled
-@EnableConfigurationProperties(LoadBalanceProperties.class)
-@LoadBalancerClients(defaultConfiguration = NacosDiscoveryConfiguration.class)
 @Slf4j
-public class NacosDiscoveryConfiguration {
+public class NacosLoadBalanceConfiguration {
+
     /**
      * 权重的负载均衡
      */
@@ -67,13 +63,4 @@ public class NacosDiscoveryConfiguration {
         return new RoundRobinLoadBalancer(
                 loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class), name);
     }
-
-    @Bean
-    public DiscoveryClient nacosDiscoveryClient(NacosDiscoveryProperties discoveryProperties,
-                                                LoadBalanceProperties loadProperties,
-                                                NacosServiceManager nacosServiceManager) {
-        return new NacosDiscoveryClient(discoveryProperties, loadProperties, nacosServiceManager.getNamingService(discoveryProperties.getNacosProperties()));
-    }
-
-
 }

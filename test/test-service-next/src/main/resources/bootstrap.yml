@@ -20,7 +20,11 @@ spring:
         group: DEFAULT_GROUP
         enabled: true
         metadata:
-          version: 1
+          metadata:
+            release-version: ${spring.cloud.architer.load-balance.release-version}
+    architer:
+      load-balance:
+        release-version: 1.0.0
 
 
 

@@ -1,12 +1,23 @@
-##应用名称配置
 spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    ##会员服务
-    name: test-service
-  ## nacos配置
+    name: gateway-service
+  profiles:
+    active: test
   cloud:
+    gateway:
+      routes:
+        - id: test
+          uri: lb://test-service
+          predicates:
+            - Path=/886/**
+          filters: #过滤器,请求在传递过程中可以通过过滤器对其进行一定的修改
+            - StripPrefix=1 # 转发之前去掉第一层路由
+
+      discovery:
+        locator:
+          enabled: true
     nacos:
       config:
         server-addr: 120.48.170.201:8848
@@ -14,6 +25,7 @@ spring:
         file-extension: yml
         ## 命名空间
         namespace: public
+        refresh-enabled: true
       ## 注册中心配置
       discovery:
         server-addr: 120.48.170.201:8848
@@ -22,16 +34,8 @@ spring:
         group: DEFAULT_GROUP
         enabled: true
         metadata:
-          release-version: 1.0.0
+          release-version: ${spring.cloud.architer.load-balance.release-version}
     architer:
       load-balance:
         strategy: round
         grayscale-release: true
-        release-version: 1.0.0
-
-
-
-
-
-
-

@@ -32,6 +32,18 @@
             <version>${revision}</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>architer-cloud-config-nacos-starter</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+
+
 
     </dependencies>
 
