@@ -30,9 +30,9 @@ public class NacosServiceSelector extends NacosServiceDiscovery {
 
 
     public NacosServiceSelector(NacosDiscoveryProperties discoveryProperties,
-                                 NacosServiceManager nacosServiceManager,
+                                NacosServiceManager nacosServiceManager,
                                 LoadBalanceProperties loadBalanceProperties) {
-        super(discoveryProperties,nacosServiceManager);
+        super(discoveryProperties, nacosServiceManager);
         this.loadBalanceProperties = loadBalanceProperties;
         this.namingService = nacosServiceManager.getNamingService(discoveryProperties.getNacosProperties());
         this.discoveryProperties = discoveryProperties;
@@ -68,7 +68,7 @@ public class NacosServiceSelector extends NacosServiceDiscovery {
                     .collect(Collectors.toList());
         }
         if (CollectionUtils.isEmpty(instances)) {
-            throw new RuntimeException("get Nacos instances exception");
+            return Collections.emptyList();
         }
         return hostToServiceInstanceList(instances, serviceId);
     }
