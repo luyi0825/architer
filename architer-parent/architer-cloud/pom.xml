@@ -21,5 +21,6 @@
         <module>cloud-dubbo</module>
         <module>cloud-sentinel</module>
         <module>cloud-common</module>
+        <module>cloud-gateway-starter</module>
     </modules>
 </project>
