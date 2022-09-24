@@ -9,7 +9,7 @@ import java.util.Map;
  * 异步任务请求参数
  */
 @Data
-public class TaskRequest implements TaskSendRequest, Comparable<TaskSendRequest> {
+public class TaskRequestParams implements TaskSendRequest, Comparable<TaskSendRequest> {
 
     /**
      * 任务名称
@@ -34,6 +34,11 @@ public class TaskRequest implements TaskSendRequest, Comparable<TaskSendRequest>
      * 是否可靠消息
      */
     private boolean reliable;
+
+    /**
+     * 执行器名称
+     */
+    private String executor;
 
     /**
      * 额外信息

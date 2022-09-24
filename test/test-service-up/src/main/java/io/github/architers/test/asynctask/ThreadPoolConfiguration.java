@@ -23,6 +23,12 @@ public class ThreadPoolConfiguration {
 
 
     @Bean
+    public DefaultTaskExecutor defaultTaskExecutor(TaskRegister taskRegister){
+         return new DefaultTaskExecutor(taskRegister);
+    }
+
+
+    @Bean
     public ThreadPoolExecutor threadPoolTaskExecutor() {
 
         //  RBlockingDeque<Runnable> blockingDeque = redissonClient.getBlockingDeque("test");

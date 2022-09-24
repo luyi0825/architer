@@ -1,5 +1,6 @@
 package io.github.architers.test.asynctask.test;
 
+import io.github.architers.test.asynctask.LocalTransactionExecutor;
 import io.github.architers.test.asynctask.annotation.AsyncTask;
 import io.github.architers.test.asynctask.annotation.TaskConsumer;
 import io.github.architers.test.asynctask.annotation.TaskSender;
@@ -25,7 +26,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @TaskSender(taskName = "testTask2")
+    @TaskSender(taskName = "testTask2",executor = "localTransactionExecutor")
     public String sendTask() {
         return UUID.randomUUID().toString();
     }
@@ -36,7 +37,6 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @TaskConsumer(taskName = "testTask2")
-
     public void consumer2(String str) {
         System.out.println("consumer2:" + str);
     }

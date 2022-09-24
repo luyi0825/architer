@@ -37,10 +37,12 @@ public class AsyncTaskAspect {
         }
         //添加任务
         AsyncTask asyncTask = method.getAnnotation(AsyncTask.class);
-        TaskRequest sendRequest = new TaskRequest();
+        TaskRequestParams sendRequest = new TaskRequestParams();
         sendRequest.setTaskName(asyncTask.taskName());
         sendRequest.setArgs(jp.getArgs());
         sendRequest.setTaskId(UUID.randomUUID().toString());
+        sendRequest.setExecutor(asyncTask.executor());
+        sendRequest.setReliable(asyncTask.reliable());
         taskSubmit.submit(sendRequest);
         return null;
     }
@@ -60,10 +62,12 @@ public class AsyncTaskAspect {
         Object result = jp.proceed();
         //添加任务
         TaskSender taskSender = method.getAnnotation(TaskSender.class);
-        TaskRequest sendRequest = new TaskRequest();
+        TaskRequestParams sendRequest = new TaskRequestParams();
         sendRequest.setTaskName(taskSender.taskName());
         sendRequest.setArgs(new Object[]{result});
         sendRequest.setTaskId(UUID.randomUUID().toString());
+        sendRequest.setExecutor(taskSender.executor());
+        sendRequest.setReliable(taskSender.reliable());
         taskSubmit.submit(sendRequest);
         return result;
     }

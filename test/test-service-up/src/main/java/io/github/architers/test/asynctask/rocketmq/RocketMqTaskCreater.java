@@ -42,7 +42,7 @@ public class RocketMqTaskCreater implements ApplicationContextAware, SmartInitia
     private RocketMQProperties rocketMQProperties;
 
     @Resource
-    private TaskSubmit taskSubmit;
+    private DefaultTaskExecutor defaultTaskExecutor;
 
     @Resource
     private RocketMQMessageConverter rocketMQMessageConverter;
@@ -57,17 +57,15 @@ public class RocketMqTaskCreater implements ApplicationContextAware, SmartInitia
 
 
         Collection<String> taskNames = taskRegister.getTaskNames();
-        RocketMQMessageListener rocketMQMessageListener = Test.class.getAnnotation(RocketMQMessageListener.class);
+        RocketMQMessageListener rocketMqMessageListener = Test.class.getAnnotation(RocketMQMessageListener.class);
         for (String taskName : taskNames) {
             GenericApplicationContext genericApplicationContext = (GenericApplicationContext) applicationContext;
-            String containerBeanName = "rocketmq-" + taskName+"-"+"rocketMQListenerContainer";
+            String containerBeanName = "rocketmq-" + taskName + "-" + "rocketMQListenerContainer";
             genericApplicationContext.registerBean(containerBeanName, DefaultRocketMQListenerContainer.class,
                     () -> {
                         try {
-                            return createRocketMQListenerContainer(containerBeanName, taskName, rocketMQMessageListener);
-                        } catch (InstantiationException e) {
-                            throw new RuntimeException(e);
-                        } catch (IllegalAccessException e) {
+                            return createRocketMQListenerContainer(containerBeanName, taskName, rocketMqMessageListener);
+                        } catch (InstantiationException | IllegalAccessException e) {
                             throw new RuntimeException(e);
                         }
                     });
@@ -85,7 +83,7 @@ public class RocketMqTaskCreater implements ApplicationContextAware, SmartInitia
     }
 
     private DefaultRocketMQListenerContainer createRocketMQListenerContainer(String name,
-                                                                             String taskName ,
+                                                                             String taskName,
                                                                              RocketMQMessageListener rocketMQMessageListener) throws InstantiationException, IllegalAccessException {
         DefaultRocketMQListenerContainer container = new DefaultRocketMQListenerContainer();
 
@@ -104,12 +102,7 @@ public class RocketMqTaskCreater implements ApplicationContextAware, SmartInitia
             container.setSelectorExpression(tags);
         }
         container.setConsumerGroup("test");
-        container.setRocketMQListener(new RocketMQListener<TaskRequest>() {
-            @Override
-            public void onMessage(TaskRequest message) {
-                taskSubmit.executor(message);
-            }
-        });
+        container.setRocketMQListener((RocketMQListener<TaskRequestParams>) message -> defaultTaskExecutor.executor(message));
         container.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
         container.setName(name);
         return container;

@@ -35,6 +35,10 @@ public @interface TaskSender {
      */
     int priority() default 2;
 
+    /**
+     * 执行器
+     */
+    String executor() default "";
 
 
 }

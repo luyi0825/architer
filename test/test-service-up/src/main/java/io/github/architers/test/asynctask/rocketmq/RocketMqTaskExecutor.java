@@ -26,7 +26,7 @@ public class RocketMqTaskExecutor implements TaskSubmit {
         if (request.isReliable()) {
             //发送可靠信息
             SendResult sendResult = rocketMqTemplate.syncSend(request.getTaskName(), request);
-            if (SendStatus.SEND_OK.equals(sendResult.getSendStatus())) {
+            if (!SendStatus.SEND_OK.equals(sendResult.getSendStatus())) {
                 throw new RuntimeException("发送异步任务失败");
             }
             return;

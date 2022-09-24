@@ -27,11 +27,16 @@ public interface TaskSendRequest extends Serializable {
     /**
      * 可靠性
      */
-     boolean isReliable();
+    boolean isReliable();
 
     /**
      * 得到任务参数
      */
     Object[] getArgs();
+
+    /**
+     * 得到执行器名称
+     */
+    String getExecutor();
 
 }

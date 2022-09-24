@@ -76,7 +76,12 @@ public class TaskRegister implements ApplicationContextAware, SmartInitializingS
         }
     }
 
-    private void getAsyncTaskInfo(Object bean, Method method, String taskName, boolean reliable, String group, int priority) {
+    private void getAsyncTaskInfo(Object bean,
+                                  Method method,
+                                  String taskName,
+                                  boolean reliable,
+                                  String group,
+                                  int priority) {
         if (taskName.trim().length() == 0) {
             throw new RuntimeException("async task name invalid,for [" + bean.getClass() + "#" + method.getName() + "].");
         }
