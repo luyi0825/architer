@@ -23,4 +23,8 @@ public class UpController {
         return nextServiceFeign.test();
     }
 
+    public static synchronized void main(String[] args) {
+
+    }
+
 }

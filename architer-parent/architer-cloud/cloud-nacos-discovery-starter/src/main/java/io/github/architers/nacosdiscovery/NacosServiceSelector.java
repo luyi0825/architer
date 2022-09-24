@@ -21,10 +21,10 @@ import java.util.stream.Collectors;
 public class NacosServiceSelector extends NacosServiceDiscovery {
 
 
-    private NacosDiscoveryProperties discoveryProperties;
+    private final NacosDiscoveryProperties discoveryProperties;
 
 
-    private NamingService namingService;
+    private final NamingService namingService;
 
     private final LoadBalanceProperties loadBalanceProperties;
 
