@@ -1,13 +1,12 @@
 package io.github.architers.test.task.annotation;
 
-import io.github.architers.test.task.SenderExtend;
+import io.github.architers.test.task.constants.ConsumerSources;
 import io.github.architers.test.task.constants.TaskConstants;
 
 import java.lang.annotation.*;
 
 /**
- * 异步任务
- * <li>自己发送，自己消费</li>
+ * 任务订阅者
  *
  * @author luyi
  */
@@ -15,7 +14,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface AsyncTask {
+public @interface TaskSubscriber {
 
     /**
      * 组
@@ -28,14 +27,14 @@ public @interface AsyncTask {
     String taskName();
 
     /**
+     * 数据消费来源(如果任务被发送的不同的中间件（例如kafka,redis,rocketMq），就需要指定)
+     */
+    ConsumerSources[] sources();
+
+    /**
      * 是否可靠消息(如果false，说明改消息可以丢失)
      */
     boolean reliable() default true;
-
-    /**
-     * 拓展参数(可以根据这些参数做定制化)
-     */
-    Class<? extends SenderExtend> extend();
 
     /**
      * 优先级

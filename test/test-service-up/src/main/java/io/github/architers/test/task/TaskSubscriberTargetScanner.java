@@ -2,7 +2,7 @@ package io.github.architers.test.task;
 
 import io.github.architers.context.Symbol;
 import io.github.architers.test.task.annotation.AsyncTask;
-import io.github.architers.test.task.annotation.TaskConsumer;
+import io.github.architers.test.task.annotation.TaskSubscriber;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.context.ApplicationContext;
@@ -20,19 +20,19 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * 任务消费目标注册
+ * 任务消费目标扫描
  *
  * @author luyi
  */
-public class TaskConsumerTargetRegister implements ApplicationContextAware, SmartInitializingSingleton {
+public class TaskSubscriberTargetScanner implements ApplicationContextAware, SmartInitializingSingleton {
 
     private final AtomicBoolean init = new AtomicBoolean(false);
     /**
      * Map<group,Map<groupName,Set<TaskConsumerTarget>>>
      */
-    private final ConcurrentMap<String, Map<String, Set<TaskConsumerTarget>>> taskConsumerTargetStore = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, Map<String, Set<TaskSubscriberTarget>>> taskConsumerTargetStore = new ConcurrentHashMap<>();
 
-    private final ConcurrentMap<String, Set<TaskConsumerTarget>> consumerTargetStore = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, Set<TaskSubscriberTarget>> consumerTargetStore = new ConcurrentHashMap<>();
 
     private ApplicationContext applicationContext;
 
@@ -42,7 +42,7 @@ public class TaskConsumerTargetRegister implements ApplicationContextAware, Smar
      * @param taskName 任务名称
      * @return 任务目录集合(多个消费者)
      */
-    public Set<TaskConsumerTarget> taskConsumerTarget(String group, String taskName) {
+    public Set<TaskSubscriberTarget> taskConsumerTarget(String group, String taskName) {
         return consumerTargetStore.get(group + Symbol.COLON + taskName);
     }
 
@@ -52,20 +52,19 @@ public class TaskConsumerTargetRegister implements ApplicationContextAware, Smar
      */
     public Set<String> getTaskGroups() {
         if (!init.get()) {
-            initTaskConsumerTargets();
+            doScan();
         }
         return taskConsumerTargetStore.keySet();
     }
 
 
-
     @Override
     public void afterSingletonsInstantiated() {
         //注册异步任务消费目标
-        initTaskConsumerTargets();
+        doScan();
     }
 
-    private synchronized void initTaskConsumerTargets() {
+    private synchronized void doScan() {
         if (applicationContext == null) {
             return;
         }
@@ -78,10 +77,11 @@ public class TaskConsumerTargetRegister implements ApplicationContextAware, Smar
             Object bean = applicationContext.getBean(beanDefinitionName);
             Method[] methods = bean.getClass().getDeclaredMethods();
             for (Method method : methods) {
-                TaskConsumer taskConsumer = AnnotationUtils.findAnnotation(method, TaskConsumer.class);
-                if (taskConsumer != null) {
-                    getAsyncTaskInfo(bean, method, taskConsumer.taskName(), taskConsumer.reliable(), taskConsumer.group(), taskConsumer.priority());
+                TaskSubscriber taskSubscriber = AnnotationUtils.findAnnotation(method, TaskSubscriber.class);
+                if (taskSubscriber != null) {
+                    getAsyncTaskInfo(bean, method, taskSubscriber.taskName(), taskSubscriber.reliable(), taskSubscriber.group(), taskSubscriber.priority());
                 }
+                //异步任务的发送者和订阅者都是自己
                 AsyncTask asyncTask = AnnotationUtils.findAnnotation(method, AsyncTask.class);
                 if (asyncTask != null) {
                     getAsyncTaskInfo(bean, method, asyncTask.taskName(), asyncTask.reliable(), asyncTask.group(), asyncTask.priority());
@@ -101,16 +101,16 @@ public class TaskConsumerTargetRegister implements ApplicationContextAware, Smar
         if (taskName.trim().length() == 0) {
             throw new RuntimeException("async task name invalid,for [" + bean.getClass() + "#" + method.getName() + "].");
         }
-        Map<String, Set<TaskConsumerTarget>> taskConsumerTargets = taskConsumerTargetStore.computeIfAbsent(group, k -> new HashMap<>());
-        TaskConsumerTarget taskConsumerTarget = new TaskConsumerTarget();
-        taskConsumerTarget.setTaskMethod(method);
-        taskConsumerTarget.setReliable(reliable);
-        taskConsumerTarget.setTaskBean(bean);
-        taskConsumerTarget.setTaskName(taskName);
-        taskConsumerTarget.setGroup(group);
-        taskConsumerTarget.setPriority(priority);
-        Set<TaskConsumerTarget> targets = taskConsumerTargets.computeIfAbsent(taskName, key -> new HashSet<>());
-        targets.add(taskConsumerTarget);
+        Map<String, Set<TaskSubscriberTarget>> taskConsumerTargets = taskConsumerTargetStore.computeIfAbsent(group, k -> new HashMap<>());
+        TaskSubscriberTarget taskSubscriberTarget = new TaskSubscriberTarget();
+        taskSubscriberTarget.setTaskMethod(method);
+        taskSubscriberTarget.setReliable(reliable);
+        taskSubscriberTarget.setTaskBean(bean);
+        taskSubscriberTarget.setTaskName(taskName);
+        taskSubscriberTarget.setGroup(group);
+        taskSubscriberTarget.setPriority(priority);
+        Set<TaskSubscriberTarget> targets = taskConsumerTargets.computeIfAbsent(taskName, key -> new HashSet<>());
+        targets.add(taskSubscriberTarget);
 
 
     }

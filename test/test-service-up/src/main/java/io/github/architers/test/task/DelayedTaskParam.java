@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * @author luyi
  */
 @Data
-public class DelayedTaskParam implements SendParam {
+public class DelayedTaskParam implements TaskParam {
 
     /**
      * 组名称

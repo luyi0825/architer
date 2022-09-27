@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class LocalTransactionExecutor extends AbstractTaskExecutor implements CustomizeTaskExecutor {
 
 
-    public LocalTransactionExecutor(TaskConsumerTargetRegister taskConsumerTargetRegister) {
-        super(taskConsumerTargetRegister);
+    public LocalTransactionExecutor(TaskSubscriberTargetScanner taskSubscriberTargetScanner) {
+        super(taskSubscriberTargetScanner);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class LocalTransactionExecutor extends AbstractTaskExecutor implements Cu
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void executor(SendParam request) {
+    public void executor(TaskParam request) {
         super.executor(request);
     }
 }

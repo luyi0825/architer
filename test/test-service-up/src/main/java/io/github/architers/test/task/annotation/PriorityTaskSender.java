@@ -1,20 +1,14 @@
 package io.github.architers.test.task.annotation;
 
 import io.github.architers.test.task.constants.TaskConstants;
-
-import java.lang.annotation.*;
+import io.github.architers.test.task.constants.TaskPriority;
 
 /**
- * 任务消费
+ * 优先级任务发送
  *
  * @author luyi
  */
-@Target({ElementType.TYPE, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Inherited
-public @interface TaskConsumer {
-
+public @interface PriorityTaskSender {
     /**
      * 组
      */
@@ -26,21 +20,30 @@ public @interface TaskConsumer {
     String taskName();
 
     /**
-     * 数据消费来源(如果任务被发送的不同的中间件（例如kafka,redis,rocketMq），就需要指定)
-     */
-    String source() default "";
-
-    /**
      * 是否可靠消息(如果false，说明改消息可以丢失)
      */
     boolean reliable() default true;
 
+
     /**
      * 优先级
      */
-    int priority() default 2;
+    TaskPriority priority() default TaskPriority.four;
 
+    /**
+     * 任务参数(EL表达式)
+     */
+    String taskParam();
 
+    /**
+     * 执行器
+     */
+    String executor() default "";
+
+    /**
+     * 数据发送者
+     */
+    String sender() default "";
 
 
 }

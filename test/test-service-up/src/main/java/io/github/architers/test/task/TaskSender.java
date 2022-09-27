@@ -1,11 +1,11 @@
 package io.github.architers.test.task;
 
 /**
- * 任务处理器
+ * 任务发送器
  *
  * @author luyi
  */
-public interface TaskProcess {
+public interface TaskSender {
 
 
     /**
@@ -18,7 +18,7 @@ public interface TaskProcess {
     /**
      * 处理任务
      *
-     * @param sendParam
+     * @param taskParam
      */
-    void process(SendParam sendParam);
+    void process(TaskParam taskParam);
 }

@@ -1,4 +1,4 @@
-package io.github.architers.test.task;
+package io.github.architers.test.task.annotation;
 
 /**
  * 异步定时任务

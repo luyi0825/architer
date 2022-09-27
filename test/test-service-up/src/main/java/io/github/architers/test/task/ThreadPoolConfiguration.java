@@ -17,14 +17,14 @@ public class ThreadPoolConfiguration {
 
 
     @Bean
-    public TaskConsumerTargetRegister asyncTaskRegister() {
-        return new TaskConsumerTargetRegister();
+    public TaskSubscriberTargetScanner asyncTaskRegister() {
+        return new TaskSubscriberTargetScanner();
     }
 
 
     @Bean
-    public DefaultTaskExecutor defaultTaskExecutor(TaskConsumerTargetRegister taskConsumerTargetRegister){
-         return new DefaultTaskExecutor(taskConsumerTargetRegister);
+    public DefaultTaskExecutor defaultTaskExecutor(TaskSubscriberTargetScanner taskSubscriberTargetScanner){
+         return new DefaultTaskExecutor(taskSubscriberTargetScanner);
     }
 
 

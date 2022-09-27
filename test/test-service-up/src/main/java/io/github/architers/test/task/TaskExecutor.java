@@ -9,7 +9,7 @@ public interface TaskExecutor {
     /**
      * 提交任务
      *
-     * @param sendParam 执行的参数
+     * @param taskStore 执行的参数
      */
-    void executor(SendParam sendParam);
+    void executor(TaskStore taskStore);
 }

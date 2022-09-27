@@ -10,32 +10,30 @@ import java.util.Set;
 public abstract class AbstractTaskExecutor implements TaskExecutor {
 
 
-    protected TaskConsumerTargetRegister taskConsumerTargetRegister;
+    protected TaskSubscriberTargetScanner taskSubscriberTargetScanner;
 
 
-
-    public AbstractTaskExecutor(TaskConsumerTargetRegister taskConsumerTargetRegister) {
-        this.taskConsumerTargetRegister = taskConsumerTargetRegister;
+    public AbstractTaskExecutor(TaskSubscriberTargetScanner taskSubscriberTargetScanner) {
+        this.taskSubscriberTargetScanner = taskSubscriberTargetScanner;
     }
 
     /**
      * 执行任务
      *
-     * @param param
+     * @param taskStore
      */
-    public void executor(SendParam param) {
+    public void executor(TaskStore taskStore) {
         try {
             AsyncTaskContext.startExecutor();
-            Set<TaskConsumerTarget> tasks = taskConsumerTargetRegister.taskConsumerTarget(param.getGroup(),param.getTaskName());
-            for (TaskConsumerTarget task : tasks) {
-                task.getTaskMethod().invoke(task.getTaskBean(), param.getArgs());
+            Set<TaskSubscriberTarget> tasks = taskSubscriberTargetScanner.taskConsumerTarget(taskStore.getGroup(), taskStore.getTaskName());
+            for (TaskSubscriberTarget task : tasks) {
+                task.getTaskMethod().invoke(task.getTaskBean(), taskStore.getArgs());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             AsyncTaskContext.endExecutor();
         }
-
 
 
     }

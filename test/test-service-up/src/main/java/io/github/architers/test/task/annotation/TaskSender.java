@@ -36,9 +36,6 @@ public @interface TaskSender {
      */
     String taskParam();
 
-
-
-
     /**
      * 执行器
      */

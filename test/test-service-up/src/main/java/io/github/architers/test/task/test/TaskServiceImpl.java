@@ -1,8 +1,9 @@
 package io.github.architers.test.task.test;
 
 import io.github.architers.test.task.annotation.AsyncTask;
-import io.github.architers.test.task.annotation.TaskConsumer;
+import io.github.architers.test.task.annotation.TaskSubscriber;
 import io.github.architers.test.task.annotation.TaskSender;
+import io.github.architers.test.task.constants.ProcessName;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
@@ -31,17 +32,17 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @TaskSender(taskName = "testTask2", executor = "localTransactionExecutor", delayedTime = 100,process = "redis")
+    @TaskSender(taskName = "testTask2", executor = "localTransactionExecutor", delayedTime = 100,process = ProcessName.ROCKET_MQ)
     public String sendTask() {
         return UUID.randomUUID().toString();
     }
 
-    @TaskConsumer(taskName = "testTask2")
+    @TaskSubscriber(taskName = "testTask2")
     public void consumer1(String str) {
         System.out.println("consumer1:" + str);
     }
 
-    @TaskConsumer(taskName = "testTask2")
+    @TaskSubscriber(taskName = "testTask2")
     public void consumer2(String str) {
         System.out.println("consumer2:" + str);
     }

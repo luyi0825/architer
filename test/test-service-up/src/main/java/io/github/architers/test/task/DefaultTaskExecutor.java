@@ -15,8 +15,8 @@ import java.util.Map;
  * @author luyi
  */
 public class DefaultTaskExecutor extends AbstractTaskExecutor implements ApplicationContextAware {
-    public DefaultTaskExecutor(TaskConsumerTargetRegister taskConsumerTargetRegister) {
-        super(taskConsumerTargetRegister);
+    public DefaultTaskExecutor(TaskSubscriberTargetScanner taskSubscriberTargetScanner) {
+        super(taskSubscriberTargetScanner);
     }
 
     private Map<String, CustomizeTaskExecutor> customizeTaskExecutors;
@@ -31,12 +31,14 @@ public class DefaultTaskExecutor extends AbstractTaskExecutor implements Applica
     }
 
     @Override
-    public void executor(SendParam request) {
-        if (customizeTaskExecutors == null || !StringUtils.hasText(request.getExecutor())) {
-            super.executor(request);
+    public void executor(TaskStore taskStore) {
+        //为空就链式调用
+        if (customizeTaskExecutors == null || !StringUtils.hasText(taskStore.getExecutor())) {
+            super.executor(taskStore);
             return;
         }
-        CustomizeTaskExecutor customizeTaskExecutor = customizeTaskExecutors.get(request.getExecutor());
-        customizeTaskExecutor.executor(request);
+        //执行定制化的执行器
+        CustomizeTaskExecutor customizeTaskExecutor = customizeTaskExecutors.get(taskStore.getExecutor());
+        customizeTaskExecutor.executor(taskStore);
     }
 }

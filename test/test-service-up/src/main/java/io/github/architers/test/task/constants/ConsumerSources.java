@@ -5,9 +5,14 @@ package io.github.architers.test.task.constants;
  *
  * @author luyi
  */
-public interface ConsumerSources {
+public enum ConsumerSources {
 
-    String REDIS = "redis";
-    String ROCKET_MQ = "rocketMq";
+    REDIS,
+    ROCKET_MQ,
+    KAFKA,
+
+    RABBIT_MQ,
+
+    LOCAL;
 
 }

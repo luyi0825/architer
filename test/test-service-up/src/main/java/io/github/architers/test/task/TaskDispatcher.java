@@ -12,8 +12,8 @@ public interface TaskDispatcher extends Serializable {
     /**
      * 提交任务
      *
-     * @param sendParam 提交的任务参数
+     * @param taskParam 提交的任务参数
      */
-    void submit(SendParam sendParam);
+    void submit(TaskParam taskParam);
 
 }

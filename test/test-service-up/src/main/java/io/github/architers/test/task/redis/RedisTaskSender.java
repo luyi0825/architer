@@ -20,13 +20,13 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @author luyi
  */
 @Component
-public class RedisTaskProcess implements TaskProcess, SmartInitializingSingleton {
+public class RedisTaskSender implements TaskSender, SmartInitializingSingleton {
 
     @Resource
     private RedissonClient redissonClient;
 
     @Resource
-    private TaskConsumerTargetRegister register;
+    private TaskSubscriberTargetScanner register;
 
     @Resource
     private ThreadPoolExecutor threadPoolExecutor;
@@ -40,24 +40,24 @@ public class RedisTaskProcess implements TaskProcess, SmartInitializingSingleton
     }
 
     @Override
-    public void process(SendParam sendParam) {
-        RBlockingDeque<SendParam> blockingDeque = redissonClient.getPriorityBlockingDeque(sendParam.getGroup());
+    public void process(TaskParam taskParam) {
+        RBlockingDeque<TaskParam> blockingDeque = redissonClient.getPriorityBlockingDeque(taskParam.getGroup());
         //发送延迟任务
-        if (sendParam instanceof DelayedTaskParam) {
-            RDelayedQueue<SendParam> delayedQueue = redissonClient.getDelayedQueue(blockingDeque);
-            delayedQueue.offer(sendParam, ((DelayedTaskParam) sendParam).getDelayedTime(), ((DelayedTaskParam) sendParam).getTimeUnit());
+        if (taskParam instanceof DelayedTaskParam) {
+            RDelayedQueue<TaskParam> delayedQueue = redissonClient.getDelayedQueue(blockingDeque);
+            delayedQueue.offer(taskParam, ((DelayedTaskParam) taskParam).getDelayedTime(), ((DelayedTaskParam) taskParam).getTimeUnit());
             return;
         }
         //发送即时任务
-        blockingDeque.add(sendParam);
+        blockingDeque.add(taskParam);
     }
 
     @Override
     public void afterSingletonsInstantiated() {
         Set<String> groups = register.getTaskGroups();
-        List<RBlockingDeque<SendParam>> blockingDeques = new ArrayList<>(groups.size());
+        List<RBlockingDeque<TaskParam>> blockingDeques = new ArrayList<>(groups.size());
         for (String group : groups) {
-            RPriorityBlockingDeque<SendParam> rBlockingDeque = redissonClient.getPriorityBlockingDeque(group);
+            RPriorityBlockingDeque<TaskParam> rBlockingDeque = redissonClient.getPriorityBlockingDeque(group);
             blockingDeques.add(rBlockingDeque);
             rBlockingDeque.addListener(new ListAddListener() {
                 @Override
@@ -67,14 +67,14 @@ public class RedisTaskProcess implements TaskProcess, SmartInitializingSingleton
             });
         }
 
-        for (RBlockingDeque<SendParam> blockingDeque : blockingDeques) {
+        for (RBlockingDeque<TaskParam> blockingDeque : blockingDeques) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     for (; ; ) {
                         try {
-                            SendParam sendParam = blockingDeque.take();
-                            threadPoolExecutor.submit(() -> taskExecutor.executor(sendParam));
+                            TaskParam taskParam = blockingDeque.take();
+                            threadPoolExecutor.submit(() -> taskExecutor.executor(taskParam));
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }

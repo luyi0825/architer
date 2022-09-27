@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
  * @author luyi
  */
 @Data
-public class TaskConsumerTarget {
+public class TaskSubscriberTarget {
 
     /**
      * 任务组
@@ -24,7 +24,7 @@ public class TaskConsumerTarget {
     private String taskName;
 
     /**
-     * 任务对应的类
+     * 任务对应的bean
      */
     private Object taskBean;
 
@@ -32,21 +32,6 @@ public class TaskConsumerTarget {
      * 任务对应的方法
      */
     private Method taskMethod;
-
-    /**
-     * 优先级
-     */
-    private int priority;
-
-    /**
-     * 可靠性
-     */
-    private boolean reliable;
-
-    /**
-     * 最大任务
-     */
-    private int maxTask = -1;
 
     /**
      * 任务参数

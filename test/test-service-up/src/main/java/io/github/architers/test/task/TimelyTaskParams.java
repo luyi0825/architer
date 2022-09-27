@@ -10,7 +10,7 @@ import java.util.Map;
  * 任务请求参数
  */
 @Data
-public class TimelyTaskParams implements SendParam, Comparable<SendParam> {
+public class TimelyTaskParams implements TaskParam, Comparable<TaskParam> {
 
     /**
      * 组名称
@@ -58,8 +58,9 @@ public class TimelyTaskParams implements SendParam, Comparable<SendParam> {
 
 
     @Override
-    public int compareTo(SendParam o) {
-        return this.priority - o.getPriority();
+    public int compareTo(TaskParam o) {
+        return 1;
+        //return this.priority - o.getPriority();
     }
 
     @Override
