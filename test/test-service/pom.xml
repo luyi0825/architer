@@ -64,6 +64,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>next-service</finalName>
+        <finalName>test-service</finalName>
     </build>
 </project>

@@ -36,5 +36,5 @@ public @interface AsyncTask {
      */
     int priority() default 2;
 
-    String executor() default "";
+
 }

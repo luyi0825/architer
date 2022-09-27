@@ -75,7 +75,6 @@ public class RedisTaskProcess implements TaskProcess, SmartInitializingSingleton
                         try {
                             SendParam sendParam = blockingDeque.take();
                             threadPoolExecutor.submit(() -> taskExecutor.executor(sendParam));
-                            sendParam.getExecutor();
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }

@@ -2,19 +2,14 @@ package io.github.architers.test.task.annotation;
 
 import io.github.architers.test.task.constants.TaskConstants;
 
-import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 任务发送器
+ * 延迟任务发送
  *
  * @author luyi
  */
-@Target({ElementType.TYPE, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Inherited
-public @interface TaskSender {
+public @interface DelayedTaskSender {
 
     /**
      * 组
@@ -36,18 +31,20 @@ public @interface TaskSender {
      */
     String taskParam();
 
-
-
+    /**
+     * 优先级
+     */
+    int priority() default 2;
 
     /**
-     * 执行器
+     * 延迟时间
      */
-    String executor() default "";
+    long delayedTime() default -1;
 
     /**
-     * 数据发送者
+     * 时间单位(默认单位秒)
      */
-    String sender() default "";
+    TimeUnit timeUnit() default TimeUnit.SECONDS;
 
 
 }

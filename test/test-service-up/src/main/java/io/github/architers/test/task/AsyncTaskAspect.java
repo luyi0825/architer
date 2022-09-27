@@ -71,7 +71,7 @@ public class AsyncTaskAspect {
             delayedTaskParam.setReliable(taskSender.reliable());
             delayedTaskParam.setDelayedTime(taskSender.delayedTime());
             delayedTaskParam.setTimeUnit(taskSender.timeUnit());
-            delayedTaskParam.setProcessName(taskSender.process());
+            delayedTaskParam.setProcessName(taskSender.sender());
             delayedTaskParam.setGroup(taskSender.group());
             taskDispatcher.submit(delayedTaskParam);
             return result;
@@ -82,7 +82,7 @@ public class AsyncTaskAspect {
         sendRequest.setTaskId(UUID.randomUUID().toString());
         sendRequest.setExecutor(taskSender.executor());
         sendRequest.setReliable(taskSender.reliable());
-        sendRequest.setProcessName(taskSender.process());
+        sendRequest.setProcessName(taskSender.sender());
         sendRequest.setGroup(taskSender.group());
         taskDispatcher.submit(sendRequest);
         return result;

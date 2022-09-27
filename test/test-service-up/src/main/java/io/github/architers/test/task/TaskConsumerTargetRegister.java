@@ -57,6 +57,8 @@ public class TaskConsumerTargetRegister implements ApplicationContextAware, Smar
         return taskConsumerTargetStore.keySet();
     }
 
+
+
     @Override
     public void afterSingletonsInstantiated() {
         //注册异步任务消费目标
