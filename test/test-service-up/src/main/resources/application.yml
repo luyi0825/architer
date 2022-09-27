@@ -12,6 +12,12 @@ server:
 spring:
   profiles:
     active: test
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
 
 rocketmq:
   name-server: 127.0.0.1:9876
@@ -19,3 +25,4 @@ rocketmq:
     group: test
   producer:
     group: test
+

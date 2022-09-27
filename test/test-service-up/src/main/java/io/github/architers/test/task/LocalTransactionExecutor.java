@@ -1,5 +1,6 @@
 package io.github.architers.test.task;
 
+import io.github.architers.test.task.constants.ExecutorName;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +19,7 @@ public class LocalTransactionExecutor extends AbstractTaskExecutor implements Cu
 
     @Override
     public String getExecutorName() {
-        return "localTransactionExecutor";
+        return ExecutorName.LOCAL_TRANSACTION;
     }
 
     @Override
