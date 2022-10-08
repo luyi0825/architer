@@ -1,4 +1,4 @@
-package io.github.architers.test.task.pulsar;
+package io.github.architers.task.pulsar;
 
 import io.github.architers.context.task.send.TaskParam;
 import io.github.architers.context.task.send.TaskSender;

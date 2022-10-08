@@ -1,6 +1,6 @@
-package io.github.architers.test.task.redis;
+package io.github.architers.task.redis;
 
-import io.github.architers.test.task.*;
+import io.github.architers.context.task.TaskStore;
 import io.github.architers.context.task.constants.SenderName;
 import io.github.architers.context.task.subscriber.DefaultTaskExecutor;
 import io.github.architers.context.task.subscriber.TaskSubscriberTargetScanner;
@@ -79,7 +79,5 @@ public class RedisTaskSender implements TaskSender, SmartInitializingSingleton {
                 }
             }).start();
         }
-
-
     }
 }

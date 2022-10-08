@@ -16,6 +16,7 @@
     <modules>
         <module>redis-task</module>
         <module>rocketmq-task</module>
+        <module>pulsar</module>
     </modules>
 
 

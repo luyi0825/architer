@@ -1,4 +1,4 @@
-package io.github.architers.test.task.rocketmq;
+package io.github.architers.task.rocketmq;
 
 import org.apache.rocketmq.client.AccessChannel;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
