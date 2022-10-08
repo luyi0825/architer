@@ -1,12 +1,16 @@
 package io.github.architers.test.task.redis;
 
 import io.github.architers.test.task.*;
-import io.github.architers.test.task.constants.ProcessName;
+import io.github.architers.context.task.constants.SenderName;
+import io.github.architers.context.task.subscriber.DefaultTaskExecutor;
+import io.github.architers.context.task.subscriber.TaskSubscriberTargetScanner;
+import io.github.architers.context.task.send.DelayedTaskParam;
+import io.github.architers.context.task.send.TaskParam;
+import io.github.architers.context.task.send.TaskSender;
 import org.redisson.api.RBlockingDeque;
 import org.redisson.api.RDelayedQueue;
 import org.redisson.api.RPriorityBlockingDeque;
 import org.redisson.api.RedissonClient;
-import org.redisson.api.listener.ListAddListener;
 import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.stereotype.Component;
 
@@ -34,13 +38,15 @@ public class RedisTaskSender implements TaskSender, SmartInitializingSingleton {
     @Resource
     private DefaultTaskExecutor taskExecutor;
 
+
+
     @Override
-    public String processName() {
-        return ProcessName.REDIS;
+    public String senderName() {
+        return SenderName.REDIS;
     }
 
     @Override
-    public void process(TaskParam taskParam) {
+    public void doSend(TaskParam taskParam) {
         RBlockingDeque<TaskParam> blockingDeque = redissonClient.getPriorityBlockingDeque(taskParam.getGroup());
         //发送延迟任务
         if (taskParam instanceof DelayedTaskParam) {
@@ -55,41 +61,25 @@ public class RedisTaskSender implements TaskSender, SmartInitializingSingleton {
     @Override
     public void afterSingletonsInstantiated() {
         Set<String> groups = register.getTaskGroups();
-        List<RBlockingDeque<TaskParam>> blockingDeques = new ArrayList<>(groups.size());
+        List<RBlockingDeque<TaskStore>> blockingDeques = new ArrayList<>(groups.size());
         for (String group : groups) {
-            RPriorityBlockingDeque<TaskParam> rBlockingDeque = redissonClient.getPriorityBlockingDeque(group);
+            RPriorityBlockingDeque<TaskStore> rBlockingDeque = redissonClient.getPriorityBlockingDeque(group);
             blockingDeques.add(rBlockingDeque);
-            rBlockingDeque.addListener(new ListAddListener() {
-                @Override
-                public void onListAdd(String name) {
-                    System.out.println(name);
-                }
-            });
         }
 
-        for (RBlockingDeque<TaskParam> blockingDeque : blockingDeques) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (; ; ) {
-                        try {
-                            TaskParam taskParam = blockingDeque.take();
-                            threadPoolExecutor.submit(() -> taskExecutor.executor(taskParam));
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+        for (RBlockingDeque<TaskStore> blockingDeque : blockingDeques) {
+            new Thread(() -> {
+                for (; ; ) {
+                    try {
+                        TaskStore taskStore = blockingDeque.take();
+                        threadPoolExecutor.submit(() -> taskExecutor.executor(taskStore));
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }).start();
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-
-            }
-        }).start();
 
     }
 }

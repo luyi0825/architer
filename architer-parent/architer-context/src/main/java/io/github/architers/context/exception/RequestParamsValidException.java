@@ -1,6 +1,6 @@
 package io.github.architers.context.exception;
 
-import io.github.architers.context.response.ResponseStatusEnum;
+import io.github.architers.context.web.response.ResponseStatusEnum;
 import lombok.Getter;
 
 /**

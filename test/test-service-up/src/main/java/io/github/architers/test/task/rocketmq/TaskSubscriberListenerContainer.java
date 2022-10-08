@@ -16,7 +16,6 @@ import org.apache.rocketmq.remoting.RPCHook;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.MessageModel;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.annotation.SelectorType;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.apache.rocketmq.spring.core.RocketMQPushConsumerLifecycleListener;
@@ -49,6 +48,9 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * @author luyi
+ */
 public class TaskSubscriberListenerContainer implements InitializingBean,
         RocketMQListenerContainer, SmartLifecycle, ApplicationContextAware {
     private final static Logger log = LoggerFactory.getLogger(DefaultRocketMQListenerContainer.class);
@@ -596,10 +598,10 @@ public class TaskSubscriberListenerContainer implements InitializingBean,
 
         switch (consumeMode) {
             case ORDERLY:
-                consumer.setMessageListener(new DefaultRocketMQListenerContainer.DefaultMessageListenerOrderly());
+                consumer.setMessageListener(new DefaultMessageListenerOrderly());
                 break;
             case CONCURRENTLY:
-                consumer.setMessageListener(new DefaultRocketMQListenerContainer.DefaultMessageListenerConcurrently());
+                consumer.setMessageListener(new DefaultMessageListenerConcurrently());
                 break;
             default:
                 throw new IllegalArgumentException("Property 'consumeMode' was wrong.");
@@ -614,6 +616,52 @@ public class TaskSubscriberListenerContainer implements InitializingBean,
             ((RocketMQPushConsumerLifecycleListener) rocketMQReplyListener).prepareStart(consumer);
         }
 
+    }
+
+    public class DefaultMessageListenerConcurrently implements MessageListenerConcurrently {
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
+            for (MessageExt messageExt : msgs) {
+                log.debug("received msg: {}", messageExt);
+                try {
+                    long now = System.currentTimeMillis();
+                    handleMessage(messageExt);
+                    long costTime = System.currentTimeMillis() - now;
+                    log.debug("consume {} cost: {} ms", messageExt.getMsgId(), costTime);
+                } catch (Exception e) {
+                    log.warn("consume message failed. messageId:{}, topic:{}, reconsumeTimes:{}", messageExt.getMsgId(), messageExt.getTopic(), messageExt.getReconsumeTimes(), e);
+                    context.setDelayLevelWhenNextConsume(delayLevelWhenNextConsume);
+                    return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+                }
+            }
+
+            return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+        }
+    }
+
+    public class DefaultMessageListenerOrderly implements MessageListenerOrderly {
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
+            for (MessageExt messageExt : msgs) {
+                log.debug("received msg: {}", messageExt);
+                try {
+                    long now = System.currentTimeMillis();
+                    handleMessage(messageExt);
+                    long costTime = System.currentTimeMillis() - now;
+                    log.debug("consume {} cost: {} ms", messageExt.getMsgId(), costTime);
+                } catch (Exception e) {
+                    log.warn("consume message failed. messageId:{}, topic:{}, reconsumeTimes:{}", messageExt.getMsgId(), messageExt.getTopic(), messageExt.getReconsumeTimes(), e);
+                    context.setSuspendCurrentQueueTimeMillis(suspendCurrentQueueTimeMillis);
+                    return ConsumeOrderlyStatus.SUSPEND_CURRENT_QUEUE_A_MOMENT;
+                }
+            }
+
+            return ConsumeOrderlyStatus.SUCCESS;
+        }
     }
 
 }

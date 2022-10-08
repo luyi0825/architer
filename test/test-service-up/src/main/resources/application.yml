@@ -18,6 +18,13 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
+pulsar:
+  url:
+  consumer:
+    group: test
+  producer:
+    group: test
+
 
 rocketmq:
   name-server: 127.0.0.1:9876

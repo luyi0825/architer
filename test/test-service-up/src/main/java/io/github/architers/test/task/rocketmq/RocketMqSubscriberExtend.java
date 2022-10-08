@@ -1,6 +1,6 @@
 package io.github.architers.test.task.rocketmq;
 
-import io.github.architers.test.task.SubscriberExtend;
+import io.github.architers.context.task.subscriber.SubscriberExtend;
 import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.MessageModel;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;

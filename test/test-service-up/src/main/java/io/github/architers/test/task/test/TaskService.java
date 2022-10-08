@@ -1,7 +1,7 @@
 package io.github.architers.test.task.test;
 
-import io.github.architers.test.task.annotation.AsyncTask;
-import io.github.architers.test.task.annotation.TaskSender;
+import io.github.architers.context.task.annotation.AsyncTask;
+import io.github.architers.context.task.annotation.TaskSender;
 
 /**
  * @author luyi
@@ -15,6 +15,6 @@ public interface TaskService {
      */
     @AsyncTask(taskName = "testTask")
     void addAsyncTask(String username, String test) throws InterruptedException;
-    @TaskSender(taskName = "testTask2",executor = "localTransactionExecutor")
+    @TaskSender(taskName = "testTask2",executor = "localTransactionExecutor",taskParam = "#")
     String sendTask();
 }

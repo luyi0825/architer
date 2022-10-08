@@ -1,5 +1,7 @@
 package io.github.architers.test.task;
 
+import io.github.architers.context.task.subscriber.DefaultTaskExecutor;
+import io.github.architers.context.task.subscriber.TaskSubscriberTargetScanner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
@@ -10,10 +12,10 @@ import java.util.concurrent.*;
 public class ThreadPoolConfiguration {
 
 
-     @Bean
-    public AsyncTaskAspect asyncTaskAspect(TaskDispatcher taskDispatcher) {
-        return new AsyncTaskAspect(taskDispatcher);
-    }
+//     @Bean
+//    public AsyncTaskAspect asyncTaskAspect(TaskDispatcher taskDispatcher) {
+//        return new AsyncTaskAspect(taskDispatcher);
+//    }
 
 
     @Bean

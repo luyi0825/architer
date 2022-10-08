@@ -1,14 +1,14 @@
 package io.github.architers.test.task.rocketmq;
 
 import io.github.architers.test.task.*;
-import io.github.architers.test.task.constants.ConsumerSources;
+import io.github.architers.context.task.constants.ConsumerSources;
+import io.github.architers.context.task.subscriber.DefaultTaskExecutor;
+import io.github.architers.context.task.subscriber.TaskSubscriberRegister;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.AccessChannel;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.autoconfigure.RocketMQProperties;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer;
-import org.apache.rocketmq.spring.support.RocketMQListenerContainer;
 import org.apache.rocketmq.spring.support.RocketMQMessageConverter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
@@ -18,8 +18,6 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.Set;
-
-import static org.apache.rocketmq.spring.annotation.RocketMQMessageListener.NAME_SERVER_PLACEHOLDER;
 
 /**
  * rocketMq订阅者注册

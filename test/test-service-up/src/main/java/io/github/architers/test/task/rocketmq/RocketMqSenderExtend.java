@@ -1,6 +1,6 @@
 package io.github.architers.test.task.rocketmq;
 
-import io.github.architers.test.task.SenderExtend;
+import io.github.architers.context.task.send.SenderExtend;
 
 /**
  * @author luyi
