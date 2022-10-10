@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>architer-parent</artifactId>
+        <groupId>io.github.architers</groupId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>test-service-websocket</artifactId>
+    <name>test-service-websocket</name>
+    <description>websocket测试</description>
+    <packaging>jar</packaging>
+    <properties>
+        <revision>1.0.0-SNAPSHOT</revision>
+        <core.version>1.0.0</core.version>
+        <jackson.version>2.11.4</jackson.version>
+    </properties>
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.49</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+
+
+    </dependencies>
+
+
+</project>
