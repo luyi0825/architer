@@ -1,7 +1,7 @@
 package io.github.architers.context.cache.proxy;
 
 
-import io.github.architers.context.cache.operation.Operation;
+import io.github.architers.context.cache.operation.CacheOperation;
 import org.springframework.lang.Nullable;
 
 import java.lang.reflect.Method;
@@ -30,5 +30,5 @@ public interface CacheOperationSource {
      * @return 解析的注解操作
      */
     @Nullable
-    Collection<Operation> getCacheOperations(Method method, @Nullable Class<?> targetClass);
+    Collection<CacheOperation> getCacheOperations(Method method, @Nullable Class<?> targetClass);
 }

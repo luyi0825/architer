@@ -22,9 +22,9 @@ public class PutCacheOperation extends BaseCacheOperation {
     private long expireTime;
 
     /**
-     * @see Cacheable#expireTimeUnit()
+     * @see Cacheable#timeUnit()
      */
-    private TimeUnit expireTimeUnit;
+    private TimeUnit timeUnit;
     /**
      * 缓存值
      */
@@ -47,12 +47,12 @@ public class PutCacheOperation extends BaseCacheOperation {
         this.expireTime = expireTime;
     }
 
-    public TimeUnit getExpireTimeUnit() {
-        return expireTimeUnit;
+    public TimeUnit getTimeUnit() {
+        return timeUnit;
     }
 
-    public void setExpireTimeUnit(TimeUnit expireTimeUnit) {
-        this.expireTimeUnit = expireTimeUnit;
+    public void setTimeUnit(TimeUnit timeUnit) {
+        this.timeUnit = timeUnit;
     }
 
     public String getCacheValue() {

@@ -1,17 +1,11 @@
 package io.github.architers.context.cache.proxy;
 
 
-
 import io.github.architers.context.cache.CacheAnnotationsParser;
-import io.github.architers.context.cache.operation.BaseCacheOperation;
-import io.github.architers.context.cache.operation.LockOperation;
-import io.github.architers.context.cache.operation.Operation;
-import org.springframework.util.CollectionUtils;
+import io.github.architers.context.cache.operation.CacheOperation;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 
 /**
@@ -35,16 +29,7 @@ public class AnnotationCacheOperationSource implements CacheOperationSource {
     }
 
     @Override
-    public Collection<Operation> getCacheOperations(Method method, Class<?> targetClass) {
-        List<Operation> operations = new ArrayList<>(2);
-        Collection<BaseCacheOperation> cacheOperations = cacheAnnotationsParser.parse(method);
-        if (!CollectionUtils.isEmpty(cacheOperations)) {
-            operations.addAll(cacheOperations);
-        }
-        LockOperation lockOperation = cacheAnnotationsParser.parseLockOperation(method);
-        if (lockOperation != null) {
-            operations.add(lockOperation);
-        }
-        return operations;
+    public Collection<CacheOperation> getCacheOperations(Method method, Class<?> targetClass) {
+        return cacheAnnotationsParser.parse(method);
     }
 }

@@ -22,13 +22,13 @@ public class CacheableOperationHandler extends CacheOperationHandler {
     private static final int FIRST_ORDER = 1;
 
     @Override
-    public boolean match(Operation operation) {
-        return operation instanceof CacheableOperation;
+    public boolean match(CacheOperation cacheOperation) {
+        return cacheOperation instanceof CacheableCacheOperation;
     }
 
     @Override
     protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
-        CacheableOperation cacheableOperation = (CacheableOperation) operation;
+        CacheableCacheOperation cacheableOperation = (CacheableCacheOperation) operation;
         String key = Objects.requireNonNull(expressionParser.parserExpression(expressionMetadata, operation.getKey())).toString();
         Object cacheValue = null;
         for (String cacheName : operation.getCacheName()) {
@@ -40,15 +40,16 @@ public class CacheableOperationHandler extends CacheOperationHandler {
             }
         }
         if (cacheValue == null) {
-            lockExecute.execute(operation.getLocked(), expressionMetadata, () -> {
+
                 long expireTime = CacheUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomTime());
                 Object returnValue = methodReturnValueFunction.proceed();
                 for (String cacheName : operation.getCacheName()) {
                     Cache cache = chooseCache(operation, cacheName);
-                    cache.set(key, returnValue, expireTime, ((CacheableOperation) operation).getExpireTimeUnit());
+                    cache.set(key, returnValue, expireTime,
+                            ((CacheableCacheOperation) operation).getTimeUnit());
                 }
-                return null;
-            });
+
+
         } else {
             //设置返回值，防止重复调用
             methodReturnValueFunction.setValue(cacheValue);

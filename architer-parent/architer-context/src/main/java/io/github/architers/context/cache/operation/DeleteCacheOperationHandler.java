@@ -21,8 +21,8 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
     private static final int END_ORDER = 3;
 
     @Override
-    public boolean match(Operation operation) {
-        return operation instanceof DeleteCacheOperation;
+    public boolean match(CacheOperation cacheOperation) {
+        return cacheOperation instanceof DeleteCacheOperation;
     }
 
     @Override

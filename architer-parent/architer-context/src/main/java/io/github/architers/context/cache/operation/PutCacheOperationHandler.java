@@ -23,8 +23,8 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
     private static final int SECOND_ORDER = 2;
 
     @Override
-    public boolean match(Operation operation) {
-        return operation instanceof PutCacheOperation;
+    public boolean match(CacheOperation cacheOperation) {
+        return cacheOperation instanceof PutCacheOperation;
     }
 
     @Override

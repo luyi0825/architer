@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class CacheableOperation extends BaseCacheOperation {
+public class CacheableCacheOperation extends BaseCacheOperation {
     /**
      * @see Cacheable#randomTime()
      */
@@ -24,8 +24,8 @@ public class CacheableOperation extends BaseCacheOperation {
     private long expireTime;
 
     /**
-     * @see Cacheable#expireTimeUnit()
+     * @see Cacheable#timeUnit()
      */
-    private TimeUnit expireTimeUnit;
+    private TimeUnit timeUnit;
 
 }

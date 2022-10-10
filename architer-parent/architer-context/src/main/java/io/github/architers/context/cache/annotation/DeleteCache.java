@@ -42,11 +42,6 @@ public @interface DeleteCache {
     String cacheValue() default "";
 
     /**
-     * 默认没有锁
-     */
-    Locked locked() default @Locked(lock = LockEnum.NONE, key = "");
-
-    /**
      * @see Cacheable#async()
      */
     boolean async() default false;

@@ -1,15 +1,14 @@
 package io.github.architers.context.cache.proxy;
 
 
-
 import io.github.architers.context.cache.CacheAnnotationsParser;
 import io.github.architers.context.cache.model.NullValue;
 import io.github.architers.context.cache.operation.BaseCacheOperation;
+import io.github.architers.context.cache.operation.CacheOperation;
 import io.github.architers.context.cache.operation.CacheOperationHandler;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.expression.ExpressionParser;
 import io.github.architers.context.lock.LockExecute;
-import io.github.architers.context.lock.Locked;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +35,6 @@ public class CacheInterceptor implements MethodInterceptor {
 
     private List<CacheOperationHandler> cacheOperationHandlers;
 
-    private LockExecute lockExecute;
-
     @Override
     @Nullable
     public Object invoke(@NonNull final MethodInvocation invocation) throws Throwable {
@@ -47,35 +44,33 @@ public class CacheInterceptor implements MethodInterceptor {
          *2.方便不同注解拓展变量值传递
          */
         ExpressionMetadata expressionMetadata = this.buildExpressionMeta(invocation);
-        Locked locked = cacheAnnotationsParser.parseLocked(invocation.getMethod());
-        return lockExecute.execute(locked, expressionMetadata, () -> {
-            Collection<BaseCacheOperation> baseCacheOperations = cacheAnnotationsParser.parse(invocation.getMethod());
-            if (!CollectionUtils.isEmpty(baseCacheOperations)) {
-                if (baseCacheOperations.size() > 1) {
-                    //当多余一个注解的时候，排序，让cacheable操作在最前边
-                    baseCacheOperations = baseCacheOperations.stream().sorted(Comparator.comparing(BaseCacheOperation::getOrder)).collect(Collectors.toList());
-                }
-                Object returnValue = execute(invocation, baseCacheOperations, expressionMetadata);
-                //已经调用了方法，缓存中放的空值
-                if (returnValue instanceof NullValue) {
-                    return null;
-                }
-                //获取到返回值
-                if (returnValue != null) {
-                    return returnValue;
-                }
-                //没有调用过方法，调用一次
-                return invocation.proceed();
+
+        Collection<CacheOperation> cacheOperations = cacheAnnotationsParser.parse(invocation.getMethod());
+        if (!CollectionUtils.isEmpty(cacheOperations)) {
+            if (cacheOperations.size() > 1) {
+
             }
+            Object returnValue = execute(invocation, cacheOperations, expressionMetadata);
+            //已经调用了方法，缓存中放的空值
+            if (returnValue instanceof NullValue) {
+                return null;
+            }
+            //获取到返回值
+            if (returnValue != null) {
+                return returnValue;
+            }
+            //没有调用过方法，调用一次
             return invocation.proceed();
-        });
+        }
+        return invocation.proceed();
+
 
     }
 
     /**
      * 执行拦截的操作
      */
-    private Object execute(MethodInvocation invocation, Collection<BaseCacheOperation> operations, ExpressionMetadata expressionMetadata) throws Throwable {
+    private Object execute(MethodInvocation invocation, Collection<CacheOperation> operations, ExpressionMetadata expressionMetadata) throws Throwable {
         //返回值构建，也方便多个注解的时候，重复调用方法
         AtomicReference<Object> returnValue = new AtomicReference<>();
         MethodReturnValueFunction methodReturnValueFunction = new MethodReturnValueFunction() {
@@ -105,10 +100,10 @@ public class CacheInterceptor implements MethodInterceptor {
                 }
             }
         };
-        for (BaseCacheOperation operation : operations) {
+        for (CacheOperation operation : operations) {
             for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
                 if (cacheOperationHandler.match(operation)) {
-                    cacheOperationHandler.handler(operation, methodReturnValueFunction, expressionMetadata);
+                    cacheOperationHandler.handler((BaseCacheOperation) operation, methodReturnValueFunction, expressionMetadata);
                     break;
                 }
             }
@@ -146,8 +141,4 @@ public class CacheInterceptor implements MethodInterceptor {
         this.cacheOperationHandlers = cacheOperationHandlers;
     }
 
-    @Autowired(required = false)
-    public void setLockExecute(LockExecute lockExecute) {
-        this.lockExecute = lockExecute;
-    }
 }

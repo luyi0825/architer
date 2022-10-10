@@ -4,7 +4,6 @@ package io.github.architers.context.cache.operation;
 
 import io.github.architers.context.cache.CacheMode;
 import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.context.lock.Locked;
 import lombok.Data;
 
 
@@ -14,7 +13,7 @@ import lombok.Data;
  * @see org.springframework.cache.interceptor.CacheOperation 参考的这个类
  */
 @Data
-public abstract class BaseCacheOperation implements Operation {
+public abstract class BaseCacheOperation implements CacheOperation {
     /**
      * 用于排序的字段顺序
      */
@@ -31,10 +30,7 @@ public abstract class BaseCacheOperation implements Operation {
      * @see Cacheable#async()
      */
     private boolean async;
-    /**
-     * @see Cacheable#locked()
-     */
-    private Locked locked;
+
 
     /**
      * 条件满足的时候，进行缓存操作

@@ -5,5 +5,7 @@ package io.github.architers.context.cache.operation;
  *
  * @author luyi
  */
-public interface Operation {
+public interface CacheOperation {
+
+    int getOrder();
 }

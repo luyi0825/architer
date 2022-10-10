@@ -12,7 +12,7 @@ import org.springframework.lang.Nullable;
  * @author luyi
  */
 public class BeanFactoryCacheSourceAdvisor extends AbstractBeanFactoryPointcutAdvisor {
-    @Nullable
+
     private CacheOperationSource cacheOperationSource;
 
     private CacheOperationSourcePointcut pointcut = new CacheOperationSourcePointcut() {

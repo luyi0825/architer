@@ -51,10 +51,10 @@ public abstract class CacheOperationHandler implements Ordered {
     /**
      * operation是否匹配
      *
-     * @param operation operation对应的缓存操作
+     * @param cacheOperation operation对应的缓存操作
      * @return 是否匹配，如果true就对这个operation的进行缓存处理
      */
-    public abstract boolean match(Operation operation);
+    public abstract boolean match(CacheOperation cacheOperation);
 
     protected Object parseCacheKey(ExpressionMetadata expressionMetadata, String key) {
         if (!StringUtils.hasText(key)) {

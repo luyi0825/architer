@@ -1,8 +1,6 @@
 package io.github.architers.context.cache.annotation;
 
 
-
-
 import io.github.architers.context.cache.CacheMode;
 import io.github.architers.context.lock.LockEnum;
 import io.github.architers.context.lock.Locked;
@@ -49,14 +47,9 @@ public @interface PutCache {
     long expireTime() default -1;
 
     /**
-     * @see Cacheable#expireTimeUnit()
+     * @see Cacheable#timeUnit()
      */
-    TimeUnit expireTimeUnit() default TimeUnit.MINUTES;
-
-    /**
-     * @see Cacheable#locked()
-     */
-    Locked locked() default @Locked(lock = LockEnum.NONE, key = "");
+    TimeUnit timeUnit() default TimeUnit.MINUTES;
 
     /**
      * @see Cacheable#async()

@@ -2,11 +2,10 @@
 package io.github.architers.context.cache.annotation;
 
 
-
-
 import io.github.architers.context.cache.CacheMode;
 import io.github.architers.context.lock.LockEnum;
 import io.github.architers.context.lock.Locked;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
@@ -34,6 +33,8 @@ import java.util.concurrent.TimeUnit;
 @Inherited
 @Repeatable(Cacheables.class)
 public @interface Cacheable {
+    @AliasFor("cacheName")
+    String[] value() default "";
 
     /**
      * 缓存名称(不支持EL表达式)
@@ -59,12 +60,7 @@ public @interface Cacheable {
     /**
      * 过期时间单位
      */
-    TimeUnit expireTimeUnit() default TimeUnit.MINUTES;
-
-    /**
-     * 默认没有锁
-     */
-    Locked locked() default @Locked(lock = LockEnum.NONE, key = "");
+    TimeUnit timeUnit() default TimeUnit.MINUTES;
 
     /**
      * 是否异步
