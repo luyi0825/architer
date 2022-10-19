@@ -1,5 +1,6 @@
 package io.github.architers.center.dict.domain.dto;
 
+import io.github.architers.center.dict.domain.entity.Dict;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -52,6 +53,14 @@ public class ImportJsonDict {
         @NotBlank(message = "字典值名称不能为空")
         private String dataCaption;
 
+    }
+
+    public Dict convertToDict() {
+        Dict dict = new Dict();
+        dict.setDictCode(this.dictCode);
+        dict.setDictCaption(this.dictCaption);
+        dict.setRemark(this.remark);
+        return dict;
     }
 
 }
