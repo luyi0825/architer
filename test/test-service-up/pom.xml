@@ -82,7 +82,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus</artifactId>
-            <version>3.4.3.4</version>
+            <version>${mybatis-plus.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.pulsar/pulsar-client -->

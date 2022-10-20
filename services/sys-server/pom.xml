@@ -10,8 +10,8 @@
         <relativePath/>
     </parent>
 
-    <artifactId>sys-module-excel-template</artifactId>
-    <name>sys-module-excel-template</name>
+    <artifactId>sys-server</artifactId>
+    <name>sys-server</name>
     <description>网关测试</description>
     <packaging>jar</packaging>
     <properties>
@@ -39,10 +39,10 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <groupId>io.github.architers</groupId>
+            <artifactId>sys-module-dict</artifactId>
+            <version>${revision}</version>
         </dependency>
-
 
 
     </dependencies>

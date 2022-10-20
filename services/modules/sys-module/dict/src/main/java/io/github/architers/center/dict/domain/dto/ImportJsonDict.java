@@ -35,32 +35,21 @@ public class ImportJsonDict {
      * 数据字典值
      */
     @Valid
-    private List<DictData> dictDataList;
+    private List<ImportJsonDictData> dictDataList;
 
-    /**
-     * 数据字典数据
-     */
-    @Data
-    static class DictData {
-        /**
-         * 数据英文名称
-         */
-        @NotBlank(message = "字典值编码不能为空")
-        private String dataCode;
-        /**
-         * 字典数据中文名称
-         */
-        @NotBlank(message = "字典值名称不能为空")
-        private String dataCaption;
 
-    }
-
-    public Dict convertToDict() {
+    public static Dict convertToDict(ImportJsonDict importJsonDict) {
         Dict dict = new Dict();
-        dict.setDictCode(this.dictCode);
-        dict.setDictCaption(this.dictCaption);
-        dict.setRemark(this.remark);
+        dict.setDictCode(importJsonDict.dictCode);
+        dict.setDictCaption(importJsonDict.dictCaption);
+        dict.setRemark(importJsonDict.remark);
         return dict;
     }
 
+
+    public static ImportJsonDict convert2ImportJsonDict(Dict dict) {
+        ImportJsonDict importJsonDict = new ImportJsonDict();
+
+        return importJsonDict;
+    }
 }

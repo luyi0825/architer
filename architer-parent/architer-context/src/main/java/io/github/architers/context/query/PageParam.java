@@ -10,7 +10,7 @@ import java.util.List;
  * @author luyi
  */
 @Data
-public class PageInfo {
+public class PageParam {
     /**
      * 页码
      */
