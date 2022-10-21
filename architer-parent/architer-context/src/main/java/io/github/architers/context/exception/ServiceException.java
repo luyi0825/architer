@@ -1,15 +1,20 @@
 package io.github.architers.context.exception;
 
+import lombok.Data;
+
 /**
  * 业务异常
  *
  * @author luyi
  */
+@Data
 public class ServiceException extends RuntimeException {
     /**
      * 异常编码，帮助异常快速定位
      */
-    private int code = 1;
+    private int code = 500;
+
+    private String message;
 
     public ServiceException() {
 

@@ -3,7 +3,6 @@ package io.github.architers.context.cache;
 
 
 import io.github.architers.context.cache.annotation.EnableCustomCaching;
-import io.github.architers.context.cache.aspectj.AspectjConfiguration;
 import io.github.architers.context.cache.proxy.CacheProxyConfiguration;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.AdviceModeImportSelector;
@@ -29,7 +28,7 @@ public class CacheAdviceImportSelector extends AdviceModeImportSelector<EnableCu
             case PROXY:
                 return getProxyImports();
             case ASPECTJ:
-                return getAspectjImports();
+              //  return getAspectjImports();
             default:
                 return null;
         }
@@ -39,12 +38,12 @@ public class CacheAdviceImportSelector extends AdviceModeImportSelector<EnableCu
         return new String[]{CacheProxyConfiguration.class.getName(), AutoProxyRegistrar.class.getName()};
     }
 
-    /**
-     * 得到Aspectj需要导入的类
-     */
-    private String[] getAspectjImports() {
-        return new String[]{AspectjConfiguration.class.getName()};
-    }
+//    /**
+//     * 得到Aspectj需要导入的类
+//     */
+//    private String[] getAspectjImports() {
+//       // return new String[]{AspectjConfiguration.class.getName()};
+//    }
 
     @Override
     public Predicate<String> getExclusionFilter() {

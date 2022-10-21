@@ -15,6 +15,11 @@ public class ServletUtils {
         return attributes.getRequest();
     }
 
+    public static String header(String headerKey) {
+        HttpServletRequest httpServletRequest = request();
+        return httpServletRequest.getHeader(headerKey);
+    }
+
     public static HttpServletResponse response() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert attributes != null;

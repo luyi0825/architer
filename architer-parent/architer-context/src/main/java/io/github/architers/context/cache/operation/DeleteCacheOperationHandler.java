@@ -41,19 +41,17 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
      * @throws Throwable 锁执行的业务抛出的异常
      */
     private void doDelete(DeleteCacheOperation operation, ExpressionMetadata expressionMetadata) throws Throwable {
-        lockExecute.execute(operation.getLocked(), expressionMetadata, () -> {
-            String cacheValue = operation.getCacheValue();
-            for (String cacheName : operation.getCacheName()) {
-                Cache cache = chooseCache(operation, cacheName);
-                if (CacheConstants.BATCH_CACHE_KEY.equals(operation.getKey())) {
-                    this.doBatch(expressionMetadata, cacheValue, cache);
-                } else {
-                    Object cacheKey = super.parseCacheKey(expressionMetadata, operation.getKey());
-                    cache.delete(cacheKey);
-                }
+
+        String cacheValue = operation.getCacheValue();
+        for (String cacheName : operation.getCacheName()) {
+            Cache cache = chooseCache(operation, cacheName);
+            if (CacheConstants.BATCH_CACHE_KEY.equals(operation.getKey())) {
+                this.doBatch(expressionMetadata, cacheValue, cache);
+            } else {
+                Object cacheKey = super.parseCacheKey(expressionMetadata, operation.getKey());
+                cache.delete(cacheKey);
             }
-            return null;
-        });
+        }
     }
 
     /**

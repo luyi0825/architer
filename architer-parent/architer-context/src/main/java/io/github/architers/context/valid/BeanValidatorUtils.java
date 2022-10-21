@@ -2,7 +2,7 @@
 package io.github.architers.context.valid;
 
 
-import io.github.architers.context.exception.RequestParamsValidException;
+import io.github.architers.context.exception.NoLogStackException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -24,7 +24,6 @@ public final class BeanValidatorUtils {
      *
      * @param object 待校验对象
      * @param groups 待校验的组
-     * @throws RequestParamsValidException 校验不通过，则报ParamsValidException异常
      */
     public static void validateEntity(Object object, Class<?>... groups) {
         Set<ConstraintViolation<Object>> constraintViolations = VALIDATOR.validate(object, groups);
@@ -33,7 +32,7 @@ public final class BeanValidatorUtils {
             for (ConstraintViolation<Object> constraint : constraintViolations) {
                 msg.append(constraint.getMessage()).append("<br>");
             }
-            throw new RequestParamsValidException(msg.toString());
+            throw new NoLogStackException(msg.toString());
         }
     }
 }

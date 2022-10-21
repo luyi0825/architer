@@ -1,7 +1,6 @@
 package io.github.architers.context.cache.operation;
 
 
-
 import io.github.architers.context.cache.Cache;
 import io.github.architers.context.cache.CacheConstants;
 import io.github.architers.context.cache.CacheUtils;
@@ -39,18 +38,18 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         }
         if (this.canHandler(operation, expressionMetadata, false)) {
             Object finalValue = value;
-            lockExecute.execute(operation.getLocked(), expressionMetadata, () -> {
-                Object key = parseCacheKey(expressionMetadata, operation.getKey());
-                for (String cacheName : operation.getCacheName()) {
-                    Cache cache = chooseCache(operation, cacheName);
-                    if (CacheConstants.BATCH_CACHE_KEY.equals(key)) {
-                        cache.multiSet(finalValue, expireTime, putCacheOperation.getExpireTimeUnit());
-                    } else {
-                        cache.set(key, finalValue, expireTime, putCacheOperation.getExpireTimeUnit());
-                    }
+
+            Object key = parseCacheKey(expressionMetadata, operation.getKey());
+            for (String cacheName : operation.getCacheName()) {
+                Cache cache = chooseCache(operation, cacheName);
+                if (CacheConstants.BATCH_CACHE_KEY.equals(key)) {
+                    cache.multiSet(finalValue, expireTime, putCacheOperation.getTimeUnit());
+                } else {
+                    cache.set(key, finalValue, expireTime, putCacheOperation.getTimeUnit());
                 }
-                return null;
-            });
+            }
+
+
         }
     }
 
