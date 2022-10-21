@@ -10,6 +10,11 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class DictData {
 
+    /**
+     * 数据字典编码
+     */
+    private String dictCode;
+
     @NotBlank(message = "字典值编码不能为空")
     private String dataCode;
     /**

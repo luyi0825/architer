@@ -1,7 +1,9 @@
-package io.github.architers.center.dict.mapper;
+package io.github.architers.center.dict.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.github.architers.center.dict.domain.entity.Dict;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Set;
@@ -9,7 +11,8 @@ import java.util.Set;
 /**
  * @author luyi
  */
-public interface DictMapper extends BaseMapper<Dict> {
+@Mapper
+public interface DictDao extends BaseMapper<Dict> {
 
     /**
      * 批量添加
@@ -26,7 +29,9 @@ public interface DictMapper extends BaseMapper<Dict> {
      * @param dictCodes 数据字典编码
      * @return 删除的数量
      */
-    int deleteByDictCode(Integer tenantId, Set<String> dictCodes);
+    int deleteByDictCode(@Param("tenantId") Integer tenantId,
+                         @Param("dictCodes") Set<String> dictCodes);
 
-    List<Dict> findByDictCodes(Integer tenantId, Set<String> dictCodes);
+    List<Dict> findByDictCodes(@Param("tenantId") Integer tenantId,
+                               @Param("dictCodes") Set<String> dictCodes);
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -39,7 +40,7 @@ public class DictApi {
      * 导出数据字典json数据
      */
     @PostMapping("/exportJsonDictData")
-    public void exportJsonDictData(Set<String> dictCodes) {
+    public void exportJsonDictData(HashSet<String> dictCodes) {
         dictService.exportJsonDictData(TenantUtils.getTenantId(), dictCodes);
     }
 

@@ -49,7 +49,9 @@ public class ImportJsonDict {
 
     public static ImportJsonDict convert2ImportJsonDict(Dict dict) {
         ImportJsonDict importJsonDict = new ImportJsonDict();
-
+        importJsonDict.setDictCaption(dict.getDictCaption());
+        importJsonDict.setDictCode(dict.getDictCode());
+        importJsonDict.setRemark(dict.getRemark());
         return importJsonDict;
     }
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.architers.center.dict.dao.DictDao">
+
+
+    <delete id="deleteByDictCode">
+        update sys_dict set deleted = 1 where tenant_id=#{tenantId}
+        and dict_code in
+        <foreach collection="dictCodes" open="(" close=")" separator="," item="dictCode">
+            #{dictCode}
+        </foreach>
+
+        and deleted = 0
+    </delete>
+    <select id="findByDictCodes"
+            resultType="io.github.architers.center.dict.domain.entity.Dict">
+        select * from sys_dict where tenant_id = #{tenantId}
+        <if test="dictCodes!=null and dictCodes.size>0">
+            and dict_code in
+            <foreach collection="dictCodes" item="dictCode" open="(" separator="," close=")">
+                #{dictCode}
+            </foreach>
+        </if>
+        and deleted = 0
+    </select>
+
+
+</mapper>
+
