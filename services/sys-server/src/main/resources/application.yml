@@ -1,14 +1,23 @@
-
-
-
 spring:
   profiles:
     active: dev
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 19940825Ls
     url: jdbc:mysql://120.48.170.201:3306/test?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 120.48.170.201:8848
+        #group: dev
+        namespace: public
+        group: DEFAULT_GROUP
+        enabled: true
+  application:
+    name: center-server
 server:
   port: 9025
 mybatis-plus:

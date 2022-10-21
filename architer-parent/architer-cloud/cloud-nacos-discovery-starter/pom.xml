@@ -8,9 +8,9 @@
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>architer-cloud-discovery-nacos-starter</artifactId>
-    <name>architer-cloud-discovery-nacos-starter</name>
-    <description>architer-cloud-discovery-nacos-starter</description>
+    <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+    <name>spring-cloud-starter-alibaba-nacos-discovery</name>
+    <description>spring-cloud-starter-alibaba-nacos-discovery</description>
     <packaging>jar</packaging>
 
     <dependencies>

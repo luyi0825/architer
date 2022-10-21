@@ -61,12 +61,12 @@ public class NacosServiceSelector extends NacosServiceDiscovery {
         } catch (Exception e) {
             throw new RuntimeException("get Nacos instances exception");
         }
-        //判断是否启动灰色发布
-        if (instances.size() > 0 && loadBalanceProperties.isGrayscaleRelease()) {
-            String releaseVersion = loadBalanceProperties.getReleaseVersion();
-            instances = instances.stream().filter(e -> releaseVersion.equals(e.getMetadata().get("metadata.release-version")))
-                    .collect(Collectors.toList());
-        }
+//        //判断是否启动灰色发布
+//        if (instances.size() > 0 && loadBalanceProperties.isGrayscaleRelease()) {
+//            String releaseVersion = loadBalanceProperties.getReleaseVersion();
+//            instances = instances.stream().filter(e -> releaseVersion.equals(e.getMetadata().get("metadata.release-version")))
+//                    .collect(Collectors.toList());
+//        }
         if (CollectionUtils.isEmpty(instances)) {
             return Collections.emptyList();
         }
