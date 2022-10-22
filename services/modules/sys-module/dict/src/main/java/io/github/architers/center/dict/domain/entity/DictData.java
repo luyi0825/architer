@@ -35,5 +35,10 @@ public class DictData extends BaseTenantEntity implements Serializable {
     @NotBlank(message = "字典值名称不能为空")
     private String dataCaption;
 
+    /**
+     * 备注
+     */
+    private String remark;
+
 
 }

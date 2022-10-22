@@ -1,6 +1,7 @@
 package io.github.architers.center.dict.domain;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -19,6 +20,7 @@ public abstract class BaseEntity {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected Date createTime;
 
     /**
@@ -29,6 +31,7 @@ public abstract class BaseEntity {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected Date updateTime;
 
     /**

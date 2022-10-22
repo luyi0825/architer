@@ -6,10 +6,7 @@ import io.github.architers.context.valid.group.AddGroup;
 import io.github.architers.context.valid.group.EditGroup;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,25 +16,29 @@ import java.util.Date;
  * @author luyi
  */
 @Data
-public class AddEditDictDTO implements Serializable {
+public class AddEditDictDataDTO implements Serializable {
 
     /**
-     * 数据字典主键ID
+     * 主键ID
      */
     @NotNull(message = "ID不能为空", groups = {EditGroup.class})
     @Null(message = "id参数有误", groups = AddGroup.class)
     private Long id;
 
     /**
-     * 字典编码
+     * 数据字典编码
      */
-    @NotBlank(message = "字典编码不能为空", groups = {AddGroup.class, EditGroup.class})
+    @NotBlank(message = "字典编码不能为空",groups = AddGroup.class)
     private String dictCode;
+
+    @NotBlank(message = "字典值编码不能为空",groups = AddGroup.class)
+    private String dataCode;
     /**
-     * 字典名称
+     * 字典数据中文名称
      */
-    @NotBlank(message = "字典名称不能为空", groups = {AddGroup.class, EditGroup.class})
-    private String dictCaption;
+    @NotBlank(message = "字典值名称不能为空", groups = {AddGroup.class, EditGroup.class})
+    private String dataCaption;
+
     /**
      * 备注
      */

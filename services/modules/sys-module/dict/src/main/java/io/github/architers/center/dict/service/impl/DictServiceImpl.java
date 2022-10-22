@@ -1,10 +1,12 @@
 package io.github.architers.center.dict.service.impl;
 
-import io.github.architers.center.dict.domain.dto.AddEditDictDTO;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import io.github.architers.center.dict.domain.dto.*;
+import io.github.architers.center.dict.domain.vo.SimpleDictDataVO;
 import io.github.architers.component.mybatisplus.MybatisPageUtils;
 import io.github.architers.center.dict.TenantUtils;
-import io.github.architers.center.dict.domain.dto.ImportJsonDictData;
-import io.github.architers.center.dict.domain.dto.ImportJsonDict;
 import io.github.architers.center.dict.domain.entity.Dict;
 import io.github.architers.center.dict.domain.entity.DictData;
 import io.github.architers.center.dict.dao.DictDataDao;
@@ -20,6 +22,7 @@ import io.github.architers.context.web.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -30,6 +33,7 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -139,7 +143,7 @@ public class DictServiceImpl implements DictService {
             throw new NoLogStackException("数据字典已经存在");
         }
         Dict dict = new Dict();
-        BeanUtils.copyProperties(dict, addParam);
+        BeanUtils.copyProperties(addParam, dict);
         dict.fillCreateAndUpdateField(null);
         dict.setTenantId(TenantUtils.getTenantId());
         dictDao.insert(dict);
@@ -150,12 +154,97 @@ public class DictServiceImpl implements DictService {
         Dict dict = new Dict();
         //字典编码不能编辑
         edit.setDictCode(null);
-        BeanUtils.copyProperties(dict, edit);
+        BeanUtils.copyProperties(edit, dict);
         dict.fillCreateAndUpdateField(null);
         int count = dictDao.updateById(dict);
         if (count != 1) {
             throw new ServiceException("编辑字典失败");
         }
+    }
+
+    @Override
+    public Dict getDictById(Long id) {
+        return dictDao.selectById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteDictById(Long id) {
+        Dict dict = dictDao.selectById(id);
+        if (dict == null) {
+            throw new ServiceException("数据字典信息不能为空");
+        }
+        dictDao.deleteById(id);
+        dictDataDao.findByDictCodes(TenantUtils.getTenantId(),
+                Collections.singleton(dict.getDictCode()));
+    }
+
+    @Override
+    public Long addDictData(AddEditDictDataDTO add) {
+
+        //判断数据字典是否存在
+        int count = dictDao.countByDictCode(TenantUtils.getTenantId(), add.getDictCode());
+        if (count == 0) {
+            throw new ServiceException("数据字典不存在");
+        }
+        if (count > 1) {
+            throw new ServiceException("数据字典重复");
+        }
+        //判断字典值编码是否重复
+        count = dictDataDao.countByDictCodeAndDataCode(TenantUtils.getTenantId(), add.getDictCode(), add.getDataCode());
+        if (count > 0) {
+            if (count > 1) {
+                log.error("字典值编码【{}】重复", add.getDataCode());
+            }
+            throw new ServiceException("字典值编码【" + add.getDataCode() + "】已经存在");
+        }
+
+        DictData dictData = new DictData();
+        BeanUtils.copyProperties(add, dictData);
+        dictData.setTenantId(TenantUtils.getTenantId());
+        dictData.fillCreateAndUpdateField(new Date());
+        dictDataDao.insert(dictData);
+        return dictData.getId();
+    }
+
+    @Override
+    public void editDictData(AddEditDictDataDTO edit) {
+        DictData dictData = new DictData();
+        BeanUtils.copyProperties(edit, dictData);
+        //字典编码、字典值编码、租户不能编辑
+        edit.setDataCode(null);
+        edit.setDataCode(null);
+        dictData.setTenantId(TenantUtils.getTenantId());
+        dictData.fillCreateAndUpdateField(new Date());
+        dictDataDao.updateById(dictData);
+    }
+
+    @Override
+    public DictData findDictDataById(Long id) {
+        return dictDataDao.selectById(id);
+    }
+
+    @Override
+    public void deleteDictDataById(Long id) {
+        int count = dictDataDao.deleteById(id);
+        if (count != 1) {
+            throw new ServiceException("删除字典值数据失败");
+        }
+    }
+
+    @Override
+    public PageResult<DictData> getDictDataByPage(PageRequest<DictDataQueryDTO> dictPageRequest) {
+        DictDataQueryDTO dictDataQueryDTO = dictPageRequest.getRequestParam();
+        Wrapper<DictData> wrapper = Wrappers.lambdaQuery(DictData.class)
+                .eq(DictData::getTenantId, TenantUtils.getTenantId())
+                .eq(DictData::getDictCode, dictDataQueryDTO.getDictCode());
+        return MybatisPageUtils.pageQuery(dictPageRequest.getPageParam(),
+                () -> dictDataDao.selectList(wrapper));
+    }
+
+    @Override
+    public List<SimpleDictDataVO> getSimpleListByDictCode(String dictCode) {
+        return dictDataDao.getSimpleListByDictCode(TenantUtils.getTenantId(), dictCode);
     }
 
 

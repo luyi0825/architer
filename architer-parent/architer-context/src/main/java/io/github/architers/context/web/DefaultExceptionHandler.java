@@ -30,7 +30,7 @@ public class DefaultExceptionHandler implements RequestExceptionHandler {
     /**
      * 缺少缺少参数异常提示
      */
-    public static final String MISSING_PARAMETER_EXCEPTION_TIP = "缺少参数【{0}]】";
+    public static final String MISSING_PARAMETER_EXCEPTION_TIP = "缺少参数【{0}】";
 
     @Override
     public ResponseResult<?> handler(Exception e) {
