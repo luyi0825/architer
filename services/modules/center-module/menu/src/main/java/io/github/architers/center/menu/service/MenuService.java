@@ -1,9 +1,9 @@
 package io.github.architers.center.menu.service;
 
-import io.github.architers.center.menu.domain.vo.MenuNodeTree;
+import io.github.architers.center.menu.utils.NodeTreeUtils;
 
 import java.util.List;
 
 public interface MenuService {
-    List<MenuNodeTree> getMenuTreeWithPrivilege();
+    List<NodeTreeUtils.TreeNode> getMenuTreeWithPrivilege();
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.architers.center.menu.dao.MenuDao">
+
+
+    <select id="selectByRoleIds" resultType="io.github.architers.center.menu.domain.vo.MenuNode">
+        select menu.id,menu.menu_code,menu.menu_caption,menu.menu_icon,menu.parent_code from
+        sys_role_menu as roleMenu
+        inner join sys_menu as menu on menu.id = roleMenu.menu_id and menu.deleted = 0
+        where roleMenu.role_id in
+        <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+
+    </select>
+</mapper>
+

@@ -1,7 +1,7 @@
 package io.github.architers.center.menu.api;
 
-import io.github.architers.center.menu.domain.vo.MenuNodeTree;
 import io.github.architers.center.menu.service.MenuService;
+import io.github.architers.center.menu.utils.NodeTreeUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author luyi
  */
 @RestController
-@RequestMapping("/api/menu")
+@RequestMapping("/menuApi")
 public class MenuApi {
 
     @Resource
@@ -24,8 +24,8 @@ public class MenuApi {
     /**
      * 获取菜单树(权限内)
      */
-    @GetMapping("getMenuTreeWithPrivilege")
-    public List<MenuNodeTree> getMenuTreeWithPrivilege() {
+    @GetMapping("/getMenuTreeWithPrivilege")
+    public List<NodeTreeUtils.TreeNode> getMenuTreeWithPrivilege() {
         return menuService.getMenuTreeWithPrivilege();
     }
 

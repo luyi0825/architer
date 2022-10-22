@@ -1,8 +1,12 @@
 package io.github.architers.center.menu.domain.vo;
 
+import lombok.Data;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class MenuNodeTree {
+@Data
+public class MenuNode implements Serializable {
 
     private Long id;
 
@@ -27,9 +31,8 @@ public class MenuNodeTree {
     private Integer menuType;
 
     /**
-     * 父级ID
+     * 父级编码
      */
-    private String parentId;
+    private String parentCode;
 
-    private List<MenuNodeTree> childrenList;
 }

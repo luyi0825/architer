@@ -40,7 +40,7 @@ public class Menu extends BaseTenantEntity implements Serializable {
     /**
      * 父级ID
      */
-    private String parentId;
+    private String parentCode;
 
     /**
      * 备注
