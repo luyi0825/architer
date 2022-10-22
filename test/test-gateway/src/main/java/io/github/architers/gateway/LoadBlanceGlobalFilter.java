@@ -15,6 +15,8 @@ public class LoadBlanceGlobalFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        String path = exchange.getRequest().getURI().getPath();
+        System.out.println(path);
         //exchange.getRequest().getHeaders().add("relase.version", relaseVersion);
         return chain.filter(exchange);
     }

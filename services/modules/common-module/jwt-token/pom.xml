@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>sys-module</artifactId>
+        <groupId>io.github.architers</groupId>
+        <version>${revision}</version>
+        <relativePath/>
+    </parent>
+
+    <artifactId>module-common-jwt-token</artifactId>
+    <name>module-common-jwt-token</name>
+    <description>安全</description>
+    <packaging>jar</packaging>
+    <properties>
+        <revision>1.0.0-SNAPSHOT</revision>
+    </properties>
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
+
+    </dependencies>
+
+
+</project>
