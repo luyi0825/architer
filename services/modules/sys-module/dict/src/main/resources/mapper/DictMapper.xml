@@ -24,6 +24,10 @@
         </if>
         and deleted = 0
     </select>
+    <select id="countByDictCode" resultType="java.lang.Integer">
+        select count(1) from sys_dict where tenant_id = #{tenantId}
+        and dict_code = #{dictCode} and deleted = 0
+    </select>
 
 
 </mapper>

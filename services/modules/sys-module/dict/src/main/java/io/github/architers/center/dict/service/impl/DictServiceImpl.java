@@ -128,5 +128,17 @@ public class DictServiceImpl implements DictService {
         return MybatisPageUtils.pageQuery(pageRequest.getPageParam(), () -> dictDao.selectList(null));
     }
 
+    @Override
+    public void addDict(Dict dict) {
+        //TODO 判断数据是否重复
+        int count = dictDao.countByDictCode(TenantUtils.getTenantId(), dict.getDictCode());
+        if (count > 0) {
+            throw new NoLogStackException("数据字典已经存在");
+        }
+        dict.fillCreateAndUpdateField(null);
+        dict.setTenantId(TenantUtils.getTenantId());
+        dictDao.insert(dict);
+    }
+
 
 }

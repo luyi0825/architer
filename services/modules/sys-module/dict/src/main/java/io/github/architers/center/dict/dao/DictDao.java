@@ -14,7 +14,7 @@ import java.util.Set;
  */
 @Mapper
 public interface DictDao extends BaseMapper<Dict>, InsertBatch<Dict> {
-    
+
 
     /**
      * 通过数据字典编码删除
@@ -28,4 +28,7 @@ public interface DictDao extends BaseMapper<Dict>, InsertBatch<Dict> {
 
     List<Dict> findByDictCodes(@Param("tenantId") Integer tenantId,
                                @Param("dictCodes") Set<String> dictCodes);
+
+    int countByDictCode(@Param("tenantId") Integer tenantId,
+                        @Param("dictCode") String dictCode);
 }

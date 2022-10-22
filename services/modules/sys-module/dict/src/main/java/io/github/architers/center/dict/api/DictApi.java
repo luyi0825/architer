@@ -56,8 +56,9 @@ public class DictApi {
     /**
      * 添加数据字典
      */
-    public void addDict() {
-
+    @PostMapping("/addDict")
+    public void addDict(@Validated @RequestBody Dict dict) {
+        dictService.addDict(dict);
     }
 
     /**

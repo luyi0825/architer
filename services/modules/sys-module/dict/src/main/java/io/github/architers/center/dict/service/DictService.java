@@ -19,4 +19,6 @@ public interface DictService {
     void exportJsonDictData(Integer tenantId,Set<String> dictCodes);
 
     PageResult<Dict> getDictByPage(PageRequest<Dict> dictPageRequest);
+
+    void addDict(Dict dict);
 }
