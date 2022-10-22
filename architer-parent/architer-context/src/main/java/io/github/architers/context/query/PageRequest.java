@@ -3,6 +3,7 @@ package io.github.architers.context.query;
 import lombok.Data;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author luyi
@@ -14,6 +15,7 @@ public class PageRequest<T> {
     /**
      * 分页信息
      */
+    @NotNull(message = "分页参数不能为空")
     private PageParam pageParam;
 
     /**

@@ -3,8 +3,7 @@ package io.github.architers.center.dict.domain.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.github.architers.center.dict.BaseTenantEntity;
-import io.github.architers.center.dict.domain.BaseEntity;
+import io.github.architers.center.dict.domain.BaseTenantEntity;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

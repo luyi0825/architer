@@ -5,6 +5,7 @@ import io.github.architers.center.dict.domain.dto.ImportJsonDict;
 import io.github.architers.center.dict.domain.entity.Dict;
 import io.github.architers.center.dict.service.DictService;
 import io.github.architers.context.query.PageRequest;
+import io.github.architers.context.query.PageResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,9 +49,8 @@ public class DictApi {
      * 分页字典数据
      */
     @PostMapping("/getDictByPage")
-    public void getDictByPage(@RequestBody PageRequest<Dict> dictPageRequest) {
-
-        dictService.getDictByPage(dictPageRequest);
+    public PageResult<Dict> getDictByPage(@Validated @RequestBody PageRequest<Dict> dictPageRequest) {
+        return dictService.getDictByPage(dictPageRequest);
     }
 
     /**

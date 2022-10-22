@@ -1,5 +1,6 @@
 package io.github.architers.center.dict.domain;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,6 +13,7 @@ public abstract class BaseEntity {
     /**
      * 是否删除:0否1是
      */
+    @TableLogic
     protected boolean deleted;
 
     /**

@@ -1,6 +1,6 @@
 package io.github.architers.center.dict.service.impl;
 
-import io.github.architers.center.dict.PageUtils;
+import io.github.architers.component.mybatisplus.MybatisPageUtils;
 import io.github.architers.center.dict.TenantUtils;
 import io.github.architers.center.dict.domain.dto.ImportJsonDictData;
 import io.github.architers.center.dict.domain.dto.ImportJsonDict;
@@ -125,7 +125,7 @@ public class DictServiceImpl implements DictService {
 
     @Override
     public PageResult<Dict> getDictByPage(PageRequest<Dict> pageRequest) {
-        return PageUtils.pageQuery(pageRequest.getPageParam(), () -> dictDao.selectList(null));
+        return MybatisPageUtils.pageQuery(pageRequest.getPageParam(), () -> dictDao.selectList(null));
     }
 
 

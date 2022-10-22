@@ -14,11 +14,11 @@ public class PageParam {
     /**
      * 页码
      */
-    private int pageNum;
+    private Integer pageNum = 1;
     /**
      * 每页数量
      */
-    private int pageSize;
+    private Integer pageSize = 15;
 
     /**
      * 是否合计

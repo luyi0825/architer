@@ -1,15 +1,13 @@
-package io.github.architers.center.dict;
+package io.github.architers.component.mybatisplus;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.github.architers.context.query.PageParam;
-import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
 import org.apache.commons.io.IOUtils;
 
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -18,7 +16,7 @@ import java.util.function.Supplier;
  *
  * @author luyi
  */
-public class PageUtils {
+public class MybatisPageUtils {
     private final static int TWO_PAGE_NUM = 2;
     private final static int ONE_PAGE_NUM = 1;
 
@@ -48,7 +46,7 @@ public class PageUtils {
             page = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize());
             //第一次查询
             List<T> list = supplier.get();
-            return PageUtils.restPage(list);
+            return MybatisPageUtils.restPage(list);
         } finally {
             IOUtils.closeQuietly(page);
         }

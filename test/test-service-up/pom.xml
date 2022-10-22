@@ -7,7 +7,6 @@
         <artifactId>architer-parent</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
-        <relativePath/>
     </parent>
 
     <artifactId>test-service-up</artifactId>
