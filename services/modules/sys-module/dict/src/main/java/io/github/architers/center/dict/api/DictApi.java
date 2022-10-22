@@ -1,6 +1,6 @@
 package io.github.architers.center.dict.api;
 
-import io.github.architers.center.dict.TenantUtils;
+import io.github.architers.common.module.tenant.TenantUtils;
 import io.github.architers.center.dict.domain.dto.AddEditDictDTO;
 import io.github.architers.center.dict.domain.dto.AddEditDictDataDTO;
 import io.github.architers.center.dict.domain.dto.DictDataQueryDTO;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 数据字典

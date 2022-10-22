@@ -1,12 +1,11 @@
 package io.github.architers.center.dict.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.github.architers.center.dict.domain.dto.*;
 import io.github.architers.center.dict.domain.vo.SimpleDictDataVO;
 import io.github.architers.component.mybatisplus.MybatisPageUtils;
-import io.github.architers.center.dict.TenantUtils;
+import io.github.architers.common.module.tenant.TenantUtils;
 import io.github.architers.center.dict.domain.entity.Dict;
 import io.github.architers.center.dict.domain.entity.DictData;
 import io.github.architers.center.dict.dao.DictDataDao;
@@ -33,7 +32,6 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**

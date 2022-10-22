@@ -55,7 +55,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>mybatis-plus</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${revision}</version>
             <scope>compile</scope>
         </dependency>
 
