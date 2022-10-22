@@ -1,4 +1,4 @@
-package io.github.architers.center.dict.domain;
+package io.github.architers.common.module.tenant.domain;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;

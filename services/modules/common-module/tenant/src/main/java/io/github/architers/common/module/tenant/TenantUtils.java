@@ -1,4 +1,4 @@
-package io.github.architers.center.dict;
+package io.github.architers.common.module.tenant;
 
 import io.github.architers.context.web.ServletUtils;
 
@@ -13,4 +13,8 @@ public class TenantUtils {
 
         return Integer.parseInt(tenantId);
     }
+
+
+
+
 }

@@ -1,7 +1,4 @@
-package io.github.architers.center.dict.domain;
-
-import lombok.Data;
-
+package io.github.architers.common.module.tenant.domain;
 
 
 /**
