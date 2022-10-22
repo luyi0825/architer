@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>architer-parent</artifactId>
+        <artifactId>services</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
         <relativePath/>
     </parent>
 
-    <artifactId>services</artifactId>
-    <name>services</name>
+    <artifactId>server</artifactId>
+    <name>server</name>
     <description>系统服务</description>
     <packaging>pom</packaging>
     <properties>
@@ -20,7 +20,7 @@
         <jackson.version>2.11.4</jackson.version>
     </properties>
     <modules>
-        <module>server</module>
-        <module>modules</module>
+        <module>center-server</module>
+        <module>gateway-server</module>
     </modules>
 </project>

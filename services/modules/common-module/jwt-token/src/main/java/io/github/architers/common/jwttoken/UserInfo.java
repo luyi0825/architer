@@ -41,7 +41,7 @@ public class UserInfo {
     @Data
     public static
     class RoleInfo {
-        private String roleId;
+        private Long roleId;
         private String roleCode;
         private String roleCaption;
 
@@ -49,7 +49,7 @@ public class UserInfo {
 
         }
 
-        public RoleInfo(String roleId, String roleCode, String roleCaption) {
+        public RoleInfo(Long roleId, String roleCode, String roleCaption) {
             this.roleId = roleId;
             this.roleCode = roleCode;
             this.roleCaption = roleCaption;
