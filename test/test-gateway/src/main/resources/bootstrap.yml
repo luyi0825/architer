@@ -39,11 +39,5 @@ spring:
         namespace: public
         group: DEFAULT_GROUP
         enabled: true
-        metadata:
-          release-version: ${spring.cloud.architer.load-balance.release-version}
-    architer:
-      load-balance:
-        strategy: round
-        grayscale-release: false
 server:
   port: 8888

@@ -12,6 +12,7 @@ import io.github.architers.center.dict.service.DictService;
 import io.github.architers.context.exception.NoLogStackException;
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
+import io.github.architers.context.sql.SqlTaskUtils;
 import io.github.architers.context.utils.JsonUtils;
 import io.github.architers.context.web.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -50,23 +51,31 @@ public class DictServiceImpl implements DictService {
         List<Dict> dictList = new ArrayList<>(importJsonDictList.size());
         List<DictData> dictDataList = new LinkedList<>();
         for (ImportJsonDict importJsonDict : importJsonDictList) {
-            Dict dict = (Dict) ImportJsonDict.convertToDict(importJsonDict).fillCreateOrUpdateField(current);
+            Dict dict = ImportJsonDict.convertToDict(importJsonDict);
             dict.setTenantId(TenantUtils.getTenantId());
+            dict.fillCreateAndUpdateField(current);
             dictList.add(dict);
             //数据字典值
             if (importJsonDict.getDictDataList() != null) {
                 for (ImportJsonDictData importJsonDictData : importJsonDict.getDictDataList()) {
                     DictData dictData = ImportJsonDictData.convert2DictData(importJsonDictData);
+                    dictData.fillCreateAndUpdateField(current);
+                    dictData.setDictCode(dict.getDictCode());
+                    dictData.setTenantId(TenantUtils.getTenantId());
                     dictDataList.add(dictData);
                 }
             }
         }
         //删除之前的
         Set<String> dictCodes = dictList.stream().map(Dict::getDictCode).collect(Collectors.toSet());
-        dictDao.deleteByDictCode(tenantId, dictCodes);
-        //查询已有的
-        dictDao.insertBatchSomeColumn(dictList);
-        dictDataDao.insertBatchSomeColumn(dictDataList);
+        //执行sql任务
+        SqlTaskUtils.executor(() -> {
+            dictDao.deleteByDictCode(tenantId, dictCodes);
+            //查询已有的
+            dictDao.insertBatch(dictList);
+            dictDataDao.insertBatch(dictDataList);
+        });
+
     }
 
     @Override

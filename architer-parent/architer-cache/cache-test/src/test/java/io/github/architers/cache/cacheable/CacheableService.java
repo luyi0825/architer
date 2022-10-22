@@ -39,7 +39,8 @@ public interface CacheableService {
     /**
      * 随机时间
      */
-    @Cacheable(cacheName = "randomTime", key = "#userName", expireTime = 120, expireTimeUnit = TimeUnit.SECONDS, randomTime = 40)
+    @Cacheable(cacheName = "randomTime", key = "#userName", expireTime = 120, timeUnit =
+            TimeUnit.SECONDS, randomTime = 40)
     UserInfo randomTime(String userName);
 
     /**
@@ -63,7 +64,6 @@ public interface CacheableService {
     /**
      * 测试并发，加锁
      */
-    @Cacheable(cacheName = "testLockToGather", key = "#userName", expireTime = 2,
-            locked = @Locked(key = "'lock_testLockToGather'", lock = LockEnum.REDIS))
+    @Cacheable(cacheName = "testLockToGather", key = "#userName", expireTime = 2)
     UserInfo testLockToGather(String userName);
 }

@@ -1,14 +1,27 @@
 package io.github.architers.center.dict.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.github.architers.center.dict.BaseTenantEntity;
+import io.github.architers.center.dict.domain.BaseEntity;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * @author luyi
  */
 @Data
-public class DictData {
+@TableName("sys_dict_data")
+public class DictData extends BaseTenantEntity implements Serializable {
+
+    /**
+     * 主键ID
+     */
+    @TableId(type = IdType.AUTO)
+    private Long id;
 
     /**
      * 数据字典编码
@@ -22,5 +35,6 @@ public class DictData {
      */
     @NotBlank(message = "字典值名称不能为空")
     private String dataCaption;
+
 
 }

@@ -1,2 +1,9 @@
+spring:
+  cloud:
+    discovery:
+      blocking:
+        enabled: false
 
+      reactive:
+        enabled: true
 

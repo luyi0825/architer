@@ -3,7 +3,7 @@ package io.github.architers.center.dict.domain.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.github.architers.center.dict.domain.BaseEntity;
+import io.github.architers.center.dict.BaseTenantEntity;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,18 +13,13 @@ import java.io.Serializable;
  */
 @TableName("sys_dict")
 @Data
-public class Dict extends BaseEntity implements Serializable {
+public class Dict extends BaseTenantEntity implements Serializable {
 
     /**
      * 数据字典主键ID
      */
     @TableId(type = IdType.AUTO)
     private Long id;
-
-    /**
-     * 租户ID
-     */
-    private Integer tenantId;
 
     /**
      * 字典编码

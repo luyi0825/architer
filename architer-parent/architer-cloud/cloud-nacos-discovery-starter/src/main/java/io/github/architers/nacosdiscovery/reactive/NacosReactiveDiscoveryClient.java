@@ -1,12 +1,9 @@
 package io.github.architers.nacosdiscovery.reactive;
 
-import com.alibaba.cloud.nacos.discovery.NacosServiceDiscovery;
-import com.alibaba.nacos.api.exception.NacosException;
+
 import io.github.architers.nacosdiscovery.NacosServiceSelector;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.ReactiveDiscoveryClient;
 import reactor.core.publisher.Flux;
@@ -15,6 +12,9 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.function.Function;
 
+/**
+ * @author luyi
+ */
 @Slf4j
 public class NacosReactiveDiscoveryClient implements ReactiveDiscoveryClient {
 

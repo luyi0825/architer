@@ -2,6 +2,7 @@ package io.github.architers.center.dict.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.github.architers.center.dict.domain.entity.Dict;
+import io.github.architers.component.mybatisplus.InsertBatch;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,15 +13,8 @@ import java.util.Set;
  * @author luyi
  */
 @Mapper
-public interface DictDao extends BaseMapper<Dict> {
-
-    /**
-     * 批量添加
-     *
-     * @param list 需要批量插入的数据
-     * @return 插入的数量
-     */
-    int insertBatchSomeColumn(List<Dict> list);
+public interface DictDao extends BaseMapper<Dict>, InsertBatch<Dict> {
+    
 
     /**
      * 通过数据字典编码删除

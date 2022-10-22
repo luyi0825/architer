@@ -16,6 +16,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -38,10 +40,16 @@ public class NacosWeightLoadBalance implements ReactorServiceInstanceLoadBalance
     }
 
 
+
+
     public Mono<Response<ServiceInstance>> choose(Request request) {
         ServiceInstanceListSupplier supplier = this.serviceInstanceListSupplierProvider.getIfAvailable(NoopServiceInstanceListSupplier::new);
-        return supplier.get(request).next().map((serviceInstances) -> this.processInstanceResponse(supplier, serviceInstances));
+        return supplier.get(request).next().map((serviceInstances) -> {
+            return this.processInstanceResponse(supplier, serviceInstances);
+        });
     }
+
+
 
     private Response<ServiceInstance> processInstanceResponse(ServiceInstanceListSupplier supplier, List<ServiceInstance> serviceInstances) {
         Response<ServiceInstance> serviceInstanceResponse = this.getInstanceResponse(serviceInstances);

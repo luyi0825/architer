@@ -47,14 +47,6 @@ import org.springframework.context.annotation.Configuration;
 public class NacosReactiveDiscoveryClientConfiguration {
 
 
-    @Bean
-    @ConditionalOnMissingBean
-    public NacosServiceSelector nacosServiceSelector(NacosDiscoveryProperties discoveryProperties,
-                                                     NacosServiceManager nacosServiceManager,
-                                                     LoadBalanceProperties loadBalanceProperties) {
-        return new NacosServiceSelector(discoveryProperties, nacosServiceManager, loadBalanceProperties);
-    }
-
 
     @Bean
     @ConditionalOnMissingBean

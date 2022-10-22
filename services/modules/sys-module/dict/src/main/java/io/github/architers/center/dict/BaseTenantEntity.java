@@ -1,4 +1,4 @@
-package io.github.architers.center.dict.domain;
+package io.github.architers.center.dict;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.util.Date;
  * @author luyi
  */
 @Data
-public abstract class BaseEntity {
+public abstract class BaseTenantEntity {
     /**
      * 是否删除:0否1是
      */
@@ -34,6 +34,10 @@ public abstract class BaseEntity {
      */
     protected Long updateBy;
 
+    /**
+     * 租户ID
+     */
+    protected Integer tenantId;
 
     /**
      * 得到主键ID
@@ -45,7 +49,7 @@ public abstract class BaseEntity {
     /**
      * 填充更新创建字段信息
      */
-    public BaseEntity fillCreateAndUpdateField(Date date) {
+    public BaseTenantEntity fillCreateAndUpdateField(Date date) {
         if (date == null) {
             date = new Date();
         }

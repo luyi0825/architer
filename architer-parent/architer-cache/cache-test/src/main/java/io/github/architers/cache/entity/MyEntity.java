@@ -23,9 +23,9 @@ public class MyEntity {
     }
 
     public static void main(String[] args) {
-        test(MyEntityFields.firstName);
-        test(MyEntityFields.endTime);
-        test(MyEntityFields.updateTime);
+//        test(MyEntityFields.firstName);
+//        test(MyEntityFields.endTime);
+//        test(MyEntityFields.updateTime);
     }
 
     static void test(String name) {

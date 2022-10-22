@@ -1,4 +1,5 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  io.github.architers.nacosdiscovery.NacosDiscoveryClientConfiguration,\
-  io.github.architers.nacosdiscovery.loadbalace.NacosLoadBalanceConfiguration,\
-  io.github.architers.nacosdiscovery.reactive.NacosReactiveDiscoveryClientConfiguration
+#org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+#  io.github.architers.nacosdiscovery.NacosDiscoveryAutoConfigure,\
+#  io.github.architers.nacosdiscovery.NacosDiscoveryClientConfiguration,\
+#  io.github.architers.nacosdiscovery.loadbalace.NacosLoadBalanceConfiguration,\
+#  io.github.architers.nacosdiscovery.reactive.NacosReactiveDiscoveryClientConfiguration

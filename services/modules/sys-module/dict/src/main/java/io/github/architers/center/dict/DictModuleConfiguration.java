@@ -1,6 +1,8 @@
 package io.github.architers.center.dict;
 
+import io.github.architers.context.sql.SqlTaskExecutorAutoConfiguration;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,8 +11,11 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author luyi
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
+@ImportAutoConfiguration({SqlTaskExecutorAutoConfiguration.class})
 @ComponentScan
 @MapperScan("io.github.architers.center.dict.dao")
 public class DictModuleConfiguration {
+
+
 }
