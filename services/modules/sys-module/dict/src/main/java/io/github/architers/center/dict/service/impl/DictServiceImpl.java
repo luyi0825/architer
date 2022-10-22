@@ -73,6 +73,7 @@ public class DictServiceImpl implements DictService {
             dictDao.deleteByDictCode(tenantId, dictCodes);
             //查询已有的
             dictDao.insertBatch(dictList);
+            dictDataDao.findByDictCodes(tenantId, dictCodes);
             dictDataDao.insertBatch(dictDataList);
         });
 
