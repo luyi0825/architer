@@ -16,18 +16,10 @@
     <packaging>pom</packaging>
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
-        <jackson.version>2.11.4</jackson.version>
     </properties>
     <modules>
-        <module>sys-module</module>
+        <module>center-module</module>
+        <module>common-module</module>
     </modules>
-    <dependencies>
-
-
-
-
-
-    </dependencies>
-
 
 </project>

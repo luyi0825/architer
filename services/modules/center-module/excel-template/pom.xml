@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>sys-module</artifactId>
+        <artifactId>center-module</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
         <relativePath/>
@@ -16,7 +16,6 @@
     <packaging>jar</packaging>
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
-        <jackson.version>2.11.4</jackson.version>
     </properties>
     <dependencies>
 

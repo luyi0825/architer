@@ -10,17 +10,17 @@
         <relativePath/>
     </parent>
 
-    <artifactId>sys-module</artifactId>
-    <name>sys-module</name>
+    <artifactId>center-module</artifactId>
+    <name>center-module</name>
     <description>网关测试</description>
     <packaging>pom</packaging>
     <modules>
         <module>excel-template</module>
         <module>dict</module>
+        <module>menu</module>
     </modules>
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
-        <jackson.version>2.11.4</jackson.version>
     </properties>
     <dependencies>
 

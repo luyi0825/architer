@@ -20,20 +20,5 @@
     </modules>
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
-        <jackson.version>2.11.4</jackson.version>
     </properties>
-    <dependencies>
-
-
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>architer-context</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
-
-
-    </dependencies>
-
-
 </project>

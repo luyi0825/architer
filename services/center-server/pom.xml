@@ -4,28 +4,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>sys-module</artifactId>
+        <artifactId>services</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
         <relativePath/>
     </parent>
 
-    <artifactId>sys-server</artifactId>
-    <name>sys-server</name>
-    <description>网关测试</description>
+    <artifactId>center-server</artifactId>
+    <name>center-server</name>
+    <description>中台</description>
     <packaging>jar</packaging>
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
-        <jackson.version>2.11.4</jackson.version>
     </properties>
     <dependencies>
 
-
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>architer-context</artifactId>
-            <version>${revision}</version>
-        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>io.github.architers</groupId>-->
 <!--            <artifactId>architer-cloud-discovery-nacos-starter</artifactId>-->
@@ -42,6 +35,12 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>sys-module-dict</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>sys-module-menu</artifactId>
             <version>${revision}</version>
         </dependency>
 

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>sys-module</artifactId>
+        <artifactId>common-module</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
         <relativePath/>
@@ -24,8 +24,12 @@
             <artifactId>java-jwt</artifactId>
             <version>4.2.0</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>architer-context</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 
