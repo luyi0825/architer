@@ -15,6 +15,6 @@ public class UserInfoUtils {
             String userInfo = JwtTokenUtils.userInfo(token);
             return JsonUtils.readValue(userInfo, UserInfo.class);
         }
-        return null;
+        throw new RuntimeException("用户信息为空");
     }
 }

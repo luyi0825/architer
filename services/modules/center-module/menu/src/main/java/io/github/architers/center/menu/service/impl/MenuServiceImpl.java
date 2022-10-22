@@ -1,25 +1,28 @@
 package io.github.architers.center.menu.service.impl;
 
 import io.github.architers.center.menu.dao.MenuDao;
-import io.github.architers.center.menu.dao.SysRoleDao;
 import io.github.architers.center.menu.domain.entity.Menu;
 import io.github.architers.center.menu.domain.vo.MenuNode;
 import io.github.architers.center.menu.service.MenuService;
 import io.github.architers.center.menu.utils.NodeTreeUtils;
 import io.github.architers.common.jwttoken.UserInfo;
 import io.github.architers.common.jwttoken.UserInfoUtils;
+import io.github.architers.common.module.tenant.TenantUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 菜单对应的service实现类
+ *
+ * @author luyi
+ */
 @Service
 public class MenuServiceImpl implements MenuService {
-
-    @Resource
-    private SysRoleDao sysRoleDao;
 
     @Resource
     private MenuDao menuDao;
@@ -27,7 +30,6 @@ public class MenuServiceImpl implements MenuService {
     public List<NodeTreeUtils.TreeNode> getMenuTreeWithPrivilege() {
         //获取角色
         UserInfo userInfo = UserInfoUtils.getUserInfo();
-        System.out.println(userInfo.getUserName());
         List<Long> roleIds = userInfo.getRoles().stream().map(UserInfo.RoleInfo::getRoleId).collect(Collectors.toList());
         //获取角色菜单
         List<MenuNode> menus = menuDao.selectByRoleIds(roleIds);
@@ -43,5 +45,22 @@ public class MenuServiceImpl implements MenuService {
             });
         }
         return null;
+    }
+
+    @Override
+    public Menu addMenu(Menu menu) {
+        menu.setTenantId(TenantUtils.getTenantId());
+        menu.fillCreateAndUpdateField(new Date());
+        menuDao.insert(menu);
+        return menu;
+    }
+
+    @Override
+    public void changeStatus(Long id, Byte status) {
+        Menu menu = new Menu();
+        menu.setId(id);
+        menu.setStatus(status);
+        menu.fillCreateAndUpdateField(new Date());
+        menuDao.updateById(menu);
     }
 }
