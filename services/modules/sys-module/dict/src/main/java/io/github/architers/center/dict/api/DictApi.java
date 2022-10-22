@@ -1,11 +1,14 @@
 package io.github.architers.center.dict.api;
 
 import io.github.architers.center.dict.TenantUtils;
+import io.github.architers.center.dict.domain.dto.AddEditDictDTO;
 import io.github.architers.center.dict.domain.dto.ImportJsonDict;
 import io.github.architers.center.dict.domain.entity.Dict;
 import io.github.architers.center.dict.service.DictService;
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
+import io.github.architers.context.valid.group.AddGroup;
+import io.github.architers.context.valid.group.EditGroup;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,15 +60,16 @@ public class DictApi {
      * 添加数据字典
      */
     @PostMapping("/addDict")
-    public void addDict(@Validated @RequestBody Dict dict) {
-        dictService.addDict(dict);
+    public void addDict(@RequestBody @Validated(AddGroup.class) AddEditDictDTO add) {
+        dictService.addDict(add);
     }
 
     /**
      * 编辑数据字典
      */
-    public void editDict() {
-
+    @PostMapping("/editDict")
+    public void editDict(@RequestBody @Validated(EditGroup.class) AddEditDictDTO edit) {
+        dictService.editDict(edit);
     }
 
     /**

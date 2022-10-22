@@ -35,7 +35,7 @@ public class ModulesBuilder {
     /**
      * 扫描的包
      */
-    private String[] scanPackages = new String[]{"com.core.**", "com.business.**"};
+    private String[] scanPackages = new String[]{};
 
     /**
      * 资源模式

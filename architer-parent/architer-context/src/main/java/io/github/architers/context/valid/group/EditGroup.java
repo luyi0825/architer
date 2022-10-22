@@ -6,5 +6,5 @@ package io.github.architers.context.valid.group;
  * @author luyi
  * @date 2020/12/20 上午12:46
  */
-public interface UpdateGroup {
+public interface EditGroup {
 }

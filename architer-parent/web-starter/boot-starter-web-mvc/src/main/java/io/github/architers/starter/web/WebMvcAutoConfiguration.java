@@ -1,8 +1,8 @@
 package io.github.architers.starter.web;
 
 
-import io.github.architers.starter.web.exception.DefaultExceptionHandler;
-import io.github.architers.starter.web.exception.GlobalExceptionHandler;
+import io.github.architers.context.web.DefaultExceptionHandler;
+import io.github.architers.context.web.GlobalExceptionHandler;
 import io.github.architers.starter.web.response.ResponseResultBodyAdvice;
 import io.github.architers.starter.web.response.ResponseResultHttpMessageConverter;
 import io.github.architers.starter.web.response.WebmvcConfiguration;
@@ -13,10 +13,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * springMVC自动配置类
+ *
  * @author luyi
  */
 @Configuration(proxyBeanMethods = false)
-public class StarterWebConfig {
+public class WebMvcAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean

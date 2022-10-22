@@ -1,5 +1,6 @@
 package io.github.architers.center.dict.service.impl;
 
+import io.github.architers.center.dict.domain.dto.AddEditDictDTO;
 import io.github.architers.component.mybatisplus.MybatisPageUtils;
 import io.github.architers.center.dict.TenantUtils;
 import io.github.architers.center.dict.domain.dto.ImportJsonDictData;
@@ -10,12 +11,14 @@ import io.github.architers.center.dict.dao.DictDataDao;
 import io.github.architers.center.dict.dao.DictDao;
 import io.github.architers.center.dict.service.DictService;
 import io.github.architers.context.exception.NoLogStackException;
+import io.github.architers.context.exception.ServiceException;
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
 import io.github.architers.context.sql.SqlTaskUtils;
 import io.github.architers.context.utils.JsonUtils;
 import io.github.architers.context.web.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -129,15 +132,30 @@ public class DictServiceImpl implements DictService {
     }
 
     @Override
-    public void addDict(Dict dict) {
+    public void addDict(AddEditDictDTO addParam) {
         //TODO 判断数据是否重复
-        int count = dictDao.countByDictCode(TenantUtils.getTenantId(), dict.getDictCode());
+        int count = dictDao.countByDictCode(TenantUtils.getTenantId(), addParam.getDictCode());
         if (count > 0) {
             throw new NoLogStackException("数据字典已经存在");
         }
+        Dict dict = new Dict();
+        BeanUtils.copyProperties(dict, addParam);
         dict.fillCreateAndUpdateField(null);
         dict.setTenantId(TenantUtils.getTenantId());
         dictDao.insert(dict);
+    }
+
+    @Override
+    public void editDict(AddEditDictDTO edit) {
+        Dict dict = new Dict();
+        //字典编码不能编辑
+        edit.setDictCode(null);
+        BeanUtils.copyProperties(dict, edit);
+        dict.fillCreateAndUpdateField(null);
+        int count = dictDao.updateById(dict);
+        if (count != 1) {
+            throw new ServiceException("编辑字典失败");
+        }
     }
 
 

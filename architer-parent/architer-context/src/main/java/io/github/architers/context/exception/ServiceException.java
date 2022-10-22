@@ -22,6 +22,7 @@ public class ServiceException extends RuntimeException {
 
     public ServiceException(String message) {
         super(message);
+        this.message = message;
     }
 
     public ServiceException(int code) {
@@ -30,6 +31,7 @@ public class ServiceException extends RuntimeException {
 
     public ServiceException(String message, int code) {
         super(message);
+        this.message = message;
         this.code = code;
     }
 

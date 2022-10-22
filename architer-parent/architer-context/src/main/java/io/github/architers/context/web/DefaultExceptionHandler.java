@@ -1,8 +1,6 @@
-package io.github.architers.starter.web.exception;
+package io.github.architers.context.web;
 
 import io.github.architers.context.exception.ServiceException;
-import io.github.architers.context.web.RequestExceptionHandler;
-import io.github.architers.context.web.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.internal.engine.path.PathImpl;
@@ -38,10 +36,10 @@ public class DefaultExceptionHandler implements RequestExceptionHandler {
     public ResponseResult<?> handler(Exception e) {
         //处理校验异常
         ResponseResult<?> responseResult = this.handleValidException(e);
+        //参数异常不记录异常信息
         if (responseResult != null) {
             return responseResult;
         }
-
         //业务主动抛出异常
         log.error(e.getMessage(), e);
         if (e instanceof ServiceException) {
