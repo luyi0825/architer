@@ -1,7 +1,7 @@
-package io.github.architers.context.web;
+package io.github.architers.context.exception;
 
 
-import io.github.architers.context.exception.NoLogStackException;
+import io.github.architers.context.web.ResponseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,19 +26,12 @@ public class GlobalExceptionHandler {
         this.requestExceptionHandler = requestExceptionHandler;
     }
 
-
-    @ExceptionHandler(value = NoLogStackException.class)
-    public ResponseResult<?> exceptionHandler(NoLogStackException e) {
-        logger.info(e.getMessage());
-        return new ResponseResult<>(e.getCode(), e.getMessage());
-    }
-
     /**
      * @author luyi
      * 处理系统异常
      */
     @ExceptionHandler(value = Throwable.class)
-    public ResponseResult<?> exceptionHandler(Exception e) {
+    public ResponseResult<?> exceptionHandler(Throwable e) {
         return requestExceptionHandler.handler(e);
 
 

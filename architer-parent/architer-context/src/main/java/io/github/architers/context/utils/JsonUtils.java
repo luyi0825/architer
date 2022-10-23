@@ -7,7 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Json工具类
@@ -39,6 +41,20 @@ public class JsonUtils {
                 return object.toString();
             }
             return OBJECT_MAPPER.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("序列化失败", e);
+        }
+    }
+
+    /**
+     * Object转成Json字符串
+     *
+     * @return json字符串
+     */
+    public static Map<String,Object> toMap(Object object) {
+        try {
+            String jsonStr = OBJECT_MAPPER.writeValueAsString(object);
+            return OBJECT_MAPPER.readValue(jsonStr, HashMap.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("序列化失败", e);
         }

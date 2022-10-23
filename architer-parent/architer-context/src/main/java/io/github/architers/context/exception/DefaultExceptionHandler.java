@@ -1,6 +1,6 @@
-package io.github.architers.context.web;
+package io.github.architers.context.exception;
 
-import io.github.architers.context.exception.ServiceException;
+import io.github.architers.context.web.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.internal.engine.path.PathImpl;
@@ -33,7 +33,12 @@ public class DefaultExceptionHandler implements RequestExceptionHandler {
     public static final String MISSING_PARAMETER_EXCEPTION_TIP = "缺少参数【{0}】";
 
     @Override
-    public ResponseResult<?> handler(Exception e) {
+    public ResponseResult<?> handler(Throwable e) {
+        if (e instanceof NoStackBusException) {
+            log.info(e.getMessage());
+            NoStackBusException noStackBusException = (NoStackBusException) e;
+            return new ResponseResult<>(noStackBusException.getCode(), e.getMessage());
+        }
         //处理校验异常
         ResponseResult<?> responseResult = this.handleValidException(e);
         //参数异常不记录异常信息
@@ -42,17 +47,17 @@ public class DefaultExceptionHandler implements RequestExceptionHandler {
         }
         //业务主动抛出异常
         log.error(e.getMessage(), e);
-        if (e instanceof ServiceException) {
-            return new ResponseResult<>(((ServiceException) e).getCode(), e.getMessage());
+        if (e instanceof BusException) {
+            return new ResponseResult<>(((BusException) e).getCode(), e.getMessage());
         }
         //不可预期的异常
-        return new ResponseResult<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "系统异常", e.getMessage());
+        return new ResponseResult<>(SysException.SYS_EXCEPTION_CODE,SysException.SYS_EXCEPTION_MESSAGE, e.getMessage());
     }
 
     /**
      * 处理校验的异常
      */
-    private ResponseResult<?> handleValidException(Exception e) {
+    private ResponseResult<?> handleValidException(Throwable e) {
         //缺少参数抛出的异常
         if (e instanceof MissingServletRequestParameterException) {
             return this.getMissingServletRequestParameterExceptionResponseResult((MissingServletRequestParameterException) e);

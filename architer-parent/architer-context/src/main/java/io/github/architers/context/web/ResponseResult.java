@@ -14,7 +14,6 @@ import java.util.Objects;
 @Data
 public class ResponseResult<T> implements Serializable {
 
-
     /**
      * 返回码
      */
@@ -53,7 +52,7 @@ public class ResponseResult<T> implements Serializable {
 
     }
 
-    public  ResponseResult(Integer code, String message, T data) {
+    public ResponseResult(Integer code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
@@ -90,6 +89,16 @@ public class ResponseResult<T> implements Serializable {
         ResponseResult<T> baseResponse = new ResponseResult<>();
         // baseResponse.setCode(ResponseStatusEnum.SERVICE_EXCEPTION.getCode());
         // baseResponse.setMessage(ResponseStatusEnum.SERVICE_EXCEPTION.getMessage());
+        return baseResponse;
+    }
+
+    /**
+     * 失败
+     */
+    public static <T> ResponseResult<T> fail(String message) {
+        ResponseResult<T> baseResponse = new ResponseResult<>();
+        baseResponse.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        baseResponse.setMessage(message);
         return baseResponse;
     }
 
