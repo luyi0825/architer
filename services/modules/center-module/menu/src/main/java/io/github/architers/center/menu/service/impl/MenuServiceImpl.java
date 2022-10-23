@@ -8,6 +8,8 @@ import io.github.architers.center.menu.utils.NodeTreeUtils;
 import io.github.architers.common.jwttoken.UserInfo;
 import io.github.architers.common.jwttoken.UserInfoUtils;
 import io.github.architers.common.module.tenant.TenantUtils;
+import io.github.architers.context.exception.NoLogStackException;
+import io.github.architers.context.exception.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -62,5 +64,38 @@ public class MenuServiceImpl implements MenuService {
         menu.setStatus(status);
         menu.fillCreateAndUpdateField(new Date());
         menuDao.updateById(menu);
+    }
+
+    @Override
+    public void deleteMenu(Long menuId) {
+        //判断子菜单
+        Menu menu = menuDao.selectById(menuId);
+        if (menu == null) {
+            throw new NoLogStackException("删除菜单失败");
+        }
+        List<Menu> menus = menuDao.selectByParentCode(TenantUtils.getTenantId(), menu.getMenuCode());
+        if (!CollectionUtils.isEmpty(menus)) {
+            throw new NoLogStackException("请先删除子菜单");
+        }
+        int count = menuDao.deleteById(menuId);
+        if (count != 1) {
+            throw new RuntimeException("删除菜单失败");
+        }
+    }
+
+    @Override
+    public void editMenu(Menu edit) {
+        edit.setTenantId(null);
+        edit.setMenuCode(null);
+        edit.fillCreateAndUpdateField(new Date());
+        int count = menuDao.updateById(edit);
+        if (count != 1) {
+            throw new ServiceException("更新菜单失败");
+        }
+    }
+
+    @Override
+    public Menu getById(Long menuId) {
+        return menuDao.selectById(menuId);
     }
 }

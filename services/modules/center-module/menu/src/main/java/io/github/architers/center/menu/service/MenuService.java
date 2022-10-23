@@ -10,5 +10,11 @@ public interface MenuService {
 
     Menu addMenu(Menu menu);
 
-    void changeStatus(Long id, Byte status);
+    void changeStatus(Long menuId, Byte status);
+
+    void deleteMenu(Long menuId);
+
+    void editMenu(Menu edit);
+
+    Menu getById(Long menuId);
 }

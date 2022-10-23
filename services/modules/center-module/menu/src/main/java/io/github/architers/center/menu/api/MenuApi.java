@@ -41,12 +41,38 @@ public class MenuApi {
      * 改变菜单状态
      *
      * @param status 改变后状态
-     * @param id     菜单ID
+     * @param menuId 菜单ID
      */
-    @PutMapping("/changeStatus/{id}")
-    public void changeStatus(@PathVariable() Long id,
-                             @RequestParam("status") byte status) {
-        menuService.changeStatus(id, status);
+    @PutMapping("/changeStatus/{menuId}")
+    public void changeStatus(@PathVariable() Long menuId,
+                             @RequestParam() byte status) {
+        menuService.changeStatus(menuId, status);
     }
+
+    /**
+     * 删除菜单
+     */
+    @DeleteMapping("/deleteMenu/{menuId}")
+    public void deleteMenu(@PathVariable Long menuId) {
+        menuService.deleteMenu(menuId);
+    }
+
+
+    /**
+     * 更新菜单
+     */
+    @PutMapping("/editMenu")
+    public void updateMenu(@Validated @RequestBody Menu edit) {
+        menuService.editMenu(edit);
+    }
+
+    /**
+     * 查询菜单详情
+     */
+    @GetMapping("getById/{menuId}")
+    public Menu getById(@PathVariable Long menuId) {
+        return menuService.getById(menuId);
+    }
+
 
 }

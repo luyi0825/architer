@@ -56,11 +56,7 @@ public class Menu extends BaseTenantEntity implements Serializable {
      */
     private Byte status;
 
-    /**
-     * 备注
-     */
-    @Size(max = 50, message = "菜单备注超过50字符")
-    private String remark;
+
 
 
 }
