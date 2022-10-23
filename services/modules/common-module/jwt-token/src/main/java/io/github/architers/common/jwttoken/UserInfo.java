@@ -2,6 +2,7 @@ package io.github.architers.common.jwttoken;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -10,7 +11,7 @@ import java.util.Set;
  * 用户信息
  */
 @Data
-public class UserInfo {
+public class UserInfo implements Serializable {
 
     /**
      * 用户ID
@@ -28,6 +29,11 @@ public class UserInfo {
     private String userCaption;
 
     /**
+     * 租户信息
+     */
+    public TenantInfo tenantInfo;
+
+    /**
      * 角色信息
      */
     private List<RoleInfo> roles;
@@ -36,25 +42,6 @@ public class UserInfo {
      * 数据权限
      */
     private Set<String> permissions;
-
-
-    @Data
-    public static
-    class RoleInfo {
-        private Long roleId;
-        private String roleCode;
-        private String roleCaption;
-
-        public RoleInfo() {
-
-        }
-
-        public RoleInfo(Long roleId, String roleCode, String roleCaption) {
-            this.roleId = roleId;
-            this.roleCode = roleCode;
-            this.roleCaption = roleCaption;
-        }
-    }
 
 
 }

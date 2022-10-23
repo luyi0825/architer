@@ -18,9 +18,10 @@ public class JwtTokenUtils {
      *
      * @param **userInfo** 用户信息 用户姓名
      * @param **other**    用户其他信息 用户id
+     * @param expire       过期时间，单位毫秒
      * @return
      */
-    public static String sign(String username, String userInfo, long expire) {
+    public static String sign(UserInfo userInfo, Date issuedAt, long expire) {
         try {
             // 设置过期时间
             Date date = new Date(System.currentTimeMillis() + expire);
@@ -36,9 +37,9 @@ public class JwtTokenUtils {
                     //jwt的唯一身份标识，主要用来作为一次性token，从而回避重放攻击
                     .withJWTId(UUID.randomUUID().toString())
                     //下发的时间
-                    .withIssuedAt(new Date())
-                    .withClaim("username", username)
-                    .withClaim("userInfo", userInfo)
+                    .withIssuedAt(issuedAt == null ? new Date() : issuedAt)
+                    .withClaim("username", userInfo.getUserName())
+                    .withClaim("userInfo", JsonUtils.toJsonString(userInfo))
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (Exception e) {
@@ -101,24 +102,32 @@ public class JwtTokenUtils {
         return null;
     }
 
+    public static DecodedJWT decoded(String token) {
+        try {
+            return JWT.decode(token);
+        } catch (JWTDecodeException e) {
+            throw new RuntimeException("token有误");
+        }
+    }
+
     public static void main(String[] args) {
         UserInfo userInfo = new UserInfo();
         userInfo.setUserId(1L);
         userInfo.setUserName("admin");
         userInfo.setUserCaption("管理员");
-        List<UserInfo.RoleInfo> roleInfos = new ArrayList<>();
-        roleInfos.add(new UserInfo.RoleInfo(1L, "1", "角色1"));
-        roleInfos.add(new UserInfo.RoleInfo(2L, "2", "角色2"));
-        roleInfos.add(new UserInfo.RoleInfo(3L, "3", "角色2"));
-        roleInfos.add(new UserInfo.RoleInfo(4L, "4", "角色2"));
-        roleInfos.add(new UserInfo.RoleInfo(5L, "5", "角色2"));
-        roleInfos.add(new UserInfo.RoleInfo(6L, "6", "角色2"));
-        roleInfos.add(new UserInfo.RoleInfo(7L, "7", "角色2"));
-        roleInfos.add(new UserInfo.RoleInfo(8L, "8", "角色2"));
+        List<RoleInfo> roleInfos = new ArrayList<>();
+        roleInfos.add(new RoleInfo(1L, "1", "角色1"));
+        roleInfos.add(new RoleInfo(2L, "2", "角色2"));
+        roleInfos.add(new RoleInfo(3L, "3", "角色2"));
+        roleInfos.add(new RoleInfo(4L, "4", "角色2"));
+        roleInfos.add(new RoleInfo(5L, "5", "角色2"));
+        roleInfos.add(new RoleInfo(6L, "6", "角色2"));
+        roleInfos.add(new RoleInfo(7L, "7", "角色2"));
+        roleInfos.add(new RoleInfo(8L, "8", "角色2"));
         userInfo.setPermissions(new HashSet<>(Arrays.asList("1", "2", "rerererere")));
         userInfo.setRoles(roleInfos);
         String str = JsonUtils.toJsonString(userInfo);
-        String token = JwtTokenUtils.sign("1", str, 1000L);
+        String token = sign(userInfo,null,100);
         System.out.println(token);
 
         System.out.println(JwtTokenUtils.getUserName(token));
@@ -127,4 +136,5 @@ public class JwtTokenUtils {
         //是否过期
         System.out.println(JwtTokenUtils.isExpired(token));
     }
+
 }

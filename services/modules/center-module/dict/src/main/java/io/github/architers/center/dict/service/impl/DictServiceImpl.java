@@ -11,8 +11,8 @@ import io.github.architers.center.dict.domain.entity.DictData;
 import io.github.architers.center.dict.dao.DictDataDao;
 import io.github.architers.center.dict.dao.DictDao;
 import io.github.architers.center.dict.service.DictService;
-import io.github.architers.context.exception.NoLogStackException;
-import io.github.architers.context.exception.ServiceException;
+import io.github.architers.context.exception.NoStackBusException;
+import io.github.architers.context.exception.BusException;
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
 import io.github.architers.context.sql.SqlTaskUtils;
@@ -89,7 +89,7 @@ public class DictServiceImpl implements DictService {
         //查询数据字典
         List<Dict> dictList = dictDao.findByDictCodes(tenantId, dictCodes);
         if (CollectionUtils.isEmpty(dictList)) {
-            throw new NoLogStackException("没有数据字典需要导出");
+            throw new NoStackBusException("没有数据字典需要导出");
         }
         //查询数据字典值
         List<DictData> dictDataList = dictDataDao.findByDictCodes(tenantId, dictCodes);
@@ -138,7 +138,7 @@ public class DictServiceImpl implements DictService {
         //TODO 判断数据是否重复
         int count = dictDao.countByDictCode(TenantUtils.getTenantId(), addParam.getDictCode());
         if (count > 0) {
-            throw new NoLogStackException("数据字典已经存在");
+            throw new NoStackBusException("数据字典已经存在");
         }
         Dict dict = new Dict();
         BeanUtils.copyProperties(addParam, dict);
@@ -156,7 +156,7 @@ public class DictServiceImpl implements DictService {
         dict.fillCreateAndUpdateField(null);
         int count = dictDao.updateById(dict);
         if (count != 1) {
-            throw new ServiceException("编辑字典失败");
+            throw new BusException("编辑字典失败");
         }
     }
 
@@ -170,7 +170,7 @@ public class DictServiceImpl implements DictService {
     public void deleteDictById(Long id) {
         Dict dict = dictDao.selectById(id);
         if (dict == null) {
-            throw new ServiceException("数据字典信息不能为空");
+            throw new BusException("数据字典信息不能为空");
         }
         dictDao.deleteById(id);
         dictDataDao.findByDictCodes(TenantUtils.getTenantId(),
@@ -183,10 +183,10 @@ public class DictServiceImpl implements DictService {
         //判断数据字典是否存在
         int count = dictDao.countByDictCode(TenantUtils.getTenantId(), add.getDictCode());
         if (count == 0) {
-            throw new ServiceException("数据字典不存在");
+            throw new BusException("数据字典不存在");
         }
         if (count > 1) {
-            throw new ServiceException("数据字典重复");
+            throw new BusException("数据字典重复");
         }
         //判断字典值编码是否重复
         count = dictDataDao.countByDictCodeAndDataCode(TenantUtils.getTenantId(), add.getDictCode(), add.getDataCode());
@@ -194,7 +194,7 @@ public class DictServiceImpl implements DictService {
             if (count > 1) {
                 log.error("字典值编码【{}】重复", add.getDataCode());
             }
-            throw new ServiceException("字典值编码【" + add.getDataCode() + "】已经存在");
+            throw new BusException("字典值编码【" + add.getDataCode() + "】已经存在");
         }
 
         DictData dictData = new DictData();
@@ -226,7 +226,7 @@ public class DictServiceImpl implements DictService {
     public void deleteDictDataById(Long id) {
         int count = dictDataDao.deleteById(id);
         if (count != 1) {
-            throw new ServiceException("删除字典值数据失败");
+            throw new BusException("删除字典值数据失败");
         }
     }
 

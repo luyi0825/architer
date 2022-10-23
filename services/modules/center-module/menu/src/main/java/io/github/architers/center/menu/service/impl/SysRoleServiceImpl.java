@@ -10,16 +10,13 @@ import io.github.architers.center.menu.domain.entity.SysRole;
 import io.github.architers.center.menu.service.SysRoleService;
 import io.github.architers.common.module.tenant.TenantUtils;
 import io.github.architers.component.mybatisplus.MybatisPageUtils;
-import io.github.architers.context.exception.NoLogStackException;
+import io.github.architers.context.exception.NoStackBusException;
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
-import io.github.architers.context.web.ServletUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * @author luyi
@@ -35,7 +32,7 @@ public class SysRoleServiceImpl implements SysRoleService {
         //判断角色英文是否重复
         int count = sysRoleDao.countByRoleName(TenantUtils.getTenantId(), add.getRoleName());
         if (count > 0) {
-            throw new NoLogStackException("角色英文名称重复");
+            throw new NoStackBusException("角色英文名称重复");
         }
         add.setTenantId(TenantUtils.getTenantId());
         add.fillCreateAndUpdateField(new Date());

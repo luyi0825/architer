@@ -17,7 +17,6 @@
     <packaging>pom</packaging>
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
-        <jackson.version>2.11.4</jackson.version>
     </properties>
     <modules>
         <module>server</module>

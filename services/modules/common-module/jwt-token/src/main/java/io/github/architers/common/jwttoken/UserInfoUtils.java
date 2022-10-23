@@ -17,4 +17,12 @@ public class UserInfoUtils {
         }
         throw new RuntimeException("用户信息为空");
     }
+
+    public static String getJwtToken() {
+        String authorization = ServletUtils.header("authorization");
+        if (StringUtils.isNotEmpty(authorization) && authorization.startsWith("Bearer")) {
+            return authorization.replace("Bearer ", "");
+        }
+        throw new RuntimeException("token为空");
+    }
 }
