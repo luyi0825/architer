@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.architers.center.dict.dao.DictDataDao">
+
+
+    <delete id="deleteByDictCode">
+        update sys_dict set deleted = 1 where tenant_id=#{tenantId} and dict_code in
+        <foreach collection="dictCodes" item="dictCode" open="(" close=")" separator=",">
+            #{dictCode}
+        </foreach>
+        and deleted = 0
+    </delete>
+    <select id="findByDictCodes"
+            resultType="io.github.architers.center.dict.domain.entity.DictData">
+
+        select * from sys_dict_data where tenant_id=#{tenantId}
+        <if test="dictCodes!=null and dictCodes.size>0">
+            and dict_code in
+            <foreach collection="dictCodes" item="dictCode" open="(" close=")" separator=",">
+                #{dictCode}
+            </foreach>
+        </if>
+        and deleted = 0
+    </select>
+    <select id="countByDictCodeAndDataCode" resultType="java.lang.Integer">
+        select count(1)
+        from sys_dict_data
+        where tenant_id = #{tenantId}
+          and dict_code = #{dictCode}
+          and data_code = #{dataCode}
+          and deleted = 0
+    </select>
+    <select id="getSimpleListByDictCode"
+            resultType="io.github.architers.center.dict.domain.vo.SimpleDictDataVO">
+        select data_code as dataCode, data_caption as dataCaption
+        from sys_dict_data
+        where tenant_id = #{tenantId}
+          and dict_code = #{dictCode}
+          and deleted = 0
+    </select>
+
+
+</mapper>
+

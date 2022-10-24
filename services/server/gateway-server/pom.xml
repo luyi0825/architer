@@ -10,9 +10,9 @@
         <relativePath/>
     </parent>
 
-    <artifactId>test-gateway</artifactId>
-    <name>test-gateway</name>
-    <description>网关测试</description>
+    <artifactId>gateway-server</artifactId>
+    <name>gateway-server</name>
+    <description>网关</description>
     <packaging>jar</packaging>
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>

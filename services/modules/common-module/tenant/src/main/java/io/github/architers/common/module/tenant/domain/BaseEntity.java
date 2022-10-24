@@ -4,13 +4,14 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author luyi
  */
 @Data
-public abstract class BaseEntity {
+public abstract class BaseEntity implements Serializable {
     /**
      * 是否删除:0否1是
      */
@@ -57,8 +58,6 @@ public abstract class BaseEntity {
         if (this.getId() == null) {
             this.createBy = 0L;//@TODO
             this.createTime = date;
-            this.updateBy = 0L;//@TODO
-            this.updateTime = date;
         } else {
             this.updateBy = 0L;//@TODO
             this.updateTime = date;
