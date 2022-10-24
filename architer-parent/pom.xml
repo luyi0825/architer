@@ -44,6 +44,7 @@
         <elasticsearch.version>7.9.3</elasticsearch.version>
         <elasticjob.verion>3.0.0</elasticjob.verion>
         <jacoco.version>0.8.3</jacoco.version>
+        <maven-flatten-version>1.1.0</maven-flatten-version>
     </properties>
     <developers>
         <developer>
@@ -188,6 +189,11 @@
                 <artifactId>jackson-core</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
             <!--            <dependency>-->
             <!--                <groupId>org.redisson</groupId>-->
             <!--                <artifactId>redisson</artifactId>-->
@@ -328,7 +334,34 @@
 <!--                    </execution>-->
 <!--                </executions>-->
             </plugin>
-
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${maven-flatten-version}</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    <pomElements>
+                        <dependencies>expand</dependencies>
+                    </pomElements>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <pluginRepositories>

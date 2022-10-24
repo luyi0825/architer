@@ -12,5 +12,4 @@ public interface SysTenantService {
      */
     void isValid(Integer tenantId);
 
-    void insertOne(SysTenantUser sysTenantUser);
 }

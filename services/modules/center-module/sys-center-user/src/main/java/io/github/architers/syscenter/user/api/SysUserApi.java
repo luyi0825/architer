@@ -33,7 +33,7 @@ public class SysUserApi {
     }
 
     @PostMapping("/addUser")
-    public void addUser(@Validated AddTenantUserDTO add) {
+    public void addUser(@RequestBody @Validated AddTenantUserDTO add) {
         sysUserService.addSysUser(add);
     }
 

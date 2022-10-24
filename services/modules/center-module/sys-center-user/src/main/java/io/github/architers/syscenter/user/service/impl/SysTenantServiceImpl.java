@@ -3,6 +3,7 @@ package io.github.architers.syscenter.user.service.impl;
 import io.github.architers.syscenter.user.StatusEnum;
 import io.github.architers.syscenter.user.dao.SysTenantDao;
 import io.github.architers.syscenter.user.domain.entity.SysTenant;
+import io.github.architers.syscenter.user.domain.entity.SysTenantUser;
 import io.github.architers.syscenter.user.service.SysTenantService;
 import io.github.architers.context.exception.BusException;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class SysTenantServiceImpl implements SysTenantService {
     @Resource
     private SysTenantDao sysTenantDao;
 
+    @Override
     public SysTenant findById(Integer tenantId) {
         return sysTenantDao.selectById(tenantId);
     }

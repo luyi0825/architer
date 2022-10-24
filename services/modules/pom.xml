@@ -4,19 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>services</artifactId>
+        <artifactId>services-parent</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
-        <relativePath/>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>modules</artifactId>
     <name>modules</name>
     <description>网关测试</description>
     <packaging>pom</packaging>
-    <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
-    </properties>
     <modules>
         <module>center-module</module>
         <module>common-module</module>

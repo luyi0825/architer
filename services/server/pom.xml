@@ -5,19 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>services</artifactId>
+        <artifactId>services-parent</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
-        <relativePath/>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>server</artifactId>
     <name>server</name>
     <description>系统服务</description>
     <packaging>pom</packaging>
-    <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
-    </properties>
     <modules>
         <module>center-server</module>
         <module>gateway-server</module>

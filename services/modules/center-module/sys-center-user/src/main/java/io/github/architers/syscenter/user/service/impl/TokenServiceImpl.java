@@ -1,5 +1,6 @@
 package io.github.architers.syscenter.user.service.impl;
 
+import io.github.architers.common.module.tenant.TenantUtils;
 import io.github.architers.syscenter.user.StatusEnum;
 import io.github.architers.syscenter.user.domain.dto.LoginParamDTO;
 import io.github.architers.syscenter.user.domain.entity.SysTenant;
@@ -47,8 +48,8 @@ public class TokenServiceImpl implements TokenService {
         userInfo.setUserName(sysUser.getUserName());
         userInfo.setUserCaption(sysUser.getUserCaption());
 
-        //查询租户信息
-        SysTenant tenant = sysTenantService.findById(sysUser.getTenantId());
+        //查询租户信息 TODO 租户ID查询数据库
+        SysTenant tenant = sysTenantService.findById(TenantUtils.getTenantId());
         if (tenant == null) {
             throw new NoStackBusException("租户信息不存在");
         }

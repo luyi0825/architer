@@ -7,39 +7,20 @@
         <artifactId>center-module</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
-        <relativePath/>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>sys-center-dict</artifactId>
     <name>sys-center-dict</name>
     <description>系统中台数据字典</description>
     <packaging>jar</packaging>
-    <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
-    </properties>
     <dependencies>
 
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-core</artifactId>
-            <version>${mybatis-plus.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-extension</artifactId>
-            <version>${mybaits-plus.version}</version>
-            <scope>compile</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybaits-plus.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -49,7 +30,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>mybatis-plus</artifactId>
-            <version>${revision}</version>
+            <version>${architer.revision}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

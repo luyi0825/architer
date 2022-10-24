@@ -7,19 +7,14 @@
         <artifactId>center-module</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
-        <relativePath/>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>sys-module-excel-template</artifactId>
     <name>sys-module</name>
-    <description>网关测试</description>
+    <description>网关测试1</description>
     <packaging>jar</packaging>
-    <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
-    </properties>
     <dependencies>
-
-
 
     </dependencies>
 

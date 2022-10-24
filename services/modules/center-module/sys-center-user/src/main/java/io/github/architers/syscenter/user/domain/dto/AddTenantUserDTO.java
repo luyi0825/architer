@@ -26,12 +26,14 @@ public class AddTenantUserDTO implements Serializable {
      * 用户名称
      */
     @Size(max = 50, message = "用户名称最大50个字符")
+    @NotEmpty(message = "用户名称不能为空")
     private String userCaption;
     /**
      * 租户ID
      */
     @NotNull(message = "租户ID不能为空")
     private Integer tenantId;
+
     /**
      * 用户状态:0禁用，1启用
      */

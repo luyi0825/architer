@@ -4,10 +4,10 @@
 <mapper namespace="io.github.architers.syscenter.user.dao.SysUserDao">
     <select id="getUsersByPage" resultType="io.github.architers.syscenter.user.domain.vo.SysUserVO"
             parameterType="io.github.architers.syscenter.user.domain.dto.SysUserQueryDTO">
-        select username, user_caption, status, create_by, update_by, create_time, update_time
+        select user_name, user_caption, status, create_by, update_by, create_time, update_time
         from sys_user
         <if test="username!=null">
-            and username = #{username}
+            and user_name = #{username}
         </if>
         <if test="userCaption!=null">
             and user_caption like contract('%', #{userCaption},'%')
@@ -26,7 +26,7 @@
     </select>
     <select id="selectByUserName" resultType="io.github.architers.syscenter.user.domain.vo.SysUserVO"
             parameterType="java.lang.String">
-        select username, user_caption, status, create_by, update_by, create_time, update_time
+        select user_name, user_caption, status, create_by, update_by, create_time, update_time
         from sys_user
         where user_name = #{userName}
           and deleted = 0

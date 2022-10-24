@@ -8,58 +8,28 @@
         <artifactId>center-module</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
-        <relativePath/>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>sys-center-user</artifactId>
     <name>sys-center-user</name>
     <description>系统中台用户</description>
-    <version>${revision}</version>
     <packaging>jar</packaging>
-    <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
-        <jackson.version>2.11.4</jackson.version>
-    </properties>
     <dependencies>
 
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>5.3.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-core</artifactId>
-            <version>${mybatis-plus.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-extension</artifactId>
-            <version>${mybaits-plus.version}</version>
-            <scope>compile</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybaits-plus.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>mybatis-plus</artifactId>
-            <version>${revision}</version>
-            <scope>compile</scope>
-        </dependency>
+
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>module-common-jwt-token</artifactId>
@@ -69,7 +39,13 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>module-common-tenant</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>${architer.revision}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

@@ -1,6 +1,7 @@
 package io.github.architers.syscenter.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.BeanUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.github.architers.syscenter.user.TenantUserConstants;
 import io.github.architers.syscenter.user.dao.SysUserDao;
@@ -66,6 +67,7 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addSysUser(AddTenantUserDTO add) {
+
         //判断租户状态
         sysTenantService.isValid(add.getTenantId());
         //判断用户名是否已经存在
@@ -74,6 +76,9 @@ public class SysUserServiceImpl implements SysUserService {
         //用户不存在，就直接添加
         if (sysUserVO == null) {
             SysUser sysUser = new SysUser();
+            sysUser.setUserName(add.getUserName());
+            sysUser.setUserCaption(add.getUserCaption());
+            sysUser.setStatus(add.getStatus());
             sysUser.fillCreateAndUpdateField(date);
             //默认的密码为系统的默认的密码+用户名
             String defaultPassword = passwordEncoder.encode(TenantUserConstants.DEFAULT_PASSWORD_PREFIX + add.getUserName());

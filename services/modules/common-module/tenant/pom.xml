@@ -7,16 +7,13 @@
         <artifactId>common-module</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
-        <relativePath/>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>module-common-tenant</artifactId>
     <name>module-common-tenant</name>
     <description>多租户</description>
     <packaging>jar</packaging>
-    <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
-    </properties>
     <dependencies>
 
         <dependency>
@@ -25,15 +22,22 @@
             <version>3.5.2</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>architer-context</artifactId>
-            <version>${revision}</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
     </dependencies>
 
 

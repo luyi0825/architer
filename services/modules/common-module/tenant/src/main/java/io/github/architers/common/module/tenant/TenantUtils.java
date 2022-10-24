@@ -1,6 +1,10 @@
 package io.github.architers.common.module.tenant;
 
-import io.github.architers.context.web.ServletUtils;
+
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author luyi
@@ -9,9 +13,16 @@ import io.github.architers.context.web.ServletUtils;
 public class TenantUtils {
 
     public static Integer getTenantId() {
-        String tenantId = ServletUtils.header("tenant_id");
+        HttpServletRequest httpServletRequest = request();
+        String tenantId = httpServletRequest.getHeader("tenant_id");
 
         return Integer.parseInt(tenantId);
+    }
+
+    public static HttpServletRequest request() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert attributes != null;
+        return attributes.getRequest();
     }
 
 

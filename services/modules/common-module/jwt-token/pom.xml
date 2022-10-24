@@ -7,16 +7,13 @@
         <artifactId>common-module</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
-        <relativePath/>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>module-common-jwt-token</artifactId>
     <name>module-common-jwt-token</name>
     <description>安全</description>
     <packaging>jar</packaging>
-    <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
-    </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
         <dependency>

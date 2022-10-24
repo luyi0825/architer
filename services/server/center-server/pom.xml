@@ -7,16 +7,14 @@
         <artifactId>server</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
-        <relativePath/>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>center-server</artifactId>
     <name>center-server</name>
     <description>中台</description>
     <packaging>jar</packaging>
-    <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
-    </properties>
+
     <dependencies>
 
 
@@ -35,7 +33,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>spring-boot-starter-web-mvc</artifactId>
-            <version>${revision}</version>
+            <version>${architer.revision}</version>
         </dependency>
 
         <dependency>
@@ -75,7 +73,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>${revision}</version>
+            <version>${architer.revision}</version>
         </dependency>
 
     </dependencies>
