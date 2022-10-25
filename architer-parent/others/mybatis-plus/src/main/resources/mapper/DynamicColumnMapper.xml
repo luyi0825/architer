@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="common.dynamicColumns">
+
+    <!--查询列-->
+    <sql id="select">
+        <if test="columns!=null and columns.size>0">
+            <trim prefixOverrides="," suffixOverrides=",">
+                <foreach collection="columns" item="column" separator=",">
+                    #{column.field} as #{column.alias}
+                </foreach>
+            </trim>
+        </if>
+    </sql>
+
+</mapper>
+
