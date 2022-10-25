@@ -1,14 +1,18 @@
 package io.github.architers.syscenter.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.toolkit.BeanUtils;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import io.github.architers.component.mybatisplus.Column;
 import io.github.architers.syscenter.user.TenantUserConstants;
 import io.github.architers.syscenter.user.dao.SysUserDao;
+import io.github.architers.syscenter.user.dao.SysUserRoleDao;
 import io.github.architers.syscenter.user.domain.dto.AddTenantUserDTO;
+import io.github.architers.syscenter.user.domain.dto.AuthorizeRoleDTO;
 import io.github.architers.syscenter.user.domain.dto.SysUserQueryDTO;
 import io.github.architers.syscenter.user.domain.entity.SysTenantUser;
 import io.github.architers.syscenter.user.domain.entity.SysUser;
+import io.github.architers.syscenter.user.domain.entity.SysUserRole;
 import io.github.architers.syscenter.user.domain.vo.SysUserVO;
 import io.github.architers.syscenter.user.service.SysTenantService;
 import io.github.architers.syscenter.user.service.SysTenantUserService;
@@ -24,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Supplier;
@@ -46,6 +51,9 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Resource
     private SysTenantUserService sysTenantUserService;
+    @Resource
+
+    private SysUserRoleDao sysUserRoleDao;
 
 
     @Override
@@ -58,7 +66,9 @@ public class SysUserServiceImpl implements SysUserService {
                     sysUserQueryDTO = new SysUserQueryDTO();
                 }
                 sysUserQueryDTO.setTenantId(TenantUtils.getTenantId());
-                return sysUserDao.getUsersByPage(sysUserQueryDTO);
+                List<Column> columns = new ArrayList<>();
+                columns.add(new Column("user_name", "userName"));
+                return sysUserDao.getUsersByPage(columns, sysUserQueryDTO);
             }
         });
     }
@@ -131,5 +141,25 @@ public class SysUserServiceImpl implements SysUserService {
         Wrapper<SysUser> sysUserWrapper =
                 Wrappers.lambdaQuery(SysUser.class).eq(SysUser::getUserName, userName);
         return sysUserDao.selectOne(sysUserWrapper);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void authorizeRole(AuthorizeRoleDTO authorizeRoleDTO) {
+        //先删除
+        if (CollectionUtils.isNotEmpty(authorizeRoleDTO.getDeleteIds())) {
+            sysUserRoleDao.deleteBatchIds(authorizeRoleDTO.getDeleteIds());
+        }
+        //然后添加
+        if (CollectionUtils.isNotEmpty(authorizeRoleDTO.getAddRoleIds())) {
+            List<SysUserRole> userRoles = new ArrayList<>(authorizeRoleDTO.getAddRoleIds().size());
+            for (Long addRoleId : authorizeRoleDTO.getAddRoleIds()) {
+                SysUserRole sysUserRole = new SysUserRole();
+                sysUserRole.setRoleId(addRoleId);
+                sysUserRole.setUserId(authorizeRoleDTO.getUserId());
+                userRoles.add(sysUserRole);
+            }
+            sysUserRoleDao.insertBatch(userRoles);
+        }
     }
 }

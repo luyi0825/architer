@@ -1,6 +1,7 @@
 package io.github.architers.syscenter.user.api;
 
 import io.github.architers.syscenter.user.domain.dto.AddTenantUserDTO;
+import io.github.architers.syscenter.user.domain.dto.AuthorizeRoleDTO;
 import io.github.architers.syscenter.user.domain.dto.SysUserQueryDTO;
 import io.github.architers.syscenter.user.domain.entity.SysUser;
 import io.github.architers.syscenter.user.domain.vo.SysUserVO;
@@ -45,6 +46,14 @@ public class SysUserApi {
     @PutMapping("/editUser")
     public void editUser(@Validated SysUser edit) {
         sysUserService.editUser(edit);
+    }
+
+    /**
+     * 授权角色
+     */
+    @PutMapping("/authorizeRole")
+    public void authorizeRole(@RequestBody @Validated AuthorizeRoleDTO authorizeRoleDTO) {
+        sysUserService.authorizeRole(authorizeRoleDTO);
     }
 
     /**
