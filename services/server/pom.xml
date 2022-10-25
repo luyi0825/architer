@@ -18,5 +18,6 @@
     <modules>
         <module>center-server</module>
         <module>gateway-server</module>
+        <module>web-flux-server</module>
     </modules>
 </project>
