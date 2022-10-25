@@ -48,7 +48,6 @@ public class SysUserServiceImpl implements SysUserService {
     private SysTenantUserService sysTenantUserService;
 
 
-
     @Override
     public PageResult<SysUserVO> getUsersByPage(PageRequest<SysUserQueryDTO> pageRequest) {
         return MybatisPageUtils.pageQuery(pageRequest.getPageParam(), new Supplier<List<SysUserVO>>() {
@@ -89,6 +88,7 @@ public class SysUserServiceImpl implements SysUserService {
             sysTenantUser.setUserId(sysUser.getId());
             sysTenantUser.setTenantId(add.getTenantId());
             sysTenantUser.fillCreateAndUpdateField(date);
+            sysTenantUser.setStatus(add.getStatus());
             sysTenantUserService.insertOne(sysTenantUser);
             return;
         }

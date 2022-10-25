@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -45,13 +46,17 @@ public class DefaultExceptionHandler implements RequestExceptionHandler {
         if (responseResult != null) {
             return responseResult;
         }
+        //没有权限访问
+        if (e instanceof AccessDeniedException) {
+            return new ResponseResult<>(HttpStatus.FORBIDDEN.value(), "没有权限");
+        }
         //业务主动抛出异常
         log.error(e.getMessage(), e);
         if (e instanceof BusException) {
             return new ResponseResult<>(((BusException) e).getCode(), e.getMessage());
         }
         //不可预期的异常
-        return new ResponseResult<>(SysException.SYS_EXCEPTION_CODE,SysException.SYS_EXCEPTION_MESSAGE, e.getMessage());
+        return new ResponseResult<>(SysException.SYS_EXCEPTION_CODE, SysException.SYS_EXCEPTION_MESSAGE, e.getMessage());
     }
 
     /**
