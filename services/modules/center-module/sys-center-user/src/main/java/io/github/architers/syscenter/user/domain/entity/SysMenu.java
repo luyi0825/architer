@@ -8,7 +8,6 @@ import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -18,7 +17,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName("sys_menu")
-public class Menu extends BaseTenantEntity implements Serializable {
+public class SysMenu extends BaseTenantEntity implements Serializable {
 
     @TableId(type = IdType.AUTO)
     private Long id;

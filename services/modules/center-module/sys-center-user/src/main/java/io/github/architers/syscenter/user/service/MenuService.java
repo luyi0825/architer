@@ -1,6 +1,6 @@
 package io.github.architers.syscenter.user.service;
 
-import io.github.architers.syscenter.user.domain.entity.Menu;
+import io.github.architers.syscenter.user.domain.entity.SysMenu;
 import io.github.architers.syscenter.user.utils.NodeTreeUtils;
 
 import java.util.List;
@@ -8,13 +8,13 @@ import java.util.List;
 public interface MenuService {
     List<NodeTreeUtils.TreeNode> getMenuTreeWithPrivilege();
 
-    Menu addMenu(Menu menu);
+    SysMenu addMenu(SysMenu sysMenu);
 
     void changeStatus(Long menuId, Byte status);
 
     void deleteMenu(Long menuId);
 
-    void editMenu(Menu edit);
+    void editMenu(SysMenu edit);
 
-    Menu getById(Long menuId);
+    SysMenu getById(Long menuId);
 }

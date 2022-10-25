@@ -5,9 +5,9 @@
 
 
     <select id="selectByRoleIds" resultType="io.github.architers.syscenter.user.domain.vo.MenuNode">
-        select menu.id,menu.menu_code,menu.menu_caption,menu.menu_icon,menu.parent_code
+        select sysMenu.id,sysMenu.menu_code,sysMenu.menu_caption,sysMenu.menu_icon,sysMenu.parent_code
         from sys_role_menu as roleMenu
-        inner join sys_menu as menu on menu.id = roleMenu.menu_id and menu.deleted = 0
+        inner join sys_menu as sysMenu on sysMenu.id = roleMenu.menu_id and sysMenu.deleted = 0
         where roleMenu.role_id in
         <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
             #{roleId}
@@ -15,9 +15,9 @@
 
     </select>
     <select id="selectByParentCode"
-            resultType="io.github.architers.syscenter.user.domain.entity.Menu">
-        select menu.id, menu.menu_code, menu.menu_caption, menu.menu_icon, menu.parent_code
-        from sys_menu as menu
+            resultType="io.github.architers.syscenter.user.domain.entity.SysMenu">
+        select sysMenu.id, sysMenu.menu_code, sysMenu.menu_caption, sysMenu.menu_icon, sysMenu.parent_code
+        from sys_menu as sysMenu
         where tenant_id = #{tenantId}
           and parent_code = #{parentCode}
           and deleted = 0

@@ -1,7 +1,7 @@
 package io.github.architers.syscenter.user.service.impl;
 
 import io.github.architers.syscenter.user.dao.MenuDao;
-import io.github.architers.syscenter.user.domain.entity.Menu;
+import io.github.architers.syscenter.user.domain.entity.SysMenu;
 import io.github.architers.syscenter.user.domain.vo.MenuNode;
 import io.github.architers.syscenter.user.service.MenuService;
 import io.github.architers.syscenter.user.utils.NodeTreeUtils;
@@ -51,31 +51,31 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Menu addMenu(Menu menu) {
-        menu.setTenantId(TenantUtils.getTenantId());
-        menu.fillCreateAndUpdateField(new Date());
-        menuDao.insert(menu);
-        return menu;
+    public SysMenu addMenu(SysMenu sysMenu) {
+        sysMenu.setTenantId(TenantUtils.getTenantId());
+        sysMenu.fillCreateAndUpdateField(new Date());
+        menuDao.insert(sysMenu);
+        return sysMenu;
     }
 
     @Override
     public void changeStatus(Long id, Byte status) {
-        Menu menu = new Menu();
-        menu.setId(id);
-        menu.setStatus(status);
-        menu.fillCreateAndUpdateField(new Date());
-        menuDao.updateById(menu);
+        SysMenu sysMenu = new SysMenu();
+        sysMenu.setId(id);
+        sysMenu.setStatus(status);
+        sysMenu.fillCreateAndUpdateField(new Date());
+        menuDao.updateById(sysMenu);
     }
 
     @Override
     public void deleteMenu(Long menuId) {
         //判断子菜单
-        Menu menu = menuDao.selectById(menuId);
-        if (menu == null) {
+        SysMenu sysMenu = menuDao.selectById(menuId);
+        if (sysMenu == null) {
             throw new NoStackBusException("删除菜单失败");
         }
-        List<Menu> menus = menuDao.selectByParentCode(TenantUtils.getTenantId(), menu.getMenuCode());
-        if (!CollectionUtils.isEmpty(menus)) {
+        List<SysMenu> sysMenus = menuDao.selectByParentCode(TenantUtils.getTenantId(), sysMenu.getMenuCode());
+        if (!CollectionUtils.isEmpty(sysMenus)) {
             throw new NoStackBusException("请先删除子菜单");
         }
         int count = menuDao.deleteById(menuId);
@@ -85,7 +85,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void editMenu(Menu edit) {
+    public void editMenu(SysMenu edit) {
         edit.setTenantId(null);
         edit.setMenuCode(null);
         edit.fillCreateAndUpdateField(new Date());
@@ -96,7 +96,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Menu getById(Long menuId) {
+    public SysMenu getById(Long menuId) {
         return menuDao.selectById(menuId);
     }
 }

@@ -1,6 +1,6 @@
 package io.github.architers.syscenter.user.api;
 
-import io.github.architers.syscenter.user.domain.entity.Menu;
+import io.github.architers.syscenter.user.domain.entity.SysMenu;
 import io.github.architers.syscenter.user.service.MenuService;
 import io.github.architers.syscenter.user.utils.NodeTreeUtils;
 import org.springframework.validation.annotation.Validated;
@@ -33,8 +33,8 @@ public class MenuApi {
      * 添加菜单
      */
     @PostMapping("/addMenu")
-    public Menu addMenu(@Validated @RequestBody Menu menu) {
-        return menuService.addMenu(menu);
+    public SysMenu addMenu(@Validated @RequestBody SysMenu sysMenu) {
+        return menuService.addMenu(sysMenu);
     }
 
     /**
@@ -62,7 +62,7 @@ public class MenuApi {
      * 更新菜单
      */
     @PutMapping("/editMenu")
-    public void updateMenu(@Validated @RequestBody Menu edit) {
+    public void updateMenu(@Validated @RequestBody SysMenu edit) {
         menuService.editMenu(edit);
     }
 
@@ -70,7 +70,7 @@ public class MenuApi {
      * 查询菜单详情
      */
     @GetMapping("getById/{menuId}")
-    public Menu getById(@PathVariable Long menuId) {
+    public SysMenu getById(@PathVariable Long menuId) {
         return menuService.getById(menuId);
     }
 
