@@ -3,6 +3,7 @@ package io.github.architers.context.cache.operation;
 
 import io.github.architers.context.cache.annotation.Cacheable;
 import io.github.architers.context.cache.annotation.PutCache;
+import lombok.Data;
 
 import java.util.concurrent.TimeUnit;
 
@@ -10,7 +11,8 @@ import java.util.concurrent.TimeUnit;
  * @author luyi
  * @see PutCache
  */
-public class PutCacheOperation extends BaseCacheOperation {
+@Data
+public class PutCacheParam extends BaseCacheOperationParam {
 
     /**
      * @see Cacheable#randomTime()
@@ -28,7 +30,7 @@ public class PutCacheOperation extends BaseCacheOperation {
     /**
      * 缓存值
      */
-    private String cacheValue;
+    private Object cacheValue;
 
 
     public long getRandomTime() {
@@ -55,12 +57,6 @@ public class PutCacheOperation extends BaseCacheOperation {
         this.timeUnit = timeUnit;
     }
 
-    public String getCacheValue() {
-        return cacheValue;
-    }
 
-    public void setCacheValue(String cacheValue) {
-        this.cacheValue = cacheValue;
-    }
 
 }

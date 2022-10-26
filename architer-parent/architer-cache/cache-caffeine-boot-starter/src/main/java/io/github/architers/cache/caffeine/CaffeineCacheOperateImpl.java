@@ -1,11 +1,11 @@
 package io.github.architers.cache.caffeine;
 
 import io.github.architers.context.cache.Cache;
-import io.github.architers.context.cache.CacheManager;
+import io.github.architers.context.cache.operation.CacheOperate;
 
 
 
-public class CaffeineCacheManagerImpl implements CacheManager {
+public class CaffeineCacheOperateImpl implements CacheOperate {
 
     @Override
     public Cache getSimpleCache(String cacheName) {

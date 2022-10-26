@@ -40,12 +40,14 @@ public class MapCache extends BaseRedissonCache {
 
     @Override
     public void set(Object key, Object value) {
+        redissonClient.getMap(cacheName);
         cacheService.set(cacheName, key, value);
     }
 
     @Override
     public Future<Boolean> multiSet(Object values) {
-        Map<Object, Object> cacheMap = batchValueFactory.parseValue2Map(values, Symbol.COLON);
+
+        Map<Object, Object> cacheMap = batchValueFactory.parseValue2Map(values, Symbol.COLON)
         redissonClient.getMap(cacheName).putAll(cacheMap);
         return null;
     }

@@ -11,10 +11,10 @@ import org.springframework.context.ApplicationContextAware;
 import java.util.concurrent.ExecutionException;
 
 @SpringBootTest
-class SimpleCacheTest implements ApplicationContextAware {
+class ValueCacheTest implements ApplicationContextAware {
 
     @Autowired
-    private RedisCacheManager redisCacheManager;
+    private RedisCacheOperate redisCacheManager;
 
     private CacheTest cacheTest;
 

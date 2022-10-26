@@ -2,9 +2,9 @@
 package io.github.architers.cache.redisson;
 
 
-import io.github.architers.cache.redisson.support.RedisCacheManager;
+import io.github.architers.cache.redisson.support.RedisCacheOperate;
 import io.github.architers.cache.redisson.support.RedisTemplateCacheService;
-import io.github.architers.context.cache.annotation.EnableCustomCaching;
+import io.github.architers.context.cache.annotation.EnableArchiterCaching;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
@@ -34,7 +34,7 @@ import java.io.InputStream;
  * @author luyi
  */
 @Configuration
-@EnableCustomCaching
+@EnableArchiterCaching
 @EnableConfigurationProperties(RedissonCacheProperties.class)
 public class RedissonCacheAutoConfiguration {
     @Resource
@@ -44,7 +44,7 @@ public class RedissonCacheAutoConfiguration {
     private ApplicationContext ctx;
 
     @Bean(destroyMethod = "shutdown", value = "redissonCacheClient")
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(name = {"redissonCacheClient"})
     public RedissonClient redissonCacheClient() throws IOException {
         Config config;
         if (redissonCacheProperties == null) {
@@ -77,8 +77,7 @@ public class RedissonCacheAutoConfiguration {
         return new RedissonConnectionFactory(redisson);
     }
 
-
-    @Bean("redisTemplate")
+    @Bean("cacheRedisTemplate")
     public org.springframework.data.redis.core.RedisTemplate<Object, Object> redisTemplate(RedissonConnectionFactory redisConnectionFactory) {
         RedisSerializer<Object> serializer = getRedisSerializer();
         org.springframework.data.redis.core.RedisTemplate<Object, Object> redisTemplate = new org.springframework.data.redis.core.RedisTemplate<>();
@@ -91,7 +90,7 @@ public class RedissonCacheAutoConfiguration {
         return redisTemplate;
     }
 
-    @Bean("stringRedisTemplate")
+    @Bean("cacheStringRedisTemplate")
     public StringRedisTemplate stringRedisTemplate(RedissonConnectionFactory redisConnectionFactory) {
         RedisSerializer<Object> serializer = getRedisSerializer();
         StringRedisTemplate redisTemplate = new StringRedisTemplate();
@@ -120,9 +119,9 @@ public class RedissonCacheAutoConfiguration {
 
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
-    public RedisCacheManager redisCacheManager(RedisTemplateCacheService redisTemplateCacheService,
-                                              @Qualifier("redissonCacheClient") RedissonClient redissonClient) {
-        RedisCacheManager redisCacheManager = new RedisCacheManager();
+    public RedisCacheOperate redisCacheManager(RedisTemplateCacheService redisTemplateCacheService,
+                                               @Qualifier("redissonCacheClient") RedissonClient redissonClient) {
+        RedisCacheOperate redisCacheManager = new RedisCacheOperate();
         redisCacheManager.setRedisTemplateService(redisTemplateCacheService);
         redisCacheManager.setRedissonClient(redissonClient);
         return redisCacheManager;

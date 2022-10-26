@@ -17,7 +17,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Import({CacheAdviceImportSelector.class, CacheConfiguration.class})
-public @interface EnableCustomCaching {
+public @interface EnableArchiterCaching {
     /**
      * 指示与基于标准Java接口的代理相反，是否要创建基于子类（CGLIB）的代理。默认为false。仅当mode()设置为AdviceMode.PROXY时适用。
      */

@@ -5,7 +5,7 @@ package io.github.architers.context.cache.operation;
  *
  * @author luyi
  */
-public class DeleteCacheOperation extends BaseCacheOperation {
+public class DeleteCacheParam extends BaseCacheOperationParam {
     /**
      * 缓存值
      */

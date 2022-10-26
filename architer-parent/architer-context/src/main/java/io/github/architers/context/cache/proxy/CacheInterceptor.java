@@ -2,27 +2,22 @@ package io.github.architers.context.cache.proxy;
 
 
 import io.github.architers.context.cache.CacheAnnotationsParser;
-import io.github.architers.context.cache.model.NullValue;
-import io.github.architers.context.cache.operation.BaseCacheOperation;
-import io.github.architers.context.cache.operation.CacheOperation;
+import io.github.architers.context.NullValue;
 import io.github.architers.context.cache.operation.CacheOperationHandler;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.expression.ExpressionParser;
-import io.github.architers.context.lock.LockExecute;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.CollectionUtils;
 
+import java.lang.annotation.Annotation;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 /**
  * @author luyi
@@ -45,12 +40,10 @@ public class CacheInterceptor implements MethodInterceptor {
          */
         ExpressionMetadata expressionMetadata = this.buildExpressionMeta(invocation);
 
-        Collection<CacheOperation> cacheOperations = cacheAnnotationsParser.parse(invocation.getMethod());
-        if (!CollectionUtils.isEmpty(cacheOperations)) {
-            if (cacheOperations.size() > 1) {
-
-            }
-            Object returnValue = execute(invocation, cacheOperations, expressionMetadata);
+        Collection<? extends Annotation> operationAnnotations =
+                cacheAnnotationsParser.parse(invocation.getMethod());
+        if (!CollectionUtils.isEmpty(operationAnnotations)) {
+            Object returnValue = execute(invocation, operationAnnotations, expressionMetadata);
             //已经调用了方法，缓存中放的空值
             if (returnValue instanceof NullValue) {
                 return null;
@@ -59,7 +52,7 @@ public class CacheInterceptor implements MethodInterceptor {
             if (returnValue != null) {
                 return returnValue;
             }
-            //没有调用过方法，调用一次
+            //没有调用过方法，调用一次(
             return invocation.proceed();
         }
         return invocation.proceed();
@@ -70,7 +63,7 @@ public class CacheInterceptor implements MethodInterceptor {
     /**
      * 执行拦截的操作
      */
-    private Object execute(MethodInvocation invocation, Collection<CacheOperation> operations, ExpressionMetadata expressionMetadata) throws Throwable {
+    private Object execute(MethodInvocation invocation, Collection<? extends Annotation> operationAnnotations, ExpressionMetadata expressionMetadata) throws Throwable {
         //返回值构建，也方便多个注解的时候，重复调用方法
         AtomicReference<Object> returnValue = new AtomicReference<>();
         MethodReturnValueFunction methodReturnValueFunction = new MethodReturnValueFunction() {
@@ -100,10 +93,10 @@ public class CacheInterceptor implements MethodInterceptor {
                 }
             }
         };
-        for (CacheOperation operation : operations) {
+        for (Annotation operationAnnotation : operationAnnotations) {
             for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
-                if (cacheOperationHandler.match(operation)) {
-                    cacheOperationHandler.handler((BaseCacheOperation) operation, methodReturnValueFunction, expressionMetadata);
+                if (cacheOperationHandler.match(operationAnnotation)) {
+                    cacheOperationHandler.handler(operationAnnotation , methodReturnValueFunction, expressionMetadata);
                     break;
                 }
             }
@@ -129,13 +122,6 @@ public class CacheInterceptor implements MethodInterceptor {
         this.cacheAnnotationsParser = cacheAnnotationsParser;
     }
 
-    public CacheAnnotationsParser getCacheAnnotationsParser() {
-        return cacheAnnotationsParser;
-    }
-
-    public List<CacheOperationHandler> getCacheOperationHandlers() {
-        return cacheOperationHandlers;
-    }
 
     public void setCacheOperationHandlers(List<CacheOperationHandler> cacheOperationHandlers) {
         this.cacheOperationHandlers = cacheOperationHandlers;

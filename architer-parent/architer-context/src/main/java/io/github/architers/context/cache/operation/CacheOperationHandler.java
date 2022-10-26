@@ -1,20 +1,21 @@
 package io.github.architers.context.cache.operation;
 
 
-
-import io.github.architers.context.cache.Cache;
-import io.github.architers.context.cache.CacheConstants;
-import io.github.architers.context.cache.CacheManager;
-import io.github.architers.context.cache.CacheMode;
+import io.github.architers.context.cache.*;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.expression.ExpressionParser;
-import io.github.architers.context.lock.LockExecute;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.Ordered;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.lang.annotation.Annotation;
 import java.text.MessageFormat;
+import java.util.Map;
 
 
 /**
@@ -22,16 +23,24 @@ import java.text.MessageFormat;
  * 缓存operation处理基类
  * <li>对于实现类order排序,按照操作的频率排好序，增加程序效率：比如缓存读多，就把cacheable对应的处理器放最前边</li>
  */
-public abstract class CacheOperationHandler implements Ordered {
+public abstract class CacheOperationHandler implements ApplicationContextAware {
 
-    @Autowired(required = false)
-    protected CacheManager cacheManager;
 
-    @Autowired(required = false)
-    protected LockExecute lockExecute;
+    private Map<Class<? extends CacheOperate>, CacheOperate> cacheManagerMap;
     @Autowired(required = false)
     protected ExpressionParser expressionParser;
 
+    protected CacheKeyWrapper cacheKeyWrapper;
+
+    private CacheOperate defaultCacheOperate;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        Map<String, CacheOperate> beanNameCacheManagerMap =
+                applicationContext.getBeansOfType(CacheOperate.class);
+        cacheManagerMap = CollectionUtils.newHashMap(beanNameCacheManagerMap.size());
+        beanNameCacheManagerMap.forEach((key, value) -> cacheManagerMap.put(value.getClass(), value));
+    }
 
     public Object value(String valueExpression, ExpressionMetadata expressionMetadata) {
         return expressionParser.parserExpression(expressionMetadata, valueExpression);
@@ -40,82 +49,96 @@ public abstract class CacheOperationHandler implements Ordered {
     /**
      * 选择缓存
      */
-    public Cache chooseCache(BaseCacheOperation operation, String cacheName) {
-        CacheMode cacheMode = operation.getCacheMode();
-        if (CacheMode.SIMPLE.equals(cacheMode)) {
-            return cacheManager.getSimpleCache(cacheName);
+    public CacheOperate chooseCacheOperate(Class<? extends CacheOperate> clazz) {
+
+        CacheOperate cacheOperate = null;
+        if (clazz.equals(DefaultCacheOperate.class)) {
+            //默认的缓存操作器
+            cacheOperate = defaultCacheOperate;
         }
-        return cacheManager.getMapCache(cacheName);
+        if (cacheOperate == null) {
+            cacheOperate = cacheManagerMap.get(clazz);
+        }
+        if (cacheOperate == null) {
+            throw new IllegalArgumentException("cacheManger is null");
+        }
+        return cacheOperate;
     }
 
     /**
      * operation是否匹配
      *
-     * @param cacheOperation operation对应的缓存操作
+     * @param operationAnnotation operation对应的操作缓存的注解
      * @return 是否匹配，如果true就对这个operation的进行缓存处理
      */
-    public abstract boolean match(CacheOperation cacheOperation);
+    public abstract boolean match(Annotation operationAnnotation);
 
-    protected Object parseCacheKey(ExpressionMetadata expressionMetadata, String key) {
+    protected String parseCacheKey(ExpressionMetadata expressionMetadata, String key) {
         if (!StringUtils.hasText(key)) {
             throw new IllegalArgumentException("key is empty");
         }
         if (CacheConstants.BATCH_CACHE_KEY.equals(key)) {
             return key;
         }
-        return expressionParser.parserExpression(expressionMetadata, key);
+        Object cacheKey = expressionParser.parserExpression(expressionMetadata, key);
+        if (cacheKey == null) {
+            throw new RuntimeException("cacheKey 为空");
+        }
+        return cacheKeyWrapper.getCacheKey(null, cacheKey.toString());
     }
 
     /**
      * 处理缓存operation
      *
-     * @param operation
      * @param methodReturnValueFunction
      * @param expressionMetadata
      * @throws Throwable
      */
-    public void handler(BaseCacheOperation operation, MethodReturnValueFunction methodReturnValueFunction, ExpressionMetadata expressionMetadata) throws Throwable {
-        //这里初次过滤,没有包含result
-        if (this.canHandler(operation, expressionMetadata, true)) {
-            this.execute(operation, expressionMetadata, methodReturnValueFunction);
+    public void handler(Annotation operationAnnotation,
+                        MethodReturnValueFunction methodReturnValueFunction,
+                        ExpressionMetadata expressionMetadata) throws Throwable {
+
+        this.execute(operationAnnotation, expressionMetadata, methodReturnValueFunction);
+        // }
+    }
+
+    /**
+     * condition是否为true
+     */
+    public boolean isCondition(String condition, ExpressionMetadata expressionMetadata) {
+        //条件满足才缓存
+        if (StringUtils.hasText(condition)) {
+            if (isContainsResult(condition)) {
+                return true;
+            }
+            Object isCondition = expressionParser.parserExpression(expressionMetadata, condition);
+            if (!(isCondition instanceof Boolean)) {
+                throw new IllegalArgumentException(MessageFormat.format("condition[{0}]有误,必须为Boolean类型", condition));
+            }
+            return (boolean) isCondition;
         }
+        return true;
     }
 
 
     /**
-     * 能否处理
-     *
-     * @param excludeResult 是否排除#result
-     * @return true标识condition满足，unless为false
+     * 是否unless
+     * 返回为true说明就不能进行缓存操作
      */
-    protected boolean canHandler(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, boolean excludeResult) {
-        String condition = operation.getCondition(), unless = operation.getUnless();
-        if (!StringUtils.hasText(condition) && !StringUtils.hasText(unless)) {
-            return true;
-        }
-        if (StringUtils.hasText(condition)) {
-            if (excludeResult && isContainsResult(condition)) {
-                return true;
-            }
-            Object isCondition = expressionParser.parserExpression(expressionMetadata, operation.getCondition());
-            if (!(isCondition instanceof Boolean)) {
-                throw new IllegalArgumentException(MessageFormat.format("condition[{0}]有误,必须为Boolean类型", operation.getCondition()));
-            }
-            return (boolean) isCondition;
-        }
-
+    public boolean isUnless(String unless, ExpressionMetadata expressionMetadata) {
         if (StringUtils.hasText(unless)) {
-            if (excludeResult && isContainsResult(unless)) {
-                return true;
-            }
             Object isUnless = expressionParser.parserExpression(expressionMetadata, unless);
             if (!(isUnless instanceof Boolean)) {
                 throw new IllegalArgumentException(MessageFormat.format("unless[{0}]有误,必须为Boolean类型", unless));
             }
-            return !(boolean) isUnless;
+            return (boolean) isUnless;
         }
         return true;
     }
+
+
+
+
 
     private boolean isContainsResult(String expression) {
         return expression.contains("#result");
@@ -124,17 +147,16 @@ public abstract class CacheOperationHandler implements Ordered {
     /**
      * 执行缓存处理
      *
-     * @param operation                 缓存操作对应的数据
+     * @param operationAnnotation       缓存注解
      * @param expressionMetadata        表达式元数据
      * @param methodReturnValueFunction 返回值功能函数
      * @throws Throwable
      */
-    protected abstract void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable;
+    protected abstract void execute(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable;
 
 
-    @Autowired
-    public CacheOperationHandler setCacheManager(CacheManager cacheManager) {
-        this.cacheManager = cacheManager;
+    public CacheOperationHandler setDefaultCacheManager(CacheOperate defaultCacheOperate) {
+        this.defaultCacheOperate = defaultCacheOperate;
         return this;
     }
 
@@ -142,5 +164,6 @@ public abstract class CacheOperationHandler implements Ordered {
         this.expressionParser = expressionParser;
         return this;
     }
+
 
 }

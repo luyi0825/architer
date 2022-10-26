@@ -3,6 +3,8 @@ package io.github.architers.context.cache.annotation;
 
 
 import io.github.architers.context.cache.CacheMode;
+import io.github.architers.context.cache.operation.CacheOperate;
+import io.github.architers.context.cache.operation.DefaultCacheOperate;
 import io.github.architers.context.lock.LockEnum;
 import io.github.architers.context.lock.Locked;
 import org.springframework.core.annotation.AliasFor;
@@ -85,6 +87,6 @@ public @interface Cacheable {
     /**
      * 缓存管理器类型，对应spring容器中bean的名称
      */
-    String cacheManager() default "";
+    Class<? extends CacheOperate> cacheOperate() default DefaultCacheOperate.class;
 
 }

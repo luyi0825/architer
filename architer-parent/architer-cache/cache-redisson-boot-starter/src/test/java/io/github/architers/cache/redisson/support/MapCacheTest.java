@@ -1,7 +1,7 @@
 package io.github.architers.cache.redisson.support;
 
 import io.github.architers.context.cache.Cache;
-import io.github.architers.context.cache.CacheManager;
+import io.github.architers.context.cache.operation.CacheOperate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 class MapCacheTest implements ApplicationContextAware {
 
     @Resource
-    private CacheManager cacheManager;
+    private CacheOperate cacheOperate;
 
     private CacheTest cacheTest;
 
@@ -90,7 +90,7 @@ class MapCacheTest implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        Cache cache = cacheManager.getMapCache("mapCache");
+        Cache cache = cacheOperate.getMapCache("mapCache");
         cacheTest = new CacheTest(cache);
     }
 }

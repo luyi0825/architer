@@ -2,7 +2,7 @@ package io.github.architers.cache.redisson.support;
 
 
 import io.github.architers.context.cache.Cache;
-import io.github.architers.context.cache.CacheManager;
+import io.github.architers.context.cache.operation.CacheOperate;
 import org.redisson.api.RedissonClient;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author luyi
  */
-public class RedisCacheManager implements CacheManager {
+public class RedisCacheOperate implements CacheOperate {
 
 
     private RedisTemplateCacheService redisTemplateCacheService;
@@ -22,12 +22,12 @@ public class RedisCacheManager implements CacheManager {
     private RedissonClient redissonClient;
 
 
-    public RedisCacheManager() {
+    public RedisCacheOperate() {
 
     }
 
 
-    public RedisCacheManager setRedisTemplateService(RedisTemplateCacheService redisTemplateCacheService) {
+    public RedisCacheOperate setRedisTemplateService(RedisTemplateCacheService redisTemplateCacheService) {
         this.redisTemplateCacheService = redisTemplateCacheService;
         return this;
     }
@@ -36,7 +36,7 @@ public class RedisCacheManager implements CacheManager {
         return redissonClient;
     }
 
-    public RedisCacheManager setRedissonClient(RedissonClient redissonClient) {
+    public RedisCacheOperate setRedissonClient(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
         return this;
     }
@@ -48,7 +48,7 @@ public class RedisCacheManager implements CacheManager {
     public Cache getSimpleCache(String cacheName) {
         Cache cache = caches.get(cacheName);
         if (cache == null) {
-            cache = new SimpleCache(cacheName, redissonClient, redisTemplateCacheService);
+            cache = new ValueCache(cacheName, redissonClient, redisTemplateCacheService);
             caches.putIfAbsent(cacheName, cache);
         }
         caches.putIfAbsent(cacheName, cache);

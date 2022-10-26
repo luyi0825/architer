@@ -21,7 +21,7 @@ public interface Cache {
     String getCacheName();
 
     /**
-     * 描述:向redis中放入值:永不过期
+     * 描述:放入值:永不过期
      *
      * @param key   缓存的key
      * @param value 缓存的值

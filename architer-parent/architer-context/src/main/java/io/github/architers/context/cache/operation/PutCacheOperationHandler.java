@@ -1,12 +1,15 @@
 package io.github.architers.context.cache.operation;
 
 
-import io.github.architers.context.cache.Cache;
 import io.github.architers.context.cache.CacheConstants;
 import io.github.architers.context.cache.CacheUtils;
+import io.github.architers.context.cache.annotation.PutCache;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
+import org.springframework.security.core.parameters.P;
 import org.springframework.util.StringUtils;
+
+import java.lang.annotation.Annotation;
 
 /**
  * 对应PutCacheOperation的handler,先调用返回结果，后put.
@@ -22,39 +25,32 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
     private static final int SECOND_ORDER = 2;
 
     @Override
-    public boolean match(CacheOperation cacheOperation) {
-        return cacheOperation instanceof PutCacheOperation;
+    public boolean match(Annotation operationAnnotation) {
+        return operationAnnotation instanceof PutCache;
     }
 
     @Override
-    protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
-        PutCacheOperation putCacheOperation = (PutCacheOperation) operation;
-        long expireTime = CacheUtils.getExpireTime(putCacheOperation.getExpireTime(), putCacheOperation.getRandomTime());
-        String cacheValue = putCacheOperation.getCacheValue();
+    protected void execute(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
+        PutCache putCache = (PutCache) operationAnnotation;
+        //获取调用的方法的返回值
         Object value = methodReturnValueFunction.proceed();
+
+
+        // if (this.canHandler(operation, expressionMetadata, false)) {
+
         //默认为方法的返回值，当设置了返回值就用指定的返回值
-        if (StringUtils.hasText(cacheValue)) {
-            value = expressionParser.parserExpression(expressionMetadata, cacheValue);
+        if (StringUtils.hasText(putCache.cacheValue())) {
+            value = expressionParser.parserExpression(expressionMetadata, putCache.cacheValue());
         }
-        if (this.canHandler(operation, expressionMetadata, false)) {
-            Object finalValue = value;
+        long expireTime = CacheUtils.getExpireTime(putCache.expireTime(),
+                putCache.randomTime());
+        Object finalValue = value;
 
-            Object key = parseCacheKey(expressionMetadata, operation.getKey());
-            for (String cacheName : operation.getCacheName()) {
-                Cache cache = chooseCache(operation, cacheName);
-                if (CacheConstants.BATCH_CACHE_KEY.equals(key)) {
-                    cache.multiSet(finalValue, expireTime, putCacheOperation.getTimeUnit());
-                } else {
-                    cache.set(key, finalValue, expireTime, putCacheOperation.getTimeUnit());
-                }
-            }
+        Object key = parseCacheKey(expressionMetadata, putCache.key());
+        CacheOperate cacheOperate = chooseCacheOperate(putCache.cacheOperate());
+        PutCacheParam putCacheParam = new PutCacheParam();
+        cacheOperate.put(putCacheParam);
 
-
-        }
     }
 
-    @Override
-    public int getOrder() {
-        return SECOND_ORDER;
-    }
 }

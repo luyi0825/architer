@@ -3,6 +3,7 @@ package io.github.architers.cache.redisson.support;
 
 import io.github.architers.context.Symbol;
 import io.github.architers.context.cache.batch.BatchValueFactory;
+import io.github.architers.context.cache.spi.DynamicNameSpace;
 import io.github.architers.context.utils.JsonUtils;
 import org.redisson.api.*;
 
@@ -15,7 +16,12 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Administrator
  */
-public class SimpleCache extends BaseRedissonCache {
+public class ValueCache extends BaseRedissonCache {
+
+
+    private DynamicNameSpace dynamicNameSpace;
+
+
 
 
     private RedisTemplateCacheService redisTemplateCacheService;
@@ -24,7 +30,7 @@ public class SimpleCache extends BaseRedissonCache {
 
     BatchValueFactory batchValueParser = new BatchValueFactory();
 
-    public SimpleCache(String cacheName, RedissonClient redissonClient, RedisTemplateCacheService redisTemplateCacheService) {
+    public ValueCache(String cacheName, RedissonClient redissonClient, RedisTemplateCacheService redisTemplateCacheService) {
         super(cacheName);
         this.redissonClient = redissonClient;
         this.redisTemplateCacheService = redisTemplateCacheService;

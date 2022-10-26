@@ -3,10 +3,12 @@ package io.github.architers.context.cache.operation;
 
 import io.github.architers.context.cache.Cache;
 import io.github.architers.context.cache.CacheUtils;
-import io.github.architers.context.cache.model.NullValue;
+import io.github.architers.context.NullValue;
+import io.github.architers.context.cache.annotation.Cacheable;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 
+import java.lang.annotation.Annotation;
 import java.util.Objects;
 
 
@@ -22,34 +24,39 @@ public class CacheableOperationHandler extends CacheOperationHandler {
     private static final int FIRST_ORDER = 1;
 
     @Override
-    public boolean match(CacheOperation cacheOperation) {
-        return cacheOperation instanceof CacheableCacheOperation;
+    public boolean match(Annotation annotation) {
+        return annotation instanceof Cacheable;
     }
 
     @Override
-    protected void execute(BaseCacheOperation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
-        CacheableCacheOperation cacheableOperation = (CacheableCacheOperation) operation;
-        String key = Objects.requireNonNull(expressionParser.parserExpression(expressionMetadata, operation.getKey())).toString();
+    protected void execute(Annotation operationAnnotation, ExpressionMetadata expressionMetadata,
+                           MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
+        Cacheable cacheable = (Cacheable) operationAnnotation;
+
         Object cacheValue = null;
-        for (String cacheName : operation.getCacheName()) {
-            Cache cache = chooseCache(operation, cacheName);
-            Object value = cache.get(key);
+
+        CacheOperate cacheOperate = chooseCacheOperate(cacheable.cacheOperate());
+
+        String key = super.parseCacheKey(expressionMetadata, cacheable.key());
+
+        for (String cacheName : cacheable.cacheName()) {
+            GetCacheParam getCacheParam = new GetCacheParam();
+            Object value = cacheOperate.get(getCacheParam);
             if (!isNullValue(value)) {
                 cacheValue = value;
                 break;
             }
         }
         if (cacheValue == null) {
+            //调用方法，只要第一次调用是真的调用
+            Object returnValue = methodReturnValueFunction.proceed();
+            long expireTime = CacheUtils.getExpireTime(cacheable.expireTime(), cacheable.randomTime());
 
-                long expireTime = CacheUtils.getExpireTime(cacheableOperation.getExpireTime(), cacheableOperation.getRandomTime());
-                Object returnValue = methodReturnValueFunction.proceed();
-                for (String cacheName : operation.getCacheName()) {
-                    Cache cache = chooseCache(operation, cacheName);
-                    cache.set(key, returnValue, expireTime,
-                            ((CacheableCacheOperation) operation).getTimeUnit());
-                }
-
-
+            PutCacheParam putCacheParam = new PutCacheParam();
+            putCacheParam.setCacheKey(key);
+            putCacheParam.setCacheValue(returnValue);
+            putCacheParam.setTimeUnit(cacheable.timeUnit());
+            cacheOperate.put(putCacheParam);
         } else {
             //设置返回值，防止重复调用
             methodReturnValueFunction.setValue(cacheValue);
@@ -66,8 +73,4 @@ public class CacheableOperationHandler extends CacheOperationHandler {
         return value == null || value instanceof NullValue;
     }
 
-    @Override
-    public int getOrder() {
-        return FIRST_ORDER;
-    }
 }

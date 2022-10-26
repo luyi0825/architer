@@ -3,7 +3,7 @@ package io.github.architers.cache.delete;
 
 import io.github.architers.context.cache.Cache;
 import io.github.architers.cache.UserInfo;
-import io.github.architers.context.cache.CacheManager;
+import io.github.architers.context.cache.operation.CacheOperate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +17,7 @@ public class DeleteTest {
     @Autowired
     private DeleteService deleteService;
     @Autowired
-    private CacheManager cacheManager;
+    private CacheOperate cacheOperate;
 
     /**
      * 测试一个删除注解
@@ -26,7 +26,7 @@ public class DeleteTest {
     public void testOneDelete() {
         int count = 1000;
         for (int i = 0; i < count; i++) {
-            Cache cache = cacheManager.getSimpleCache("simpleCache");
+            Cache cache = cacheOperate.getSimpleCache("simpleCache");
             UserInfo userInfo = UserInfo.getRandomUserInfo();
             cache.set("oneDelete" + "::" + userInfo.getUsername(), userInfo);
             deleteService.oneDelete(userInfo);

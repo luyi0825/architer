@@ -1,7 +1,7 @@
 package io.github.architers.cache.cacheable;
 
 
-import io.github.architers.context.cache.CacheManager;
+import io.github.architers.context.cache.operation.CacheOperate;
 import io.github.architers.cache.UserInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ public class CacheableTest {
     private CacheableService cacheableService;
 
     @Autowired
-    private CacheManager cacheManager;
+    private CacheOperate cacheOperate;
 
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
@@ -49,7 +49,7 @@ public class CacheableTest {
         long time2 = System.currentTimeMillis();
         System.out.println(time2 - time1);
         for (int i = 0; i < count; i++) {
-            cacheManager.getSimpleCache("test").get("1");
+            cacheOperate.getSimpleCache("test").get("1");
         }
         long time3 = System.currentTimeMillis();
         System.out.println(time3 - time2);
@@ -75,7 +75,7 @@ public class CacheableTest {
         String userId = UUID.randomUUID().toString();
         for (int i = 0; i < 5; i++) {
             //删除一个，再获取
-            cacheManager.getSimpleCache("cacheableService_twoCacheable_key2").delete(userId);
+            cacheOperate.getSimpleCache("cacheableService_twoCacheable_key2").delete(userId);
             UserInfo userInfo = cacheableService.twoCacheable(userId);
             Assertions.assertNotNull(userInfo);
         }

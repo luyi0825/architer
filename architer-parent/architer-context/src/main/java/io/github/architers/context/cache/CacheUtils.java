@@ -1,6 +1,7 @@
 package io.github.architers.context.cache;
 
 
+import io.github.architers.context.cache.spi.DynamicNameSpace;
 
 /**
  * @author luyi
@@ -9,6 +10,13 @@ package io.github.architers.context.cache;
 public class CacheUtils {
 
 
+    /**
+     * 得到过期时间（过期时间+随机的过期时间随机数生成）
+     *
+     * @param expireTime       过期时间
+     * @param randomExpireTime 随机的过期时间
+     * @return 缓存过期时间
+     */
     public static long getExpireTime(long expireTime, long randomExpireTime) {
         if (CacheConstants.NEVER_EXPIRE == expireTime) {
             return CacheConstants.NEVER_EXPIRE;

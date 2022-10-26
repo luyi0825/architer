@@ -2,7 +2,7 @@ package io.github.architers.context.cache;
 
 
 
-import io.github.architers.context.cache.annotation.EnableCustomCaching;
+import io.github.architers.context.cache.annotation.EnableArchiterCaching;
 import io.github.architers.context.cache.proxy.CacheProxyConfiguration;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.AdviceModeImportSelector;
@@ -18,9 +18,9 @@ import java.util.function.Predicate;
  * @author luyi
  * @see org.springframework.cache.annotation.CachingConfigurationSelector
  * </p>
- * @see EnableCustomCaching
+ * @see EnableArchiterCaching
  */
-public class CacheAdviceImportSelector extends AdviceModeImportSelector<EnableCustomCaching> {
+public class CacheAdviceImportSelector extends AdviceModeImportSelector<EnableArchiterCaching> {
 
     @Override
     public String[] selectImports(AdviceMode adviceMode) {
