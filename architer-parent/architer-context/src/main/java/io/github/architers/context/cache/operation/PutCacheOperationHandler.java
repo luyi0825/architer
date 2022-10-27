@@ -34,11 +34,10 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         PutCache putCache = (PutCache) operationAnnotation;
         //获取调用的方法的返回值
         Object value = methodReturnValueFunction.proceed();
-
-
-        // if (this.canHandler(operation, expressionMetadata, false)) {
-
-        //默认为方法的返回值，当设置了返回值就用指定的返回值
+        if (!this.canDoCacheOperate(putCache.condition(), putCache.unless(), expressionMetadata)) {
+            return;
+        }
+        //默认为方法的返回值，当设置了缓存值就用指定的缓存值
         if (StringUtils.hasText(putCache.cacheValue())) {
             value = expressionParser.parserExpression(expressionMetadata, putCache.cacheValue());
         }
@@ -47,8 +46,16 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         Object finalValue = value;
 
         Object key = parseCacheKey(expressionMetadata, putCache.key());
-        CacheOperate cacheOperate = chooseCacheOperate(putCache.cacheOperate());
+        KeyGenerator keyGenerator = super.keyGeneratorFactory.getKeyGenerator(putCache.keyGenerator());
+        String cacheKey = keyGenerator.generator(expressionMetadata, putCache.cacheValue(), key);
+        CacheOperate cacheOperate = super.cacheCacheOperateFactory.getCacheOperate(putCache.cacheOperate());
         PutCacheParam putCacheParam = new PutCacheParam();
+        putCacheParam.setCacheKey(cacheKey);
+        putCacheParam.setCacheOperate(cacheOperate);
+        putCacheParam.setCacheName(putCacheParam.getCacheName());
+        putCacheParam.setCacheValue(value);
+        putCacheParam.setExpireTime(expireTime);
+        putCacheParam.setTimeUnit(putCacheParam.getTimeUnit());
         cacheOperate.put(putCacheParam);
 
     }

@@ -56,8 +56,6 @@ public class CacheInterceptor implements MethodInterceptor {
             return invocation.proceed();
         }
         return invocation.proceed();
-
-
     }
 
     /**
@@ -71,10 +69,12 @@ public class CacheInterceptor implements MethodInterceptor {
             public Object proceed() throws Throwable {
                 synchronized (this) {
                     if (returnValue.get() == null) {
+                        //执行方法
                         Object value = invocation.proceed();
                         if (value == null) {
                             value = NullValue.INVALID_CACHE;
                         }
+                        //设置特定值，防止重复调用方法
                         setValue(value);
                     }
                     return returnValue.get();
@@ -85,6 +85,7 @@ public class CacheInterceptor implements MethodInterceptor {
             public void setValue(Object value) {
                 synchronized (this) {
                     if (value != null && !(value instanceof NullValue)) {
+                        //支持#result表达式
                         expressionMetadata.getEvaluationContext().setVariable("result", value);
                     }
                     if (value != null && returnValue.get() == null) {

@@ -15,11 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class PutCacheParam extends BaseCacheOperationParam {
 
     /**
-     * @see Cacheable#randomTime()
-     */
-    private long randomTime;
-    /**
-     * @see Cacheable#expireTime()
+     * 缓存的过期时间
      */
     private long expireTime;
 
@@ -33,29 +29,6 @@ public class PutCacheParam extends BaseCacheOperationParam {
     private Object cacheValue;
 
 
-    public long getRandomTime() {
-        return randomTime;
-    }
-
-    public void setRandomTime(long randomTime) {
-        this.randomTime = randomTime;
-    }
-
-    public long getExpireTime() {
-        return expireTime;
-    }
-
-    public void setExpireTime(long expireTime) {
-        this.expireTime = expireTime;
-    }
-
-    public TimeUnit getTimeUnit() {
-        return timeUnit;
-    }
-
-    public void setTimeUnit(TimeUnit timeUnit) {
-        this.timeUnit = timeUnit;
-    }
 
 
 

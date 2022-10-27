@@ -6,8 +6,6 @@ import io.github.architers.context.cache.operation.CacheOperate;
 import io.github.architers.context.cache.operation.DefaultCacheOperate;
 import io.github.architers.context.cache.operation.DefaultkeyGenerator;
 import io.github.architers.context.cache.operation.KeyGenerator;
-import io.github.architers.context.lock.LockEnum;
-import io.github.architers.context.lock.Locked;
 
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
@@ -21,8 +19,7 @@ import java.util.concurrent.TimeUnit;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Repeatable(PutCaches.class)
-public @interface PutCache {
+public @interface BatchPutCache {
 
     /**
      * @see Cacheable#cacheName()

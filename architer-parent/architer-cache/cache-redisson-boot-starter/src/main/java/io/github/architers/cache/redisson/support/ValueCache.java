@@ -3,7 +3,6 @@ package io.github.architers.cache.redisson.support;
 
 import io.github.architers.context.Symbol;
 import io.github.architers.context.cache.batch.BatchValueFactory;
-import io.github.architers.context.cache.spi.DynamicNameSpace;
 import io.github.architers.context.utils.JsonUtils;
 import org.redisson.api.*;
 
@@ -18,8 +17,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class ValueCache extends BaseRedissonCache {
 
-
-    private DynamicNameSpace dynamicNameSpace;
 
 
 

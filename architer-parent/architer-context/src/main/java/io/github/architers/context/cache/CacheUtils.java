@@ -1,8 +1,6 @@
 package io.github.architers.context.cache;
 
 
-import io.github.architers.context.cache.spi.DynamicNameSpace;
-
 /**
  * @author luyi
  * key过期工具类

@@ -14,28 +14,28 @@ import lombok.Data;
 public abstract class BaseCacheOperationParam implements CacheOperationParam {
 
     /**
-     * 缓存的空间
+     * 是否异步的
      */
-    private String namespace;
+    private boolean async = false;
 
     /**
-     * @see Cacheable#cacheName()
+     * 缓存前缀
      */
     private String[] cacheName;
     /**
      * 解析后的缓存key
      */
-    private String cacheKey;
-    /**
-     * 是否异步
-     * @see Cacheable#async()
-     */
-    private boolean async;
+    private String key;
 
     /**
-     * 缓存管理器
+     * key的生成器
      */
-    private Class<? extends CacheOperate> cacheManager;
+    private KeyGenerator keyGenerator;
+
+    /**
+     * 缓存处理器
+     */
+    private CacheOperate cacheOperate;
 
 
 }

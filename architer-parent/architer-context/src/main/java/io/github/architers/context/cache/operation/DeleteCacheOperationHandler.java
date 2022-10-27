@@ -1,8 +1,6 @@
 package io.github.architers.context.cache.operation;
 
 
-import io.github.architers.context.cache.Cache;
-import io.github.architers.context.cache.CacheConstants;
 import io.github.architers.context.cache.annotation.DeleteCache;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
@@ -30,25 +28,28 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
 
     @Override
     protected void execute(Annotation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
+
+        //调用方法（没有cacheable就是真的调用）
         methodReturnValueFunction.proceed();
-
         DeleteCache deleteCache = (DeleteCache) operation;
-        // if (this.canHandler(operation, expressionMetadata, false)) {
-        CacheOperate cacheOperate = this.chooseCacheOperate(deleteCache.cacheOperate());
-
+        if (!canDoCacheOperate(deleteCache.condition(), deleteCache.unless(), expressionMetadata)) {
+            return;
+        }
+        CacheOperate cacheOperate = cacheCacheOperateFactory.getCacheOperate(deleteCache.cacheOperate());
         DeleteCacheParam deleteCacheParam = new DeleteCacheParam();
-        deleteCacheParam.setCacheName(deleteCacheParam.getCacheName());
-        String cacheKey = super.parseCacheKey(expressionMetadata, deleteCache.key());
-        deleteCacheParam.setCacheKey(cacheKey);
-        //TODO deleteCacheParam.setCacheValue();
-        //  deleteCacheParam.setCacheManager();
+        KeyGenerator keyGenerator = keyGeneratorFactory.getKeyGenerator(deleteCache.keyGenerator());
+        String[] cachePrefixes = keyGenerator.generator(expressionMetadata, deleteCache.cacheName());
+
+        deleteCacheParam.setCacheName(cachePrefixes);
+        Object key = super.parseCacheKey(expressionMetadata, deleteCache.key());
+
+      //  deleteCacheParam.setCacheKey(key);
+        deleteCacheParam.setAsync(deleteCache.async());
+       // deleteCacheParam.setKeyGenerator();
+       // deleteCacheParam.setCacheOperate(super.cacheCacheOperateFactory.getCacheOperate(deleteCache.cacheOperate()));
+        //删除缓存
         cacheOperate.delete(deleteCacheParam);
-
     }
-
-
-
-
 
 
 }

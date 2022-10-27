@@ -2,12 +2,10 @@
 package io.github.architers.context.cache.annotation;
 
 
-import io.github.architers.context.cache.CacheMode;
+import io.github.architers.context.cache.operation.DefaultkeyGenerator;
+import io.github.architers.context.cache.operation.KeyGenerator;
 import io.github.architers.context.cache.operation.CacheOperate;
 import io.github.architers.context.cache.operation.DefaultCacheOperate;
-import io.github.architers.context.lock.LockEnum;
-import io.github.architers.context.lock.Locked;
-import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
@@ -35,8 +33,6 @@ import java.util.concurrent.TimeUnit;
 @Inherited
 @Repeatable(Cacheables.class)
 public @interface Cacheable {
-    @AliasFor("cacheName")
-    String[] value() default "";
 
     /**
      * 缓存名称(不支持EL表达式)
@@ -47,6 +43,11 @@ public @interface Cacheable {
      * 缓存key,支持SpEL
      */
     String key();
+
+    /**
+     * key的生成器
+     */
+    Class<? extends KeyGenerator> keyGenerator() default DefaultkeyGenerator.class;
 
     /**
      * 缓存随机时间,时间单位跟expireTime一致
@@ -65,11 +66,6 @@ public @interface Cacheable {
     TimeUnit timeUnit() default TimeUnit.MINUTES;
 
     /**
-     * 是否异步
-     */
-    boolean async() default false;
-
-    /**
      * 条件满足的时候，进行缓存操作
      */
     String condition() default "";
@@ -79,13 +75,9 @@ public @interface Cacheable {
      */
     String unless() default "";
 
-    /**
-     * 缓存模式
-     */
-    CacheMode cacheMode() default CacheMode.SIMPLE;
 
     /**
-     * 缓存管理器类型，对应spring容器中bean的名称
+     * 缓存操作器
      */
     Class<? extends CacheOperate> cacheOperate() default DefaultCacheOperate.class;
 

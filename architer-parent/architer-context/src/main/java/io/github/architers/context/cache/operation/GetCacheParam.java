@@ -1,4 +1,8 @@
 package io.github.architers.context.cache.operation;
 
-public class GetCacheParam {
+import lombok.Data;
+
+@Data
+public class GetCacheParam extends BaseCacheOperationParam {
+
 }

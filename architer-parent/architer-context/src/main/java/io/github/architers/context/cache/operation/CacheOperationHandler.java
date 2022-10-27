@@ -23,47 +23,21 @@ import java.util.Map;
  * 缓存operation处理基类
  * <li>对于实现类order排序,按照操作的频率排好序，增加程序效率：比如缓存读多，就把cacheable对应的处理器放最前边</li>
  */
-public abstract class CacheOperationHandler implements ApplicationContextAware {
+public abstract class CacheOperationHandler {
 
 
-    private Map<Class<? extends CacheOperate>, CacheOperate> cacheManagerMap;
+    protected CacheCacheOperateFactory cacheCacheOperateFactory;
+
+    protected KeyGeneratorFactory keyGeneratorFactory;
+
     @Autowired(required = false)
     protected ExpressionParser expressionParser;
 
-    protected CacheKeyWrapper cacheKeyWrapper;
-
-    private CacheOperate defaultCacheOperate;
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        Map<String, CacheOperate> beanNameCacheManagerMap =
-                applicationContext.getBeansOfType(CacheOperate.class);
-        cacheManagerMap = CollectionUtils.newHashMap(beanNameCacheManagerMap.size());
-        beanNameCacheManagerMap.forEach((key, value) -> cacheManagerMap.put(value.getClass(), value));
-    }
 
     public Object value(String valueExpression, ExpressionMetadata expressionMetadata) {
         return expressionParser.parserExpression(expressionMetadata, valueExpression);
     }
 
-    /**
-     * 选择缓存
-     */
-    public CacheOperate chooseCacheOperate(Class<? extends CacheOperate> clazz) {
-
-        CacheOperate cacheOperate = null;
-        if (clazz.equals(DefaultCacheOperate.class)) {
-            //默认的缓存操作器
-            cacheOperate = defaultCacheOperate;
-        }
-        if (cacheOperate == null) {
-            cacheOperate = cacheManagerMap.get(clazz);
-        }
-        if (cacheOperate == null) {
-            throw new IllegalArgumentException("cacheManger is null");
-        }
-        return cacheOperate;
-    }
 
     /**
      * operation是否匹配
@@ -73,7 +47,7 @@ public abstract class CacheOperationHandler implements ApplicationContextAware {
      */
     public abstract boolean match(Annotation operationAnnotation);
 
-    protected String parseCacheKey(ExpressionMetadata expressionMetadata, String key) {
+    protected Object parseCacheKey(ExpressionMetadata expressionMetadata, String key) {
         if (!StringUtils.hasText(key)) {
             throw new IllegalArgumentException("key is empty");
         }
@@ -84,7 +58,7 @@ public abstract class CacheOperationHandler implements ApplicationContextAware {
         if (cacheKey == null) {
             throw new RuntimeException("cacheKey 为空");
         }
-        return cacheKeyWrapper.getCacheKey(null, cacheKey.toString());
+        return cacheKey.toString();
     }
 
     /**
@@ -97,9 +71,17 @@ public abstract class CacheOperationHandler implements ApplicationContextAware {
     public void handler(Annotation operationAnnotation,
                         MethodReturnValueFunction methodReturnValueFunction,
                         ExpressionMetadata expressionMetadata) throws Throwable {
-
         this.execute(operationAnnotation, expressionMetadata, methodReturnValueFunction);
-        // }
+    }
+
+
+    /**
+     * 是否能够执行缓存操作
+     *
+     * @return true表示可以进行缓存操作
+     */
+    public boolean canDoCacheOperate(String condition, String unless, ExpressionMetadata expressionMetadata) {
+        return isCondition(condition, expressionMetadata) && !isUnless(unless, expressionMetadata);
     }
 
     /**
@@ -108,9 +90,6 @@ public abstract class CacheOperationHandler implements ApplicationContextAware {
     public boolean isCondition(String condition, ExpressionMetadata expressionMetadata) {
         //条件满足才缓存
         if (StringUtils.hasText(condition)) {
-            if (isContainsResult(condition)) {
-                return true;
-            }
             Object isCondition = expressionParser.parserExpression(expressionMetadata, condition);
             if (!(isCondition instanceof Boolean)) {
                 throw new IllegalArgumentException(MessageFormat.format("condition[{0}]有误,必须为Boolean类型", condition));
@@ -136,14 +115,6 @@ public abstract class CacheOperationHandler implements ApplicationContextAware {
         return true;
     }
 
-
-
-
-
-    private boolean isContainsResult(String expression) {
-        return expression.contains("#result");
-    }
-
     /**
      * 执行缓存处理
      *
@@ -154,11 +125,6 @@ public abstract class CacheOperationHandler implements ApplicationContextAware {
      */
     protected abstract void execute(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable;
 
-
-    public CacheOperationHandler setDefaultCacheManager(CacheOperate defaultCacheOperate) {
-        this.defaultCacheOperate = defaultCacheOperate;
-        return this;
-    }
 
     public CacheOperationHandler setExpressionParser(ExpressionParser expressionParser) {
         this.expressionParser = expressionParser;

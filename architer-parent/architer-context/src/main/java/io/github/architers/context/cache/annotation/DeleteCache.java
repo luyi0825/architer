@@ -4,6 +4,8 @@ package io.github.architers.context.cache.annotation;
 import io.github.architers.context.cache.CacheMode;
 import io.github.architers.context.cache.operation.CacheOperate;
 import io.github.architers.context.cache.operation.DefaultCacheOperate;
+import io.github.architers.context.cache.operation.DefaultkeyGenerator;
+import io.github.architers.context.cache.operation.KeyGenerator;
 import io.github.architers.context.lock.LockEnum;
 import io.github.architers.context.lock.Locked;
 import org.springframework.core.annotation.AliasFor;
@@ -38,12 +40,17 @@ public @interface DeleteCache {
     String key();
 
     /**
+     * key的生成器
+     */
+    Class<? extends KeyGenerator> keyGenerator() default DefaultkeyGenerator.class;
+
+    /**
      * 缓存值:此字段用于做批量操作（all表示删除cacheName对应的所有的缓存，其他根据对应的值删除）
      */
     String cacheValue() default "";
 
     /**
-     * @see Cacheable#async()
+     * 是否异步删除
      */
     boolean async() default false;
 
@@ -64,14 +71,9 @@ public @interface DeleteCache {
     String unless() default "";
 
     /**
-     * 缓存模式
-     */
-    CacheMode cacheMode() default CacheMode.SIMPLE;
-
-    /**
-     * 缓存管理器类型
+     * /**
      *
-     * @see Cacheable#cacheManager()
+     * @see Cacheable#cacheOperate()
      */
     Class<? extends CacheOperate> cacheOperate() default DefaultCacheOperate.class;
 
