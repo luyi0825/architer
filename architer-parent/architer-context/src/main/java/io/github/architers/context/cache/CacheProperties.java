@@ -1,6 +1,8 @@
 package io.github.architers.context.cache;
 
+import io.github.architers.context.cache.operation.CacheOperate;
 import io.github.architers.context.lock.LockEnum;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -8,8 +10,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author luyi
  */
-@ConfigurationProperties(prefix = "customize.cache")
+@ConfigurationProperties(prefix = "architers.cache")
+@Data
 public class CacheProperties {
+
+    /**
+     * 默认的处理器
+     */
+    private String defaultCacheOperateClass;
+
+    private Class<? extends CacheOperate> aClass;
+
     /**
      * 使用什么锁
      */

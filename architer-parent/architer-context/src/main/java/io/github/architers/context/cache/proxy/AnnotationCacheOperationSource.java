@@ -4,6 +4,7 @@ package io.github.architers.context.cache.proxy;
 import io.github.architers.context.cache.CacheAnnotationsParser;
 import io.github.architers.context.cache.operation.CacheOperationParam;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Collection;
 
@@ -29,7 +30,7 @@ public class AnnotationCacheOperationSource implements CacheOperationSource {
     }
 
     @Override
-    public Collection<CacheOperationParam> getCacheOperations(Method method, Class<?> targetClass) {
+    public Collection<?extends Annotation> getCacheOperations(Method method, Class<?> targetClass) {
         return cacheAnnotationsParser.parse(method);
     }
 }

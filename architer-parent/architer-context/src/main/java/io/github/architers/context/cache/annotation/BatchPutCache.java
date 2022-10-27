@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 向缓存中放数据
+ * list放入map
  *
  * @author luyi
  */
@@ -31,10 +32,7 @@ public @interface BatchPutCache {
      */
     String cacheValue() default "";
 
-    /**
-     * @see Cacheable#key()
-     */
-    String key();
+
 
     /**
      * key的生成器

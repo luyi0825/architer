@@ -1,4 +1,4 @@
-package io.github.architers.cache.cacheable;
+package io.github.architers.cache.redission.cacheable;
 
 
 import io.github.architers.context.cache.operation.CacheOperate;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -25,8 +26,6 @@ public class CacheableTest {
     @Autowired
     private CacheableService cacheableService;
 
-    @Autowired
-    private CacheOperate cacheOperate;
 
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
@@ -35,35 +34,32 @@ public class CacheableTest {
     private RedissonClient client;
 
     /**
-     * 测试一个注解
+     * 测试一个@Cacheable注解
      */
     @Test
     public void testOneCacheable() {
-        String userId = UUID.randomUUID().toString();
+        String userName = "123456789";
         long count = 10000;
+        //使用注解查询一万次
         long time1 = System.currentTimeMillis();
         for (int i = 0; i < count; i++) {
-            UserInfo userInfo = cacheableService.oneCacheable(userId);
+            UserInfo userInfo = cacheableService.oneCacheable(userName);
             Assertions.assertNotNull(userInfo);
         }
         long time2 = System.currentTimeMillis();
-        System.out.println(time2 - time1);
+        System.out.println("cacheable耗时：" + (time2 - time1));
         for (int i = 0; i < count; i++) {
-            cacheOperate.getSimpleCache("test").get("1");
+            client.getBucket("cacheableService_oneCacheable:" + userName).get();
         }
         long time3 = System.currentTimeMillis();
-        System.out.println(time3 - time2);
-
+        System.out.println("使用redissonClient耗时:" + (time3 - time2));
+        //用redisTemplate查询10000次
         for (int i = 0; i < count; i++) {
-            redisTemplate.opsForValue().get("test");
+            redisTemplate.opsForValue().get("cacheableService_oneCacheable:" + userName);
         }
         long time4 = System.currentTimeMillis();
-        System.out.println(time4 - time3);
-        for (int i = 0; i < count; i++) {
-            client.getAtomicLong("test2").addAndGet(1);
-        }
-        long time5 = System.currentTimeMillis();
-        System.out.println(time5 - time4);
+        System.out.println("使用redissonClient的redisTemplate耗时" + (time4 - time3));
+
     }
 
     /**
@@ -75,7 +71,7 @@ public class CacheableTest {
         String userId = UUID.randomUUID().toString();
         for (int i = 0; i < 5; i++) {
             //删除一个，再获取
-            cacheOperate.getSimpleCache("cacheableService_twoCacheable_key2").delete(userId);
+            //  cacheOperate.getSimpleCache("cacheableService_twoCacheable_key2").delete(userId);
             UserInfo userInfo = cacheableService.twoCacheable(userId);
             Assertions.assertNotNull(userInfo);
         }
@@ -89,21 +85,15 @@ public class CacheableTest {
         int count = 5;
         String userId = UUID.randomUUID().toString();
         for (int i = 0; i < count; i++) {
-            UserInfo userInfo = cacheableService.expireTime_1(userId);
+            //不过期
+            UserInfo userInfo = cacheableService.expireTime_never(userId);
             Assertions.assertNotNull(userInfo);
         }
 
+        //3分钟过期
         userId = UUID.randomUUID().toString();
         for (int i = 0; i < count; i++) {
-            String finalUserId = userId;
-            Assertions.assertThrows(IllegalArgumentException.class, () -> {
-                UserInfo userInfo = cacheableService.expireTime_2(finalUserId);
-                Assertions.assertNull(userInfo);
-            });
-        }
-        userId = UUID.randomUUID().toString();
-        for (int i = 0; i < count; i++) {
-            UserInfo userInfo = cacheableService.expireTime_3(userId);
+            UserInfo userInfo = cacheableService.expireTime_3_minutes(userId);
             Assertions.assertNotNull(userInfo);
         }
     }

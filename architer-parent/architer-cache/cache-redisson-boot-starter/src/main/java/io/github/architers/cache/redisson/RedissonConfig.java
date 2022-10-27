@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutorService;
  * @author luyi
  * redisson配置类
  */
-public class RedissonCacheConfig extends Config implements Serializable {
+public class RedissonConfig extends Config implements Serializable {
 
     private MasterSlaveServersConfig masterSlaveServersConfig;
 
@@ -28,11 +28,11 @@ public class RedissonCacheConfig extends Config implements Serializable {
     private ClusterServersConfig clusterServersConfig;
 
     private ReplicatedServersConfig replicatedServersConfig;
-    public RedissonCacheConfig() {
+    public RedissonConfig() {
         super();
     }
 
-    public RedissonCacheConfig(Config oldConf) {
+    public RedissonConfig(Config oldConf) {
         super(oldConf);
     }
 

@@ -36,7 +36,7 @@ public class CacheAnnotationsParser {
      * @return true 表示这个类有缓存注解
      */
     public boolean isCandidateClass(Class<?> targetClass) {
-        return AnnotationUtils.isCandidateClass(targetClass, CACHE_OPERATION_ANNOTATIONS);
+        return true;
     }
 
 

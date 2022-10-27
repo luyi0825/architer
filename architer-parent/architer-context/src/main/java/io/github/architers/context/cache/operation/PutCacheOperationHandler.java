@@ -1,12 +1,10 @@
 package io.github.architers.context.cache.operation;
 
 
-import io.github.architers.context.cache.CacheConstants;
 import io.github.architers.context.cache.CacheUtils;
 import io.github.architers.context.cache.annotation.PutCache;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
-import org.springframework.security.core.parameters.P;
 import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
@@ -43,14 +41,15 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         }
         long expireTime = CacheUtils.getExpireTime(putCache.expireTime(),
                 putCache.randomTime());
-        Object finalValue = value;
+
 
         Object key = parseCacheKey(expressionMetadata, putCache.key());
         KeyGenerator keyGenerator = super.keyGeneratorFactory.getKeyGenerator(putCache.keyGenerator());
-        String cacheKey = keyGenerator.generator(expressionMetadata, putCache.cacheValue(), key);
-        CacheOperate cacheOperate = super.cacheCacheOperateFactory.getCacheOperate(putCache.cacheOperate());
+        String cacheName = keyGenerator.generator(expressionMetadata, putCache.cacheName());
+        CacheOperate cacheOperate = super.cacheOperateFactory.getCacheOperate(putCache.cacheOperate());
         PutCacheParam putCacheParam = new PutCacheParam();
-        putCacheParam.setCacheKey(cacheKey);
+        putCacheParam.setCacheName(cacheName);
+        putCacheParam.setKey(key);
         putCacheParam.setCacheOperate(cacheOperate);
         putCacheParam.setCacheName(putCacheParam.getCacheName());
         putCacheParam.setCacheValue(value);

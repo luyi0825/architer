@@ -31,13 +31,14 @@ import java.util.concurrent.TimeUnit;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
+@Cache
 @Repeatable(Cacheables.class)
 public @interface Cacheable {
 
     /**
      * 缓存名称(不支持EL表达式)
      */
-    String[] cacheName() default "";
+    String cacheName() default "";
 
     /**
      * 缓存key,支持SpEL

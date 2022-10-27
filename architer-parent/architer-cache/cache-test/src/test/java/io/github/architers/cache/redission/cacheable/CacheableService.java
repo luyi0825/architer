@@ -1,4 +1,4 @@
-package io.github.architers.cache.cacheable;
+package io.github.architers.cache.redission.cacheable;
 
 
 import io.github.architers.cache.UserInfo;
@@ -15,32 +15,26 @@ public interface CacheableService {
     UserInfo oneCacheable(String userName);
 
     @Cacheable(cacheName = "cacheableService_twoCacheable_key1", key = "#userName")
-    @Cacheable(cacheName = "cacheableService_twoCacheable_key2", key = "#userName")
+    @Cacheable(cacheName = "cacheableService_twoCacheable_key2", key = "#result.phone")
     UserInfo twoCacheable(String userName);
 
     /**
      * 不过期
      */
-    @Cacheable(cacheName = "expireTime_1", key = "#userName", expireTime = -1L)
-    UserInfo expireTime_1(String userName);
+    @Cacheable(cacheName = "expireTime_never", key = "#userName", expireTime = -1L)
+    UserInfo expireTime_never(String userName);
+
 
     /**
-     * 错误的过期时间
+     * 过期:3分钟
      */
-    @Cacheable(cacheName = "expireTime_2", key = "#userName", expireTime = -3L)
-    UserInfo expireTime_2(String userName);
-
-    /**
-     * 过期
-     */
-    @Cacheable(cacheName = "expireTime_3", key = "#userName", expireTime = 60)
-    UserInfo expireTime_3(String userName);
+    @Cacheable(cacheName = "expireTime_3_minutes", key = "#userName", expireTime = 3)
+    UserInfo expireTime_3_minutes(String userName);
 
     /**
      * 随机时间
      */
-    @Cacheable(cacheName = "randomTime", key = "#userName", expireTime = 120, timeUnit =
-            TimeUnit.SECONDS, randomTime = 40)
+    @Cacheable(cacheName = "randomTime", key = "#userName", expireTime = 120, randomTime = 40)
     UserInfo randomTime(String userName);
 
     /**

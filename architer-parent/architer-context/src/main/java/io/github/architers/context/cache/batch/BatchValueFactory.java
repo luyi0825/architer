@@ -1,6 +1,5 @@
 package io.github.architers.context.cache.batch;
 
-import io.github.architers.context.cache.exception.CacheAnnotationIllegalException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
@@ -74,11 +73,11 @@ public class BatchValueFactory {
         }
 
         if (CollectionUtils.isEmpty(cacheKeyInfos)) {
-            throw new CacheAnnotationIllegalException(className + "中cacheKey不存在");
+            throw new IllegalArgumentException(className + "中cacheKey不存在");
         }
 
         if (!StringUtils.hasText(cacheField.getValue())) {
-            throw new CacheAnnotationIllegalException(className + "中cacheValue不存在");
+            throw new IllegalArgumentException(className + "中cacheValue不存在");
         }
         Collections.sort(cacheKeyInfos);
         Field[] keys = cacheKeyInfos.stream().map(CacheField.CacheKeyInfo::getField).collect(Collectors.toList()).toArray(new Field[0]);

@@ -67,37 +67,38 @@ public class CacheInterceptor implements MethodInterceptor {
         MethodReturnValueFunction methodReturnValueFunction = new MethodReturnValueFunction() {
             @Override
             public Object proceed() throws Throwable {
-                synchronized (this) {
-                    if (returnValue.get() == null) {
-                        //执行方法
-                        Object value = invocation.proceed();
-                        if (value == null) {
-                            value = NullValue.INVALID_CACHE;
-                        }
-                        //设置特定值，防止重复调用方法
-                        setValue(value);
+                //TODO 是否要用锁
+                //  synchronized (this) {
+                if (returnValue.get() == null) {
+                    //执行方法
+                    Object value = invocation.proceed();
+                    if (value == null) {
+                        value = NullValue.INVALID_CACHE;
                     }
-                    return returnValue.get();
+                    //设置特定值，防止重复调用方法
+                    setValue(value);
                 }
+                return returnValue.get();
+                //  }
             }
 
             @Override
             public void setValue(Object value) {
-                synchronized (this) {
-                    if (value != null && !(value instanceof NullValue)) {
-                        //支持#result表达式
-                        expressionMetadata.getEvaluationContext().setVariable("result", value);
-                    }
-                    if (value != null && returnValue.get() == null) {
-                        returnValue.set(value);
-                    }
+                // synchronized (this) {
+                if (value != null && !(value instanceof NullValue)) {
+                    //支持#result表达式
+                    expressionMetadata.getEvaluationContext().setVariable("result", value);
                 }
+                if (value != null && returnValue.get() == null) {
+                    returnValue.set(value);
+                }
+                //  }
             }
         };
         for (Annotation operationAnnotation : operationAnnotations) {
             for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
                 if (cacheOperationHandler.match(operationAnnotation)) {
-                    cacheOperationHandler.handler(operationAnnotation , methodReturnValueFunction, expressionMetadata);
+                    cacheOperationHandler.handler(operationAnnotation, methodReturnValueFunction, expressionMetadata);
                     break;
                 }
             }

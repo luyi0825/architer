@@ -5,17 +5,11 @@ import io.github.architers.context.cache.*;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.expression.ExpressionParser;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.core.Ordered;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
 import java.text.MessageFormat;
-import java.util.Map;
 
 
 /**
@@ -26,8 +20,10 @@ import java.util.Map;
 public abstract class CacheOperationHandler {
 
 
-    protected CacheCacheOperateFactory cacheCacheOperateFactory;
+    @Autowired(required = false)
+    protected CacheOperateFactory cacheOperateFactory;
 
+    @Autowired(required = false)
     protected KeyGeneratorFactory keyGeneratorFactory;
 
     @Autowired(required = false)
@@ -54,11 +50,11 @@ public abstract class CacheOperationHandler {
         if (CacheConstants.BATCH_CACHE_KEY.equals(key)) {
             return key;
         }
-        Object cacheKey = expressionParser.parserExpression(expressionMetadata, key);
-        if (cacheKey == null) {
+        Object realKey = expressionParser.parserExpression(expressionMetadata, key);
+        if (realKey == null) {
             throw new RuntimeException("cacheKey 为空");
         }
-        return cacheKey.toString();
+        return realKey;
     }
 
     /**

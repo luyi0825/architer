@@ -28,26 +28,16 @@ public @interface DeleteCache {
     /**
      * @see Cacheable#cacheName()
      */
-    @AliasFor("value")
-    String[] cacheName() default "";
+    String cacheName() default "";
 
-    @AliasFor("cacheName")
-    String[] value() default "";
 
-    /**
-     * @see Cacheable#key()
-     */
-    String key();
+    String key() default "";
 
     /**
      * key的生成器
      */
     Class<? extends KeyGenerator> keyGenerator() default DefaultkeyGenerator.class;
 
-    /**
-     * 缓存值:此字段用于做批量操作（all表示删除cacheName对应的所有的缓存，其他根据对应的值删除）
-     */
-    String cacheValue() default "";
 
     /**
      * 是否异步删除
@@ -71,7 +61,6 @@ public @interface DeleteCache {
     String unless() default "";
 
     /**
-     * /**
      *
      * @see Cacheable#cacheOperate()
      */

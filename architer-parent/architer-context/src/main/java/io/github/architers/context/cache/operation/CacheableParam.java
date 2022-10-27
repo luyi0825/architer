@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class CacheableOperationParam extends BaseCacheOperationParam {
+public class CacheableParam extends BaseCacheOperationParam {
     /**
      * @see Cacheable#randomTime()
      */

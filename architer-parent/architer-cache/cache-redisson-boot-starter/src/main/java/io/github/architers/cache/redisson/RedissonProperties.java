@@ -10,8 +10,8 @@ import java.io.Serializable;
  * redisson缓存的属性配置
  * <li>file和config二选一，两个同时存在优先file</li>
  */
-@ConfigurationProperties(prefix = "architer.cache.redisson")
-public class RedissonCacheProperties implements Serializable {
+@ConfigurationProperties(prefix = "architers.cache.redisson")
+public class RedissonProperties implements Serializable {
     /**
      * 配置的文件(项目下resources下的路径)
      */
@@ -19,7 +19,7 @@ public class RedissonCacheProperties implements Serializable {
     /**
      * 根据属性配置，可以直接配置在yml和properties文件中
      */
-    private RedissonCacheConfig config;
+    private RedissonConfig config;
 
 
     public String getFile() {
@@ -30,11 +30,11 @@ public class RedissonCacheProperties implements Serializable {
         this.file = file;
     }
 
-    public RedissonCacheConfig getConfig() {
+    public RedissonConfig getConfig() {
         return config;
     }
 
-    public void setConfig(RedissonCacheConfig config) {
+    public void setConfig(RedissonConfig config) {
         this.config = config;
     }
 }

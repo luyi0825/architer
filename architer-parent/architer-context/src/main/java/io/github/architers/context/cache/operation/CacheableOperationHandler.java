@@ -1,7 +1,6 @@
 package io.github.architers.context.cache.operation;
 
 
-import io.github.architers.context.cache.Cache;
 import io.github.architers.context.cache.CacheUtils;
 import io.github.architers.context.NullValue;
 import io.github.architers.context.cache.annotation.Cacheable;
@@ -9,7 +8,6 @@ import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 
 import java.lang.annotation.Annotation;
-import java.util.Objects;
 
 
 /**
@@ -21,7 +19,6 @@ import java.util.Objects;
  */
 public class CacheableOperationHandler extends CacheOperationHandler {
 
-    private static final int FIRST_ORDER = 1;
 
     @Override
     public boolean match(Annotation annotation) {
@@ -35,27 +32,32 @@ public class CacheableOperationHandler extends CacheOperationHandler {
 
         Object cacheValue = null;
 
-        CacheOperate cacheOperate = chooseCacheOperate(cacheable.cacheOperate());
+        CacheOperate cacheOperate = super.cacheOperateFactory.getCacheOperate(cacheable.cacheOperate());
 
-        String key = super.parseCacheKey(expressionMetadata, cacheable.key());
+        Object key = super.parseCacheKey(expressionMetadata, cacheable.key());
+        String cacheName = super.keyGeneratorFactory.getKeyGenerator(cacheable.keyGenerator())
+                .generator(expressionMetadata, cacheable.cacheName());
 
-        for (String cacheName : cacheable.cacheName()) {
-            GetCacheParam getCacheParam = new GetCacheParam();
-            Object value = cacheOperate.get(getCacheParam);
-            if (!isNullValue(value)) {
-                cacheValue = value;
-                break;
-            }
+        GetCacheParam getCacheParam = new GetCacheParam();
+        getCacheParam.setCacheOperate(cacheOperate);
+        //同步：没有值才查询数据库
+        getCacheParam.setAsync(false);
+        getCacheParam.setCacheName(cacheable.cacheName());
+        getCacheParam.setKey(key);
+        Object value = cacheOperate.get(getCacheParam);
+        if (!isNullValue(value)) {
+            cacheValue = value;
         }
         if (cacheValue == null) {
             //调用方法，只要第一次调用是真的调用
             Object returnValue = methodReturnValueFunction.proceed();
             long expireTime = CacheUtils.getExpireTime(cacheable.expireTime(), cacheable.randomTime());
-
             PutCacheParam putCacheParam = new PutCacheParam();
-            putCacheParam.setCacheKey(key);
+            putCacheParam.setCacheName(cacheName);
             putCacheParam.setCacheValue(returnValue);
+            putCacheParam.setKey(key);
             putCacheParam.setTimeUnit(cacheable.timeUnit());
+            putCacheParam.setExpireTime(expireTime);
             cacheOperate.put(putCacheParam);
         } else {
             //设置返回值，防止重复调用

@@ -10,23 +10,24 @@ import java.util.Map;
 /**
  * @author luyi
  */
-public class CacheCacheOperateFactory implements ApplicationContextAware {
+public class CacheOperateFactory implements ApplicationContextAware {
 
-    private Map<Class<? extends CacheOperate>, CacheOperate> cacheManagerMap;
-    private CacheOperate defaultCacheOperate;
+    public CacheOperateFactory(Class<? extends CacheOperate> defaultCacheOperateClass) {
+        this.defaultCacheOperateClass = defaultCacheOperateClass;
+    }
+
+    private Map<Class<? extends CacheOperate>, CacheOperate> cacheOperateMap;
+    private Class<? extends CacheOperate> defaultCacheOperateClass;
 
 
-
-
-
-    public CacheOperate getCacheOperate(Class<? extends CacheOperate> cacheOperateClass){
+    public CacheOperate getCacheOperate(Class<? extends CacheOperate> cacheOperateClass) {
         CacheOperate cacheOperate = null;
         if (cacheOperateClass.equals(DefaultCacheOperate.class)) {
             //默认的缓存操作器
-            cacheOperate = defaultCacheOperate;
+            cacheOperate = cacheOperateMap.get(defaultCacheOperateClass);
         }
         if (cacheOperate == null) {
-            cacheOperate = cacheManagerMap.get(cacheOperateClass);
+            cacheOperate = cacheOperateMap.get(cacheOperateClass);
         }
         if (cacheOperate == null) {
             throw new IllegalArgumentException("cacheManger is null");
@@ -35,17 +36,13 @@ public class CacheCacheOperateFactory implements ApplicationContextAware {
     }
 
 
-
-
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         Map<String, CacheOperate> beanNameCacheManagerMap =
                 applicationContext.getBeansOfType(CacheOperate.class);
-        cacheManagerMap = CollectionUtils.newHashMap(beanNameCacheManagerMap.size());
-        beanNameCacheManagerMap.forEach((key, value) -> cacheManagerMap.put(value.getClass(), value));
+        cacheOperateMap = CollectionUtils.newHashMap(beanNameCacheManagerMap.size());
+        beanNameCacheManagerMap.forEach((key, value) -> cacheOperateMap.put(value.getClass(), value));
     }
-
-
 
 
 }

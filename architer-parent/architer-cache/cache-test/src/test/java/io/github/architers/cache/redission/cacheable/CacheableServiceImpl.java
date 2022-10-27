@@ -1,10 +1,11 @@
-package io.github.architers.cache.cacheable;
+package io.github.architers.cache.redission.cacheable;
 
 import io.github.architers.cache.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service("CacheableUserInfoService")
@@ -20,24 +21,18 @@ public class CacheableServiceImpl implements CacheableService {
     @Override
     public UserInfo twoCacheable(String userName) {
         logger.info("{}查询数据库", "twoCacheable");
-        return new UserInfo().setUsername(userName);
+        return new UserInfo().setUsername(userName).setPhone("phone:" + userName);
     }
 
     @Override
-    public UserInfo expireTime_1(String userName) {
+    public UserInfo expireTime_never(String userName) {
         logger.info("{}查询数据库", "expireTime_1");
         return new UserInfo().setUsername(userName);
     }
 
 
     @Override
-    public UserInfo expireTime_2(String userName) {
-        logger.info("{}查询数据库", "expireTime_2");
-        return new UserInfo().setUsername(userName);
-    }
-
-    @Override
-    public UserInfo expireTime_3(String userName) {
+    public UserInfo expireTime_3_minutes(String userName) {
         logger.info("{}查询数据库", "expireTime_3");
         return new UserInfo().setUsername(userName);
     }

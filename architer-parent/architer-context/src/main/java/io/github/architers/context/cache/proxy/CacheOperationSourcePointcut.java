@@ -53,9 +53,7 @@ public abstract class CacheOperationSourcePointcut extends StaticMethodMatcherPo
 
         @Override
         public boolean matches(Class<?> clazz) {
-            if (CacheManager.class.isAssignableFrom(clazz)) {
-                return false;
-            }
+
             CacheOperationSource cas = getCacheOperationSource();
             return (cas == null || cas.isCandidateClass(clazz));
         }

@@ -8,5 +8,5 @@ import io.github.architers.context.expression.ExpressionMetadata;
  */
 public interface KeyGenerator {
 
-   String[] generator(ExpressionMetadata expressionMetadata,String[] cacheName);
+   String generator(ExpressionMetadata expressionMetadata,String cacheName);
 }

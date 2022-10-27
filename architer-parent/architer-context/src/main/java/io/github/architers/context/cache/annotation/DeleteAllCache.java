@@ -6,26 +6,20 @@ import io.github.architers.context.cache.operation.DefaultkeyGenerator;
 import io.github.architers.context.cache.operation.KeyGenerator;
 
 /**
- * 批量删除
+ * 删除整个缓存
  *
  * @author luyi
  */
-public @interface BatchDelete {
+public @interface DeleteAllCache {
     /**
      * 缓存名称(不支持EL表达式)
      */
     String[] cacheName() default "";
 
     /**
-     * 批量删除的key,当key为空，就删除所有的
-     */
-    String keys() default "";
-
-
-    /**
      * key的生成器
      */
-    Class<? extends KeyGenerator> keyGenerator() default DefaultkeyGenerator.class;
+    Class<? extends KeyGenerator> keyGenerator() default DefaultkeyGenerator .class;
 
     /**
      * 是否异步删除
@@ -47,5 +41,5 @@ public @interface BatchDelete {
      *
      * @see Cacheable#cacheOperate()
      */
-    Class<? extends CacheOperate> cacheOperate() default DefaultCacheOperate.class;
+    Class<? extends CacheOperate> cacheOperate() default DefaultCacheOperate .class;
 }

@@ -1,6 +1,7 @@
 package io.github.architers.cache.redisson.support;
 
 import io.github.architers.context.cache.operation.*;
+import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 
 /**
@@ -9,15 +10,32 @@ import org.redisson.api.RedissonClient;
 public class ValueCacheOperate implements CacheOperate {
 
 
-    private RedissonClient redissonClient;
+    private final RedissonClient redissonClient;
+
+    public ValueCacheOperate(RedissonClient redissonClient) {
+        this.redissonClient = redissonClient;
+    }
 
     @Override
     public void put(PutCacheParam put) {
         String cacheKey = getCacheKey(put);
+        RBucket<Object> rBucket = redissonClient.getBucket(cacheKey);
+        if (put.getExpireTime() > 0) {
+            if (put.isAsync()) {
+                //过期+异步
+                rBucket.setAsync(put.getCacheValue(), put.getExpireTime(), put.getTimeUnit());
+            } else {
+                //过期+同步步
+                rBucket.set(put.getCacheValue(), put.getExpireTime(), put.getTimeUnit());
+            }
+            return;
+        }
         if (put.isAsync()) {
-            redissonClient.getBucket(cacheKey).setAsync(put.getCacheValue(), put.getExpireTime(), put.getTimeUnit());
+            //不过期+异步
+            rBucket.setAsync(put.getCacheValue());
         } else {
-            redissonClient.getBucket(cacheKey).set(put.getCacheValue(), put.getExpireTime(), put.getTimeUnit());
+            //不过期+同步
+            rBucket.set(put.getCacheValue());
         }
     }
 

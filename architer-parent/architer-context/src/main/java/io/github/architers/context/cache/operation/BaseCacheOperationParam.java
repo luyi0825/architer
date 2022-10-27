@@ -21,11 +21,11 @@ public abstract class BaseCacheOperationParam implements CacheOperationParam {
     /**
      * 缓存前缀
      */
-    private String[] cacheName;
+    private String cacheName;
     /**
      * 解析后的缓存key
      */
-    private String key;
+    private Object key;
 
     /**
      * key的生成器

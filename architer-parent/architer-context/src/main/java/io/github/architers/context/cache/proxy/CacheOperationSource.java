@@ -4,6 +4,7 @@ package io.github.architers.context.cache.proxy;
 import io.github.architers.context.cache.operation.CacheOperationParam;
 import org.springframework.lang.Nullable;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Collection;
 
@@ -30,5 +31,5 @@ public interface CacheOperationSource {
      * @return 解析的注解操作
      */
     @Nullable
-    Collection<CacheOperationParam> getCacheOperations(Method method, @Nullable Class<?> targetClass);
+    Collection<?extends Annotation> getCacheOperations(Method method, @Nullable Class<?> targetClass);
 }

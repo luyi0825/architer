@@ -2,8 +2,8 @@
 package io.github.architers.cache.redisson;
 
 
-import io.github.architers.cache.redisson.support.RedisCacheOperate;
 import io.github.architers.cache.redisson.support.RedisTemplateCacheService;
+import io.github.architers.cache.redisson.support.ValueCacheOperate;
 import io.github.architers.context.cache.annotation.EnableArchiterCaching;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -35,10 +35,12 @@ import java.io.InputStream;
  */
 @Configuration
 @EnableArchiterCaching
-@EnableConfigurationProperties(RedissonCacheProperties.class)
+@EnableConfigurationProperties(RedissonProperties.class)
 public class RedissonCacheAutoConfiguration {
+
+    private final String CACHE_CLIENT_BEAN_NAME = "redissonCacheClient";
     @Resource
-    private RedissonCacheProperties redissonCacheProperties;
+    private RedissonProperties redissonProperties;
 
     @Resource
     private ApplicationContext ctx;
@@ -47,15 +49,15 @@ public class RedissonCacheAutoConfiguration {
     @ConditionalOnMissingBean(name = {"redissonCacheClient"})
     public RedissonClient redissonCacheClient() throws IOException {
         Config config;
-        if (redissonCacheProperties == null) {
+        if (redissonProperties == null) {
             throw new IllegalArgumentException("redisson缓存配置缺失");
         }
-        String file = redissonCacheProperties.getFile();
+        String file = redissonProperties.getFile();
         if (StringUtils.hasText(file)) {
             InputStream is = this.getConfigStream();
             config = Config.fromYAML(is);
-        } else if (redissonCacheProperties.getConfig() != null) {
-            config = redissonCacheProperties.getConfig();
+        } else if (redissonProperties.getConfig() != null) {
+            config = redissonProperties.getConfig();
         } else {
             //默认连接本地
             config = new Config();
@@ -66,14 +68,15 @@ public class RedissonCacheAutoConfiguration {
         return Redisson.create(config);
     }
 
+
     private InputStream getConfigStream() throws IOException {
-        org.springframework.core.io.Resource resource = this.ctx.getResource(this.redissonCacheProperties.getFile());
+        org.springframework.core.io.Resource resource = this.ctx.getResource(this.redissonProperties.getFile());
         return resource.getInputStream();
     }
 
 
     @Bean
-    public RedissonConnectionFactory redissonConnectionFactory(@Qualifier("redissonCacheClient") RedissonClient redisson) {
+    public RedissonConnectionFactory redissonConnectionFactory(@Qualifier(CACHE_CLIENT_BEAN_NAME) RedissonClient redisson) {
         return new RedissonConnectionFactory(redisson);
     }
 
@@ -88,6 +91,11 @@ public class RedissonCacheAutoConfiguration {
         redisTemplate.setHashValueSerializer(serializer);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
+    }
+
+    @Bean
+    public ValueCacheOperate valueCacheOperate(@Qualifier(CACHE_CLIENT_BEAN_NAME) RedissonClient redissonClient) {
+        return new ValueCacheOperate(redissonClient);
     }
 
     @Bean("cacheStringRedisTemplate")
@@ -117,19 +125,14 @@ public class RedissonCacheAutoConfiguration {
     }
 
 
-    @Bean
-    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
-    public RedisCacheOperate redisCacheManager(RedisTemplateCacheService redisTemplateCacheService,
-                                               @Qualifier("redissonCacheClient") RedissonClient redissonClient) {
-        RedisCacheOperate redisCacheManager = new RedisCacheOperate();
-        redisCacheManager.setRedisTemplateService(redisTemplateCacheService);
-        redisCacheManager.setRedissonClient(redissonClient);
-        return redisCacheManager;
-    }
-
-//    @Bean("redisLock")
-//    public LockService lockService(RedissonClient redissonClient) {
-//        return new RedisLockServiceImpl(redissonClient);
+//    @Bean
+//    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+//    public RedisCacheOperate redisCacheManager(RedisTemplateCacheService redisTemplateCacheService,
+//                                               @Qualifier(CACHE_CLIENT_BEAN_NAME) RedissonClient redissonClient) {
+//        RedisCacheOperate redisCacheManager = new RedisCacheOperate();
+//        redisCacheManager.setRedisTemplateService(redisTemplateCacheService);
+//        redisCacheManager.setRedissonClient(redissonClient);
+//        return redisCacheManager;
 //    }
 
 }

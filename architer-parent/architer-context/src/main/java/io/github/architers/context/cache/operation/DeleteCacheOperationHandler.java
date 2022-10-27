@@ -35,10 +35,10 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
         if (!canDoCacheOperate(deleteCache.condition(), deleteCache.unless(), expressionMetadata)) {
             return;
         }
-        CacheOperate cacheOperate = cacheCacheOperateFactory.getCacheOperate(deleteCache.cacheOperate());
+        CacheOperate cacheOperate = cacheOperateFactory.getCacheOperate(deleteCache.cacheOperate());
         DeleteCacheParam deleteCacheParam = new DeleteCacheParam();
         KeyGenerator keyGenerator = keyGeneratorFactory.getKeyGenerator(deleteCache.keyGenerator());
-        String[] cachePrefixes = keyGenerator.generator(expressionMetadata, deleteCache.cacheName());
+        String cachePrefixes = keyGenerator.generator(expressionMetadata, deleteCache.cacheName());
 
         deleteCacheParam.setCacheName(cachePrefixes);
         Object key = super.parseCacheKey(expressionMetadata, deleteCache.key());
