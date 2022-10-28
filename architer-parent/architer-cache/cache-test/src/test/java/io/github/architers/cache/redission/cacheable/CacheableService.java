@@ -52,7 +52,7 @@ public interface CacheableService {
     /**
      * 测试并发，没有锁
      */
-    @Cacheable(cacheName = "toGather", key = "#userName", expireTime = 2)
+    @Cacheable(cacheName = "toGather", key = "#userName", expireTime = 10)
     UserInfo toGather(String userName);
 
     /**

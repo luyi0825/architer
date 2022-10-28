@@ -6,6 +6,7 @@ import io.github.architers.context.NullValue;
 import io.github.architers.context.cache.annotation.Cacheable;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
+import io.github.architers.context.lock.LockService;
 
 import java.lang.annotation.Annotation;
 
@@ -19,6 +20,7 @@ import java.lang.annotation.Annotation;
  */
 public class CacheableOperationHandler extends CacheOperationHandler {
 
+    private LockService lockService;
 
     @Override
     public boolean match(Annotation annotation) {
@@ -31,13 +33,15 @@ public class CacheableOperationHandler extends CacheOperationHandler {
         Cacheable cacheable = (Cacheable) operationAnnotation;
 
         Object cacheValue = null;
-
+        if (!canDoCacheOperate(cacheable.condition(), cacheable.unless(), expressionMetadata)) {
+            return;
+        }
         CacheOperate cacheOperate = super.cacheOperateFactory.getCacheOperate(cacheable.cacheOperate());
+
 
         Object key = super.parseCacheKey(expressionMetadata, cacheable.key());
         String cacheName = super.keyGeneratorFactory.getKeyGenerator(cacheable.keyGenerator())
                 .generator(expressionMetadata, cacheable.cacheName());
-
         GetCacheParam getCacheParam = new GetCacheParam();
         getCacheParam.setCacheOperate(cacheOperate);
         //同步：没有值才查询数据库

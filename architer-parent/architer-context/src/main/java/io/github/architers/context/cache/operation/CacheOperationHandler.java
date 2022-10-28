@@ -108,7 +108,7 @@ public abstract class CacheOperationHandler {
             }
             return (boolean) isUnless;
         }
-        return true;
+        return false;
     }
 
     /**

@@ -124,10 +124,11 @@ public class CacheableTest {
             stringBuilder.append("1");
         }
         String userName = stringBuilder.toString();
+        //长度大于10，查询一次数据库
         cacheableService.condition(userName);
         UserInfo userInfo = cacheableService.condition(userName);
         Assertions.assertNotNull(userInfo);
-        //不缓存：查询db两次
+        //长度小于10，查询，不缓存：查询db两次
         userName = stringBuilder.substring(0, count - 2);
         cacheableService.condition(userName);
         userInfo = cacheableService.condition(userName);
@@ -159,14 +160,19 @@ public class CacheableTest {
         int count = 100;
         ExecutorService executorService = Executors.newFixedThreadPool(count);
         String userName = UUID.randomUUID().toString();
-        CountDownLatch countDownLatch = new CountDownLatch(count);
         for (int i = 0; i < count; i++) {
             executorService.submit(() -> {
+                try {
+                    Thread.sleep((long) (Math.random()*1000));
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 cacheableService.toGather(userName);
-                countDownLatch.countDown();
+
             });
         }
-        countDownLatch.await();
+        Thread.sleep(5000);
+       // countDownLatch.await();
     }
 
     /**
