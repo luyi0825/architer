@@ -1,6 +1,6 @@
-package io.github.architers.cache.redisson.support;
+package io.github.architers.redisson.cache.support;
 
-import io.github.architers.cache.redisson.CacheUser;
+import io.github.architers.redisson.cache.CacheUser;
 import io.github.architers.context.cache.Cache;
 import org.junit.jupiter.api.Test;
 
@@ -23,8 +23,8 @@ public class CacheTest {
         cache.set(UUID.randomUUID(), UUID.randomUUID());
         cache.set("1", "3");
         CacheUser cacheUser = new CacheUser();
-        cacheUser.setName(UUID.randomUUID().toString());
-        cache.set(cacheUser.getName(), cacheUser);
+        cacheUser.setUsername(UUID.randomUUID().toString());
+        cache.set(cacheUser.getUsername(), cacheUser);
     }
 
     @Test
@@ -41,8 +41,8 @@ public class CacheTest {
         List<CacheUser> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             CacheUser cacheUser = new CacheUser();
-            cacheUser.setName("username" + i);
-            cacheUser.setCity("city");
+            cacheUser.setUsername("username" + i);
+            cacheUser.setPhone("phone");
             list.add(cacheUser);
         }
         future = cache.multiSet(list);
@@ -64,8 +64,8 @@ public class CacheTest {
         List<CacheUser> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             CacheUser cacheUser = new CacheUser();
-            cacheUser.setName("username" + i);
-            cacheUser.setCity("city-expire");
+            cacheUser.setUsername("username" + i);
+            cacheUser.setPhone("city-phone");
             list.add(cacheUser);
         }
         future = cache.multiSet(list, 1, TimeUnit.DAYS);
@@ -97,8 +97,8 @@ public class CacheTest {
     @Test
     void get() {
         CacheUser cacheUser = new CacheUser();
-        cacheUser.setName("username");
-        cacheUser.setCity("city-get");
+        cacheUser.setUsername("username");
+        cacheUser.setPhone("phone-get");
         cache.set("1234", cacheUser);
         cache.set("1235", cacheUser);
         CacheUser object = (CacheUser) cache.get("1234");

@@ -1,37 +1,26 @@
-package io.github.architers.cache.redission.cacheable;
+package io.github.architers.redisson.cache.cacheable.map;
 
-
-import io.github.architers.context.cache.operation.CacheOperate;
-import io.github.architers.cache.UserInfo;
+import io.github.architers.redisson.cache.CacheUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RedissonClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
 
-import javax.xml.bind.SchemaOutputResolver;
+import javax.annotation.Resource;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * @author luyi
- * 用于测试@Cacheable注解
- * @version 1.0.0
- */
 @SpringBootTest
-public class CacheableTest {
-    @Autowired
-    private CacheableService cacheableService;
+public class MapCacheableTest {
 
+    @Resource
+    private MapCacheableService mapCacheableService;
 
-    @Autowired
-    private RedisTemplate<Object, Object> redisTemplate;
+    @Resource
+    private RedissonClient redissonClient;
 
-    @Autowired
-    private RedissonClient client;
 
     /**
      * 测试一个@Cacheable注解
@@ -40,27 +29,24 @@ public class CacheableTest {
     public void testOneCacheable() {
         String userName = "123456789";
         long count = 10000;
+        redissonClient.getMapCache("mapCacheableService_oneCacheable").put(userName,
+                new CacheUser().setUsername(userName));
         //使用注解查询一万次
         long time1 = System.currentTimeMillis();
         for (int i = 0; i < count; i++) {
-            UserInfo userInfo = cacheableService.oneCacheable(userName);
-            Assertions.assertNotNull(userInfo);
+            CacheUser CacheUser = mapCacheableService.oneCacheable(userName);
+            Assertions.assertNotNull(CacheUser);
         }
         long time2 = System.currentTimeMillis();
         System.out.println("cacheable耗时：" + (time2 - time1));
         for (int i = 0; i < count; i++) {
-            client.getBucket("cacheableService_oneCacheable:" + userName).get();
+            CacheUser CacheUser = (CacheUser) redissonClient.getMapCache("mapCacheableService_oneCacheable").get(userName);
+            Assertions.assertNotNull(CacheUser);
         }
         long time3 = System.currentTimeMillis();
         System.out.println("使用redissonClient耗时:" + (time3 - time2));
-        //用redisTemplate查询10000次
-        for (int i = 0; i < count; i++) {
-            redisTemplate.opsForValue().get("cacheableService_oneCacheable:" + userName);
-        }
-        long time4 = System.currentTimeMillis();
-        System.out.println("使用redissonClient的redisTemplate耗时" + (time4 - time3));
-
     }
+
 
     /**
      * 测试两个注解
@@ -72,8 +58,8 @@ public class CacheableTest {
         for (int i = 0; i < 5; i++) {
             //删除一个，再获取
             //  cacheOperate.getSimpleCache("cacheableService_twoCacheable_key2").delete(userId);
-            UserInfo userInfo = cacheableService.twoCacheable(userId);
-            Assertions.assertNotNull(userInfo);
+            CacheUser CacheUser = mapCacheableService.twoCacheable(userId);
+            Assertions.assertNotNull(CacheUser);
         }
     }
 
@@ -81,35 +67,41 @@ public class CacheableTest {
      * 测试expireTime
      */
     @Test
-    public void testExpireTime() {
+    public void testExpireTime() throws InterruptedException {
         int count = 5;
         String userId = UUID.randomUUID().toString();
         for (int i = 0; i < count; i++) {
             //不过期
-            UserInfo userInfo = cacheableService.expireTime_never(userId);
-            Assertions.assertNotNull(userInfo);
+            CacheUser CacheUser = mapCacheableService.expireTime_never(userId);
+            Assertions.assertNotNull(CacheUser);
         }
 
         //3分钟过期
         userId = UUID.randomUUID().toString();
         for (int i = 0; i < count; i++) {
-            UserInfo userInfo = cacheableService.expireTime_3_minutes(userId);
-            Assertions.assertNotNull(userInfo);
+            CacheUser CacheUser = mapCacheableService.expireTime_1_minutes(userId);
+            Assertions.assertNotNull(CacheUser);
         }
+        System.out.println(redissonClient.getMapCache("mapCacheableService:expireTime_1_minutes").get(userId));
+
+        Thread.sleep(1000 * 60);
+        System.out.println(redissonClient.getMapCache("mapCacheableService:expireTime_1_minutes").get(userId));
+        Thread.sleep(500);
     }
 
     /**
      * 测试随机时间
      */
     @Test
-    public void testRandomTime() {
+    public void testRandomTime() throws InterruptedException {
         int count = 100;
         for (int i = 0; i < count; i++) {
             String userName = UUID.randomUUID().toString();
-            cacheableService.randomTime(userName);
-            UserInfo userInfo = cacheableService.randomTime(userName);
-            Assertions.assertNotNull(userInfo);
+            mapCacheableService.randomTime(userName);
+            CacheUser CacheUser = mapCacheableService.randomTime(userName);
+            Assertions.assertNotNull(CacheUser);
         }
+        Thread.sleep(1500);
     }
 
     /**
@@ -125,14 +117,14 @@ public class CacheableTest {
         }
         String userName = stringBuilder.toString();
         //长度大于10，查询一次数据库
-        cacheableService.condition(userName);
-        UserInfo userInfo = cacheableService.condition(userName);
-        Assertions.assertNotNull(userInfo);
+        mapCacheableService.condition(userName);
+        CacheUser CacheUser = mapCacheableService.condition(userName);
+        Assertions.assertNotNull(CacheUser);
         //长度小于10，查询，不缓存：查询db两次
-        userName = stringBuilder.substring(0, count - 2);
-        cacheableService.condition(userName);
-        userInfo = cacheableService.condition(userName);
-        Assertions.assertNotNull(userInfo);
+        String userName2 = "999999999";
+        mapCacheableService.condition(userName2);
+        CacheUser = mapCacheableService.condition(userName2);
+        Assertions.assertNotNull(CacheUser);
     }
 
     /**
@@ -142,14 +134,14 @@ public class CacheableTest {
     public void testUnless() {
         //缓存，查询1次
         String userName = "no_unless";
-        cacheableService.unless(userName);
-        UserInfo userInfo = cacheableService.unless(userName);
-        Assertions.assertNotNull(userInfo);
+        mapCacheableService.unless(userName);
+        CacheUser CacheUser = mapCacheableService.unless(userName);
+        Assertions.assertNotNull(CacheUser);
         //不缓存：查询db两次
         userName = "unless";
-        cacheableService.unless(userName);
-        userInfo = cacheableService.unless(userName);
-        Assertions.assertNotNull(userInfo);
+        mapCacheableService.unless(userName);
+        CacheUser = mapCacheableService.unless(userName);
+        Assertions.assertNotNull(CacheUser);
     }
 
     /**
@@ -163,16 +155,16 @@ public class CacheableTest {
         for (int i = 0; i < count; i++) {
             executorService.submit(() -> {
                 try {
-                    Thread.sleep((long) (Math.random()*1000));
+                    Thread.sleep((long) (Math.random() * 1000));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                cacheableService.toGather(userName);
+                mapCacheableService.toGather(userName);
 
             });
         }
         Thread.sleep(5000);
-       // countDownLatch.await();
+        // countDownLatch.await();
     }
 
     /**
@@ -187,8 +179,8 @@ public class CacheableTest {
         for (int i = 0; i < count; i++) {
             executorService.submit(() -> {
                 try {
-                    UserInfo userInfo = cacheableService.testLockToGather(userName);
-                    Assertions.assertNotNull(userInfo);
+                    CacheUser CacheUser = mapCacheableService.testLockToGather(userName);
+                    Assertions.assertNotNull(CacheUser);
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -199,6 +191,4 @@ public class CacheableTest {
         countDownLatch.await();
 
     }
-
-
 }

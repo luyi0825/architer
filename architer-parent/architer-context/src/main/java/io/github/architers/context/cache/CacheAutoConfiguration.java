@@ -59,14 +59,7 @@ public class CacheAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public CacheOperateFactory cacheCacheOperateFactory(io.github.architers.context.cache.CacheProperties cacheProperties) {
-        Class<?> clazz;
-        try {
-            clazz =
-                    this.getClass().getClassLoader().loadClass(cacheProperties.getDefaultCacheOperateClass());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("默认的缓存处理器不存在");
-        }
-        return new CacheOperateFactory((Class<? extends CacheOperate>) clazz);
+        return new CacheOperateFactory(cacheProperties.getDefaultCacheOperateClass());
     }
 
     @Bean

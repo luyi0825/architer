@@ -1,27 +1,20 @@
 
-package io.github.architers.cache.redisson;
+package io.github.architers.redisson.cache;
 
 
-import io.github.architers.cache.redisson.support.RedisTemplateCacheService;
-import io.github.architers.cache.redisson.support.ValueCacheOperate;
+import io.github.architers.redisson.cache.support.MapCacheOperate;
+import io.github.architers.redisson.cache.support.ValueCacheOperate;
 import io.github.architers.context.cache.annotation.EnableArchiterCaching;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.config.Config;
-import org.redisson.spring.data.connection.RedissonConnectionFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Role;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -63,6 +56,8 @@ public class RedissonCacheAutoConfiguration {
             config = new Config();
             config.useSingleServer()
                     .setAddress("redis://127.0.0.1:6379");
+        }
+        if (config.getCodec() == null) {
             config.setCodec(new JsonJacksonCodec());
         }
         return Redisson.create(config);
@@ -75,54 +70,59 @@ public class RedissonCacheAutoConfiguration {
     }
 
 
-    @Bean
-    public RedissonConnectionFactory redissonConnectionFactory(@Qualifier(CACHE_CLIENT_BEAN_NAME) RedissonClient redisson) {
-        return new RedissonConnectionFactory(redisson);
-    }
-
-    @Bean("cacheRedisTemplate")
-    public org.springframework.data.redis.core.RedisTemplate<Object, Object> redisTemplate(RedissonConnectionFactory redisConnectionFactory) {
-        RedisSerializer<Object> serializer = getRedisSerializer();
-        org.springframework.data.redis.core.RedisTemplate<Object, Object> redisTemplate = new org.springframework.data.redis.core.RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory);
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(serializer);
-        redisTemplate.setHashKeySerializer(serializer);
-        redisTemplate.setHashValueSerializer(serializer);
-        redisTemplate.afterPropertiesSet();
-        return redisTemplate;
-    }
+//    @Bean
+//    public RedissonConnectionFactory redissonConnectionFactory(@Qualifier(CACHE_CLIENT_BEAN_NAME) RedissonClient redisson) {
+//        return new RedissonConnectionFactory(redisson);
+//    }
+//
+//    @Bean("cacheRedisTemplate")
+//    public org.springframework.data.redis.core.RedisTemplate<Object, Object> redisTemplate(RedissonConnectionFactory redisConnectionFactory) {
+//        RedisSerializer<Object> serializer = getRedisSerializer();
+//        org.springframework.data.redis.core.RedisTemplate<Object, Object> redisTemplate = new org.springframework.data.redis.core.RedisTemplate<>();
+//        redisTemplate.setConnectionFactory(redisConnectionFactory);
+//        redisTemplate.setKeySerializer(new StringRedisSerializer());
+//        redisTemplate.setValueSerializer(serializer);
+//        redisTemplate.setHashKeySerializer(serializer);
+//        redisTemplate.setHashValueSerializer(serializer);
+//        redisTemplate.afterPropertiesSet();
+//        return redisTemplate;
+//    }
 
     @Bean
     public ValueCacheOperate valueCacheOperate(@Qualifier(CACHE_CLIENT_BEAN_NAME) RedissonClient redissonClient) {
         return new ValueCacheOperate(redissonClient);
     }
 
-    @Bean("cacheStringRedisTemplate")
-    public StringRedisTemplate stringRedisTemplate(RedissonConnectionFactory redisConnectionFactory) {
-        RedisSerializer<Object> serializer = getRedisSerializer();
-        StringRedisTemplate redisTemplate = new StringRedisTemplate();
-        redisTemplate.setConnectionFactory(redisConnectionFactory);
-        redisTemplate.setKeySerializer(serializer);
-        redisTemplate.setValueSerializer(serializer);
-        redisTemplate.setHashKeySerializer(serializer);
-        redisTemplate.setHashValueSerializer(serializer);
-        redisTemplate.afterPropertiesSet();
-        return redisTemplate;
-    }
-
-    /**
-     * 得到redis的序列化器
-     */
-    private RedisSerializer<Object> getRedisSerializer() {
-        return new GenericJackson2JsonRedisSerializer();
-    }
-
     @Bean
-    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
-    public RedisTemplateCacheService redisValueService(org.springframework.data.redis.core.RedisTemplate<Object, Object> redisTemplate) {
-        return new RedisTemplateCacheService(redisTemplate);
+    public MapCacheOperate mapCacheOperate(@Qualifier(CACHE_CLIENT_BEAN_NAME) RedissonClient redissonClient) {
+        return new MapCacheOperate(redissonClient);
     }
+
+//    @Bean("cacheStringRedisTemplate")
+//    public StringRedisTemplate stringRedisTemplate(RedissonConnectionFactory redisConnectionFactory) {
+//        RedisSerializer<Object> serializer = getRedisSerializer();
+//        StringRedisTemplate redisTemplate = new StringRedisTemplate();
+//        redisTemplate.setConnectionFactory(redisConnectionFactory);
+//        redisTemplate.setKeySerializer(serializer);
+//        redisTemplate.setValueSerializer(serializer);
+//        redisTemplate.setHashKeySerializer(serializer);
+//        redisTemplate.setHashValueSerializer(serializer);
+//        redisTemplate.afterPropertiesSet();
+//        return redisTemplate;
+//    }
+//
+//    /**
+//     * 得到redis的序列化器
+//     */
+//    private RedisSerializer<Object> getRedisSerializer() {
+//        return new GenericJackson2JsonRedisSerializer();
+//    }
+
+//    @Bean
+//    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+//    public RedisTemplateCacheService redisValueService(org.springframework.data.redis.core.RedisTemplate<Object, Object> redisTemplate) {
+//        return new RedisTemplateCacheService(redisTemplate);
+//    }
 
 
 //    @Bean

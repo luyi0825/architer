@@ -17,9 +17,8 @@ public class CacheProperties {
     /**
      * 默认的处理器
      */
-    private String defaultCacheOperateClass;
+    private Class<? extends CacheOperate> defaultCacheOperateClass;
 
-    private Class<? extends CacheOperate> aClass;
 
     /**
      * 使用什么锁

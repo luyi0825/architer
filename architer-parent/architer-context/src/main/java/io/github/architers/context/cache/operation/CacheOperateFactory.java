@@ -3,6 +3,7 @@ package io.github.architers.context.cache.operation;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Map;
@@ -12,12 +13,13 @@ import java.util.Map;
  */
 public class CacheOperateFactory implements ApplicationContextAware {
 
+    private Map<Class<? extends CacheOperate>, CacheOperate> cacheOperateMap;
+    private final Class<? extends CacheOperate> defaultCacheOperateClass;
+
     public CacheOperateFactory(Class<? extends CacheOperate> defaultCacheOperateClass) {
+        Assert.notNull(defaultCacheOperateClass, "defaultCacheOperateClass is null");
         this.defaultCacheOperateClass = defaultCacheOperateClass;
     }
-
-    private Map<Class<? extends CacheOperate>, CacheOperate> cacheOperateMap;
-    private Class<? extends CacheOperate> defaultCacheOperateClass;
 
 
     public CacheOperate getCacheOperate(Class<? extends CacheOperate> cacheOperateClass) {

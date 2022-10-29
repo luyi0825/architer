@@ -1,11 +1,11 @@
-package io.github.architers.cache.redisson;
+package io.github.architers.redisson.cache;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CacheApplicationTest {
+public class RedissionCacheTest {
     public static void main(String[] args) {
-        SpringApplication.run(CacheApplicationTest.class);
+        SpringApplication.run(RedissionCacheTest.class);
     }
 }
