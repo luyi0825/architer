@@ -5,7 +5,6 @@ import io.github.architers.context.cache.annotation.Cacheable;
 import io.github.architers.context.cache.annotation.PutCache;
 import lombok.Data;
 
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -29,7 +28,21 @@ public class BatchPutParam implements CacheOperationParam {
     /**
      * 缓存值
      */
-    private Map<Object, Object> batchCacheValue;
+    private Object batchCacheValue;
 
+    /**
+     * @see Cacheable#expireTime()
+     */
+    private long expireTime;
+
+    /**
+     * @see Cacheable#randomTime()
+     */
+    private long randomTime;
+
+    /**
+     * @see Cacheable#timeUnit()
+     */
+    private TimeUnit timeUnit;
 
 }

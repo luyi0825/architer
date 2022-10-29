@@ -20,4 +20,5 @@ public class BatchDeleteService {
     public void batchDeleteCollection(List<CacheUser> cacheUsers) {
         System.out.println("执行batchDeleteCollection");
     }
+
 }

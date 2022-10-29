@@ -55,4 +55,8 @@ public interface CacheOperate {
     default void batchDelete(BatchDeleteParam batchDeleteParam) {
         noSupport();
     }
+
+    default void batchPut(BatchPutParam batchPutParam) {
+        noSupport();
+    }
 }

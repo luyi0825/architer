@@ -1,6 +1,7 @@
 package io.github.architers.redisson.cache.support;
 
 import io.github.architers.context.Symbol;
+import io.github.architers.context.cache.BatchValueUtils;
 import io.github.architers.context.cache.operation.*;
 import io.github.architers.context.utils.JsonUtils;
 import org.redisson.api.RMap;
@@ -9,6 +10,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author luyi
@@ -75,4 +77,29 @@ public class MapCacheOperate implements CacheOperate {
         RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchDeleteParam.getCacheName());
         rMapCache.keySet(keys.size()).clear();
     }
+
+    @Override
+    public void batchPut(BatchPutParam batchPutParam) {
+        Map<Object, Object> cacheMap =
+                BatchValueUtils.parseValue2Map(batchPutParam.getBatchCacheValue(),
+                        Symbol.COLON);
+        if (batchPutParam.isAsync()) {
+            if (batchPutParam.getExpireTime() > 0) {
+                RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getCacheName());
+                rMapCache.putAllAsync(cacheMap, batchPutParam.getExpireTime(), batchPutParam.getTimeUnit());
+            } else {
+                RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getCacheName());
+                rMapCache.putAllAsync(cacheMap);
+            }
+            return;
+        }
+        if (batchPutParam.getExpireTime() > 0) {
+            RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getCacheName());
+            rMapCache.putAll(cacheMap, batchPutParam.getExpireTime(), batchPutParam.getTimeUnit());
+        } else {
+            RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getCacheName());
+            rMapCache.putAll(cacheMap);
+        }
+    }
+
 }

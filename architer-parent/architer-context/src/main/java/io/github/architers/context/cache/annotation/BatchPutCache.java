@@ -24,7 +24,7 @@ public @interface BatchPutCache {
     /**
      * @see Cacheable#cacheName()
      */
-    String[] cacheName() default "";
+    String cacheName() default "";
 
     /**
      * 缓存值，支持EL表达

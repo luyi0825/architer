@@ -68,5 +68,12 @@ public class CacheAutoConfiguration {
         return new BatchDeleteOperationHandler();
     }
 
+    @Bean
+    @ConditionalOnMissingBean
+
+    public BatchPutOperationHandler batchPutOperationHandler() {
+        return new BatchPutOperationHandler();
+    }
+
 
 }
