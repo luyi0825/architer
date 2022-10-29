@@ -42,7 +42,7 @@ public class CacheTest {
         for (int i = 0; i < 100; i++) {
             CacheUser cacheUser = new CacheUser();
             cacheUser.setUsername("username" + i);
-            cacheUser.setPhone("phone");
+            cacheUser.setCity("city");
             list.add(cacheUser);
         }
         future = cache.multiSet(list);
@@ -65,7 +65,7 @@ public class CacheTest {
         for (int i = 0; i < 100; i++) {
             CacheUser cacheUser = new CacheUser();
             cacheUser.setUsername("username" + i);
-            cacheUser.setPhone("city-phone");
+            cacheUser.setCity("city-phone");
             list.add(cacheUser);
         }
         future = cache.multiSet(list, 1, TimeUnit.DAYS);
@@ -98,7 +98,7 @@ public class CacheTest {
     void get() {
         CacheUser cacheUser = new CacheUser();
         cacheUser.setUsername("username");
-        cacheUser.setPhone("phone-get");
+        cacheUser.setCity("city-get");
         cache.set("1234", cacheUser);
         cache.set("1235", cacheUser);
         CacheUser object = (CacheUser) cache.get("1234");

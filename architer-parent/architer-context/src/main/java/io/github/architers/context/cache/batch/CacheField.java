@@ -39,7 +39,7 @@ public class CacheField {
 
 
     @Data
-    static class CacheKeyInfo implements Comparable<CacheKeyInfo> {
+    public static class CacheKeyInfo implements Comparable<CacheKeyInfo> {
         private Field field;
         private int order;
 

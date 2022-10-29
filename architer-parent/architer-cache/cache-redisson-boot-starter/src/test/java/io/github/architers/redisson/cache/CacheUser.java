@@ -17,7 +17,7 @@ public class CacheUser implements Serializable {
 
 
     @CacheKey(order = 1)
-    private String phone;
+    private String city;
 
     @CacheValue
     private String password;
@@ -31,12 +31,12 @@ public class CacheUser implements Serializable {
         return this;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getCity() {
+        return city;
     }
 
-    public CacheUser setPhone(String phone) {
-        this.phone = phone;
+    public CacheUser setCity(String city) {
+        this.city = city;
         return this;
     }
 

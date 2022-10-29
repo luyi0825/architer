@@ -27,6 +27,8 @@ public class CacheAnnotationsParser {
         CACHE_OPERATION_ANNOTATIONS.add(DeleteCaches.class);
         CACHE_OPERATION_ANNOTATIONS.add(PutCache.class);
         CACHE_OPERATION_ANNOTATIONS.add(PutCaches.class);
+        CACHE_OPERATION_ANNOTATIONS.add(BatchDeleteCache.class);
+        CACHE_OPERATION_ANNOTATIONS.add(BatchPutCache.class);
     }
 
     /**
@@ -85,14 +87,14 @@ public class CacheAnnotationsParser {
                 AnnotatedElementUtils.findAllMergedAnnotations(annotatedElement, CACHE_OPERATION_ANNOTATIONS));
         final Collection<Annotation> ops = new ArrayList<>(anns.size());
         anns.forEach(annotation -> {
-            if (annotation instanceof Cacheable | annotation instanceof PutCache | annotation instanceof DeleteCache) {
-                ops.add(annotation);
-            } else if (annotation instanceof Cacheables) {
+            if (annotation instanceof Cacheables) {
                 ops.addAll(Arrays.asList(((Cacheables) annotation).value()));
             } else if (annotation instanceof PutCaches) {
                 ops.addAll(Arrays.asList(((PutCaches) annotation).value()));
             } else if (annotation instanceof DeleteCaches) {
                 ops.addAll(Arrays.asList(((DeleteCaches) annotation).value()));
+            } else {
+                ops.add(annotation);
             }
         });
         return ops;

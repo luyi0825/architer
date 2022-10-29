@@ -1,14 +1,10 @@
 package io.github.architers.context.cache.annotation;
 
 
-import io.github.architers.context.cache.CacheMode;
 import io.github.architers.context.cache.operation.CacheOperate;
 import io.github.architers.context.cache.operation.DefaultCacheOperate;
 import io.github.architers.context.cache.operation.DefaultkeyGenerator;
 import io.github.architers.context.cache.operation.KeyGenerator;
-import io.github.architers.context.lock.LockEnum;
-import io.github.architers.context.lock.Locked;
-import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 

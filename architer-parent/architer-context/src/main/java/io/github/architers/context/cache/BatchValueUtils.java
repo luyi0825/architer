@@ -1,5 +1,9 @@
-package io.github.architers.context.cache.batch;
+package io.github.architers.context.cache;
 
+import io.github.architers.context.cache.batch.CacheField;
+import io.github.architers.context.cache.batch.CacheKey;
+import io.github.architers.context.cache.batch.CacheValue;
+import io.github.architers.context.utils.JsonUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
@@ -16,7 +20,7 @@ import java.util.stream.Collectors;
  * @author luyi
  * @version 1.0.0
  */
-public class BatchValueFactory {
+public class BatchValueUtils {
     /**
      * 表示值为当前对象
      */
@@ -24,7 +28,7 @@ public class BatchValueFactory {
     /**
      * 缓存类的缓存字段信息
      */
-    Map<String, CacheField> fieldCaches = new ConcurrentHashMap<>();
+    static Map<String, CacheField> fieldCaches = new ConcurrentHashMap<>();
 
 
     /**
@@ -33,7 +37,7 @@ public class BatchValueFactory {
      * @param clazz 对应的缓存对象的class类型
      * @return 缓存字段信息
      */
-    public CacheField getObjectCacheField(Class<?> clazz) {
+    public static CacheField getObjectCacheField(Class<?> clazz) {
         String className = clazz.getName();
         //从缓存中取值
         CacheField cacheField = fieldCaches.get(className);
@@ -42,7 +46,7 @@ public class BatchValueFactory {
         }
         cacheField = new CacheField();
         //是否解析到key和value
-        boolean  parsedValue = false;
+        boolean parsedValue = false;
         Annotation[] annotations = clazz.getDeclaredAnnotations();
         for (Annotation annotation : annotations) {
             if (annotation instanceof CacheValue) {
@@ -89,7 +93,7 @@ public class BatchValueFactory {
     /**
      * 得到缓存key的值
      */
-    public String getCacheKey(Object cacheEntity, String split) {
+    public static String getCacheKey(Object cacheEntity, String split) {
         CacheField cacheField = getObjectCacheField(cacheEntity.getClass());
         StringBuilder keyBuilder = new StringBuilder();
         int length = cacheField.getKeys().length;
@@ -108,7 +112,7 @@ public class BatchValueFactory {
     }
 
 
-    public Object getCacheValue(Object cacheEntity) {
+    public static Object getCacheValue(Object cacheEntity) {
         CacheField cacheField = getObjectCacheField(cacheEntity.getClass());
         if (THIS_VALUE.equals(cacheField.getValue())) {
             return cacheEntity;
@@ -123,7 +127,7 @@ public class BatchValueFactory {
      * @param object 对象示例
      * @return 字段值
      */
-    public Object getFieldValue(Field field, Object object) {
+    public static Object getFieldValue(Field field, Object object) {
         try {
             //暴力反射
             field.setAccessible(true);
@@ -141,7 +145,7 @@ public class BatchValueFactory {
      * @param object    对象示例
      * @return 字段值
      */
-    public Object getFieldValue(String fieldName, Object object) {
+    public static Object getFieldValue(String fieldName, Object object) {
         try {
             Field field = object.getClass().getDeclaredField(fieldName);
             //暴力反射
@@ -157,7 +161,7 @@ public class BatchValueFactory {
      *
      * @return key为缓存的key, value为缓存的值
      */
-    public Map<String, Object> parseValue2Map(String cacheName, String split, Object value) {
+    public static Map<String, Object> parseValue2Map(String cacheName, String split, Object value) {
         if (value instanceof Map) {
             Map<String, Object> cacheMap = new HashMap<>(((Map<?, ?>) value).size());
             ((Map<?, ?>) value).forEach((k, v) -> {
@@ -171,8 +175,8 @@ public class BatchValueFactory {
             Collection<?> values = (Collection<?>) value;
             Map<String, Object> cacheData = new HashMap<>(values.size());
             for (Object o : values) {
-                Object cacheKey = this.getCacheKey(o, split);
-                Object cacheValue = this.getCacheValue(o);
+                Object cacheKey = getCacheKey(o, split);
+                Object cacheValue = getCacheValue(o);
                 cacheData.put(String.join(split, cacheName, cacheKey.toString()), cacheValue);
             }
             return cacheData;
@@ -184,7 +188,7 @@ public class BatchValueFactory {
     /**
      * 将值解析成map
      */
-    public Map<Object, Object> parseValue2Map(Object value, String split) {
+    public static Map<Object, Object> parseValue2Map(Object value, String split) {
         if (value instanceof Map) {
             Map<Object, Object> cacheMap = new HashMap<>(((Map<?, ?>) value).size());
             cacheMap.putAll((Map<?, ?>) value);
@@ -195,8 +199,8 @@ public class BatchValueFactory {
             Collection<?> values = (Collection<?>) value;
             Map<Object, Object> cacheData = new HashMap<>(values.size());
             for (Object o : values) {
-                Object cacheKey = this.getCacheKey(o, split);
-                Object cacheValue = this.getCacheValue(o);
+                Object cacheKey = getCacheKey(o, split);
+                Object cacheValue = getCacheValue(o);
                 cacheData.put(cacheKey, cacheValue);
             }
             return cacheData;
@@ -209,14 +213,14 @@ public class BatchValueFactory {
      *
      * @param cacheName 缓存名称
      */
-    public Collection<Object> parseCacheKeys(String cacheName, String split, Object keys) {
+    public static Collection<Object> parseCacheKeys(String cacheName, String split, Object keys) {
         if (keys instanceof Collection) {
             Collection<Object> cacheKeys = new ArrayList<>(((Collection<?>) keys).size());
             ((Collection<?>) keys).forEach(key -> {
                 if (key instanceof String || key instanceof Number) {
                     cacheKeys.add(String.join(split, cacheName, key.toString()));
                 } else {
-                    cacheKeys.add(String.join(split, cacheName, this.getCacheKey(key, split).toString()));
+                    cacheKeys.add(String.join(split, cacheName, getCacheKey(key, split).toString()));
                 }
             });
             return cacheKeys;
@@ -224,18 +228,33 @@ public class BatchValueFactory {
         throw new IllegalArgumentException("keys类型不匹配");
     }
 
-    public Collection<Object> parseCacheKeys(Object keys, String split) {
-        if (keys instanceof Collection) {
-            Collection<Object> cacheKeys = new ArrayList<>(((Collection<?>) keys).size());
-            ((Collection<?>) keys).forEach(key -> {
-                if (key instanceof String || key instanceof Number) {
-                    cacheKeys.add(key.toString());
-                } else {
-                    cacheKeys.add(this.getCacheKey(key, split));
-                }
-            });
-            return cacheKeys;
+
+
+
+    /**
+     * 解析key
+     *
+     * @param value
+     * @param split 缓存分隔符号
+     * @return value对应的key
+     */
+    public static Collection<?> parseKeys(Object value, String split) {
+        if (value instanceof Map) {
+            Map<?, ?> map = (Map<?, ?>) value;
+            return map.keySet();
         }
-        throw new IllegalArgumentException("keys类型不匹配");
+        //将list通过注解转map
+        if (value instanceof Collection) {
+            Collection<?> data = (Collection<?>) value;
+            Collection<Object> keys = new HashSet<>(data.size(), 1);
+            for (Object o : data) {
+                Object key = getCacheKey(o, split);
+                keys.add(key);
+            }
+            return keys;
+
+        }
+        throw new IllegalArgumentException("cacheValue有误,必须属于map或者Collection");
     }
+
 }

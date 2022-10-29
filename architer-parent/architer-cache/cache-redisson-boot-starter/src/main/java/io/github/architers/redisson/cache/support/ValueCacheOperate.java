@@ -1,8 +1,15 @@
 package io.github.architers.redisson.cache.support;
 
+import io.github.architers.context.Symbol;
+import io.github.architers.context.cache.BatchValueUtils;
 import io.github.architers.context.cache.operation.*;
+import io.github.architers.context.utils.JsonUtils;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author luyi
@@ -56,5 +63,27 @@ public class ValueCacheOperate implements CacheOperate {
 
     private String getCacheKey(BaseCacheOperationParam cacheOperationParam) {
         return cacheOperationParam.getCacheName() + ":" + cacheOperationParam.getKey();
+    }
+
+    @Override
+    public void batchDelete(BatchDeleteParam batchDeleteParam) {
+        Collection<?> keys = batchDeleteParam.getKeys();
+        if (CollectionUtils.isEmpty(keys)) {
+            return;
+        }
+        String[] cacheKeys = new String[keys.size()];
+        int i = 0;
+        for (Object key : keys) {
+            StringBuilder cacheKey = new StringBuilder(batchDeleteParam.getCacheName());
+            cacheKey.append(Symbol.COLON);
+            cacheKey.append(JsonUtils.toJsonString(key));
+            cacheKeys[i] = cacheKey.toString();
+            i++;
+        }
+        if (batchDeleteParam.isAsync()) {
+            redissonClient.getKeys().deleteAsync(cacheKeys);
+        } else {
+            redissonClient.getKeys().delete(cacheKeys);
+        }
     }
 }

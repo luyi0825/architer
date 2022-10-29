@@ -1,12 +1,14 @@
 package io.github.architers.redisson.cache.support;
 
-import io.github.architers.context.cache.operation.CacheOperate;
-import io.github.architers.context.cache.operation.DeleteCacheParam;
-import io.github.architers.context.cache.operation.GetCacheParam;
-import io.github.architers.context.cache.operation.PutCacheParam;
+import io.github.architers.context.Symbol;
+import io.github.architers.context.cache.operation.*;
+import io.github.architers.context.utils.JsonUtils;
 import org.redisson.api.RMap;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Collection;
 
 /**
  * @author luyi
@@ -62,5 +64,15 @@ public class MapCacheOperate implements CacheOperate {
         if (redissonClient.getMapCache(deleteCacheParam.getCacheName()).delete()) {
             throw new RuntimeException("删除缓存失败");
         }
+    }
+
+    @Override
+    public void batchDelete(BatchDeleteParam batchDeleteParam) {
+        Collection<?> keys = batchDeleteParam.getKeys();
+        if (CollectionUtils.isEmpty(keys)) {
+            return;
+        }
+        RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchDeleteParam.getCacheName());
+        rMapCache.keySet(keys.size()).clear();
     }
 }

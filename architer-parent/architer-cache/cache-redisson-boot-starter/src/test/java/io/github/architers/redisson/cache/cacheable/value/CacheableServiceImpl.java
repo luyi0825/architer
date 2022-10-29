@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service("CacheableCacheUserService")
@@ -20,7 +21,7 @@ public class CacheableServiceImpl implements CacheableService {
     @Override
     public CacheUser twoCacheable(String userName) {
         logger.info("{}查询数据库", "twoCacheable");
-        return new CacheUser().setUsername(userName).setPhone("phone:" + userName);
+        return new CacheUser().setUsername(userName).setCity("city:" + UUID.randomUUID());
     }
 
     @Override

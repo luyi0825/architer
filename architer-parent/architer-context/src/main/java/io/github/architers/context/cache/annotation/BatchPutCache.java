@@ -1,7 +1,6 @@
 package io.github.architers.context.cache.annotation;
 
 
-import io.github.architers.context.cache.CacheMode;
 import io.github.architers.context.cache.operation.CacheOperate;
 import io.github.architers.context.cache.operation.DefaultCacheOperate;
 import io.github.architers.context.cache.operation.DefaultkeyGenerator;
@@ -28,17 +27,15 @@ public @interface BatchPutCache {
     String[] cacheName() default "";
 
     /**
-     * 缓存值，支持EL表达式
+     * 缓存值，支持EL表达
      */
     String cacheValue() default "";
-
 
 
     /**
      * key的生成器
      */
     Class<? extends KeyGenerator> keyGenerator() default DefaultkeyGenerator.class;
-
 
 
     /**
@@ -71,11 +68,6 @@ public @interface BatchPutCache {
      * @see Cacheable#unless()
      */
     String unless() default "";
-
-    /**
-     * 缓存模式
-     */
-    CacheMode cacheMode() default CacheMode.SIMPLE;
 
     /**
      * 缓存管理器类型

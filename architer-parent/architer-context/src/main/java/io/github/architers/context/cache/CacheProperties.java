@@ -19,6 +19,11 @@ public class CacheProperties {
      */
     private Class<? extends CacheOperate> defaultCacheOperateClass;
 
+    /**
+     * 是否允许空值:@TODO 待完善
+     */
+    private boolean canNullValue = false;
+
 
     /**
      * 使用什么锁

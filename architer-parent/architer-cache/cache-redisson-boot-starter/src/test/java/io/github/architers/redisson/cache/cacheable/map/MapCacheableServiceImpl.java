@@ -20,7 +20,7 @@ public class MapCacheableServiceImpl implements MapCacheableService {
     @Override
     public CacheUser twoCacheable(String userName) {
         logger.info("{}查询数据库", "twoCacheable");
-        return new CacheUser().setUsername(userName).setPhone("phone:" + userName);
+        return new CacheUser().setUsername(userName).setCity("city:" + userName);
     }
 
     @Override

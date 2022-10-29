@@ -22,7 +22,6 @@ public class RedissonConfig extends Config implements Serializable {
 
     private SentinelServersConfig sentinelServersConfig;
 
-
     private SingleServerConfig singleServerConfig;
 
     private ClusterServersConfig clusterServersConfig;

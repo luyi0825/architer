@@ -24,24 +24,6 @@ public class CacheAutoConfiguration {
         return new ExpressionParser();
     }
 
-//    @Bean
-//    public LockFactory lockFactory(ExpressionParser expressionParser) {
-//        LockFactory lockFactory = new LockFactory();
-//        lockFactory.setExpressionParser(expressionParser);
-//        return lockFactory;
-//    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public LockFailService lockFailService() {
-        return new LockFailService() {
-            @Override
-            public void throwFailException(Locked locked) {
-                System.out.println("443");
-            }
-        };
-    }
-
 
     @Bean
     @ConditionalOnMissingBean
@@ -78,6 +60,12 @@ public class CacheAutoConfiguration {
     @ConditionalOnMissingBean
     public PutCacheOperationHandler putCacheOperationHandler() {
         return new PutCacheOperationHandler();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public BatchDeleteOperationHandler batchDeleteOperationHandler() {
+        return new BatchDeleteOperationHandler();
     }
 
 

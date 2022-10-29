@@ -38,7 +38,7 @@ public class JsonUtils {
     public static String toJsonString(Object object) {
         try {
             if (object instanceof String) {
-                return object.toString();
+                return (String) object;
             }
             return OBJECT_MAPPER.writeValueAsString(object);
         } catch (JsonProcessingException e) {

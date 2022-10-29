@@ -1,13 +1,10 @@
 package io.github.architers.context.cache.annotation;
 
 
-import io.github.architers.context.cache.CacheMode;
 import io.github.architers.context.cache.operation.CacheOperate;
 import io.github.architers.context.cache.operation.DefaultCacheOperate;
 import io.github.architers.context.cache.operation.DefaultkeyGenerator;
 import io.github.architers.context.cache.operation.KeyGenerator;
-import io.github.architers.context.lock.LockEnum;
-import io.github.architers.context.lock.Locked;
 
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
@@ -76,11 +73,6 @@ public @interface PutCache {
      * @see Cacheable#unless()
      */
     String unless() default "";
-
-    /**
-     * 缓存模式
-     */
-    CacheMode cacheMode() default CacheMode.SIMPLE;
 
     /**
      * 缓存管理器类型

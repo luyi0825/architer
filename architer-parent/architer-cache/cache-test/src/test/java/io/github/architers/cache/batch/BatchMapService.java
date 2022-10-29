@@ -1,7 +1,6 @@
 package io.github.architers.cache.batch;
 
 import io.github.architers.context.cache.CacheConstants;
-import io.github.architers.context.cache.CacheMode;
 import io.github.architers.cache.UserInfo;
 
 import io.github.architers.context.cache.annotation.DeleteCache;
