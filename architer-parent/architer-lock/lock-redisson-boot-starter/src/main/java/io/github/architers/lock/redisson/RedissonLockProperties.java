@@ -8,9 +8,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author luyi
  */
-@ConfigurationProperties(prefix = "architer.lock.redisson")
+@ConfigurationProperties(prefix = RedissonLockProperties.PREFIX)
 @Data
-public class RedissonLockPropeties {
+public class RedissonLockProperties {
+
+     final static String PREFIX = "architers.lock.redisson";
 
     /**
      * 是否隔离:隔离了就是重新建立redisson连接，默认是

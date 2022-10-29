@@ -253,65 +253,17 @@ public class RedissonLockConfig extends Config implements Serializable {
         return super.isUseScriptCache();
     }
 
-    @Override
-    public int getMinCleanUpDelay() {
-        return super.getMinCleanUpDelay();
-    }
 
-    @Override
-    public Config setMinCleanUpDelay(int minCleanUpDelay) {
-        return super.setMinCleanUpDelay(minCleanUpDelay);
-    }
 
-    @Override
-    public int getMaxCleanUpDelay() {
-        return super.getMaxCleanUpDelay();
-    }
 
     @Override
     public Config setMaxCleanUpDelay(int maxCleanUpDelay) {
         return super.setMaxCleanUpDelay(maxCleanUpDelay);
     }
 
-    @Override
-    public int getCleanUpKeysAmount() {
-        return super.getCleanUpKeysAmount();
-    }
 
-    @Override
-    public Config setCleanUpKeysAmount(int cleanUpKeysAmount) {
-        return super.setCleanUpKeysAmount(cleanUpKeysAmount);
-    }
 
-    @Override
-    public boolean isUseThreadClassLoader() {
-        return super.isUseThreadClassLoader();
-    }
 
-    @Override
-    public Config setUseThreadClassLoader(boolean useThreadClassLoader) {
-        return super.setUseThreadClassLoader(useThreadClassLoader);
-    }
-
-    @Override
-    public long getReliableTopicWatchdogTimeout() {
-        return super.getReliableTopicWatchdogTimeout();
-    }
-
-    @Override
-    public Config setReliableTopicWatchdogTimeout(long timeout) {
-        return super.setReliableTopicWatchdogTimeout(timeout);
-    }
-
-    @Override
-    public ConnectionListener getConnectionListener() {
-        return super.getConnectionListener();
-    }
-
-    @Override
-    public Config setConnectionListener(ConnectionListener connectionListener) {
-        return super.setConnectionListener(connectionListener);
-    }
 
 
 }

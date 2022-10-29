@@ -25,69 +25,72 @@ import java.io.InputStream;
  * @author luyi
  */
 @Configuration
-@EnableConfigurationProperties(RedissonLockPropeties.class)
+@EnableConfigurationProperties(RedissonLockProperties.class)
 @Slf4j
 public class RedissonLockAutoConfiguration {
 
     @Resource
     private ApplicationContext ctx;
 
-    private final RedissonLockPropeties redissonLockPropeties;
+    private final RedissonLockProperties redissonLockProperties;
 
-    RedissonLockAutoConfiguration(RedissonLockPropeties redissonLockPropeties) {
-        this.redissonLockPropeties = redissonLockPropeties;
+    RedissonLockAutoConfiguration(RedissonLockProperties redissonLockProperties) {
+        this.redissonLockProperties = redissonLockProperties;
     }
 
     @Bean(destroyMethod = "shutdown", value = "redissonLockClient")
     @ConditionalOnMissingBean(name = "redissonLockClient")
-    @ConditionalOnProperty(prefix = "architer.lock.redisson", name = "isolation", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(prefix = "architers.lock.redisson", name = "isolation", havingValue =
+            "true", matchIfMissing = true)
     public RedissonClient redissonLockClient() throws IOException {
         Config config;
-        if (redissonLockPropeties == null) {
+        if (redissonLockProperties == null) {
             throw new IllegalArgumentException("redisson锁配置缺失");
         }
-        String file = redissonLockPropeties.getFile();
+        String file = redissonLockProperties.getFile();
         if (StringUtils.hasText(file)) {
             InputStream is = this.getConfigStream();
             config = Config.fromYAML(is);
-        } else if (redissonLockPropeties.getConfig() != null) {
-            config = redissonLockPropeties.getConfig();
+        } else if (redissonLockProperties.getConfig() != null) {
+            config = redissonLockProperties.getConfig();
         } else {
             //默认连接本地
             config = new Config();
             config.useSingleServer()
                     .setAddress("redis://127.0.0.1:6379");
-            config.setCodec(new JsonJacksonCodec());
             log.info("没有配置redisson锁配置，使用默认连接");
+        }
+        if (config.getCodec() == null) {
+            config.setCodec(new JsonJacksonCodec());
         }
         return Redisson.create(config);
     }
 
     private InputStream getConfigStream() throws IOException {
-        org.springframework.core.io.Resource resource = this.ctx.getResource(this.redissonLockPropeties.getFile());
+        org.springframework.core.io.Resource resource = this.ctx.getResource(this.redissonLockProperties.getFile());
         return resource.getInputStream();
     }
 
     /**
      * 使用redissonLockClient这个beanName的客户端（锁隔离）
      */
-    @ConditionalOnProperty(prefix = "architer.lock.redisson", name = "isolation", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(prefix = RedissonLockProperties.PREFIX, name = "isolation", havingValue = "true", matchIfMissing = true)
     @ConditionalOnBean(name = "redissonLockClient")
     @Bean
-    public RedissonLockServiceImpl redissonLockServiceIsolation(@Qualifier("redissonLockClient") RedissonClient redissonClient) {
+    public RedisLockServiceImpl redissonLockServiceIsolation(@Qualifier("redissonLockClient") RedissonClient redissonClient) {
         log.info("redissonLock是否隔离：true");
-        return new RedissonLockServiceImpl(redissonClient);
+        return new RedisLockServiceImpl(redissonClient);
     }
 
 
     /**
      * 锁没有隔离的客户端（代表系统通过redissonClient）
      */
-    @ConditionalOnProperty(prefix = "architer.lock.redisson", name = "isolation", havingValue = "false")
+    @ConditionalOnProperty(prefix = RedissonLockProperties.PREFIX, name = "isolation", havingValue = "false")
     @Bean
-    public RedissonLockServiceImpl redissonLockServiceNotIsolation(RedissonClient redissonClient) {
+    public RedisLockServiceImpl redissonLockServiceNotIsolation(RedissonClient redissonClient) {
         log.info("redissonLock是否隔离：false");
-        return new RedissonLockServiceImpl(redissonClient);
+        return new RedisLockServiceImpl(redissonClient);
     }
 
 
