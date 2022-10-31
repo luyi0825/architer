@@ -8,7 +8,7 @@ import lombok.Data;
  * @author luyi
  */
 @Data
-public class DeleteCacheParam extends BaseCacheOperationParam {
+public class DeleteParam extends BaseCacheOperationParam {
 
     /**
      * 是否异步

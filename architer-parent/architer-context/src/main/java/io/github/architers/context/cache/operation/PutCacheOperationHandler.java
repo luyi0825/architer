@@ -47,15 +47,15 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         KeyGenerator keyGenerator = super.keyGeneratorFactory.getKeyGenerator(putCache.keyGenerator());
         String cacheName = keyGenerator.generator(expressionMetadata, putCache.cacheName());
         CacheOperate cacheOperate = super.cacheOperateFactory.getCacheOperate(putCache.cacheOperate());
-        PutCacheParam putCacheParam = new PutCacheParam();
-        putCacheParam.setCacheName(cacheName);
-        putCacheParam.setKey(key);
-        putCacheParam.setCacheOperate(cacheOperate);
-        putCacheParam.setCacheName(putCacheParam.getCacheName());
-        putCacheParam.setCacheValue(value);
-        putCacheParam.setExpireTime(expireTime);
-        putCacheParam.setTimeUnit(putCacheParam.getTimeUnit());
-        cacheOperate.put(putCacheParam);
+        PutParam putParam = new PutParam();
+        putParam.setCacheName(cacheName);
+        putParam.setKey(key);
+        putParam.setCacheOperate(cacheOperate);
+        putParam.setCacheName(putParam.getCacheName());
+        putParam.setCacheValue(value);
+        putParam.setExpireTime(expireTime);
+        putParam.setTimeUnit(putParam.getTimeUnit());
+        cacheOperate.put(putParam);
 
     }
 

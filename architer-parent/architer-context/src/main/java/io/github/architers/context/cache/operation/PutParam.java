@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @see PutCache
  */
 @Data
-public class PutCacheParam extends BaseCacheOperationParam {
+public class PutParam extends BaseCacheOperationParam {
 
     /**
      * 缓存的过期时间

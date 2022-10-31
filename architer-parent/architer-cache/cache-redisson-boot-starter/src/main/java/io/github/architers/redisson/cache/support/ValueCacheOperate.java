@@ -5,15 +5,11 @@ import io.github.architers.context.cache.BatchValueUtils;
 import io.github.architers.context.cache.CacheUtils;
 import io.github.architers.context.cache.operation.*;
 import io.github.architers.context.utils.JsonUtils;
-import org.redisson.Redisson;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
-import org.redisson.client.protocol.RedisCommand;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +26,7 @@ public class ValueCacheOperate implements CacheOperate {
     }
 
     @Override
-    public void put(PutCacheParam put) {
+    public void put(PutParam put) {
         String cacheKey = getCacheKey(put);
         RBucket<Object> rBucket = redissonClient.getBucket(cacheKey);
         if (put.isAsync()) {
@@ -62,7 +58,7 @@ public class ValueCacheOperate implements CacheOperate {
 
 
     @Override
-    public void delete(DeleteCacheParam delete) {
+    public void delete(DeleteParam delete) {
         String cacheKey = getCacheKey(delete);
         if (delete.isAsync()) {
             redissonClient.getBucket(cacheKey).deleteAsync();
@@ -72,7 +68,7 @@ public class ValueCacheOperate implements CacheOperate {
     }
 
     @Override
-    public Object get(GetCacheParam get) {
+    public Object get(GetParam get) {
         return redissonClient.getBucket(getCacheKey(get)).get();
     }
 
