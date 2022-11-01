@@ -3,8 +3,6 @@ package io.github.architers.redisson.cache.support;
 import io.github.architers.context.Symbol;
 import io.github.architers.context.cache.BatchValueUtils;
 import io.github.architers.context.cache.operation.*;
-import io.github.architers.context.utils.JsonUtils;
-import org.redisson.api.RMap;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.springframework.util.CollectionUtils;
@@ -24,46 +22,46 @@ public class MapCacheOperate implements CacheOperate {
     }
 
     @Override
-    public void put(PutCacheParam putCacheParam) {
-        RMapCache<Object, Object> rMap = redissonClient.getMapCache(putCacheParam.getCacheName());
-        Object cacheValue = putCacheParam.getCacheValue();
+    public void put(PutParam putParam) {
+        RMapCache<Object, Object> rMap = redissonClient.getMapCache(putParam.getCacheName());
+        Object cacheValue = putParam.getCacheValue();
         //存在过期时间
-        if (putCacheParam.getExpireTime() > 0) {
-            if (putCacheParam.isAsync()) {
-                rMap.putAsync(putCacheParam.getKey(), cacheValue, putCacheParam.getExpireTime(), putCacheParam.getTimeUnit());
+        if (putParam.getExpireTime() > 0) {
+            if (putParam.isAsync()) {
+                rMap.putAsync(putParam.getKey(), cacheValue, putParam.getExpireTime(), putParam.getTimeUnit());
             } else {
-                rMap.put(putCacheParam.getKey(), cacheValue, putCacheParam.getExpireTime(), putCacheParam.getTimeUnit());
+                rMap.put(putParam.getKey(), cacheValue, putParam.getExpireTime(), putParam.getTimeUnit());
             }
             return;
         }
-        if (putCacheParam.isAsync()) {
-            rMap.putAsync(putCacheParam.getKey(), cacheValue);
+        if (putParam.isAsync()) {
+            rMap.putAsync(putParam.getKey(), cacheValue);
         } else {
-            rMap.put(putCacheParam.getKey(), cacheValue);
+            rMap.put(putParam.getKey(), cacheValue);
         }
     }
 
     @Override
-    public void delete(DeleteCacheParam deleteCacheParam) {
-        if (deleteCacheParam.isAsync()) {
-            redissonClient.getMapCache(deleteCacheParam.getCacheName()).removeAsync(deleteCacheParam.getKey());
+    public void delete(DeleteParam deleteParam) {
+        if (deleteParam.isAsync()) {
+            redissonClient.getMapCache(deleteParam.getCacheName()).removeAsync(deleteParam.getKey());
         } else {
-            redissonClient.getMapCache(deleteCacheParam.getCacheName()).removeAsync(deleteCacheParam.getKey());
+            redissonClient.getMapCache(deleteParam.getCacheName()).removeAsync(deleteParam.getKey());
         }
     }
 
     @Override
-    public Object get(GetCacheParam getCacheParam) {
-        return redissonClient.getMapCache(getCacheParam.getCacheName()).get(getCacheParam.getKey());
+    public Object get(GetParam getParam) {
+        return redissonClient.getMapCache(getParam.getCacheName()).get(getParam.getKey());
     }
 
     @Override
-    public void deleteAll(DeleteCacheParam deleteCacheParam) {
-        if (deleteCacheParam.isAsync()) {
-            redissonClient.getMapCache(deleteCacheParam.getCacheName()).delete();
+    public void deleteAll(DeleteParam deleteParam) {
+        if (deleteParam.isAsync()) {
+            redissonClient.getMapCache(deleteParam.getCacheName()).delete();
         }
 
-        if (redissonClient.getMapCache(deleteCacheParam.getCacheName()).delete()) {
+        if (redissonClient.getMapCache(deleteParam.getCacheName()).delete()) {
             throw new RuntimeException("删除缓存失败");
         }
     }

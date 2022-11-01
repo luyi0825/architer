@@ -42,13 +42,13 @@ public class CacheableOperationHandler extends CacheOperationHandler {
         Object key = super.parseCacheKey(expressionMetadata, cacheable.key());
         String cacheName = super.keyGeneratorFactory.getKeyGenerator(cacheable.keyGenerator())
                 .generator(expressionMetadata, cacheable.cacheName());
-        GetCacheParam getCacheParam = new GetCacheParam();
-        getCacheParam.setCacheOperate(cacheOperate);
+        GetParam getParam = new GetParam();
+        getParam.setCacheOperate(cacheOperate);
         //同步：没有值才查询数据库
-        getCacheParam.setAsync(false);
-        getCacheParam.setCacheName(cacheable.cacheName());
-        getCacheParam.setKey(key);
-        Object value = cacheOperate.get(getCacheParam);
+        getParam.setAsync(false);
+        getParam.setCacheName(cacheable.cacheName());
+        getParam.setKey(key);
+        Object value = cacheOperate.get(getParam);
         if (!isNullValue(value)) {
             cacheValue = value;
         }
@@ -56,13 +56,13 @@ public class CacheableOperationHandler extends CacheOperationHandler {
             //调用方法，只要第一次调用是真的调用
             Object returnValue = methodReturnValueFunction.proceed();
             long expireTime = CacheUtils.getExpireTime(cacheable.expireTime(), cacheable.randomTime());
-            PutCacheParam putCacheParam = new PutCacheParam();
-            putCacheParam.setCacheName(cacheName);
-            putCacheParam.setCacheValue(returnValue);
-            putCacheParam.setKey(key);
-            putCacheParam.setTimeUnit(cacheable.timeUnit());
-            putCacheParam.setExpireTime(expireTime);
-            cacheOperate.put(putCacheParam);
+            PutParam putParam = new PutParam();
+            putParam.setCacheName(cacheName);
+            putParam.setCacheValue(returnValue);
+            putParam.setKey(key);
+            putParam.setTimeUnit(cacheable.timeUnit());
+            putParam.setExpireTime(expireTime);
+            cacheOperate.put(putParam);
         } else {
             //设置返回值，防止重复调用
             methodReturnValueFunction.setValue(cacheValue);

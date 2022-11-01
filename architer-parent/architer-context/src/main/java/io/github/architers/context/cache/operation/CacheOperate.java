@@ -14,9 +14,9 @@ public interface CacheOperate {
     /**
      * 设置缓存
      *
-     * @param putCacheParam 设置缓存的参数
+     * @param putParam 设置缓存的参数
      */
-    default void put(PutCacheParam putCacheParam) {
+    default void put(PutParam putParam) {
         noSupport();
     }
 
@@ -30,12 +30,12 @@ public interface CacheOperate {
     /**
      * 删除缓存
      */
-    default void delete(DeleteCacheParam deleteCacheParam) {
+    default void delete(DeleteParam deleteParam) {
         noSupport();
     }
 
 
-    default Object get(GetCacheParam getCacheParam) {
+    default Object get(GetParam getParam) {
         noSupport();
         return null;
     }
@@ -43,7 +43,7 @@ public interface CacheOperate {
     /**
      * 清理所有
      */
-    default void deleteAll(DeleteCacheParam deleteCacheParam) {
+    default void deleteAll(DeleteParam deleteParam) {
         noSupport();
     }
 

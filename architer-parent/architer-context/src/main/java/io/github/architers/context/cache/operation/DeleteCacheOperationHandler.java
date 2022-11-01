@@ -36,19 +36,19 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
             return;
         }
         CacheOperate cacheOperate = cacheOperateFactory.getCacheOperate(deleteCache.cacheOperate());
-        DeleteCacheParam deleteCacheParam = new DeleteCacheParam();
+        DeleteParam deleteParam = new DeleteParam();
         KeyGenerator keyGenerator = keyGeneratorFactory.getKeyGenerator(deleteCache.keyGenerator());
         String cachePrefixes = keyGenerator.generator(expressionMetadata, deleteCache.cacheName());
 
-        deleteCacheParam.setCacheName(cachePrefixes);
+        deleteParam.setCacheName(cachePrefixes);
         Object key = super.parseCacheKey(expressionMetadata, deleteCache.key());
 
       //  deleteCacheParam.setCacheKey(key);
-        deleteCacheParam.setAsync(deleteCache.async());
+        deleteParam.setAsync(deleteCache.async());
        // deleteCacheParam.setKeyGenerator();
        // deleteCacheParam.setCacheOperate(super.cacheCacheOperateFactory.getCacheOperate(deleteCache.cacheOperate()));
         //删除缓存
-        cacheOperate.delete(deleteCacheParam);
+        cacheOperate.delete(deleteParam);
     }
 
 
