@@ -80,12 +80,12 @@ public class URLReWriteRequest implements HttpServletRequest {
 
     @Override
     public String getQueryString() {
-        return null;
+        return httpServletRequest.getQueryString();
     }
 
     @Override
     public String getRemoteUser() {
-        return null;
+        return httpServletRequest.getQueryString();
     }
 
     @Override
@@ -135,17 +135,17 @@ public class URLReWriteRequest implements HttpServletRequest {
 
     @Override
     public boolean isRequestedSessionIdValid() {
-        return false;
+        return httpServletRequest.isRequestedSessionIdValid();
     }
 
     @Override
     public boolean isRequestedSessionIdFromCookie() {
-        return false;
+        return httpServletRequest.isRequestedSessionIdFromCookie();
     }
 
     @Override
     public boolean isRequestedSessionIdFromURL() {
-        return false;
+        return httpServletRequest.isRequestedSessionIdFromURL();
     }
 
     @Override
@@ -155,7 +155,7 @@ public class URLReWriteRequest implements HttpServletRequest {
 
     @Override
     public boolean authenticate(HttpServletResponse httpServletResponse) throws IOException, ServletException {
-        return false;
+        return httpServletRequest.authenticate(httpServletResponse);
     }
 
     @Override
@@ -165,7 +165,7 @@ public class URLReWriteRequest implements HttpServletRequest {
 
     @Override
     public void logout() throws ServletException {
-
+        httpServletRequest.logout();
     }
 
     @Override
@@ -180,7 +180,7 @@ public class URLReWriteRequest implements HttpServletRequest {
 
     @Override
     public <T extends HttpUpgradeHandler> T upgrade(Class<T> aClass) throws IOException, ServletException {
-        return null;
+        return httpServletRequest.upgrade(aClass);
     }
 
     @Override
@@ -295,12 +295,12 @@ public class URLReWriteRequest implements HttpServletRequest {
 
     @Override
     public Enumeration<Locale> getLocales() {
-        return null;
+        return httpServletRequest.getLocales();
     }
 
     @Override
     public boolean isSecure() {
-        return false;
+        return httpServletRequest.isSecure();
     }
 
     @Override
@@ -310,7 +310,7 @@ public class URLReWriteRequest implements HttpServletRequest {
 
     @Override
     public String getRealPath(String s) {
-        return null;
+        return httpServletRequest.getRealPath(s);
     }
 
     @Override

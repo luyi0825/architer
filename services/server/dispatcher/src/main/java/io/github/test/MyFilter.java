@@ -1,5 +1,6 @@
 package io.github.test;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@Order(Integer.MIN_VALUE)
 public class MyFilter implements Filter {
 
     private static Map<String, String> urlMap = new HashMap<>();
@@ -25,16 +27,17 @@ public class MyFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String newUri = urlMap.get(request.getRequestURI());
+       String uri = request.getRequestURI();
+        String newUri = urlMap.get(uri);
 
-        if (newUri != null) {
-            URLReWriteRequest httpServletRequest = new URLReWriteRequest(request, newUri);
-            filterChain.doFilter(httpServletRequest, servletResponse);
-        } else {
-            filterChain.doFilter(servletRequest, servletResponse);
-        }
+//        if (newUri != null) {
+//            URLReWriteRequest httpServletRequest = new URLReWriteRequest(request, newUri);
+//            filterChain.doFilter(httpServletRequest, servletResponse);
+//        } else {
+//            filterChain.doFilter(servletRequest, servletResponse);
+//        }
 
-        if (request.getRequestURI().startsWith("/api")) {
+        if (uri.startsWith("/api")) {
             URLReWriteRequest httpServletRequest = new URLReWriteRequest(request, newUri);
             filterChain.doFilter(httpServletRequest, servletResponse);
         } else {
