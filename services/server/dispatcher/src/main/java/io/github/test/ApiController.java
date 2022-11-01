@@ -1,5 +1,6 @@
 package io.github.test;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -10,7 +11,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
 
-@RestController
+//@RestController
 @RequestMapping("/api")
 public class ApiController {
 

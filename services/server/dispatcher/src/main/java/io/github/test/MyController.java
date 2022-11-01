@@ -1,8 +1,6 @@
 package io.github.test;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/test")
@@ -12,6 +10,11 @@ public class MyController {
     public String test1(String userName) {
         System.out.println("in");
         return userName;
+    }
+
+    @GetMapping("/findById/{id}")
+    public String findById(@PathVariable("id") String id){
+        return id;
     }
 
 }
