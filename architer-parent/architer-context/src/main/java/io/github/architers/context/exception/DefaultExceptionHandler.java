@@ -36,7 +36,7 @@ public class DefaultExceptionHandler implements RequestExceptionHandler {
     @Override
     public ResponseResult<?> handler(Throwable e) {
         if (e instanceof NoStackBusException) {
-            log.info(e.getMessage());
+            log.info(e.getMessage(), e);
             NoStackBusException noStackBusException = (NoStackBusException) e;
             return new ResponseResult<>(noStackBusException.getCode(), e.getMessage());
         }

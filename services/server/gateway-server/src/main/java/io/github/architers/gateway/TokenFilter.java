@@ -36,37 +36,37 @@ public class TokenFilter implements GlobalFilter {
             return chain.filter(exchange);
         }
         List<String> authorizations = exchange.getRequest().getHeaders().get(tokenHeaderKey);
-        if (authorizations == null) {
-            throw new NoStackBusException("请求有误");
-        }
-        String token = authorizations.get(0).replace(Bearer, "");
-        if (!StringUtils.hasText(token)) {
-            throw new NoStackBusException("token有误");
-        }
-        DecodedJWT jwt = JwtTokenUtils.decoded(token);
-
-        long currentTime = System.currentTimeMillis();
+//        if (authorizations == null) {
+//            throw new NoStackBusException("请求有误");
+//        }
+//        String token = authorizations.get(0).replace(Bearer, "");
+//        if (!StringUtils.hasText(token)) {
+//            throw new NoStackBusException("token有误");
+//        }
+//        DecodedJWT jwt = JwtTokenUtils.decoded(token);
+//
+//        long currentTime = System.currentTimeMillis();
         //判断token是否过期
-        if (jwt.getExpiresAt().getTime() < currentTime) {
-            UserInfo userInfo = JsonUtils.readValue(jwt.getClaim("userInfo").asString(),
-                    UserInfo.class);
-            //token自动延续
-            TenantInfo tenantInfo = userInfo.getTenantInfo();
-            if (tenantInfo == null) {
-                throw new BusException("租户信息不存在");
-            }
-            if (!tenantInfo.isRefreshToken()) {
-                throw new NoStackBusException("token已经过期");
-            }
-            //超过token最大的时间
-            if ((currentTime - jwt.getIssuedAt().getTime()) > 60_1000L * tenantInfo.getTokenMaxTime()) {
-                throw new NoStackBusException("token已经过期");
-            }
-            //返回刷新token的code,用户自动刷新token
-            log.info("开始刷新token:{}", token);
-            autoRefreshToken(exchange, jwt, userInfo);
-            return chain.filter(exchange);
-        }
+//        if (jwt.getExpiresAt().getTime() < currentTime) {
+//            UserInfo userInfo = JsonUtils.readValue(jwt.getClaim("userInfo").asString(),
+//                    UserInfo.class);
+//            //token自动延续
+//            TenantInfo tenantInfo = userInfo.getTenantInfo();
+//            if (tenantInfo == null) {
+//                throw new BusException("租户信息不存在");
+//            }
+//            if (!tenantInfo.isRefreshToken()) {
+//                throw new NoStackBusException("token已经过期");
+//            }
+//            //超过token最大的时间
+//            if ((currentTime - jwt.getIssuedAt().getTime()) > 60_1000L * tenantInfo.getTokenMaxTime()) {
+//                throw new NoStackBusException("token已经过期");
+//            }
+//            //返回刷新token的code,用户自动刷新token
+//            log.info("开始刷新token:{}", token);
+//            autoRefreshToken(exchange, jwt, userInfo);
+//            return chain.filter(exchange);
+//        }
         //说明token没有过期
         return chain.filter(exchange);
     }
