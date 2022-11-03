@@ -26,10 +26,10 @@ public class MybatisPageUtils {
     public static <T> PageResult<T> restPage(List<T> list) {
         PageInfo<T> pageInfo = new PageInfo<T>(list);
         PageResult<T> pageResult = new PageResult<>();
-        pageResult.setCurrentPage(pageInfo.getPageNum());
-        pageResult.setPageSize(pageInfo.getPageSize());
-        pageResult.setTotalPage(pageInfo.getPages());
-        pageResult.setRecords(pageInfo.getList());
+//        pageResult.setCurrentPage(pageInfo.getPageNum());
+//        pageResult.setPageSize(pageInfo.getPageSize());
+//        pageResult.setTotalPage(pageInfo.getPages());
+        pageResult.setItems(pageInfo.getList());
         pageResult.setTotal(pageInfo.getTotal());
         return pageResult;
     }

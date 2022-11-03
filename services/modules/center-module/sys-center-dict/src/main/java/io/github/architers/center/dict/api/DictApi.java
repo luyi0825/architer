@@ -51,7 +51,7 @@ public class DictApi {
     /**
      * 分页字典数据
      */
-    @GetMapping("/getDictByPage")
+    @PostMapping("/getDictByPage")
     public PageResult<Dict> getDictByPage(@Validated @RequestBody PageRequest<Dict> dictPageRequest) {
         return dictService.getDictByPage(dictPageRequest);
     }

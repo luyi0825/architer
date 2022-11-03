@@ -25,7 +25,7 @@ public class ResponseResult<T> implements Serializable {
     /**
      * 返回数据
      */
-    private T data;
+    private T result;
 
     public Integer getCode() {
         return code;
@@ -43,19 +43,23 @@ public class ResponseResult<T> implements Serializable {
         this.message = message;
     }
 
-    public Object getData() {
-        return data;
+    public T getResult() {
+        return result;
     }
 
+    public ResponseResult<T> setResult(T result) {
+        this.result = result;
+        return this;
+    }
 
     public ResponseResult() {
 
     }
 
-    public ResponseResult(Integer code, String message, T data) {
+    public ResponseResult(Integer code, String message, T result) {
         this.code = code;
         this.message = message;
-        this.data = data;
+        this.result = result;
     }
 
     public ResponseResult(Integer code, String message) {
@@ -76,9 +80,9 @@ public class ResponseResult<T> implements Serializable {
     /**
      * 成功
      */
-    public static <T> ResponseResult<T> ok(T data) {
+    public static <T> ResponseResult<T> ok(T result) {
         ResponseResult<T> baseResponse = ResponseResult.ok();
-        baseResponse.setData(data);
+        baseResponse.setResult(result);
         return baseResponse;
     }
 
@@ -112,11 +116,11 @@ public class ResponseResult<T> implements Serializable {
             return false;
         }
         ResponseResult<?> that = (ResponseResult<?>) o;
-        return Objects.equals(code, that.code) && Objects.equals(message, that.message) && Objects.equals(data, that.data);
+        return Objects.equals(code, that.code) && Objects.equals(message, that.message) && Objects.equals(result, that.result);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(code, message, data);
+        return Objects.hash(code, message, result);
     }
 }

@@ -10,10 +10,10 @@ import java.util.List;
  */
 @Data
 public class PageResult<T> {
-    /**
-     * 总页数
-     */
-    private int totalPage;
+//    /**
+//     * 总页数
+//     */
+//    private int totalPage;
 
     /**
      * 总条数
@@ -23,17 +23,17 @@ public class PageResult<T> {
     /**
      * 数据列表
      */
-    private List<T> records;
+    private List<T> items;
 
-    /**
-     * 当前页数
-     */
-    private int currentPage;
-
-    /**
-     * 每页显示的条数
-     */
-    private int pageSize;
+//    /**
+//     * 当前页数
+//     */
+//    private int currentPage;
+//
+//    /**
+//     * 每页显示的条数
+//     */
+//    private int pageSize;
 
 
 }

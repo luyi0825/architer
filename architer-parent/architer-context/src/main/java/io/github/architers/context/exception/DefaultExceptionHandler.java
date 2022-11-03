@@ -117,7 +117,7 @@ public class DefaultExceptionHandler implements RequestExceptionHandler {
                 }
             });
             responseResult.setCode(HttpStatus.BAD_REQUEST.value());
-            responseResult.setData(errors);
+            responseResult.setResult(errors);
             return responseResult;
         }
         return null;
