@@ -15,7 +15,9 @@ public class TenantUtils {
     public static Integer getTenantId() {
         HttpServletRequest httpServletRequest = request();
         String tenantId = httpServletRequest.getHeader("tenant_id");
-
+        if (tenantId == null) {
+            return 0;
+        }
         return Integer.parseInt(tenantId);
     }
 
@@ -24,8 +26,6 @@ public class TenantUtils {
         assert attributes != null;
         return attributes.getRequest();
     }
-
-
 
 
 }

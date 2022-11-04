@@ -114,14 +114,14 @@ public class DictServiceImpl implements DictService {
         }
         //转为json对象
         HttpServletResponse response = ServletUtils.response();
-        try (OutputStream toClient = new BufferedOutputStream(response.getOutputStream())) {
+        try (OutputStream outputStream = new BufferedOutputStream(response.getOutputStream())) {
             String fileName = UUID.randomUUID() + ".txt";
             response.reset();
-            response.setContentType("application/x-download");
+            //  response.setContentType("text/plain");
             response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
             response.setContentType("application/octet-stream");
-            toClient.write(JsonUtils.writeValueAsBytes(importJsonDictList));
-            toClient.flush();
+            outputStream.write(JsonUtils.writeValueAsBytes(importJsonDictList));
+            outputStream.flush();
         } catch (IOException ex) {
             log.error("download file error!", ex);
             throw new RuntimeException("导出代码集失败");
@@ -170,11 +170,15 @@ public class DictServiceImpl implements DictService {
     public void deleteDictById(Long id) {
         Dict dict = dictDao.selectById(id);
         if (dict == null) {
-            throw new BusException("数据字典信息不能为空");
+            throw new BusException("数据字典已经被删除或者不存在");
+        }
+        List<DictData> dictDataList = dictDataDao.findByDictCodes(TenantUtils.getTenantId(),
+                Collections.singleton(dict.getDictCode()));
+        if (!CollectionUtils.isEmpty(dictDataList)) {
+            throw new BusException("存在字典值，无法删除！");
         }
         dictDao.deleteById(id);
-        dictDataDao.findByDictCodes(TenantUtils.getTenantId(),
-                Collections.singleton(dict.getDictCode()));
+
     }
 
     @Override
