@@ -25,8 +25,32 @@
         and deleted = 0
     </select>
     <select id="countByDictCode" resultType="java.lang.Integer">
-        select count(1) from sys_dict where tenant_id = #{tenantId}
-        and dict_code = #{dictCode} and deleted = 0
+        select count(1)
+        from sys_dict
+        where tenant_id = #{tenantId}
+          and dict_code = #{dictCode}
+          and deleted = 0
+    </select>
+    <select id="selectForExportDict" resultType="io.github.architers.center.dict.domain.entity.Dict"
+            parameterType="io.github.architers.center.dict.domain.dto.ExportDictDTO">
+        select id,dict_code,dict_caption,remark from sys_dict
+        <where>
+            tenant_id = #{tenantId}
+            <choose>
+                <when test="checkIds!=null and checkIds.size>0">
+                    and id in
+                    <foreach collection="checkIds"
+                             separator="," open="(" close=")" item="id">
+                        #{id}
+                    </foreach>
+                </when>
+                <otherwise>
+                    <if test="dictCode!=null">and dict_code = #{dictCode}</if>
+                    <if test="dictCaption!=null">and dict_caption = #{dictCaption}</if>
+                </otherwise>
+            </choose>
+
+        </where>
     </select>
 
 

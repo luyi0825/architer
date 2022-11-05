@@ -23,6 +23,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -85,13 +86,17 @@ public class DictServiceImpl implements DictService {
     }
 
     @Override
-    public void exportJsonDictData(Integer tenantId, Set<String> dictCodes) {
+    public void exportJsonDictData(Integer tenantId, ExportDictDTO exportDictDTO) {
+        exportDictDTO.setTenantId(TenantUtils.getTenantId());
         //查询数据字典
-        List<Dict> dictList = dictDao.findByDictCodes(tenantId, dictCodes);
+        List<Dict> dictList = dictDao.selectForExportDict(exportDictDTO);
+
         if (CollectionUtils.isEmpty(dictList)) {
             throw new NoStackBusException("没有数据字典需要导出");
         }
         //查询数据字典值
+        Set<String> dictCodes =
+                dictList.stream().map(Dict::getDictCode).collect(Collectors.toSet());
         List<DictData> dictDataList = dictDataDao.findByDictCodes(tenantId, dictCodes);
         Map<String, List<DictData>> dictDataMap =
                 dictDataList.stream().collect(Collectors.groupingBy(DictData::getDictCode));
@@ -117,7 +122,6 @@ public class DictServiceImpl implements DictService {
         try (OutputStream outputStream = new BufferedOutputStream(response.getOutputStream())) {
             String fileName = UUID.randomUUID() + ".txt";
             response.reset();
-            //  response.setContentType("text/plain");
             response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
             response.setContentType("application/octet-stream");
             outputStream.write(JsonUtils.writeValueAsBytes(importJsonDictList));
@@ -130,7 +134,15 @@ public class DictServiceImpl implements DictService {
 
     @Override
     public PageResult<Dict> getDictByPage(PageRequest<Dict> pageRequest) {
-        return MybatisPageUtils.pageQuery(pageRequest.getPageParam(), () -> dictDao.selectList(null));
+        return MybatisPageUtils.pageQuery(pageRequest.getPageParam(),
+                () -> {
+                    Dict dict = pageRequest.getRequestParam();
+                    Wrapper<Dict> dictWrapper =
+                            Wrappers.lambdaQuery(Dict.class)
+                                    .likeRight(StringUtils.hasText(dict.getDictCode()), Dict::getDictCode, dict.getDictCode())
+                                    .likeRight(StringUtils.hasText(dict.getDictCaption()), Dict::getDictCaption, dict.getDictCaption());
+                    return dictDao.selectList(dictWrapper);
+                });
     }
 
     @Override
@@ -183,7 +195,6 @@ public class DictServiceImpl implements DictService {
 
     @Override
     public Long addDictData(AddEditDictDataDTO add) {
-
         //判断数据字典是否存在
         int count = dictDao.countByDictCode(TenantUtils.getTenantId(), add.getDictCode());
         if (count == 0) {
@@ -239,7 +250,10 @@ public class DictServiceImpl implements DictService {
         DictDataQueryDTO dictDataQueryDTO = dictPageRequest.getRequestParam();
         Wrapper<DictData> wrapper = Wrappers.lambdaQuery(DictData.class)
                 .eq(DictData::getTenantId, TenantUtils.getTenantId())
-                .eq(DictData::getDictCode, dictDataQueryDTO.getDictCode());
+                .eq(DictData::getDictCode, dictDataQueryDTO.getDictCode())
+                .like(StringUtils.hasText(dictDataQueryDTO.getDataCode()), DictData::getDataCode, dictDataQueryDTO.getDataCode())
+                .like(StringUtils.hasText(dictDataQueryDTO.getDataCaption()), DictData::getDataCaption, dictDataQueryDTO.getDataCaption())
+                .orderByAsc(DictData::getDataCode);
         return MybatisPageUtils.pageQuery(dictPageRequest.getPageParam(),
                 () -> dictDataDao.selectList(wrapper));
     }
@@ -247,6 +261,15 @@ public class DictServiceImpl implements DictService {
     @Override
     public List<SimpleDictDataVO> getSimpleListByDictCode(String dictCode) {
         return dictDataDao.getSimpleListByDictCode(TenantUtils.getTenantId(), dictCode);
+    }
+
+    @Override
+    public Boolean changeDictDataStatus(long dictDataId, Byte status) {
+        DictData dictData = new DictData();
+        dictData.setId(dictDataId);
+        dictData.setStatus(status);
+        dictData.fillCreateAndUpdateField(new Date());
+        return dictDataDao.updateById(dictData) == 1;
     }
 
 

@@ -36,6 +36,11 @@ public class DictData extends BaseTenantEntity implements Serializable {
     private String dataCaption;
 
     /**
+     * 状态
+     */
+    private Byte status;
+
+    /**
      * 备注
      */
     private String remark;

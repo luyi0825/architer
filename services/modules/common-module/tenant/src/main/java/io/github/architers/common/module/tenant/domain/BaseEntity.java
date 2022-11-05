@@ -58,6 +58,8 @@ public abstract class BaseEntity implements Serializable {
         if (this.getId() == null) {
             this.createBy = 0L;//@TODO
             this.createTime = date;
+            this.updateBy = 0L;//@TODO
+            this.updateTime = date;
         } else {
             this.updateBy = 0L;//@TODO
             this.updateTime = date;

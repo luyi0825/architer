@@ -2,6 +2,7 @@ package io.github.architers.center.dict.domain.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.github.architers.context.valid.ListValue;
 import io.github.architers.context.valid.group.AddGroup;
 import io.github.architers.context.valid.group.EditGroup;
 import lombok.Data;
@@ -28,10 +29,10 @@ public class AddEditDictDataDTO implements Serializable {
     /**
      * 数据字典编码
      */
-    @NotBlank(message = "字典编码不能为空",groups = AddGroup.class)
+    @NotBlank(message = "字典编码不能为空", groups = AddGroup.class)
     private String dictCode;
 
-    @NotBlank(message = "字典值编码不能为空",groups = AddGroup.class)
+    @NotBlank(message = "字典值编码不能为空", groups = AddGroup.class)
     private String dataCode;
     /**
      * 字典数据中文名称
@@ -44,6 +45,12 @@ public class AddEditDictDataDTO implements Serializable {
      */
     @Size(max = 50, message = "备注不能超过50字符", groups = {AddGroup.class, EditGroup.class})
     private String remark;
+
+    /**
+     * 状态
+     */
+    @ListValue(message = "状态值有误", value = {"0", "1"})
+    private Byte status;
 
     /**
      * 创建时间

@@ -1,9 +1,6 @@
 package io.github.architers.center.dict.service;
 
-import io.github.architers.center.dict.domain.dto.AddEditDictDTO;
-import io.github.architers.center.dict.domain.dto.AddEditDictDataDTO;
-import io.github.architers.center.dict.domain.dto.DictDataQueryDTO;
-import io.github.architers.center.dict.domain.dto.ImportJsonDict;
+import io.github.architers.center.dict.domain.dto.*;
 import io.github.architers.center.dict.domain.entity.Dict;
 import io.github.architers.center.dict.domain.entity.DictData;
 import io.github.architers.center.dict.domain.vo.SimpleDictDataVO;
@@ -21,7 +18,7 @@ import java.util.Set;
 public interface DictService {
     void importJsonDictData(Integer tenantId, List<ImportJsonDict> importJsonDictList);
 
-    void exportJsonDictData(Integer tenantId,Set<String> dictCodes);
+    void exportJsonDictData(Integer tenantId, ExportDictDTO exportDictDTO);
 
     PageResult<Dict> getDictByPage(PageRequest<Dict> dictPageRequest);
 
@@ -44,4 +41,6 @@ public interface DictService {
     PageResult<DictData> getDictDataByPage(PageRequest<DictDataQueryDTO> dictPageRequest);
 
     List<SimpleDictDataVO> getSimpleListByDictCode(String dictCode);
+
+    Boolean changeDictDataStatus(long dictDataId, Byte status);
 }

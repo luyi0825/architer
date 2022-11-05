@@ -1,10 +1,7 @@
 package io.github.architers.center.dict.api;
 
+import io.github.architers.center.dict.domain.dto.*;
 import io.github.architers.common.module.tenant.TenantUtils;
-import io.github.architers.center.dict.domain.dto.AddEditDictDTO;
-import io.github.architers.center.dict.domain.dto.AddEditDictDataDTO;
-import io.github.architers.center.dict.domain.dto.DictDataQueryDTO;
-import io.github.architers.center.dict.domain.dto.ImportJsonDict;
 import io.github.architers.center.dict.domain.entity.Dict;
 import io.github.architers.center.dict.domain.entity.DictData;
 import io.github.architers.center.dict.domain.vo.SimpleDictDataVO;
@@ -44,8 +41,8 @@ public class DictApi {
      * 导出数据字典json数据
      */
     @PostMapping("/exportJsonDictData")
-    public void exportJsonDictData(HashSet<String> dictCodes) {
-        dictService.exportJsonDictData(TenantUtils.getTenantId(), dictCodes);
+    public void exportJsonDictData(@RequestBody ExportDictDTO exportDictDTO) {
+        dictService.exportJsonDictData(TenantUtils.getTenantId(), exportDictDTO);
     }
 
     /**
@@ -124,7 +121,7 @@ public class DictApi {
     /**
      * 分页查询字询数据字典值
      */
-    @GetMapping("/getDictDataByPage")
+    @PostMapping("/getDictDataByPage")
     public PageResult<DictData> getDictDataByPage(@Validated @RequestBody PageRequest<DictDataQueryDTO> dictPageRequest) {
         return dictService.getDictDataByPage(dictPageRequest);
     }
@@ -135,6 +132,12 @@ public class DictApi {
     @GetMapping("/getSimpleListByDictCode")
     public List<SimpleDictDataVO> getSimpleListByDictCode(@RequestParam("dictCode") String dictCode) {
         return dictService.getSimpleListByDictCode(dictCode);
+    }
+
+    @PutMapping("/changeDictDataStatus")
+    public Boolean changeDictDataStatus(@RequestParam("dictDataId") long dictDataId,
+                                        @RequestParam("status") Byte status) {
+        return dictService.changeDictDataStatus(dictDataId, status);
     }
 
 
