@@ -18,7 +18,6 @@ public class CallBack implements DataflowJob<String> {
 
     @Override
     public List<String> fetchData(ShardingContext shardingContext) {
-        System.out.println("1");
         return null;
     }
 

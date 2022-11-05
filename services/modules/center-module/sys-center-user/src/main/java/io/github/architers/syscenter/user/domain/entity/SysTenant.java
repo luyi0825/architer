@@ -42,4 +42,9 @@ public class SysTenant extends BaseEntity implements Serializable {
      */
     private Byte status;
 
+    /**
+     * 备注
+     */
+    private String remark;
+
 }

@@ -1,5 +1,7 @@
 package io.github.architers.syscenter.user.service;
 
+import io.github.architers.context.query.PageRequest;
+import io.github.architers.context.query.PageResult;
 import io.github.architers.syscenter.user.domain.entity.SysTenant;
 import io.github.architers.syscenter.user.domain.entity.SysTenantUser;
 
@@ -12,4 +14,11 @@ public interface SysTenantService {
      */
     void isValid(Integer tenantId);
 
+    PageResult<SysTenant> getTenantsByPage(PageRequest<SysTenant> pageRequest);
+
+    void addTenant(SysTenant sysTenant);
+
+    void editTenant(SysTenant sysTenant);
+
+    void deleteById(Integer id);
 }
