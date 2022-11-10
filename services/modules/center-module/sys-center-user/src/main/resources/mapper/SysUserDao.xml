@@ -2,21 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="io.github.architers.syscenter.user.dao.SysUserDao">
-    <select id="getUsersByPage" resultType="io.github.architers.syscenter.user.domain.vo.SysUserVO">
+    <select id="getUsersByPage" resultType="io.github.architers.syscenter.user.domain.vo.SysUserPageVO">
         select
-            <include refid="common.dynamicColumns.select"/>
-        from sys_user
+        u.id,
+        u.user_name,
+        u.user_caption,
+        u.update_by,
+        u.update_time,
+        u.create_time,
+        u.create_by,
+        tenantUser.status,
+        tenantUser.tenant_id
+        from sys_user as u
+        inner join sys_tenant_user as tenantUser on u.id = tenantUser.user_id
         <where>
-<!--            <if test="username!=null">-->
-<!--                and user_name = #{username}-->
-<!--            </if>-->
-<!--            <if test="userCaption!=null">-->
-<!--                and user_caption like contract('%', #{userCaption},'%')-->
-<!--            </if>-->
-<!--            <if test="status!=null">-->
-<!--                and status = #{status}-->
-<!--            </if>-->
-            and deleted =0
+            tenantUser.tenant_id = #{tenantId}
+            <if test="username!=null">
+                and u.user_name = #{username}
+            </if>
+            <if test="userCaption!=null">
+                and u.user_caption like contract('%', #{userCaption},'%')
+            </if>
+            <if test="status!=null">
+                and tenantUser.status = #{status}
+            </if>
+            and u.deleted = 0
+            and tenantUser.deleted = 0
         </where>
 
     </select>

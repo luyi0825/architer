@@ -4,6 +4,7 @@ import io.github.architers.syscenter.user.domain.dto.AddTenantUserDTO;
 import io.github.architers.syscenter.user.domain.dto.AuthorizeRoleDTO;
 import io.github.architers.syscenter.user.domain.dto.SysUserQueryDTO;
 import io.github.architers.syscenter.user.domain.entity.SysUser;
+import io.github.architers.syscenter.user.domain.vo.SysUserPageVO;
 import io.github.architers.syscenter.user.domain.vo.SysUserVO;
 import io.github.architers.syscenter.user.service.SysUserService;
 import io.github.architers.context.query.PageRequest;
@@ -28,8 +29,8 @@ public class SysUserApi {
     /**
      * 分页查询系统用户
      */
-    @GetMapping("/getUsersByPage")
-    public PageResult<SysUserVO> getUsersByPage(@RequestBody @Validated PageRequest<SysUserQueryDTO> pageRequest) {
+    @PostMapping("/getUsersByPage")
+    public PageResult<SysUserPageVO> getUsersByPage(@RequestBody @Validated PageRequest<SysUserQueryDTO> pageRequest) {
         return sysUserService.getUsersByPage(pageRequest);
     }
 
@@ -44,7 +45,7 @@ public class SysUserApi {
      * @param edit
      */
     @PutMapping("/editUser")
-    public void editUser(@Validated SysUser edit) {
+    public void editUser(@Validated @RequestBody SysUser edit) {
         sysUserService.editUser(edit);
     }
 
@@ -58,10 +59,16 @@ public class SysUserApi {
 
     /**
      * 改变用户状态
+     *
+     * @param tenantId 租户ID
+     * @param userId   用户ID
+     * @param status   用户状态
      */
-    @PutMapping("/changUserStatus")
-    public void changUserStatus(@RequestParam("userId") Long userId,
-                                @RequestParam("status") Byte status) {
-        sysUserService.changUserStatus(userId, status);
+    @PutMapping("/changeUserStatus")
+    public void changeUserStatus(
+            @RequestParam("tenantId") Integer tenantId,
+            @RequestParam("userId") Long userId,
+            @RequestParam("status") Byte status) {
+        sysUserService.changeUserStatus(tenantId, userId, status);
     }
 }

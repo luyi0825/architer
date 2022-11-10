@@ -13,6 +13,7 @@ import io.github.architers.syscenter.user.domain.dto.SysUserQueryDTO;
 import io.github.architers.syscenter.user.domain.entity.SysTenantUser;
 import io.github.architers.syscenter.user.domain.entity.SysUser;
 import io.github.architers.syscenter.user.domain.entity.SysUserRole;
+import io.github.architers.syscenter.user.domain.vo.SysUserPageVO;
 import io.github.architers.syscenter.user.domain.vo.SysUserVO;
 import io.github.architers.syscenter.user.service.SysTenantService;
 import io.github.architers.syscenter.user.service.SysTenantUserService;
@@ -57,18 +58,19 @@ public class SysUserServiceImpl implements SysUserService {
 
 
     @Override
-    public PageResult<SysUserVO> getUsersByPage(PageRequest<SysUserQueryDTO> pageRequest) {
-        return MybatisPageUtils.pageQuery(pageRequest.getPageParam(), new Supplier<List<SysUserVO>>() {
+    public PageResult<SysUserPageVO> getUsersByPage(PageRequest<SysUserQueryDTO> pageRequest) {
+        return MybatisPageUtils.pageQuery(pageRequest.getPageParam(), new Supplier<List<SysUserPageVO>>() {
             @Override
-            public List<SysUserVO> get() {
+            public List<SysUserPageVO> get() {
                 SysUserQueryDTO sysUserQueryDTO = pageRequest.getRequestParam();
                 if (sysUserQueryDTO == null) {
                     sysUserQueryDTO = new SysUserQueryDTO();
                 }
-                sysUserQueryDTO.setTenantId(TenantUtils.getTenantId());
-                List<Column> columns = new ArrayList<>();
-                columns.add(new Column("user_name", "userName"));
-                return sysUserDao.getUsersByPage(columns, sysUserQueryDTO);
+                if(sysUserQueryDTO.getTenantId()==null){
+                    sysUserQueryDTO.setTenantId(TenantUtils.getTenantId());
+                }
+
+                return sysUserDao.getUsersByPage( sysUserQueryDTO);
             }
         });
     }
@@ -128,7 +130,7 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public void changUserStatus(Long userId, Byte status) {
+    public void changeUserStatus(Integer tenantId, Long userId, Byte status) {
         SysUser sysUser = new SysUser();
         sysUser.setStatus(status);
         sysUser.setId(userId);

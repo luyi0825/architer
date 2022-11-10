@@ -35,7 +35,7 @@ public class RoleApi {
     /**
      * 分页查询角色
      */
-    @GetMapping("/getRolesByPage")
+    @PostMapping("/getRolesByPage")
     public PageResult<SysRole> getRolesByPage(@RequestBody @Validated PageRequest<SysRoleQueryDTO> pageRequest) {
         return sysRoleService.getRolesByPage(pageRequest);
     }

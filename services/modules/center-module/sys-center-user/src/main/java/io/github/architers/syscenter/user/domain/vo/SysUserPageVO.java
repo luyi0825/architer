@@ -2,21 +2,17 @@ package io.github.architers.syscenter.user.domain.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.github.architers.common.module.tenant.domain.BaseTenantEntity;
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
- * @author luyi
+ * 用户分页VO
  */
 @Data
-public class SysUserVO implements Serializable {
+public class SysUserPageVO extends BaseTenantEntity {
 
-    /**
-     * 用户ID
-     */
+    @TableId(type = IdType.AUTO)
     private Long id;
-
 
     /**
      * 登录用户名

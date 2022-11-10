@@ -16,7 +16,8 @@ public class TenantUtils {
         HttpServletRequest httpServletRequest = request();
         String tenantId = httpServletRequest.getHeader("tenant_id");
         if (tenantId == null) {
-            return 0;
+            //TODO
+            return 1;
         }
         return Integer.parseInt(tenantId);
     }
