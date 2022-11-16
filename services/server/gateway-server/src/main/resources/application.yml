@@ -1,9 +1,7 @@
 spring:
   cloud:
-    discovery:
-      blocking:
-        enabled: false
-
-      reactive:
-        enabled: true
+    sentinel:
+      enabled: true
+      transport:
+        dashboard: 120.48.170.201:9999
 
