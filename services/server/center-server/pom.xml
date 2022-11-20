@@ -23,7 +23,11 @@
             <artifactId>sys-center-dict</artifactId>
             <version>${revision}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+            <version>2021.1</version>
+        </dependency>
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>sys-center-user</artifactId>
@@ -62,7 +66,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.2.6</version>
+            <version>1.2.15</version>
         </dependency>
 
         <dependency>

@@ -36,6 +36,16 @@ public @interface TaskSender {
     String taskParam() default "#result";
 
     /**
+     * 条件满足的时候，进行缓存操作
+     */
+    String condition() default "";
+
+    /**
+     * 条件满足的时候，不进行缓存操作
+     */
+    String unless() default "";
+
+    /**
      * 执行器
      */
     String executor() default "";

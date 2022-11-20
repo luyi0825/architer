@@ -33,8 +33,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Throwable.class)
     public ResponseResult<?> exceptionHandler(Throwable e) {
         return requestExceptionHandler.handler(e);
-
-
     }
 
 

@@ -15,6 +15,7 @@
     <modules>
         <module>easyexcel</module>
         <module>mybatis-plus</module>
+        <module>object-storage</module>
     </modules>
 
 

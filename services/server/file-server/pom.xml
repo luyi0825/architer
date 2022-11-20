@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>server</artifactId>
+        <groupId>io.github.architers</groupId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>file-server</artifactId>
+    <name>file-server</name>
+    <description>文件服务</description>
+    <packaging>jar</packaging>
+    <dependencies>
+
+
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>architer-context</artifactId>
+            <version>${architer.revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>object-storage</artifactId>
+            <version>${architer.revision}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>okhttp</artifactId>
+                    <groupId>com.squareup.okhttp3</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.2.15</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okio</groupId>
+            <artifactId>okio</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <!--        <dependency>-->
+<!--            <groupId>org.web3j</groupId>-->
+<!--            <artifactId>core</artifactId>-->
+<!--            <version>5.0.0</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>${architer.revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>spring-boot-starter-web-mvc</artifactId>
+            <version>${architer.revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <version>${architer.revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>cache-redisson-boot-starter</artifactId>
+            <version>${architer.revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>architer-task-rocketmq</artifactId>
+            <version>${architer.revision}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.17</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.17</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+
+</project>

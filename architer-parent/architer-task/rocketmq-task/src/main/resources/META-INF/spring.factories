@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+io.github.architers.task.rocketmq.RocketTaskConfig,\
+io.github.architers.context.task.proxy.TaskProxyConfiguration
+

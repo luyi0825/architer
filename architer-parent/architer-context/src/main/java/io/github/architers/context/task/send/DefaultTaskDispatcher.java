@@ -22,6 +22,9 @@ public class DefaultTaskDispatcher implements TaskDispatcher, ApplicationContext
     @Override
     public void submit(TaskParam taskParam) {
         TaskSender taskSender = taskSenderMap.get(taskParam.getSender());
+        if (taskSender == null) {
+            throw new RuntimeException("TaskSender is null");
+        }
         taskSender.doSend(taskParam);
     }
 
