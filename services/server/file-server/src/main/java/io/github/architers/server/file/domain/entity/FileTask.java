@@ -29,7 +29,7 @@ public class FileTask extends BaseEntity {
     /**
      * 任务节点类型
      */
-    private Byte nodeType;
+    private Byte taskType;
 
     /**
      * 远程调用的地址

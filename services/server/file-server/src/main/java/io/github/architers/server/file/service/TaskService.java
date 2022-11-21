@@ -11,6 +11,4 @@ public interface TaskService {
 
 
     boolean sendTask(ExecuteTaskParam executeTaskParam);
-
-    void sendAsyncTask(String taskCode, Map<String, Object> executeParam);
 }

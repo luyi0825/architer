@@ -23,6 +23,13 @@
             <version>${architer.revision}</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
+        </dependency>
+
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -83,12 +90,6 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>cache-redisson-boot-starter</artifactId>
-            <version>${architer.revision}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>architer-task-rocketmq</artifactId>
             <version>${architer.revision}</version>
         </dependency>
 

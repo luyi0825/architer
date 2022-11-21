@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.github.architers.server.file.dao.FileTaskDao;
 import io.github.architers.server.file.domain.entity.FileTask;
-import io.github.architers.server.file.service.ITaskNodeService;
+import io.github.architers.server.file.service.IFileTaskService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * @author Administrator
  */
 @Service
-public class FileTaskServiceImpl implements ITaskNodeService {
+public class FileFileTaskServiceImpl implements IFileTaskService {
 
     @Resource
     private FileTaskDao fileTaskDao;

@@ -1,12 +1,5 @@
 server:
   port: 9000
-
-rocketmq:
-  producer:
-    group: test
-  consumer:
-    group: consumerGroup
-  name-server: 120.48.170.201:9876
 architers:
   object-storage:
     minio:
@@ -34,6 +27,19 @@ spring:
     password: 19940825Ls
     url: jdbc:mysql://120.48.170.201:3306/test?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
   cloud:
+    stream:
+      rocketmq:
+        binder:
+          enable-msg-trace: true
+          name-server: 120.48.170.201:9876
+      bindings:
+        storeFileTaskConsumer-in-0:
+          destination: test-stream
+          group: test-group
+        storeFileTaskConsumer-out-0:
+          destination: test-stream
+          group: test-group
+
     nacos:
       discovery:
         server-addr: 120.48.170.201:8848
