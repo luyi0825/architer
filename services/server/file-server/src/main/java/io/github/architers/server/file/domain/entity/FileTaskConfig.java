@@ -3,12 +3,12 @@ package io.github.architers.server.file.domain.entity;
 import lombok.Data;
 
 /**
- * 任务下载限制
+ * 任务下载配置
  *
  * @author luyi
  */
 @Data
-public class TaskConfig {
+public class FileTaskConfig {
 
     /**
      * 主键ID

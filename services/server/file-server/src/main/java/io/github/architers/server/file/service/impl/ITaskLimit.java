@@ -1,7 +1,7 @@
 package io.github.architers.server.file.service.impl;
 
 import io.github.architers.server.file.domain.dto.ExecuteTaskParam;
-import io.github.architers.server.file.domain.entity.TaskConfig;
+import io.github.architers.server.file.domain.entity.FileTaskConfig;
 
 /**
  * 任务限制
@@ -20,7 +20,7 @@ public interface ITaskLimit {
      *
      * @param executeTaskParam
      */
-    boolean canExecute(ExecuteTaskParam executeTaskParam, TaskConfig taskLimit );
+    boolean canExecute(ExecuteTaskParam executeTaskParam, FileTaskConfig taskLimit );
 
     /**
      * 预备执行

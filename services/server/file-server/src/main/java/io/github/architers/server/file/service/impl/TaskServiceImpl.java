@@ -1,7 +1,7 @@
 package io.github.architers.server.file.service.impl;
 
 import io.github.architers.context.exception.BusException;
-import io.github.architers.server.file.domain.entity.TaskConfig;
+import io.github.architers.server.file.domain.entity.FileTaskConfig;
 import io.github.architers.server.file.domain.dto.ExecuteTaskParam;
 import io.github.architers.server.file.service.ITaskConfigService;
 import io.github.architers.server.file.service.TaskService;
@@ -21,7 +21,7 @@ public class TaskServiceImpl implements TaskService {
     @Resource
     private ITaskConfigService taskConfigService;
 
-    private ConcurrentMap<String, List<TaskConfig>> taskLimitMap = new ConcurrentHashMap<>();
+    private ConcurrentMap<String, List<FileTaskConfig>> taskLimitMap = new ConcurrentHashMap<>();
     @Resource
     private StreamBridge streamBridge;
 
@@ -29,8 +29,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public boolean sendTask(ExecuteTaskParam executeTaskParam) {
         //判断是否能够执行
-        List<TaskConfig> taskConfig = taskConfigService.findByTaskCode(executeTaskParam.getTaskCode());
-        for (TaskConfig config : taskConfig) {
+        List<FileTaskConfig> fileTaskConfig = taskConfigService.findByTaskCode(executeTaskParam.getTaskCode());
+        for (FileTaskConfig config : fileTaskConfig) {
             for (ITaskLimit limit : taskLimits) {
                 if (!limit.canExecute(executeTaskParam, config)) {
                     //拒绝处理

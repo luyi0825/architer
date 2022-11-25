@@ -1,6 +1,6 @@
 package io.github.architers.gateway;
 
-import com.alibaba.nacos.api.remote.response.Response;
+
 import com.auth0.jwt.interfaces.DecodedJWT;
 import io.github.architers.common.jwttoken.JwtTokenUtils;
 import io.github.architers.common.jwttoken.TenantInfo;

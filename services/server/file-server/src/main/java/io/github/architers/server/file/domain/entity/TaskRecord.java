@@ -22,7 +22,7 @@ public class TaskRecord extends BaseEntity {
     private String taskCode;
 
     /**
-     * 任务状态:0.已取消、1.排队中、2.处理中、3.处理完成、5.处理失败
+     * 任务状态
      */
     private Integer status;
 
@@ -40,5 +40,10 @@ public class TaskRecord extends BaseEntity {
      * 结果地址
      */
     private String resultUrl;
+
+    /**
+     * 备注信息
+     */
+    private String remark;
 
 }

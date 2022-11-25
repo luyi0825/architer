@@ -28,11 +28,11 @@
             <version>${architer.revision}</version>
         </dependency>
 
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>architer-cloud-config-nacos-starter</artifactId>
-            <version>${architer.revision}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.github.architers</groupId>-->
+<!--            <artifactId>architer-cloud-config-nacos-starter</artifactId>-->
+<!--            <version>${architer.revision}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

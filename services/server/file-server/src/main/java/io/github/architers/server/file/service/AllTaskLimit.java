@@ -1,6 +1,6 @@
 package io.github.architers.server.file.service;
 
-import io.github.architers.server.file.domain.entity.TaskConfig;
+import io.github.architers.server.file.domain.entity.FileTaskConfig;
 import io.github.architers.server.file.domain.dto.ExecuteTaskParam;
 import io.github.architers.server.file.service.impl.ITaskLimit;
 import org.redisson.api.RedissonClient;
@@ -22,7 +22,7 @@ public class AllTaskLimit implements ITaskLimit {
     }
 
     @Override
-    public boolean canExecute(ExecuteTaskParam executeTaskParam,TaskConfig taskLimit ) {
+    public boolean canExecute(ExecuteTaskParam executeTaskParam, FileTaskConfig taskLimit ) {
         long count = redisson.getAtomicLong("taskLimit:all:" + executeTaskParam.getTaskCode()).get();
         return count < taskLimit.getLimitCount();
     }

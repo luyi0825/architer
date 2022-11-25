@@ -2,13 +2,15 @@ package io.github.architers.server.file.domain.entity;
 
 import io.github.architers.context.autocode.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
- * 下载任务
+ * 文件任务
  *
  * @author luyi
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class FileTask extends BaseEntity {
     /**
      * 任务ID
@@ -28,6 +30,8 @@ public class FileTask extends BaseEntity {
 
     /**
      * 任务节点类型
+     *
+     * @see io.github.architers.server.file.eums.FileTaskType
      */
     private Byte taskType;
 

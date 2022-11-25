@@ -28,6 +28,11 @@ public class SysException extends BaseCodeException {
         this.message = SYS_EXCEPTION_MESSAGE;
     }
 
+    public SysException(String message) {
+        super(message);
+        this.message = message;
+    }
+
     public SysException(Throwable cause) {
         super(SYS_EXCEPTION_MESSAGE, cause);
         this.code = SYS_EXCEPTION_CODE;

@@ -4,20 +4,28 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>services-parent</artifactId>
+        <artifactId>modules</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>modules</artifactId>
-    <name>modules</name>
-    <description>网关测试</description>
+    <artifactId>file-common-module</artifactId>
+    <name>center-module</name>
+    <description>文件服务公共模块</description>
     <packaging>pom</packaging>
-    <modules>
-        <module>center-module</module>
-        <module>common-module</module>
-        <module>file-common</module>
-    </modules>
+
+    <dependencies>
+
+
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>architer-context</artifactId>
+            <version>${architer.revision}</version>
+        </dependency>
+
+
+    </dependencies>
+
 
 </project>

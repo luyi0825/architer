@@ -1,7 +1,7 @@
 package io.github.architers.server.file.service;
 
 import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.server.file.domain.entity.TaskConfig;
+import io.github.architers.server.file.domain.entity.FileTaskConfig;
 
 import java.util.List;
 
@@ -14,5 +14,5 @@ public interface ITaskConfigService {
      * @return 任务配置信息
      */
     @Cacheable(cacheName = "'taskConfig'", key = "#taskCode")
-    List<TaskConfig> findByTaskCode(String taskCode);
+    List<FileTaskConfig> findByTaskCode(String taskCode);
 }

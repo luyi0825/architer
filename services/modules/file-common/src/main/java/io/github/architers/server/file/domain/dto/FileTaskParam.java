@@ -1,7 +1,9 @@
 package io.github.architers.server.file.domain.dto;
 
 import lombok.Data;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Map;
@@ -12,8 +14,13 @@ import java.util.Map;
  * @author luyi
  */
 @Data
-public class ExecuteTaskParam {
+public class FileTaskParam<T> {
 
+
+    /**
+     * 文件任务主键ID
+     */
+    private Long recordId;
 
     /**
      * 任务编码
@@ -25,7 +32,8 @@ public class ExecuteTaskParam {
      * 执行参数
      */
     @NotNull(message = "执行参数不能为空")
-    private Map<String, Object> executeParam;
+    @Valid
+    private T taskParam;
 
 
 }
