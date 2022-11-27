@@ -1,6 +1,7 @@
-package io.github.architers.web.common.response;
+package io.github.architers.starter.web.response;
 
 
+import io.github.architers.context.web.IgnoreResponseResult;
 import io.github.architers.context.web.ResponseResult;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,9 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object>, Ord
     @Override
     @Nullable
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return true;
+        IgnoreResponseResult ignoreResponseResult =
+                returnType.getMethodAnnotation(IgnoreResponseResult.class);
+        return ignoreResponseResult != null;
     }
 
 

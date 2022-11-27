@@ -1,8 +1,10 @@
 package io.github.architers.webflux;
 
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+
 
 /**
  * @author luyi
@@ -14,4 +16,6 @@ public class WebFluxController {
     public String test() {
         return "1";
     }
+
+
 }
