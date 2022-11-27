@@ -1,4 +1,4 @@
-package io.github.architers.starter.web.response;
+package io.github.architers.web.common.response;
 
 /**
  * 定义service常用异常

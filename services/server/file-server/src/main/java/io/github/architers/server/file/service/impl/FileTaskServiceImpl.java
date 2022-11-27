@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * @author Administrator
  */
 @Service
-public class FileFileTaskServiceImpl implements IFileTaskService {
+public class FileTaskServiceImpl implements IFileTaskService {
 
     @Resource
     private FileTaskDao fileTaskDao;
@@ -24,4 +24,6 @@ public class FileFileTaskServiceImpl implements IFileTaskService {
                 .eq(FileTask::getTaskCode, taskCode);
         return fileTaskDao.selectOne(fileTaskWrapper);
     }
+
+
 }

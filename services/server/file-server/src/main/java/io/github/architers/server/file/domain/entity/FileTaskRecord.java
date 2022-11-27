@@ -2,6 +2,7 @@ package io.github.architers.server.file.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.github.architers.context.autocode.BaseEntity;
 import lombok.Data;
 
@@ -11,7 +12,8 @@ import lombok.Data;
  * @author luyi
  */
 @Data
-public class TaskRecord extends BaseEntity {
+@TableName("file_task_record")
+public class FileTaskRecord extends BaseEntity {
 
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -23,6 +25,7 @@ public class TaskRecord extends BaseEntity {
 
     /**
      * 任务状态
+     * @see io.github.architers.server.file.enums.TaskStatusEnum
      */
     private Integer status;
 
@@ -45,5 +48,7 @@ public class TaskRecord extends BaseEntity {
      * 备注信息
      */
     private String remark;
+
+
 
 }

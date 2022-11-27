@@ -1,6 +1,5 @@
 package io.github.architers.server.file.api;
 
-import com.fasterxml.jackson.core.TreeNode;
 import io.github.architers.context.utils.NodeTreeUtils;
 import io.github.architers.context.valid.group.AddGroup;
 import io.github.architers.context.valid.group.EditGroup;
@@ -21,8 +20,8 @@ import java.util.List;
  * @author luyi
  */
 @RestController
-@RequestMapping("/importTemplateApi")
-public class ImportTemplateApi {
+@RequestMapping("/fileTemplateApi")
+public class FileTemplateApi {
 
     @Resource
     private ImportTemplateService importTemplateService;

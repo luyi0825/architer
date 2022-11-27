@@ -1,11 +1,10 @@
-package io.github.architers.starter.web;
+package io.github.architers.web.flux;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.architers.context.exception.DefaultExceptionHandler;
 import io.github.architers.context.exception.GlobalExceptionHandler;
-import io.github.architers.starter.web.response.WebmvcConfiguration;
 import io.github.architers.context.exception.RequestExceptionHandler;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.architers.web.common.response.ResponseResultBodyAdvice;
 import io.github.architers.web.common.response.ResponseResultHttpMessageConverter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -18,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @author luyi
  */
 @Configuration(proxyBeanMethods = false)
-public class WebMvcAutoConfiguration {
+public class WebFluxAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
@@ -48,8 +47,5 @@ public class WebMvcAutoConfiguration {
         return new ResponseResultHttpMessageConverter(objectMapper);
     }
 
-    @Bean
-    public WebmvcConfiguration webmvcConfiguration() {
-        return new WebmvcConfiguration();
-    }
+
 }

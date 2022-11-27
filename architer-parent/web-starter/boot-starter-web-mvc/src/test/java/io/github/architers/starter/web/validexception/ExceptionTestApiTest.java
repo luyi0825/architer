@@ -3,7 +3,6 @@ package io.github.architers.starter.web.validexception;
 
 
 import io.github.architers.context.utils.JsonUtils;
-import io.github.architers.starter.web.response.ResponseStatusEnum;
 import io.github.architers.context.web.ResponseResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

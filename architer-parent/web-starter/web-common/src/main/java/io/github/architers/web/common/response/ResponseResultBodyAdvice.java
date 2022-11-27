@@ -1,4 +1,4 @@
-package io.github.architers.starter.web.response;
+package io.github.architers.web.common.response;
 
 
 import io.github.architers.context.web.ResponseResult;

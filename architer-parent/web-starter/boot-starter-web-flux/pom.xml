@@ -27,5 +27,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>architer-context</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>spring-boot-web-common</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

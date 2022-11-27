@@ -2,7 +2,7 @@ package io.github.architers.webflux;
 
 import io.github.architers.context.web.PostMapping;
 import io.github.architers.server.file.domain.dto.FileTaskParam;
-import io.github.architers.server.file.domain.dto.TaskRecord;
+import io.github.architers.server.file.domain.dto.TaskRecordDTO;
 import io.github.architers.server.file.enums.TaskStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.function.StreamBridge;
@@ -34,17 +34,18 @@ public class ExportController {
 
     @PostMapping("/exportFile")
     public void exportFile(@RequestBody @Validated FileTaskParam<ExportEntity> fileTaskParam) {
+        System.out.println(fileTaskParam.toString());
         executorService.submit(() -> {
-            TaskRecord taskRecord = new TaskRecord().setId(fileTaskParam.getRecordId());
+            TaskRecordDTO taskRecordDTO = new TaskRecordDTO().setId(fileTaskParam.getRecordId());
             try {
                 Thread.sleep(5000);
-                taskRecord.setStatus(TaskStatusEnum.FINISHED)
-                        .setTotalNum(1000).setSuccessNum(500);
+                taskRecordDTO.setStatus(TaskStatusEnum.FINISHED)
+                        .setTotalNum(1000).setSuccessNum(500).setId(fileTaskParam.getRecordId());
             } catch (Exception e) {
                 log.error("处理任务失败", e);
-                taskRecord.setStatus(TaskStatusEnum.FAIL);
+                taskRecordDTO.setStatus(TaskStatusEnum.FAIL);
             }
-            streamBridge.send("file-task-result", taskRecord);
+            streamBridge.send("file-task-result", taskRecordDTO);
         });
     }
 

@@ -15,7 +15,7 @@ public class BaseEntity {
     /**
      * 是否删除:0否1是
      */
-    protected boolean deleted;
+    protected Boolean deleted;
 
     /**
      * 创建时间

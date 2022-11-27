@@ -1,4 +1,4 @@
-package io.github.architers.server.file.service.impl;
+package io.github.architers.server.file.service;
 
 import io.github.architers.server.file.domain.dto.ExecuteTaskParam;
 import io.github.architers.server.file.domain.entity.FileTaskConfig;

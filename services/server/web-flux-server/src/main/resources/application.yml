@@ -1,3 +1,18 @@
 server:
   port: 9030
 
+
+spring:
+  cloud:
+    stream:
+      rocketmq:
+        binder:
+          enable-msg-trace: true
+          name-server: 120.48.170.201:9876
+      bindings:
+        fileTaskResult-out-0:
+          destination: file-task-result
+          group: file-task-result-group
+  profiles:
+    active: dev
+

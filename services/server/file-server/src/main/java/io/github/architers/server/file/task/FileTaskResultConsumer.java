@@ -1,11 +1,11 @@
 package io.github.architers.server.file.task;
 
 
-import io.github.architers.server.file.domain.entity.TaskRecord;
+import io.github.architers.server.file.domain.dto.TaskRecordDTO;
+import io.github.architers.server.file.domain.entity.FileTaskRecord;
 import io.github.architers.server.file.service.ITaskRecordService;
-import lombok.SneakyThrows;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 
 import javax.annotation.Resource;
@@ -16,17 +16,26 @@ import java.util.function.Consumer;
  *
  * @author luyi
  */
-@Component
-@MessageMapping(value = "fileTaskConsumer")
-public class FileTaskResultConsumer implements Consumer<TaskRecord> {
+@Configuration
+public class FileTaskResultConsumer {
+
+
+    @Bean
+    public Consumer<TaskRecordDTO> fileTaskResult() {
+        return taskRecordDTO -> {
+            FileTaskRecord fileTaskRecord = new FileTaskRecord();
+            fileTaskRecord.setRemark(taskRecordDTO.getRemark());
+            fileTaskRecord.setResultUrl(taskRecordDTO.getResultUrl());
+            fileTaskRecord.setStatus(taskRecordDTO.getStatus().getStatus());
+            fileTaskRecord.setSuccessNum(taskRecordDTO.getSuccessNum());
+            fileTaskRecord.setTotalNum(taskRecordDTO.getTotalNum());
+            fileTaskRecord.setId(fileTaskRecord.getId());
+            taskRecordService.updateProcessingResultWithOptimisticLock(fileTaskRecord);
+        };
+    }
 
 
     @Resource
     private ITaskRecordService taskRecordService;
 
-    @SneakyThrows
-    @Override
-    public void accept(TaskRecord taskRecord) {
-        taskRecordService.updateProcessingResultWithOptimisticLock(taskRecord);
-    }
 }

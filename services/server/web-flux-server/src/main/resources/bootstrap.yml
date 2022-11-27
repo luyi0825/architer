@@ -7,13 +7,6 @@ spring:
     active: test
   cloud:
     nacos:
-      config:
-        server-addr: 120.48.170.201:8848
-        ##配置文件拓展名
-        file-extension: yml
-        ## 命名空间
-        namespace: public
-        refresh-enabled: true
       ## 注册中心配置
       discovery:
         server-addr: 120.48.170.201:8848

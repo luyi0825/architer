@@ -1,19 +1,15 @@
 package io.github.architers.server.file.domain.dto;
 
-import lombok.Data;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Map;
 
 /**
  * 执行任务参数
  *
  * @author luyi
  */
-@Data
 public class FileTaskParam<T> {
 
 
@@ -35,5 +31,30 @@ public class FileTaskParam<T> {
     @Valid
     private T taskParam;
 
+    public Long getRecordId() {
+        return recordId;
+    }
 
+    public FileTaskParam<T> setRecordId(Long recordId) {
+        this.recordId = recordId;
+        return this;
+    }
+
+    public String getTaskCode() {
+        return taskCode;
+    }
+
+    public FileTaskParam<T> setTaskCode(String taskCode) {
+        this.taskCode = taskCode;
+        return this;
+    }
+
+    public T getTaskParam() {
+        return taskParam;
+    }
+
+    public FileTaskParam<T> setTaskParam(T taskParam) {
+        this.taskParam = taskParam;
+        return this;
+    }
 }

@@ -18,6 +18,15 @@ public class UserInfoUtils {
         throw new RuntimeException("用户信息为空");
     }
 
+    /**
+     * 得到当前用户ID
+     *
+     * @return 用户主键ID
+     */
+    public static Long getCurrentUserId() {
+        return 1L;
+    }
+
     public static String getJwtToken() {
         String authorization = ServletUtils.header("authorization");
         if (StringUtils.isNotEmpty(authorization) && authorization.startsWith("Bearer")) {

@@ -33,13 +33,19 @@ spring:
           enable-msg-trace: true
           name-server: 120.48.170.201:9876
       bindings:
-        storeFileTaskConsumer-in-0:
-          destination: test-stream
-          group: test-group
-        storeFileTaskConsumer-out-0:
-          destination: test-stream
-          group: test-group
-
+        storeFileTask-in-0:
+          destination: file_task_store
+          group: test-group-luyi
+          consumer:
+            concurrency: 10
+            max-attempts: 3
+        storeFileTask-out-0:
+          destination: file_task_store
+        fileTaskResult-in-0:
+          destination: file-task-result
+          group: file-task-result-group
+    function:
+      definition: storeFileTask;fileTaskResult
     nacos:
       discovery:
         server-addr: 120.48.170.201:8848
@@ -47,5 +53,7 @@ spring:
         namespace: public
         group: DEFAULT_GROUP
         enabled: true
+  profiles:
+    active: dev
 #mybatis-plus:
 #  lazy-initialization: true

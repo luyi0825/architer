@@ -1,4 +1,4 @@
-package io.github.architers.starter.web.response;
+package io.github.architers.web.common.response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.architers.context.web.ResponseResult;

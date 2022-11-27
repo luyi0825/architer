@@ -4,6 +4,7 @@ import io.github.architers.context.exception.BusException;
 import io.github.architers.server.file.domain.entity.FileTaskConfig;
 import io.github.architers.server.file.domain.dto.ExecuteTaskParam;
 import io.github.architers.server.file.service.ITaskConfigService;
+import io.github.architers.server.file.service.ITaskLimit;
 import io.github.architers.server.file.service.TaskService;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
@@ -43,8 +44,7 @@ public class TaskServiceImpl implements TaskService {
             for (ITaskLimit limit : taskLimits) {
                 limit.startExecute(executeTaskParam);
             }
-            streamBridge.send("test-stream", executeTaskParam);
-            return true;
+            return streamBridge.send("storeFileTask-out-0", executeTaskParam);
         } catch (Exception e) {
             for (ITaskLimit limit : taskLimits) {
                 limit.endExecute(executeTaskParam);

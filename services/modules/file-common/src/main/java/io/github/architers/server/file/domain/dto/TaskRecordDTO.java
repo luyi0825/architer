@@ -10,7 +10,7 @@ import lombok.Data;
  * @author luyi
  */
 @Data
-public class TaskRecord {
+public class TaskRecordDTO {
 
     private Long id;
     /**
@@ -35,11 +35,16 @@ public class TaskRecord {
      */
     private String resultUrl;
 
+    /**
+     * 备注信息
+     */
+    private String remark;
+
     public Long getId() {
         return id;
     }
 
-    public TaskRecord setId(Long id) {
+    public TaskRecordDTO setId(Long id) {
         this.id = id;
         return this;
     }
@@ -48,7 +53,7 @@ public class TaskRecord {
         return status;
     }
 
-    public TaskRecord setStatus(TaskStatusEnum status) {
+    public TaskRecordDTO setStatus(TaskStatusEnum status) {
         this.status = status;
         return this;
     }
@@ -57,7 +62,7 @@ public class TaskRecord {
         return totalNum;
     }
 
-    public TaskRecord setTotalNum(Integer totalNum) {
+    public TaskRecordDTO setTotalNum(Integer totalNum) {
         this.totalNum = totalNum;
         return this;
     }
@@ -66,7 +71,7 @@ public class TaskRecord {
         return successNum;
     }
 
-    public TaskRecord setSuccessNum(Integer successNum) {
+    public TaskRecordDTO setSuccessNum(Integer successNum) {
         this.successNum = successNum;
         return this;
     }
@@ -75,7 +80,7 @@ public class TaskRecord {
         return resultUrl;
     }
 
-    public TaskRecord setResultUrl(String resultUrl) {
+    public TaskRecordDTO setResultUrl(String resultUrl) {
         this.resultUrl = resultUrl;
         return this;
     }
