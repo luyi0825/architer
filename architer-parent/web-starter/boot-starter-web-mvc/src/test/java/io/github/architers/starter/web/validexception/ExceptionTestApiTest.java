@@ -4,6 +4,7 @@ package io.github.architers.starter.web.validexception;
 
 import io.github.architers.context.utils.JsonUtils;
 import io.github.architers.context.web.ResponseResult;
+import io.github.architers.starter.web.response.ResponseStatusEnum;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

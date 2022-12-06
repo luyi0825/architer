@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <artifactId>others</artifactId>
+        <artifactId>third-party-applications</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../others/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>object-storage</artifactId>
+    <artifactId>third-party-application-object-storage</artifactId>
     <name>object-storage</name>
     <description>object-storage</description>
     <packaging>jar</packaging>
