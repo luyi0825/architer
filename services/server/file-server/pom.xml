@@ -60,7 +60,7 @@
 
         <dependency>
             <groupId>io.github.architers</groupId>
-            <artifactId>object-storage</artifactId>
+            <artifactId>three-party-component-object-storage</artifactId>
             <version>${architer.revision}</version>
             <exclusions>
                 <exclusion>
