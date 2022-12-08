@@ -20,27 +20,15 @@ public class DingDingTextMessage implements WebHookMessage {
     private String msgtype = WebHookMsgType.TEXT.getMsgType();
     private DingDingText text;
 
-    /**
-     * 被@人的手机号
-     */
-    private Set<String> atMobiles;
-
-    /**
-     * 被@人的用户userid
-     */
-    private Set<String> atUserIds;
-
-    /**
-     * 是否@所有人
-     */
-    private Boolean isAtAll;
+    private At at;
 
 
     public DingDingTextMessage() {
     }
 
 
-    public DingDingTextMessage(DingDingText text) {
+    public DingDingTextMessage(DingDingText text, At at) {
         this.text = text;
+        this.at = at;
     }
 }
