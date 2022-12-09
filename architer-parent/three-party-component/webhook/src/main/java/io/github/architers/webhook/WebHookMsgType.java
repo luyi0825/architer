@@ -9,7 +9,16 @@ public enum WebHookMsgType {
      */
     TEXT("text", "文本类型"),
 
-    MARKDOWN("markdown", "markdown");
+    /**
+     * Link消息
+     */
+    LINK("link", "link"),
+
+    MARKDOWN("markdown", "markdown"),
+
+    ACTION_CARD("actionCard", "整体跳转actionCard"),
+
+    FEED_CARD("feedCard", "feedCard");
 
     /**
      * 消息类型

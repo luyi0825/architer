@@ -4,8 +4,6 @@ import io.github.architers.webhook.WebHookMsgType;
 import io.github.architers.webhook.model.WebHookMessage;
 import lombok.Data;
 
-import java.util.Set;
-
 /**
  * 企微WebHook消息
  *
@@ -20,15 +18,18 @@ public class DingDingTextMessage implements WebHookMessage {
     private String msgtype = WebHookMsgType.TEXT.getMsgType();
     private DingDingText text;
 
-    private At at;
+    /**
+     * 需要@的人
+     */
+    private DingDingAt at;
 
 
     public DingDingTextMessage() {
     }
 
 
-    public DingDingTextMessage(DingDingText text, At at) {
+    public DingDingTextMessage(DingDingText text, DingDingAt dingDingAt) {
         this.text = text;
-        this.at = at;
+        this.at = dingDingAt;
     }
 }

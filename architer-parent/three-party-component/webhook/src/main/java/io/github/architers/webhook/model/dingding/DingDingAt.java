@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Set;
 
 @Data
-public class At {
+public class DingDingAt {
     /**
      * 被@人的手机号
      */
