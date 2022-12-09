@@ -1,6 +1,7 @@
 package io.github.architers.context.cache.operation;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 删除：对应@DeleteOperation
@@ -8,6 +9,7 @@ import lombok.Data;
  * @author luyi
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class DeleteParam extends BaseCacheOperationParam {
 
     /**

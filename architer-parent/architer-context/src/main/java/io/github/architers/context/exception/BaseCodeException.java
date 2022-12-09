@@ -1,13 +1,11 @@
 package io.github.architers.context.exception;
 
-import lombok.Data;
 
 /**
  * 业务异常
  *
  * @author luyi
  */
-@Data
 public abstract class BaseCodeException extends RuntimeException {
     /**
      * 异常编码，帮助异常快速定位
@@ -49,4 +47,20 @@ public abstract class BaseCodeException extends RuntimeException {
         this.code = code;
     }
 
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

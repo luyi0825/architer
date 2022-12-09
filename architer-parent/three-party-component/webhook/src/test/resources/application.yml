@@ -1,7 +1,0 @@
-spring:
-  main:
-    allow-bean-definition-overriding: true
-
-logging:
-  level:
-    io.github.architers: debug

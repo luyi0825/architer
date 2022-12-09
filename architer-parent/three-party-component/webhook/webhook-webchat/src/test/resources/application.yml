@@ -1,0 +1,19 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    io.github.architers: debug
+
+architers:
+  message:
+    webhook:
+      robotConfigs:
+        test:
+          key: 44822870-06ec-4e5f-9aff-04e29b59a7a8
+          robotType: wechat
+  cache:
+    redisson:
+      config:
+

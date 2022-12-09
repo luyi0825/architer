@@ -10,59 +10,24 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>three-party-component-webhook</artifactId>
-    <name>three-party-component</name>
-    <description>three-party-component</description>
-    <packaging>jar</packaging>
-    <version>${revision}</version>
+    <name>three-party-component-webhook</name>
+    <description>three-party-component-webhook</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>webhook-common</module>
+        <module>webhook-dingding</module>
+        <module>webhook-webchat</module>
+    </modules>
     <dependencies>
 
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>spring-boot-starter-web-mvc</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>architer-cloud-openfeign-starter</artifactId>
-            <version>${revision}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>lombok</artifactId>
-                    <groupId>org.projectlombok</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>architer-context</artifactId>
-            <version>${revision}</version>
+            <version>1.0.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-
     </dependencies>
 
     <build>
