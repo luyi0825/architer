@@ -16,6 +16,15 @@ public interface IMessageRemote {
      */
     String getRobotType();
 
-    ResponseResult<? extends Serializable> sendMessage(String key, String message);
+    /**
+     * 发送消息
+     *
+     * @param robotKey 自定义机器人的key
+     * @param key      第三方定义的机器人key
+     * @param message  需要发送的消息的字符串
+     * @return 发送的结果
+     */
+
+    ResponseResult<? extends Serializable> sendMessage(String robotKey, String key, String message);
 
 }

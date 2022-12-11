@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "DingDing", url = "https://oapi.dingtalk.com", configuration =
-        TestConfiguration.class)
+        DingDingRemoteConfiguration.class)
 public interface IDingDingRemoteService extends IMessageRemote {
     @PostMapping(value = "/robot/send", headers = {"Content-Type=application/json;charset=UTF-8"})
     @Override
-    ResponseResult<DingDingResponse> sendMessage(@RequestParam("access_token") String accessToken,
+    ResponseResult<DingDingResponse> sendMessage(@RequestParam("robotKey") String robotKey,
+                                                 @RequestParam("access_token") String accessToken,
                                                  @RequestBody String message);
 
     @Override

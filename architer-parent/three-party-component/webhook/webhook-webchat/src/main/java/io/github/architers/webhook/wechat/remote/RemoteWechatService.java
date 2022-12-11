@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author luyi
  */
-@FeignClient(name = "remoteWechatService",url = "https://qyapi.weixin.qq.com/"
-,configuration = ResultStatusDecoder.class)
+@FeignClient(name = "remoteWechatService", url = "https://qyapi.weixin.qq.com/"
+        , configuration = ResultStatusDecoder.class)
 public interface RemoteWechatService extends IMessageRemote {
 
 
@@ -28,12 +28,15 @@ public interface RemoteWechatService extends IMessageRemote {
     /**
      * 发消息
      *
+     * @param robotKey 自定义机器人的key
      * @param key
      * @param msg
      * @return
      */
     @PostMapping(path = "/cgi-bin/webhook/send")
-    ResponseResult<WechatResponse> sendMessage(@RequestParam("key") String key, @RequestBody String msg);
+    ResponseResult<WechatResponse> sendMessage(@RequestParam("robotKey") String robotKey,
+                                               @RequestParam("key") String key,
+                                               @RequestBody String msg);
 
 
 }

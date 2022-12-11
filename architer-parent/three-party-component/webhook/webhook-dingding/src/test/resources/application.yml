@@ -1,0 +1,18 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    io.github.architers: debug
+
+architers:
+  message:
+    webhook:
+      robotConfigs:
+        test2:
+          key: 03ebbb352c3dd574dbdf0d7db34a21c32182f02aeb483a52cf0bdef315b25d20
+          secret: SEC3acfe0dc18b4f8d7ce41616ff71969d6e9ab3a4bf6815cd52208ddb49065083b
+          robotType: dingDing
+
+

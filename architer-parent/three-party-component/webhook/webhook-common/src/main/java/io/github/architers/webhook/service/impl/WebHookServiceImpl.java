@@ -21,7 +21,6 @@ import java.util.List;
  *
  * @author luyi
  */
-@Service
 public class WebHookServiceImpl implements IWebHookService {
 
     @Resource
@@ -47,8 +46,7 @@ public class WebHookServiceImpl implements IWebHookService {
         try {
             for (IMessageRemote messageRemote : messageRemotes) {
                 if (messageRemote.getRobotType().equals(robotConfig.getRobotType())) {
-                      return messageRemote.sendMessage(robotConfig.getKey(),
-                            JsonUtils.toJsonString(webHookMessage));
+                      return messageRemote.sendMessage(robotKey,robotConfig.getKey(), JsonUtils.toJsonString(webHookMessage));
                 }
             }
         } catch (Exception e) {

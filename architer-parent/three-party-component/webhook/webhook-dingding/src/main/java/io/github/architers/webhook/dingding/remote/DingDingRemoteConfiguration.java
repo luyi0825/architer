@@ -2,21 +2,24 @@ package io.github.architers.webhook.dingding.remote;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import io.github.architers.context.exception.BusException;
 import io.github.architers.webhook.WebhookProperties;
 import lombok.SneakyThrows;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 @Configuration
-public class TestConfiguration implements RequestInterceptor {
+public class DingDingRemoteConfiguration implements RequestInterceptor {
 
     @Resource
     private WebhookProperties webhookProperties;
@@ -24,7 +27,11 @@ public class TestConfiguration implements RequestInterceptor {
     @SneakyThrows
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        String secret = "SEC3acfe0dc18b4f8d7ce41616ff71969d6e9ab3a4bf6815cd52208ddb49065083b";
+        Collection<String> robotKeys = requestTemplate.queries().get("robotKey");
+        if (CollectionUtils.isEmpty(robotKeys)) {
+            throw new BusException("robotKey is null");
+        }
+        String secret = webhookProperties.getRobotConfigs().get(robotKeys.toArray(new String[0])[0]).getSecret();
         long timestamp = System.currentTimeMillis();
         String stringToSign = timestamp + "\n" + secret;
         Mac mac = Mac.getInstance("HmacSHA256");
