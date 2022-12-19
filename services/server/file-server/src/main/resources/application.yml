@@ -19,6 +19,7 @@ architers:
 spring:
   main:
     allow-circular-references: true
+    allow-bean-definition-overriding: true
   application:
     name: file-server
   datasource:
@@ -50,7 +51,7 @@ spring:
       discovery:
         server-addr: 120.48.170.201:8848
         #group: dev
-        namespace: public
+        namespace: dev
         group: DEFAULT_GROUP
         enabled: true
   profiles:

@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+/**
+ * 限制所有的任务
+ *
+ * @author luyi
+ */
 @Service
 public class AllTaskLimit implements ITaskLimit {
 
     @Resource
     private RedissonClient redisson;
-
 
 
     @Override
@@ -22,7 +26,7 @@ public class AllTaskLimit implements ITaskLimit {
     }
 
     @Override
-    public boolean canExecute(ExecuteTaskParam executeTaskParam, FileTaskConfig taskLimit ) {
+    public boolean canExecute(ExecuteTaskParam executeTaskParam, FileTaskConfig taskLimit) {
 
         long count = redisson.getAtomicLong("taskLimit:all:" + executeTaskParam.getTaskCode()).get();
         return count < taskLimit.getLimitCount();
@@ -30,10 +34,10 @@ public class AllTaskLimit implements ITaskLimit {
 
     @Override
     public void startExecute(ExecuteTaskParam executeTaskParam) {
-         redisson.getAtomicLong("taskLimit:all:" + executeTaskParam.getTaskCode()).incrementAndGet();
+        redisson.getAtomicLong("taskLimit:all:" + executeTaskParam.getTaskCode()).incrementAndGet();
     }
 
-    public void endExecute(ExecuteTaskParam executeTaskParam){
+    public void endExecute(ExecuteTaskParam executeTaskParam) {
         redisson.getAtomicLong("taskLimit:all:" + executeTaskParam.getTaskCode()).incrementAndGet();
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * 文件下载
+ * 文件服务
  *
  * @author luyi
  */
