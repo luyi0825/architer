@@ -1,10 +1,8 @@
 package io.github.architers.context.cache.annotation;
 
 
-import io.github.architers.context.cache.operation.CacheOperate;
-import io.github.architers.context.cache.operation.DefaultCacheOperate;
-import io.github.architers.context.cache.operation.DefaultkeyGenerator;
-import io.github.architers.context.cache.operation.KeyGenerator;
+import io.github.architers.context.cache.operate.CacheOperate;
+import io.github.architers.context.cache.operate.DefaultCacheOperate;
 
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
@@ -27,20 +25,16 @@ public @interface PutCache {
     String cacheName() default "";
 
     /**
-     * 缓存值，支持EL表达式
-     */
-    String cacheValue() default "";
-
-    /**
      * @see Cacheable#key()
      */
     String key();
 
-    /**
-     * key的生成器
-     */
-    Class<? extends KeyGenerator> keyGenerator() default DefaultkeyGenerator.class;
+    String cacheNameWrapper() default "";
 
+    /**
+     * 缓存值，支持EL表达式
+     */
+    String cacheValue();
 
 
     /**
@@ -75,9 +69,12 @@ public @interface PutCache {
     String unless() default "";
 
     /**
-     * 缓存管理器类型
+     * 缓存操作器
      *
      * @see Cacheable#cacheOperate()
+     */
+    /**
+     * 缓存操作器
      */
     Class<? extends CacheOperate> cacheOperate() default DefaultCacheOperate.class;
 

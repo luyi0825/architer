@@ -2,7 +2,6 @@ package io.github.architers.context.cache.proxy;
 
 
 import io.github.architers.context.cache.CacheAnnotationsParser;
-import io.github.architers.context.cache.operation.CacheOperationParam;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

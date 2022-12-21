@@ -1,9 +1,8 @@
-package io.github.architers.context.cache;
+package io.github.architers.context.cache.utils;
 
-import io.github.architers.context.cache.batch.CacheField;
-import io.github.architers.context.cache.batch.CacheKey;
-import io.github.architers.context.cache.batch.CacheValue;
-import io.github.architers.context.utils.JsonUtils;
+import io.github.architers.context.cache.annotation.CacheKey;
+import io.github.architers.context.cache.annotation.CacheValue;
+import io.github.architers.context.cache.model.CacheField;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;

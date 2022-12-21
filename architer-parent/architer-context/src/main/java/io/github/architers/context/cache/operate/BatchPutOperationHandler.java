@@ -1,14 +1,15 @@
-package io.github.architers.context.cache.operation;
+package io.github.architers.context.cache.operate;
 
 
 import io.github.architers.context.cache.annotation.BatchPutCache;
+import io.github.architers.context.cache.model.BatchPutParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 
 import java.lang.annotation.Annotation;
 
 /**
- * 批量删除操作处理
+ * 批量放置缓存操作处理
  *
  * @author luyi
  */
@@ -30,8 +31,9 @@ public class BatchPutOperationHandler extends CacheOperationHandler {
             return;
         }
         //得到缓存名称
-        KeyGenerator keyGenerator = super.keyGeneratorFactory.getKeyGenerator(batchPutCache.keyGenerator());
-        String cacheName = keyGenerator.generator(expressionMetadata, batchPutCache.cacheName());
+        CacheNameWrapper cacheNameWrapper =
+                cacheNameWrapperFactory.getCacheNameWrapper(batchPutCache.cacheNameWrapper());
+        String cacheName = cacheNameWrapper.getCacheName(expressionMetadata, batchPutCache.cacheName());
         BatchPutParam batchPutParam = new BatchPutParam();
         batchPutParam.setCacheName(cacheName);
         batchPutParam.setAsync(batchPutCache.async());

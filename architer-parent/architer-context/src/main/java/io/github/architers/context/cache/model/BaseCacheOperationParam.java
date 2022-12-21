@@ -1,7 +1,8 @@
-package io.github.architers.context.cache.operation;
+package io.github.architers.context.cache.model;
 
 
-import io.github.architers.context.cache.annotation.Cacheable;
+import io.github.architers.context.cache.operate.CacheNameWrapper;
+import io.github.architers.context.cache.operate.CacheOperate;
 import lombok.Data;
 
 
@@ -19,7 +20,7 @@ public abstract class BaseCacheOperationParam implements CacheOperationParam {
     private boolean async = false;
 
     /**
-     * 缓存前缀
+     * 缓存名称
      */
     private String cacheName;
     /**
@@ -30,7 +31,7 @@ public abstract class BaseCacheOperationParam implements CacheOperationParam {
     /**
      * key的生成器
      */
-    private KeyGenerator keyGenerator;
+    private CacheNameWrapper cacheNameWrapper;
 
     /**
      * 缓存处理器

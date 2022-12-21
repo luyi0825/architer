@@ -1,7 +1,6 @@
 package io.github.architers.context.cache.proxy;
 
 
-import io.github.architers.context.cache.operation.CacheOperationParam;
 import org.springframework.lang.Nullable;
 
 import java.lang.annotation.Annotation;

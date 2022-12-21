@@ -2,8 +2,8 @@ package io.github.architers.context.cache.proxy;
 
 
 import io.github.architers.context.cache.CacheAnnotationsParser;
-import io.github.architers.context.NullValue;
-import io.github.architers.context.cache.operation.CacheOperationHandler;
+import io.github.architers.context.cache.model.NullValue;
+import io.github.architers.context.cache.operate.CacheOperationHandler;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.expression.ExpressionParser;
 import org.aopalliance.intercept.MethodInterceptor;

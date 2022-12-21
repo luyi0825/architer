@@ -1,7 +1,7 @@
 package io.github.architers.redisson.cache;
 
-import io.github.architers.context.cache.batch.CacheKey;
-import io.github.architers.context.cache.batch.CacheValue;
+import io.github.architers.context.cache.annotation.CacheKey;
+import io.github.architers.context.cache.annotation.CacheValue;
 import lombok.Data;
 
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package io.github.architers.context.cache.operation;
+package io.github.architers.context.cache.model;
 
 /**
  * 操作接口类

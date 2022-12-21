@@ -1,7 +1,6 @@
 package io.github.architers.redisson.cache.support;
 
 import io.github.architers.redisson.cache.CacheUser;
-import io.github.architers.context.cache.Cache;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;

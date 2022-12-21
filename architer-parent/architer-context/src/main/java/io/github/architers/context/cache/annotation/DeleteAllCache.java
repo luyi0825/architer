@@ -1,9 +1,7 @@
 package io.github.architers.context.cache.annotation;
 
-import io.github.architers.context.cache.operation.CacheOperate;
-import io.github.architers.context.cache.operation.DefaultCacheOperate;
-import io.github.architers.context.cache.operation.DefaultkeyGenerator;
-import io.github.architers.context.cache.operation.KeyGenerator;
+import io.github.architers.context.cache.operate.CacheOperate;
+import io.github.architers.context.cache.operate.DefaultCacheOperate;
 
 /**
  * 删除整个缓存
@@ -19,8 +17,7 @@ public @interface DeleteAllCache {
     /**
      * key的生成器
      */
-    Class<? extends KeyGenerator> keyGenerator() default DefaultkeyGenerator .class;
-
+    String cacheNameWrapper() default "";
     /**
      * 是否异步删除
      */

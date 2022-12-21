@@ -1,4 +1,4 @@
-package io.github.architers.context.cache.batch;
+package io.github.architers.context.cache.model;
 
 import lombok.Data;
 

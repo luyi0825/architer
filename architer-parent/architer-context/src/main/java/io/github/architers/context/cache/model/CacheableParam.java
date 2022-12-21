@@ -1,4 +1,4 @@
-package io.github.architers.context.cache.operation;
+package io.github.architers.context.cache.model;
 
 import io.github.architers.context.cache.annotation.Cacheable;
 import lombok.Data;

@@ -1,11 +1,10 @@
-package io.github.architers.context.cache.operation;
+package io.github.architers.context.cache.model;
 
 
 import io.github.architers.context.cache.annotation.PutCache;
 import lombok.Data;
 
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * @author luyi

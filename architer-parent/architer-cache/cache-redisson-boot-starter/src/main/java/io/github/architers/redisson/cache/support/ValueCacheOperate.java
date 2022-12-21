@@ -1,9 +1,10 @@
 package io.github.architers.redisson.cache.support;
 
 import io.github.architers.context.Symbol;
-import io.github.architers.context.cache.BatchValueUtils;
-import io.github.architers.context.cache.CacheUtils;
-import io.github.architers.context.cache.operation.*;
+import io.github.architers.context.cache.utils.BatchValueUtils;
+import io.github.architers.context.cache.utils.CacheUtils;
+import io.github.architers.context.cache.model.*;
+import io.github.architers.context.cache.operate.*;
 import io.github.architers.context.utils.JsonUtils;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
@@ -14,6 +15,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * String类型缓存操作
+ *
  * @author luyi
  */
 public class ValueCacheOperate implements CacheOperate {

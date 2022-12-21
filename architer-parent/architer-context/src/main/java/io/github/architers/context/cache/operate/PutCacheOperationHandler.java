@@ -1,8 +1,9 @@
-package io.github.architers.context.cache.operation;
+package io.github.architers.context.cache.operate;
 
 
-import io.github.architers.context.cache.CacheUtils;
+import io.github.architers.context.cache.utils.CacheUtils;
 import io.github.architers.context.cache.annotation.PutCache;
+import io.github.architers.context.cache.model.PutParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 import org.springframework.util.StringUtils;
@@ -39,13 +40,13 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         if (StringUtils.hasText(putCache.cacheValue())) {
             value = expressionParser.parserExpression(expressionMetadata, putCache.cacheValue());
         }
-        long expireTime = CacheUtils.getExpireTime(putCache.expireTime(),
-                putCache.randomTime());
+        //得到过期时间
+        long expireTime = CacheUtils.getExpireTime(putCache.expireTime(), putCache.randomTime());
 
 
         Object key = parseCacheKey(expressionMetadata, putCache.key());
-        KeyGenerator keyGenerator = super.keyGeneratorFactory.getKeyGenerator(putCache.keyGenerator());
-        String cacheName = keyGenerator.generator(expressionMetadata, putCache.cacheName());
+        CacheNameWrapper cacheNameWrapper = cacheNameWrapperFactory.getCacheNameWrapper(putCache);
+        String cacheName = cacheNameWrapper.getCacheName(expressionMetadata, putCache.cacheName());
         CacheOperate cacheOperate = super.cacheOperateFactory.getCacheOperate(putCache.cacheOperate());
         PutParam putParam = new PutParam();
         putParam.setCacheName(cacheName);

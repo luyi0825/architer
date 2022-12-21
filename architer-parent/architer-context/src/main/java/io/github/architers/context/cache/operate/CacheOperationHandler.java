@@ -1,4 +1,4 @@
-package io.github.architers.context.cache.operation;
+package io.github.architers.context.cache.operate;
 
 
 import io.github.architers.context.cache.*;
@@ -24,7 +24,7 @@ public abstract class CacheOperationHandler {
     protected CacheOperateFactory cacheOperateFactory;
 
     @Autowired(required = false)
-    protected KeyGeneratorFactory keyGeneratorFactory;
+    protected CacheNameWrapperFactory cacheNameWrapperFactory;
 
     @Autowired(required = false)
     protected ExpressionParser expressionParser;

@@ -1,8 +1,9 @@
 package io.github.architers.redisson.cache.support;
 
 import io.github.architers.context.Symbol;
-import io.github.architers.context.cache.BatchValueUtils;
-import io.github.architers.context.cache.operation.*;
+import io.github.architers.context.cache.utils.BatchValueUtils;
+import io.github.architers.context.cache.model.*;
+import io.github.architers.context.cache.operate.*;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.springframework.util.CollectionUtils;
@@ -11,6 +12,8 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
+ * hash缓存操作
+ *
  * @author luyi
  */
 public class MapCacheOperate implements CacheOperate {
@@ -82,20 +85,18 @@ public class MapCacheOperate implements CacheOperate {
                 BatchValueUtils.parseValue2Map(batchPutParam.getBatchCacheValue(),
                         Symbol.COLON);
         if (batchPutParam.isAsync()) {
+            RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getCacheName());
             if (batchPutParam.getExpireTime() > 0) {
-                RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getCacheName());
                 rMapCache.putAllAsync(cacheMap, batchPutParam.getExpireTime(), batchPutParam.getTimeUnit());
             } else {
-                RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getCacheName());
                 rMapCache.putAllAsync(cacheMap);
             }
             return;
         }
+        RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getCacheName());
         if (batchPutParam.getExpireTime() > 0) {
-            RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getCacheName());
             rMapCache.putAll(cacheMap, batchPutParam.getExpireTime(), batchPutParam.getTimeUnit());
         } else {
-            RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getCacheName());
             rMapCache.putAll(cacheMap);
         }
     }

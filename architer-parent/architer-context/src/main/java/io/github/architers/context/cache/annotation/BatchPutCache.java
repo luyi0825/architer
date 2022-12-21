@@ -1,10 +1,8 @@
 package io.github.architers.context.cache.annotation;
 
 
-import io.github.architers.context.cache.operation.CacheOperate;
-import io.github.architers.context.cache.operation.DefaultCacheOperate;
-import io.github.architers.context.cache.operation.DefaultkeyGenerator;
-import io.github.architers.context.cache.operation.KeyGenerator;
+import io.github.architers.context.cache.operate.CacheOperate;
+import io.github.architers.context.cache.operate.DefaultCacheOperate;
 
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
@@ -28,15 +26,15 @@ public @interface BatchPutCache {
 
     /**
      * 缓存值，支持EL表达
+     * <li>当为map的时候，key|value就刚好对应</li>
+     * <li>当为集合的时候，用CacheKey和CacheValue指定key|value</li>
      */
     String cacheValue() default "";
 
-
     /**
-     * key的生成器
+     * 缓存名称包装器
      */
-    Class<? extends KeyGenerator> keyGenerator() default DefaultkeyGenerator.class;
-
+    String cacheNameWrapper() default "";
 
     /**
      * @see Cacheable#randomTime()
@@ -74,6 +72,10 @@ public @interface BatchPutCache {
      *
      * @see Cacheable#cacheOperate()
      */
+    /**
+     * 缓存操作器(对应的类执行缓存操作,类名)
+     */
+
     Class<? extends CacheOperate> cacheOperate() default DefaultCacheOperate.class;
 
 }

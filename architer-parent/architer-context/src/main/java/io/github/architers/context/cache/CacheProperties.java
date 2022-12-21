@@ -1,6 +1,5 @@
 package io.github.architers.context.cache;
 
-import io.github.architers.context.cache.operation.CacheOperate;
 import io.github.architers.context.lock.LockEnum;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,9 +14,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class CacheProperties {
 
     /**
-     * 默认的处理器
+     * 默认的缓存操作处理器
      */
-    private Class<? extends CacheOperate> defaultCacheOperateClass;
+    private String defaultCacheOperateBeanName;
 
     /**
      * 是否允许空值:@TODO 待完善

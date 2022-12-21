@@ -1,12 +1,13 @@
-package io.github.architers.context.cache.operation;
+package io.github.architers.context.cache.operate;
 
 
-import io.github.architers.context.cache.CacheUtils;
-import io.github.architers.context.NullValue;
+import io.github.architers.context.cache.utils.CacheUtils;
+import io.github.architers.context.cache.model.NullValue;
 import io.github.architers.context.cache.annotation.Cacheable;
+import io.github.architers.context.cache.model.GetParam;
+import io.github.architers.context.cache.model.PutParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
-import io.github.architers.context.lock.LockService;
 
 import java.lang.annotation.Annotation;
 
@@ -20,7 +21,6 @@ import java.lang.annotation.Annotation;
  */
 public class CacheableOperationHandler extends CacheOperationHandler {
 
-    private LockService lockService;
 
     @Override
     public boolean match(Annotation annotation) {
@@ -33,15 +33,15 @@ public class CacheableOperationHandler extends CacheOperationHandler {
         Cacheable cacheable = (Cacheable) operationAnnotation;
 
         Object cacheValue = null;
+        //判断是或能够进行缓存操作
         if (!canDoCacheOperate(cacheable.condition(), cacheable.unless(), expressionMetadata)) {
             return;
         }
         CacheOperate cacheOperate = super.cacheOperateFactory.getCacheOperate(cacheable.cacheOperate());
 
-
         Object key = super.parseCacheKey(expressionMetadata, cacheable.key());
-        String cacheName = super.keyGeneratorFactory.getKeyGenerator(cacheable.keyGenerator())
-                .generator(expressionMetadata, cacheable.cacheName());
+        CacheNameWrapper cacheNameWrapper = cacheNameWrapperFactory.getCacheNameWrapper(cacheable.cacheNameWrapper());
+        String cacheName = cacheNameWrapper.getCacheName(expressionMetadata, cacheable.cacheName());
         GetParam getParam = new GetParam();
         getParam.setCacheOperate(cacheOperate);
         //同步：没有值才查询数据库

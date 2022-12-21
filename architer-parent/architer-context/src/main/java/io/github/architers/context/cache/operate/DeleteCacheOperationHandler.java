@@ -1,7 +1,8 @@
-package io.github.architers.context.cache.operation;
+package io.github.architers.context.cache.operate;
 
 
 import io.github.architers.context.cache.annotation.DeleteCache;
+import io.github.architers.context.cache.model.DeleteParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 
@@ -37,7 +38,7 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
         }
         CacheOperate cacheOperate = cacheOperateFactory.getCacheOperate(deleteCache.cacheOperate());
         DeleteParam deleteParam = new DeleteParam();
-        KeyGenerator keyGenerator = keyGeneratorFactory.getKeyGenerator(deleteCache.keyGenerator());
+        KeyGenerator keyGenerator = cacheNameWrapperFactory.getKeyGenerator(deleteCache.keyGenerator());
         String cachePrefixes = keyGenerator.generator(expressionMetadata, deleteCache.cacheName());
 
         deleteParam.setCacheName(cachePrefixes);
