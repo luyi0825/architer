@@ -16,7 +16,6 @@
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
         <core.version>1.0.0</core.version>
-        <jackson.version>2.11.4</jackson.version>
     </properties>
     <dependencies>
 

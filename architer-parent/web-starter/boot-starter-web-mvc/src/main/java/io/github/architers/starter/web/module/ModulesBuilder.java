@@ -1,7 +1,6 @@
 package io.github.architers.starter.web.module;
 
 
-import io.github.architers.context.module.SubModule;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -109,11 +108,11 @@ public class ModulesBuilder {
                 if (metadataReader != null) {
                     String className = metadataReader.getClassMetadata().getClassName();
                     Class<?> clazz = this.getClass().getClassLoader().loadClass(className);
-                    SubModule subModule = clazz.getAnnotation(SubModule.class);
-                    if (subModule != null) {
-                        resourceSet.add(clazz);
-                        log.info("start load module:{}-{}-{}", subModule.name(), subModule.caption(), className);
-                    }
+                    //SubModule subModule = clazz.getAnnotation(SubModule.class);
+//                    if (subModule != null) {
+//                        resourceSet.add(clazz);
+//                        log.info("start load module:{}-{}-{}", subModule.name(), subModule.caption(), className);
+//                    }
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

@@ -2,6 +2,7 @@ package io.github.architers.context.cache.annotation;
 
 
 import io.github.architers.context.cache.CacheAdviceImportSelector;
+import io.github.architers.context.cache.CacheAutoConfiguration;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Import;
 
