@@ -1,6 +1,7 @@
 package io.github.architers.context.exception;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
  *
  * @author luyi
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class SysException extends BaseCodeException {
 

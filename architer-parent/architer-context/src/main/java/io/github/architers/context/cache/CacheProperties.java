@@ -1,11 +1,11 @@
 package io.github.architers.context.cache;
 
-import io.github.architers.context.lock.LockEnum;
+import io.github.architers.context.cache.operate.CacheOperate;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * 默认的缓存属性配置
+ * 缓存属性配置
  *
  * @author luyi
  */
@@ -16,25 +16,12 @@ public class CacheProperties {
     /**
      * 默认的缓存操作处理器
      */
-    private String defaultCacheOperateBeanName;
+    private Class<? extends CacheOperate> defaultCacheOperateClass;
 
     /**
-     * 是否允许空值:@TODO 待完善
+     * 是否延迟双删(解决缓存一致性）
      */
-    private boolean canNullValue = false;
+    private boolean delayDoubleDelete = false;
 
-
-    /**
-     * 使用什么锁
-     */
-    private LockEnum lockEnum = LockEnum.JDK;
-
-    public LockEnum getLock() {
-        return lockEnum;
-    }
-
-    public void setLock(LockEnum lockEnum) {
-        this.lockEnum = lockEnum;
-    }
 
 }

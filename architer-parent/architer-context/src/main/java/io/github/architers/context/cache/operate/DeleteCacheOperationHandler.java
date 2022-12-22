@@ -38,15 +38,15 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
         }
         CacheOperate cacheOperate = cacheOperateFactory.getCacheOperate(deleteCache.cacheOperate());
         DeleteParam deleteParam = new DeleteParam();
-        KeyGenerator keyGenerator = cacheNameWrapperFactory.getKeyGenerator(deleteCache.keyGenerator());
-        String cachePrefixes = keyGenerator.generator(expressionMetadata, deleteCache.cacheName());
+        CacheNameWrapper cacheNameWrapper = cacheNameWrapperFactory.getCacheNameWrapper(deleteCache.cacheNameWrapper());
+        String cacheName = cacheNameWrapper.getCacheName(expressionMetadata, deleteCache.cacheName());
 
-        deleteParam.setCacheName(cachePrefixes);
+        deleteParam.setCacheName(cacheName);
         Object key = super.parseCacheKey(expressionMetadata, deleteCache.key());
 
-      //  deleteCacheParam.setCacheKey(key);
+        deleteParam.setKey(key);
         deleteParam.setAsync(deleteCache.async());
-       // deleteCacheParam.setKeyGenerator();
+        //deleteCacheParam.setKeyGenerator();
        // deleteCacheParam.setCacheOperate(super.cacheCacheOperateFactory.getCacheOperate(deleteCache.cacheOperate()));
         //删除缓存
         cacheOperate.delete(deleteParam);

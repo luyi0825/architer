@@ -3,7 +3,7 @@ package io.github.architers.context.exception;
 import io.github.architers.context.web.ResponseResult;
 
 /**
- * 请求异常数据
+ * 请求异处理器
  *
  * @author luyi
  */

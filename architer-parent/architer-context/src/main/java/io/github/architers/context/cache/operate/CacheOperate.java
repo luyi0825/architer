@@ -27,7 +27,6 @@ public interface CacheOperate {
     }
 
 
-    ;
 
     /**
      * 删除缓存

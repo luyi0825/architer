@@ -30,8 +30,7 @@ public @interface Locked {
     boolean fair() default true;
 
     /**
-     * 锁的名称
-     * <li>支持EL表达式,一个方法只解析一次，然后会被本地缓存下来，不再解析</li>
+     * 锁的名称（不支持EL表达式）
      */
     String lockName() default "";
 
@@ -51,9 +50,9 @@ public @interface Locked {
     long tryTime() default 10L;
 
     /**
-     * 加锁的时间
+     * 释放锁的时间
      */
-    long lockTime() default 30L;
+    long leaseTime() default 30L;
 
     /**
      * 默认重入锁
