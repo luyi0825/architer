@@ -72,7 +72,6 @@
         <module>architer-cloud</module>
         <module>web-starter</module>
         <module>others</module>
-        <module>architer-task</module>
         <module>three-party-component</module>
     </modules>
 

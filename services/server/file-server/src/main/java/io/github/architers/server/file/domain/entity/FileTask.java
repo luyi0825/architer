@@ -27,7 +27,6 @@ public class FileTask extends BaseEntity {
      */
     private String taskCaption;
 
-
     /**
      * 任务节点类型
      *

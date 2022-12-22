@@ -7,7 +7,7 @@ import io.github.architers.context.utils.NodeTreeUtils;
 import io.github.architers.objectstorage.ObjectStorage;
 import io.github.architers.objectstorage.ObjectStorageType;
 import io.github.architers.objectstorage.PutFileResponse;
-import io.github.architers.server.file.FileVersionUtils;
+import io.github.architers.server.file.utils.FileVersionUtils;
 import io.github.architers.server.file.dao.ImportTemplateCatalogDao;
 import io.github.architers.server.file.dao.ImportTemplateDao;
 import io.github.architers.server.file.domain.dto.TemplateCatalogDTO;

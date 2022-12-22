@@ -1,4 +1,4 @@
-package io.github.architers.server.file;
+package io.github.architers.server.file.utils;
 
 import io.github.architers.context.exception.SysException;
 import lombok.extern.slf4j.Slf4j;

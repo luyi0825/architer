@@ -30,7 +30,7 @@ public class TaskApi {
      * 添加任务
      */
     @PostMapping("/executeTask")
-    public boolean executeTask(@RequestBody @Validated ExecuteTaskParam executeTaskParam) throws InterruptedException {
+    public boolean executeTask(@RequestBody @Validated ExecuteTaskParam executeTaskParam) {
         return taskService.sendTask(executeTaskParam);
     }
 

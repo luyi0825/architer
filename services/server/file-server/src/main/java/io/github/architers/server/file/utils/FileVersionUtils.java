@@ -1,8 +1,10 @@
-package io.github.architers.server.file;
+package io.github.architers.server.file.utils;
 
+import io.github.architers.context.exception.NoStackBusException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.POIXMLProperties;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openxmlformats.schemas.officeDocument.x2006.customProperties.CTProperty;
 import org.springframework.util.Assert;
@@ -36,15 +38,16 @@ public class FileVersionUtils {
      * @param inputStream 文件输入流
      * @return 模板版本
      */
-    private String getFileVersion(InputStream inputStream) {
-        try (XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream)) {
-            CTProperty ctProperty = xssfWorkbook.getProperties().getCustomProperties().getProperty(CUSTOM_FILE_VERSION);
+    public static String getFileVersion(InputStream inputStream) {
+        try (OPCPackage pkg = OPCPackage.open(inputStream)) {
+            POIXMLProperties poixmlProperties = new POIXMLProperties(pkg);
+            CTProperty ctProperty = poixmlProperties.getCustomProperties().getProperty(CUSTOM_FILE_VERSION);
             if (ctProperty == null) {
                 return null;
             }
             return ctProperty.getLpwstr();
-        } catch (IOException e) {
-            throw new RuntimeException("检查模板异常", e);
+        } catch (Exception e) {
+            throw new NoStackBusException("检查模板异常", e);
         }
     }
 

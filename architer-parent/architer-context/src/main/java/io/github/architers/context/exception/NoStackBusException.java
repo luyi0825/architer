@@ -16,4 +16,13 @@ public class NoStackBusException extends BusException {
     public NoStackBusException(int code, String message) {
         super(code, message);
     }
+
+    public NoStackBusException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public NoStackBusException(int code, String message, Throwable cause) {
+        super(code, message, cause);
+    }
+
 }

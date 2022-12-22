@@ -1,6 +1,5 @@
 package io.github.architers.component.mybatisplus;
 
-import jdk.jfr.DataAmount;
 import lombok.Data;
 
 /**
