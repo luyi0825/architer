@@ -14,7 +14,7 @@
         <architer.revision>1.0.0-SNAPSHOT</architer.revision>
         <revision>1.0.0-SNAPSHOT</revision>
         <maven-flatten-version>1.1.0</maven-flatten-version>
-        <spring-boot.version>2.6.13</spring-boot.version>
+        <spring-boot.version>2.6.14</spring-boot.version>
         <jackson.version>2.12.2</jackson.version>
         <spring-cloud.version>2021.0.4</spring-cloud.version>
     </properties>
@@ -92,7 +92,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.6.13</version>
+                <version>2.6.14</version>
                 <configuration>
                     <fork>true</fork>
                     <classifier>exec</classifier>
