@@ -5,7 +5,6 @@ import org.redisson.client.NettyHook;
 import org.redisson.client.codec.Codec;
 import org.redisson.config.*;
 import org.redisson.connection.AddressResolverGroupFactory;
-import org.redisson.connection.ConnectionListener;
 import org.redisson.connection.ConnectionManager;
 
 import java.io.IOException;
