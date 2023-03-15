@@ -24,7 +24,7 @@
         <easyexcel.verion>2.2.8</easyexcel.verion>
         <jsoup.verion>1.14.2</jsoup.verion>
         <zookeeper.version>3.7.0</zookeeper.version>
-        <redisson.version>3.17.6</redisson.version>
+        <redisson.version>3.20.0</redisson.version>
         <jedis.version>3.6.0</jedis.version>
         <jackson.version>2.12.2</jackson.version>
         <spring.version>5.3.24</spring.version>
