@@ -3,7 +3,7 @@ package io.github.architers.server.file.utils;
 import io.github.architers.context.exception.NoStackBusException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.poi.POIXMLProperties;
+import org.apache.poi.ooxml.POIXMLProperties;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openxmlformats.schemas.officeDocument.x2006.customProperties.CTProperty;

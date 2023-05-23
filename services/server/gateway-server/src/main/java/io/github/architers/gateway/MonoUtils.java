@@ -11,7 +11,7 @@ public class MonoUtils {
     public static Mono<Void> writeWith(ServerHttpResponse response, ResponseResult<?> responseResult ) {
         return response.writeWith(Mono.fromSupplier(() -> {
             DataBufferFactory bufferFactory = response.bufferFactory();
-            return bufferFactory.wrap(JsonUtils.writeValueAsBytes(responseResult));
+            return bufferFactory.wrap(JsonUtils.toJSONBytes(responseResult));
         }));
     }
 }

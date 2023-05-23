@@ -1,15 +1,16 @@
 package io.github.architers.context.utils;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
+
+import java.lang.reflect.Type;
+
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Json工具类
@@ -20,7 +21,7 @@ import java.util.Map;
  *
  * @author luyi
  */
-public class JsonUtils {
+public final class JsonUtils {
     /**
      * 防止被new
      */
@@ -28,44 +29,20 @@ public class JsonUtils {
 
     }
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
     /**
      * Object转成Json字符串
      *
      * @return json字符串
      */
     public static String toJsonString(Object object) {
-        try {
-            if (object instanceof String) {
-                return (String) object;
-            }
-            return OBJECT_MAPPER.writeValueAsString(object);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("序列化失败", e);
+        if (object instanceof String) {
+            return (String) object;
         }
+        return JSON.toJSONString(object);
     }
 
-    /**
-     * Object转成Json字符串
-     *
-     * @return json字符串
-     */
-    public static Map<String,Object> toMap(Object object) {
-        try {
-            String jsonStr = OBJECT_MAPPER.writeValueAsString(object);
-            return OBJECT_MAPPER.readValue(jsonStr, HashMap.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("序列化失败", e);
-        }
-    }
-
-    public static byte[] writeValueAsBytes(Object object) {
-        try {
-            return OBJECT_MAPPER.writeValueAsBytes(object);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("序列化失败", e);
-        }
+    public static byte[] toJsonBytes(Object object) {
+        return JSON.toJSONBytes(object);
     }
 
     /**
@@ -76,12 +53,21 @@ public class JsonUtils {
      * @param <T>   实体类型
      * @return 反序列化的实体
      */
-    public static <T> T readValue(byte[] bytes, Class<T> clazz) {
-        try {
-            return OBJECT_MAPPER.readValue(bytes, clazz);
-        } catch (IOException e) {
-            throw new RuntimeException("反序列化失败", e);
-        }
+    public static <T> T parseObject(byte[] bytes, Class<T> clazz) {
+        return JSON.parseObject(bytes, clazz);
+
+    }
+
+    /**
+     * 将json转为对象（用于泛型序列化）
+     *
+     * @param value json字符串
+     * @param type  反序列化的类型
+     * @param <T>   实体类型
+     * @return 反序列化的实体
+     */
+    public static <T> T parseObject(String value, Type type) {
+        return JSON.parseObject(value, type);
     }
 
     /**
@@ -92,63 +78,35 @@ public class JsonUtils {
      * @param <T>   实体类型
      * @return 反序列化的实体
      */
-    public static <T> T readValue(String value, Class<T> clazz) {
-        try {
-            return OBJECT_MAPPER.readValue(value, clazz);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("反序列化失败", e);
-        }
+    public static <T> T parseObject(String value, Class<T> clazz) {
+        return JSON.parseObject(value, clazz);
     }
 
 
     /**
      * 将Json字符串反序列化成list
      *
-     * @param value 需要反序列化的字符串
-     * @param clazz list中的实体
-     * @param <T>   实体类型
+     * @param jsonStr 需要反序列化的字符串
+     * @param clazz   list中的实体
      * @return 反序列化后的list
      */
-    public static <T> Object readValue(String value, Class<?> typeClass, Class<T> clazz) {
-        JavaType listType = OBJECT_MAPPER.getTypeFactory().constructParametricType(typeClass, clazz);
-        try {
-            return OBJECT_MAPPER.readValue(value, listType);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("反序列化失败", e);
-        }
+    public static <T> List<T> parseListObject(String jsonStr, Class<T> clazz) {
+        return JSONArray.parseArray(jsonStr, clazz);
     }
 
     /**
-     * 将Json字符串反序列化成list
-     *
-     * @param value 需要反序列化的字符串
-     * @param clazz list中的实体
-     * @return 反序列化后的list
-     */
-    public static <T> List<T> readListValue(String value, Class<T> clazz) {
-        JavaType listType = OBJECT_MAPPER.getTypeFactory().constructParametricType(List.class, clazz);
-        try {
-            return OBJECT_MAPPER.readValue(value, listType);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("反序列化失败", e);
-        }
-    }
-
-    /**
-     * 将Json字符串反序列化成list
+     * 将Json字符串反序列化成list(泛型的反序列化）
      *
      * @param bytes 需要反序列化的字符串对应的字节码
-     * @param clazz list中的实体
+     * @param type  list中的实体
      * @return 反序列化后的list
      */
-    public static <T> List<T> readListValue(byte[] bytes, Class<T> clazz) {
-        JavaType listType = OBJECT_MAPPER.getTypeFactory().constructParametricType(List.class, clazz);
-        try {
-            return OBJECT_MAPPER.readValue(new String(bytes, StandardCharsets.UTF_8), listType);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("反序列化失败", e);
-        }
+    public static <T> List<T> parseListObject(byte[] bytes, Type type) {
+        return JSON.parseArray(bytes, type);
     }
 
 
+    public static Map<String,Object> toMap(Object object) {
+        return JSONObject.parseObject(JSON.toJSONString(object));
+    }
 }

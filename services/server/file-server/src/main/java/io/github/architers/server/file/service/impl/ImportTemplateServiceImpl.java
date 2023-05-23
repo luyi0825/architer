@@ -3,10 +3,12 @@ package io.github.architers.server.file.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.github.architers.context.exception.BusException;
+import io.github.architers.context.model.TreeNode;
 import io.github.architers.context.utils.NodeTreeUtils;
 import io.github.architers.objectstorage.ObjectStorage;
 import io.github.architers.objectstorage.ObjectStorageType;
 import io.github.architers.objectstorage.PutFileResponse;
+import io.github.architers.server.file.domain.param.FileTemplateAddParams;
 import io.github.architers.server.file.utils.FileVersionUtils;
 import io.github.architers.server.file.dao.ImportTemplateCatalogDao;
 import io.github.architers.server.file.dao.ImportTemplateDao;
@@ -17,6 +19,7 @@ import io.github.architers.server.file.domain.entity.TemplateCatalog;
 import io.github.architers.server.file.eums.FileType;
 import io.github.architers.server.file.service.ImportTemplateService;
 import org.apache.commons.io.FileUtils;
+import org.apache.tika.Tika;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,12 +64,12 @@ public class ImportTemplateServiceImpl implements ImportTemplateService {
     }
 
     @Override
-    public List<NodeTreeUtils.TreeNode> getTemplateCatalog() {
+    public List<TreeNode> getTemplateCatalog() {
         List<TemplateCatalog> templateCatalogs = importTemplateCatalogDao.selectList(null);
-        return NodeTreeUtils.convertToTree(templateCatalogs, "parentId", new Function<TemplateCatalog, NodeTreeUtils.TreeNode>() {
+        return NodeTreeUtils.convertToTree(templateCatalogs, "parentId", new Function<TemplateCatalog, TreeNode>() {
             @Override
-            public NodeTreeUtils.TreeNode apply(TemplateCatalog templateCatalog) {
-                NodeTreeUtils.TreeNode treeNode = new NodeTreeUtils.TreeNode();
+            public TreeNode apply(TemplateCatalog templateCatalog) {
+                TreeNode treeNode = new TreeNode();
                 treeNode.setParentCode(templateCatalog.getParentId() + "");
                 treeNode.setCaption(templateCatalog.getCatalogCaption());
                 treeNode.setCode(templateCatalog.getId() + "");
@@ -165,5 +168,12 @@ public class ImportTemplateServiceImpl implements ImportTemplateService {
             throw new BusException("模板文件不存在");
         }
         return template.getVersion();
+    }
+
+    @Override
+    public void addTemplateFile(FileTemplateAddParams fileTemplateAddParams, MultipartFile file) throws IOException {
+        Tika tika = new Tika();
+        String type = tika.detect(file.getInputStream());
+        System.out.println(type);
     }
 }

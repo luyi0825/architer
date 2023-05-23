@@ -1,8 +1,10 @@
 package io.github.architers.server.file.service;
 
+import io.github.architers.context.model.TreeNode;
 import io.github.architers.context.utils.NodeTreeUtils;
 import io.github.architers.server.file.domain.dto.TemplateCatalogDTO;
 import io.github.architers.server.file.domain.dto.TemplateDTO;
+import io.github.architers.server.file.domain.param.FileTemplateAddParams;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -18,7 +20,7 @@ public interface ImportTemplateService {
 
     void editTemplateCatalog(TemplateCatalogDTO templateCatalog);
 
-    List<NodeTreeUtils.TreeNode> getTemplateCatalog();
+    List<TreeNode> getTemplateCatalog();
 
     void addTemplate(TemplateDTO templateDTO);
 
@@ -30,4 +32,6 @@ public interface ImportTemplateService {
                             ) throws IOException;
 
     String getNewTemplateFileVersion(String templateCode);
+
+    void addTemplateFile(FileTemplateAddParams fileTemplateAddParams, MultipartFile file) throws IOException;
 }

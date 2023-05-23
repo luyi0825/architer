@@ -13,7 +13,7 @@
     <artifactId>file-common-module</artifactId>
     <name>center-module</name>
     <description>文件服务公共模块</description>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <dependencies>
 

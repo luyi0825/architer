@@ -1,75 +1,84 @@
 package io.github.architers.context.lock;//package io.github.architers.context.cache.lock;
-//
-//import org.springframework.cglib.core.ClassInfo;
-//
-//import java.util.Map;
-//import java.util.concurrent.ConcurrentHashMap;
-//import java.util.concurrent.ConcurrentMap;
-//import java.util.concurrent.TimeUnit;
-//import java.util.concurrent.locks.Lock;
-//import java.util.concurrent.locks.ReentrantLock;
-//
-///**
-// * @author luyi
-// * jdk的锁
-// */
-//public class JdkLockServiceImpl implements LockService {
-//    Map<String, CacheLock> lockMap = new ConcurrentHashMap<>();
-//
-//    class CacheLock {
-//        private long expireTime;
-//        private Lock lock;
-//
-//        public long getExpireTime() {
-//            return expireTime;
-//        }
-//
-//        public void setExpireTime(long expireTime) {
-//            this.expireTime = expireTime;
-//        }
-//
-//        public Lock getLock() {
-//            return lock;
-//        }
-//
-//        public void setLock(Lock lock) {
-//            this.lock = lock;
-//        }
-//    }
-//
-//    @Override
-//    public Lock tryLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
-//        CacheLock lock = lockMap.get(lockName);
-//        if (lock == null) {
-//            synchronized (this) {
-//                lock = lockMap.get(lockName);
-//                if (lock == null) {
-//                    lock = new CacheLock();
-//                    lock.setLock(new ReentrantLock());
-//                }
-//                if (lock.getLock().tryLock(time, timeUnit)) {
-//                    lockMap.put(lockName, lock);
-//                    return lock.getLock();
-//                }
-//            }
-//        } else {
-//            if (lock.tryLock(time, timeUnit)) {
-//                return lock;
-//            }
-//        }
-//
-//
-//    }
-//
-//    @Override
-//    public Lock tryLock(String lockName) throws Exception {
-//        return null;
-//    }
-//
-//    @Override
-//    public void unLock(Lock lock) {
-//        lock.unlock();
-//    }
-//
-//
-//}
+
+import org.springframework.cglib.core.ClassInfo;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Function;
+
+/**
+ * @author luyi
+ * jdk的锁
+ */
+public class JdkLockServiceImpl implements LockService {
+
+
+    private Map<String, Lock> lockMap = new ConcurrentHashMap<>();
+
+
+    @Override
+    public String getLockSplit() {
+        return ":";
+    }
+
+    @Override
+    public Lock tryFairLock(String lockName) throws Exception {
+        Lock lock = lockMap.computeIfAbsent(lockName, (Function) o -> new ReentrantLock(true));
+        if (lock.tryLock()) {
+            return lock;
+        }
+        return null;
+    }
+
+    @Override
+    public Lock tryFairLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
+        Lock lock = lockMap.computeIfAbsent(lockName, (Function) o -> new ReentrantLock(true));
+        if (lock.tryLock(time, timeUnit)) {
+            return lock;
+        }
+        return null;
+    }
+
+    @Override
+    public Lock tryUnfairLock(String lockName) throws Exception {
+        Lock lock = lockMap.computeIfAbsent(lockName, (Function) o -> new ReentrantLock(false));
+        if (lock.tryLock()) {
+            return lock;
+        }
+        return null;
+    }
+
+    @Override
+    public Lock tryUnfairLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
+        Lock lock = lockMap.computeIfAbsent(lockName, (Function) o -> new ReentrantLock(false));
+        if (lock.tryLock(time,timeUnit)) {
+            return lock;
+        }
+        return null;
+    }
+
+    @Override
+    public Lock tryWriteLock(String lockName) throws Exception {
+        return null;
+    }
+
+    @Override
+    public Lock tryWriteLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
+        return null;
+    }
+
+    @Override
+    public Lock tryReadLock(String lockName) throws Exception {
+        return null;
+    }
+
+    @Override
+    public Lock tryReadLock(String lockName, long time, TimeUnit timeUnit) throws Exception {
+        return null;
+    }
+}

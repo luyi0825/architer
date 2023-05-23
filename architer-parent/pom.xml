@@ -19,20 +19,19 @@
 
         <alibaba-druid.version>1.1.25</alibaba-druid.version>
         <commons-lang3.version>3.11</commons-lang3.version>
-        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <lombok.version>1.18.20</lombok.version>
         <easyexcel.verion>2.2.8</easyexcel.verion>
         <jsoup.verion>1.14.2</jsoup.verion>
         <zookeeper.version>3.7.0</zookeeper.version>
         <redisson.version>3.20.0</redisson.version>
-        <jedis.version>3.6.0</jedis.version>
         <jackson.version>2.12.2</jackson.version>
         <spring.version>5.3.24</spring.version>
-        <spring-boot.version>2.6.14</spring-boot.version>
+        <spring-boot.version>2.7.12</spring-boot.version>
         <!--spring-cloud-alibaba的版本-->
         <alibaba-cloud.version>2021.1</alibaba-cloud.version>
         <!--spring-cloud的版本-->
-        <spring-cloud.version>2021.0.5</spring-cloud.version>
+        <spring-cloud.version>2021.0.6</spring-cloud.version>
         <!-- log4j2的版本-->
         <okHttp.version>4.9.1</okHttp.version>
         <hibernate-validator.version>6.1.2.Final</hibernate-validator.version>
@@ -114,7 +113,7 @@
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2021.1</version>
+                <version>2021.0.5.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

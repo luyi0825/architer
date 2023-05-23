@@ -23,8 +23,7 @@ public class ResultStatusDecoder implements Decoder {
         if (HttpStatus.OK.value() != response.status()) {
             return ResponseResult.fail(new String(Util.toByteArray(response.body().asInputStream())));
         }
-        WechatResponse wechatResponse =
-                JsonUtils.readValue(Util.toByteArray(response.body().asInputStream()),
+        WechatResponse wechatResponse = JsonUtils.parseObject(Util.toByteArray(response.body().asInputStream()),
                         WechatResponse.class);
         if (wechatResponse.getErrcode() == 0) {
             return ResponseResult.ok(wechatResponse);

@@ -1,5 +1,6 @@
 package io.github.architers.context.utils;
 
+import io.github.architers.context.model.TreeNode;
 import lombok.Data;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -11,23 +12,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
+/**
+ * 树节点工具类
+ *
+ * @author luyi
+ */
 public class NodeTreeUtils {
 
 
-    @Data
-    public static class TreeNode implements Serializable {
-
-        private String code;
-        private String caption;
-        private String parentCode;
-        private Object data;
-        private List<TreeNode> childrenNodes;
-
-
-    }
-
-    public static <T> List<TreeNode> convertToTree(List<T> objects, String parentField, Function<T,
-            TreeNode> consumer) {
+    public static <T> List<TreeNode> convertToTree(List<T> objects, String parentField, Function<T, TreeNode> consumer) {
         if (CollectionUtils.isEmpty(objects)) {
             return Collections.emptyList();
         }
@@ -40,7 +33,9 @@ public class NodeTreeUtils {
     }
 
 
-    private static <T> void fillChildNodes(TreeNode parentNode, String parentField, List<T> objects,
+    private static <T> void fillChildNodes(TreeNode parentNode,
+                                           String parentField,
+                                           List<T> objects,
                                            Function<T, TreeNode> consumer) {
         List<TreeNode> treeNodes = new LinkedList<>();
         for (T object : objects) {
@@ -69,7 +64,8 @@ public class NodeTreeUtils {
      * 查询第一级
      */
     public static <T> List<TreeNode> parent(List<T> objects,
-                                            String parentField, Function<T, TreeNode> consumer) {
+                                            String parentField,
+                                            Function<T, TreeNode> consumer) {
         List<TreeNode> treeNodes = new LinkedList<>();
         for (T object : objects) {
 

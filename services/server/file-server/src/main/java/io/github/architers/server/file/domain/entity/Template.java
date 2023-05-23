@@ -18,10 +18,7 @@ public class Template extends BaseEntity {
     @TableId(type = IdType.AUTO)
     private String id;
 
-    /**
-     * 目录ID
-     */
-    private Integer catalogId;
+
 
 
     /**

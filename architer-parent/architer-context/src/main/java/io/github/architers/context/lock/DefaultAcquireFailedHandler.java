@@ -9,6 +9,7 @@ import io.github.architers.context.expression.ExpressionMetadata;
  */
 public class DefaultAcquireFailedHandler implements AcquireFailedHandler {
 
+    @Override
     public Object handler(Locked locked, ExpressionMetadata expressionMetadata) {
         throw new RuntimeException("acquire lock Failed");
     }

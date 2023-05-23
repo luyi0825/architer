@@ -124,7 +124,7 @@ public class DictServiceImpl implements DictService {
             response.reset();
             response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
             response.setContentType("application/octet-stream");
-            outputStream.write(JsonUtils.writeValueAsBytes(importJsonDictList));
+            outputStream.write(JsonUtils.toJSONBytes(importJsonDictList));
             outputStream.flush();
         } catch (IOException ex) {
             log.error("download file error!", ex);
