@@ -19,6 +19,29 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  */
 public class SqlTaskUtils implements ApplicationContextAware {
 
+    private static final ThreadLocal<SqlTaskContext> SQL_TASK_CONTEXT_THREAD_LOCAL = new ThreadLocal<>();
+
+    public static SqlTaskContext initLocal() {
+        SqlTaskContext sqlTaskContext = SQL_TASK_CONTEXT_THREAD_LOCAL.get();
+        if (sqlTaskContext == null) {
+            sqlTaskContext = new SqlTaskContext();
+            SQL_TASK_CONTEXT_THREAD_LOCAL.set(sqlTaskContext);
+        }
+
+        return sqlTaskContext;
+    }
+
+    /**
+     * initLocal后才有值
+     */
+    public static SqlTaskContext getLocal() {
+        return SQL_TASK_CONTEXT_THREAD_LOCAL.get();
+    }
+
+    public static void removeLocal() {
+        SQL_TASK_CONTEXT_THREAD_LOCAL.remove();
+    }
+
     private static SqlTaskExecutor sqlTaskExecutor;
 
 
@@ -29,6 +52,13 @@ public class SqlTaskUtils implements ApplicationContextAware {
 
     public static void executor(SqlTask... sqlTasks) {
         sqlTaskExecutor.executor(sqlTasks);
+    }
+
+    public void executorTaskContext(SqlTaskContext sqlTaskContext) {
+        sqlTaskExecutor.executor(sqlTaskContext.getSqlTaskList().toArray(new SqlTask[0]));
+        if (sqlTaskContext.getEndTransactionHook() != null) {
+            sqlTaskExecutor.getThreadPoolExecutor().execute(sqlTaskContext.getEndTransactionHook().get());
+        }
     }
 
 

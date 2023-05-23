@@ -1,5 +1,6 @@
 package io.github.architers.context.sql;
 
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,21 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Component
 public class SqlTaskExecutor {
+
+    private ThreadPoolTaskExecutor threadPoolExecutor;
+
+
+    public SqlTaskExecutor() {
+
+    }
+
+
+
+    public SqlTaskExecutor(ThreadPoolTaskExecutor threadPoolExecutor) {
+        this.threadPoolExecutor = threadPoolExecutor;
+    }
+
+
 
     /**
      * 责任链执行sql任务
@@ -40,6 +56,14 @@ public class SqlTaskExecutor {
         for (SqlTask sqlTask : sqlTasks) {
             sqlTask.execute();
         }
+    }
+
+    public void setThreadPoolExecutor(ThreadPoolTaskExecutor threadPoolExecutor) {
+        this.threadPoolExecutor = threadPoolExecutor;
+    }
+
+    public ThreadPoolTaskExecutor getThreadPoolExecutor() {
+        return threadPoolExecutor;
     }
 
 }
