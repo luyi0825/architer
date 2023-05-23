@@ -35,8 +35,8 @@ public class DefaultExceptionHandler implements RequestExceptionHandler {
 
     @Override
     public ResponseResult<?> handler(Throwable e) {
-        if (e instanceof NoStackBusException) {
-            NoStackBusException noStackBusException = (NoStackBusException) e;
+        if (e instanceof BusException) {
+            BusException noStackBusException = (BusException) e;
             return new ResponseResult<>(noStackBusException.getCode(), e.getMessage());
         }
         //处理校验异常
@@ -51,8 +51,8 @@ public class DefaultExceptionHandler implements RequestExceptionHandler {
         }
         //业务主动抛出异常
         log.error(e.getMessage(), e);
-        if (e instanceof BusException) {
-            return new ResponseResult<>(((BusException) e).getCode(), e.getMessage());
+        if (e instanceof BusLogException) {
+            return new ResponseResult<>(((BusLogException) e).getCode(), e.getMessage());
         }
         //不可预期的异常
         return new ResponseResult<>(SysException.SYS_EXCEPTION_CODE, SysException.SYS_EXCEPTION_MESSAGE, e.getMessage());

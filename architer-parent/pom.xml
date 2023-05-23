@@ -37,7 +37,6 @@
         <hibernate-validator.version>6.1.2.Final</hibernate-validator.version>
         <zookeeper.version>3.8.0</zookeeper.version>
         <hutool.version>5.6.5</hutool.version>
-        <nacos-client.version>2.1.1</nacos-client.version>
         <mysql.version>8.0.25</mysql.version>
         <elasticsearch.version>7.9.3</elasticsearch.version>
         <elasticjob.verion>3.0.0</elasticjob.verion>
@@ -228,11 +227,6 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>1.7.25</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.nacos</groupId>
-                <artifactId>nacos-client</artifactId>
-                <version>${nacos-client.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

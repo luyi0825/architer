@@ -2,7 +2,7 @@ package io.github.architers.server.file.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import io.github.architers.server.file.dao.FileTaskDao;
+import io.github.architers.server.file.mapper.FileTaskDao;
 import io.github.architers.server.file.domain.entity.FileTask;
 import io.github.architers.server.file.service.IFileTaskService;
 import org.springframework.stereotype.Service;

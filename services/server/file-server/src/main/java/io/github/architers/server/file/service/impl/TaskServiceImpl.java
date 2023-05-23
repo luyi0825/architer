@@ -1,6 +1,6 @@
 package io.github.architers.server.file.service.impl;
 
-import io.github.architers.context.exception.BusException;
+import io.github.architers.context.exception.BusLogException;
 import io.github.architers.server.file.domain.entity.FileTaskConfig;
 import io.github.architers.server.file.domain.dto.ExecuteTaskParam;
 import io.github.architers.server.file.service.ITaskConfigService;
@@ -35,7 +35,7 @@ public class TaskServiceImpl implements TaskService {
             for (ITaskLimit limit : taskLimits) {
                 if (!limit.canExecute(executeTaskParam, config)) {
                     //拒绝处理
-                    throw new BusException("任务拒绝");
+                    throw new BusLogException("任务拒绝");
                 }
             }
         }

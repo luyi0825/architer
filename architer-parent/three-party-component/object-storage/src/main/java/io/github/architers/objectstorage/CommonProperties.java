@@ -12,7 +12,7 @@ public class CommonProperties {
     /**
      * 是否启用(默认是)
      */
-    protected boolean enabled = true;
+    protected boolean enabled = false;
 
     /**
      * 端点

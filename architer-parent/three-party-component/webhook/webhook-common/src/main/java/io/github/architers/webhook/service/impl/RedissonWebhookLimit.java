@@ -1,6 +1,6 @@
 package io.github.architers.webhook.service.impl;
 
-import io.github.architers.context.exception.BusException;
+import io.github.architers.context.exception.BusLogException;
 import io.github.architers.webhook.WebhookProperties;
 import io.github.architers.webhook.service.IWebhookLimit;
 import org.redisson.api.RRateLimiter;
@@ -31,7 +31,7 @@ public class RedissonWebhookLimit implements IWebhookLimit {
     public boolean prepareSend(String robotKey) {
         WebhookProperties.RobotConfig robotConfig = webhookProperties.getRobotConfigs().get(robotKey);
         if (robotConfig == null) {
-            throw new BusException("没有配置机器人信息：" + robotKey);
+            throw new BusLogException("没有配置机器人信息：" + robotKey);
         }
         WebhookProperties.Limit limit = robotConfig.getLimit();
         if (limit == null) {

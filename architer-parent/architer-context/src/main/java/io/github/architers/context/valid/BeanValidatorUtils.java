@@ -2,7 +2,7 @@
 package io.github.architers.context.valid;
 
 
-import io.github.architers.context.exception.NoStackBusException;
+import io.github.architers.context.exception.BusException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -32,7 +32,7 @@ public final class BeanValidatorUtils {
             for (ConstraintViolation<Object> constraint : constraintViolations) {
                 msg.append(constraint.getMessage()).append("<br>");
             }
-            throw new NoStackBusException(msg.toString());
+            throw new BusException(msg.toString());
         }
     }
 }

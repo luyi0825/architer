@@ -1,7 +1,7 @@
 package io.github.architers.webhook.service.impl;
 
 
-import io.github.architers.context.exception.BusException;
+import io.github.architers.context.exception.BusLogException;
 import io.github.architers.context.utils.JsonUtils;
 import io.github.architers.context.web.ResponseResult;
 import io.github.architers.webhook.WebHookMessage;
@@ -11,7 +11,6 @@ import io.github.architers.webhook.exeception.WebHookLimitException;
 import io.github.architers.webhook.service.IWebHookService;
 import io.github.architers.webhook.service.IWebhookLimit;
 import lombok.SneakyThrows;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -38,7 +37,7 @@ public class WebHookServiceImpl implements IWebHookService {
     public ResponseResult<?> sendMessage(String robotKey, WebHookMessage webHookMessage) {
         WebhookProperties.RobotConfig robotConfig = webhookProperties.getRobotConfigs().get(robotKey);
         if (robotConfig == null) {
-            throw new BusException("机器人配置为空");
+            throw new BusLogException("机器人配置为空");
         }
         if (!webhookLimit.prepareSend(robotKey)) {
             throw new WebHookLimitException();

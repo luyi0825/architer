@@ -9,8 +9,7 @@ import io.github.architers.common.jwttoken.RoleInfo;
 import io.github.architers.common.jwttoken.UserInfo;
 import io.github.architers.common.jwttoken.UserInfoUtils;
 import io.github.architers.common.module.tenant.TenantUtils;
-import io.github.architers.context.exception.NoStackBusException;
-import io.github.architers.context.exception.BusException;
+import io.github.architers.context.exception.BusLogException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -72,11 +71,11 @@ public class MenuServiceImpl implements MenuService {
         //判断子菜单
         SysMenu sysMenu = menuDao.selectById(menuId);
         if (sysMenu == null) {
-            throw new NoStackBusException("删除菜单失败");
+            throw new NoStackBusLogException("删除菜单失败");
         }
         List<SysMenu> sysMenus = menuDao.selectByParentCode(TenantUtils.getTenantId(), sysMenu.getMenuCode());
         if (!CollectionUtils.isEmpty(sysMenus)) {
-            throw new NoStackBusException("请先删除子菜单");
+            throw new NoStackBusLogException("请先删除子菜单");
         }
         int count = menuDao.deleteById(menuId);
         if (count != 1) {
@@ -91,7 +90,7 @@ public class MenuServiceImpl implements MenuService {
         edit.fillCreateAndUpdateField(new Date());
         int count = menuDao.updateById(edit);
         if (count != 1) {
-            throw new BusException("更新菜单失败");
+            throw new BusLogException("更新菜单失败");
         }
     }
 

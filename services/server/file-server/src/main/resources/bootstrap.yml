@@ -1,0 +1,17 @@
+spring:
+  main:
+    #懒加载
+    lazy-initialization: true
+  profiles:
+    active: dev
+  application:
+    name: file-app
+
+server:
+  servlet:
+    context-path: /file
+    encoding:
+      charset: UTF-8
+      force: true
+  tomcat:
+    uri-encoding: UTF-8

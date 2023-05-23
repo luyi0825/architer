@@ -2,7 +2,7 @@ package io.github.architers.webhook.dingding.remote;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
-import io.github.architers.context.exception.BusException;
+import io.github.architers.context.exception.BusLogException;
 import io.github.architers.webhook.WebhookProperties;
 import lombok.SneakyThrows;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -29,7 +29,7 @@ public class DingDingRemoteConfiguration implements RequestInterceptor {
     public void apply(RequestTemplate requestTemplate) {
         Collection<String> robotKeys = requestTemplate.queries().get("robotKey");
         if (CollectionUtils.isEmpty(robotKeys)) {
-            throw new BusException("robotKey is null");
+            throw new BusLogException("robotKey is null");
         }
         String secret = webhookProperties.getRobotConfigs().get(robotKeys.toArray(new String[0])[0]).getSecret();
         long timestamp = System.currentTimeMillis();

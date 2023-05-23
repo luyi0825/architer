@@ -43,7 +43,7 @@ public class FileTemplate {
     /**
      * 目录ID
      */
-    private Integer catalogId;
+    private Long catalogId;
 
     /**
      * 模板url

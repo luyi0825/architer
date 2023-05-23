@@ -1,6 +1,7 @@
 package io.github.architers.server.file.utils;
 
-import io.github.architers.context.exception.NoStackBusException;
+import io.github.architers.context.exception.BusException;
+import io.github.architers.context.exception.BusLogException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ooxml.POIXMLProperties;
@@ -47,7 +48,7 @@ public class FileVersionUtils {
             }
             return ctProperty.getLpwstr();
         } catch (Exception e) {
-            throw new NoStackBusException("检查模板异常", e);
+            throw new BusLogException("检查模板异常", e);
         }
     }
 

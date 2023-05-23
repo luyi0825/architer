@@ -3,22 +3,15 @@ package io.github.architers.gateway;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import io.github.architers.common.jwttoken.JwtTokenUtils;
-import io.github.architers.common.jwttoken.TenantInfo;
 import io.github.architers.common.jwttoken.UserInfo;
-import io.github.architers.context.exception.NoStackBusException;
-import io.github.architers.context.exception.BusException;
-import io.github.architers.context.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 @Slf4j

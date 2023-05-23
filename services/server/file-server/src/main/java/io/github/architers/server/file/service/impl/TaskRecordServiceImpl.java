@@ -6,7 +6,7 @@ import io.github.architers.common.jwttoken.UserInfoUtils;
 import io.github.architers.component.mybatisplus.MybatisPageUtils;
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
-import io.github.architers.server.file.dao.FileTaskRecordDao;
+import io.github.architers.server.file.mapper.FileTaskRecordDao;
 import io.github.architers.server.file.domain.dto.TaskRecordsQueryDTO;
 import io.github.architers.server.file.domain.entity.FileTaskRecord;
 import io.github.architers.server.file.enums.TaskStatusEnum;

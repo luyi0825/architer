@@ -7,6 +7,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+import javax.annotation.Resource;
+
 /**
  * @author luyi
  * 文件配置类
@@ -15,6 +17,15 @@ import org.springframework.context.annotation.Import;
 @EnableConfigurationProperties(ObjectStorageProperties.class)
 @Import({CosConfig.class, OssConfig.class, MinioConfig.class})
 public class ObjectStorageConfig {
+
+
+   public ObjectStorageConfig( ObjectStorageProperties objectStorageProperties){
+       System.out.println(objectStorageProperties);
+   }
+
+
+
+
 
 
 }

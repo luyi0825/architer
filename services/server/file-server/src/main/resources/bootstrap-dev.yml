@@ -1,0 +1,46 @@
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 9000
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        fileExtension: yml
+        namespace: study
+        group: DEFAULT_GROUP
+        shared-configs:
+         - #数据库配置
+          data-id: application-mysql-dev.yml
+          group: ${spring.cloud.nacos.config.group}
+          refresh: false
+      discovery:
+        server-addr: 127.0.0.1:8848
+        #group: dev
+        namespace: study
+        enabled: true
+
+##mybatis-plus:
+##  lazy-initialization: true
+#    stream:
+#      rocketmq:
+#        binder:
+#          enable-msg-trace: true
+#          name-server: 120.48.170.201:9876
+#      bindings:
+#        storeFileTask-in-0:
+#          destination: file_task_store
+#          group: test-group-luyi
+#          consumer:
+#            concurrency: 10
+#            max-attempts: 3
+#        storeFileTask-out-0:
+#          destination: file_task_store
+#        fileTaskResult-in-0:
+#          destination: file-task-result
+#          group: file-task-result-group
+#    function:
+#      definition: storeFileTask;fileTaskResult
+
