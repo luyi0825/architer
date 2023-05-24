@@ -1,4 +1,4 @@
-package io.github.architers.server.file.domain.dto;
+package io.github.architers.server.file.model.dto;
 
 import io.github.architers.context.autocode.BaseEntity;
 import io.github.architers.context.valid.group.AddGroup;

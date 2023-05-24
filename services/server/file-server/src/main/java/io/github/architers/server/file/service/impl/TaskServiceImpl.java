@@ -1,8 +1,8 @@
 package io.github.architers.server.file.service.impl;
 
 import io.github.architers.context.exception.BusLogException;
-import io.github.architers.server.file.domain.entity.FileTaskConfig;
-import io.github.architers.server.file.domain.dto.ExecuteTaskParam;
+import io.github.architers.server.file.model.entity.FileTaskConfig;
+import io.github.architers.server.file.model.dto.ExecuteTaskParam;
 import io.github.architers.server.file.service.ITaskConfigService;
 import io.github.architers.server.file.service.ITaskLimit;
 import io.github.architers.server.file.service.TaskService;

@@ -2,9 +2,9 @@ package io.github.architers.server.file.api;
 
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
-import io.github.architers.server.file.domain.dto.ExecuteTaskParam;
-import io.github.architers.server.file.domain.dto.TaskRecordsQueryDTO;
-import io.github.architers.server.file.domain.entity.FileTaskRecord;
+import io.github.architers.server.file.model.dto.ExecuteTaskParam;
+import io.github.architers.server.file.model.dto.TaskRecordsQueryDTO;
+import io.github.architers.server.file.model.entity.FileTaskRecord;
 import io.github.architers.server.file.service.ITaskRecordService;
 import io.github.architers.server.file.service.TaskService;
 import org.springframework.validation.annotation.Validated;

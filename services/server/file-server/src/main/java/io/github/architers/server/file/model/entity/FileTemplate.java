@@ -1,4 +1,4 @@
-package io.github.architers.server.file.domain.entity;
+package io.github.architers.server.file.model.entity;
 
 import lombok.Data;
 
@@ -6,6 +6,7 @@ import java.util.Date;
 
 /**
  * 文件模板
+ *
  * @author luyi
  */
 @Data
@@ -13,7 +14,12 @@ public class FileTemplate {
     /**
      * 模板ID
      */
-    private Integer id;
+    private Long id;
+
+    /**
+     * 目录ID
+     */
+    private Long catalogId;
 
     /**
      * 模板编码
@@ -31,24 +37,25 @@ public class FileTemplate {
     private String md5;
 
     /**
-     * 模板校验信息
+     * 校验行信息
      */
-    private CheckInfo checkInfo;
+    private FileTemplateCheckRowInfo checkRowInfo;
 
     /**
-     * 模板版本
+     * 校验版本信息
      */
-    private String version;
+    private FileTemplateCheckFileVersion checkFileVersion;
 
-    /**
-     * 目录ID
-     */
-    private Long catalogId;
 
     /**
      * 模板url
      */
     private String templateUrl;
+
+    /**
+     * 模板key
+     */
+    private String templateKey;
 
     /**
      * 更新人

@@ -2,8 +2,8 @@ package io.github.architers.server.file.service;
 
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
-import io.github.architers.server.file.domain.dto.TaskRecordsQueryDTO;
-import io.github.architers.server.file.domain.entity.FileTaskRecord;
+import io.github.architers.server.file.model.dto.TaskRecordsQueryDTO;
+import io.github.architers.server.file.model.entity.FileTaskRecord;
 
 /**
  * @author Administrator

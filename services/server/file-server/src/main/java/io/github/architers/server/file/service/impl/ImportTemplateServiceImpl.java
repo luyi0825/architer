@@ -2,38 +2,30 @@ package io.github.architers.server.file.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.context.AnalysisContext;
-import com.alibaba.excel.metadata.Cell;
-import com.alibaba.excel.metadata.CellExtra;
-import com.alibaba.excel.metadata.data.CellData;
-import com.alibaba.excel.metadata.data.ReadCellData;
-import com.alibaba.excel.read.listener.ReadListener;
-import com.alibaba.excel.read.metadata.holder.ReadRowHolder;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.architers.context.exception.BusException;
 import io.github.architers.context.exception.BusLogException;
 import io.github.architers.context.model.TreeNode;
+import io.github.architers.context.utils.JsonUtils;
 import io.github.architers.context.utils.NodeTreeUtils;
 import io.github.architers.objectstorage.ObjectStorage;
 import io.github.architers.objectstorage.ObjectStorageType;
 import io.github.architers.objectstorage.PutFileResponse;
-import io.github.architers.server.file.domain.entity.CheckInfo;
-import io.github.architers.server.file.domain.param.FileTemplateAddParams;
+import io.github.architers.server.file.model.entity.*;
+import io.github.architers.server.file.model.param.FileTemplateAddParams;
 import io.github.architers.server.file.eums.FileContentType;
-import io.github.architers.server.file.utils.FileVersionUtils;
+import io.github.architers.server.file.model.param.FileTemplateCheckFileVersionParam;
+import io.github.architers.server.file.model.param.FileTemplateCheckRowInfoParams;
 import io.github.architers.server.file.mapper.ImportTemplateCatalogDao;
-import io.github.architers.server.file.mapper.ImportTemplateDao;
-import io.github.architers.server.file.domain.dto.TemplateCatalogDTO;
-import io.github.architers.server.file.domain.dto.TemplateDTO;
-import io.github.architers.server.file.domain.entity.Template;
-import io.github.architers.server.file.domain.entity.TemplateCatalog;
+import io.github.architers.server.file.mapper.FileTemplateMapper;
+import io.github.architers.server.file.model.dto.TemplateCatalogDTO;
+import io.github.architers.server.file.model.dto.TemplateDTO;
 import io.github.architers.server.file.eums.FileType;
 import io.github.architers.server.file.service.ImportTemplateService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.tika.Tika;
-import org.apache.tika.metadata.Metadata;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,13 +43,13 @@ import java.util.function.Function;
  */
 @Service
 @Slf4j
-public class ImportTemplateServiceImpl implements ImportTemplateService {
+public abstract class ImportTemplateServiceImpl extends ServiceImpl<FileTemplateMapper,FileTemplate> implements ImportTemplateService {
 
     @Resource
     private ImportTemplateCatalogDao importTemplateCatalogDao;
 
     @Resource
-    private ImportTemplateDao importTemplateDao;
+    private FileTemplateMapper fileTemplateMapper;
 
     @Resource(name = ObjectStorageType.OSS)
     private ObjectStorage objectStorage;
@@ -85,9 +77,9 @@ public class ImportTemplateServiceImpl implements ImportTemplateService {
             @Override
             public TreeNode apply(TemplateCatalog templateCatalog) {
                 TreeNode treeNode = new TreeNode();
-                treeNode.setParentCode(templateCatalog.getParentId() + "");
+                treeNode.setParentCode(String.valueOf(templateCatalog.getParentId()));
                 treeNode.setCaption(templateCatalog.getCatalogCaption());
-                treeNode.setCode(templateCatalog.getId() + "");
+                treeNode.setCode(String.valueOf(templateCatalog.getId()));
                 return treeNode;
             }
         });
@@ -99,17 +91,17 @@ public class ImportTemplateServiceImpl implements ImportTemplateService {
         if (templateCatalog == null) {
             throw new BusLogException("模板目录不存在");
         }
-        Template template = new Template();
+        FileTemplate  template = new FileTemplate();
         BeanUtils.copyProperties(templateDTO, template);
         templateCatalog.setCreateTime(new Date());
-        importTemplateDao.insert(template);
+        fileTemplateMapper.insert(template);
     }
 
     @Override
     public void editTemplate(TemplateDTO templateDTO) {
-        Template template = new Template();
+        FileTemplate template = new FileTemplate();
         BeanUtils.copyProperties(templateDTO, template);
-        importTemplateDao.updateById(template);
+        fileTemplateMapper.updateById(template);
     }
 
 
@@ -122,172 +114,144 @@ public class ImportTemplateServiceImpl implements ImportTemplateService {
         SUPPORT_VERSION_TYPES.add(FileType.xlsx);
     }
 
-    /**
-     * @param file
-     * @param templateId
-     * @param refreshVersion
-     * @throws IOException
-     */
+
     @Override
-    public void uploadTemplateFile(MultipartFile file, Integer templateId, boolean refreshVersion) throws IOException {
-        Template template = importTemplateDao.selectById(templateId);
-        String key = "/importTemplate";
-        String contentType = file.getContentType();
-        FileType fileType = FileType.convertToContentTypeMap().get(contentType);
-        if (template.getSavePath().startsWith("/")) {
-            key =
-                    key + template.getSavePath();
-        } else {
-            key = key + "/" + template.getSavePath();
+    public FileTemplate getFileTemplateByTemplateCode(String templateCode) {
+        return null;
+    }
+
+//    /**
+//     * @param file
+//     * @param templateId
+//     * @param refreshVersion
+//     * @throws IOException
+//     */
+//    @Override
+//    public void uploadTemplateFile(MultipartFile file, Integer templateId, boolean refreshVersion) throws IOException {
+//        FileTemplate  template = fileTemplateMapper.selectById(templateId);
+//        String key = "/importTemplate";
+//        String contentType = file.getContentType();
+//        FileType fileType = FileType.convertToContentTypeMap().get(contentType);
+//        if (template.getSavePath().startsWith("/")) {
+//            key =
+//                    key + template.getSavePath();
+//        } else {
+//            key = key + "/" + template.getSavePath();
+//        }
+//        if (!template.getSavePath().endsWith("/")) {
+//            key = key + "/";
+//        }
+//        key = key + template.getTemplateCode() + fileType.getSuffix();
+//
+//        PutFileResponse putFileResponse;
+//        File tempFile = null;
+//        try {
+//            if (refreshVersion) {
+//
+//
+//                if (!SUPPORT_VERSION_TYPES.contains(fileType)) {
+//                    throw new BusLogException("该文件类型暂不支持刷新版本");
+//                }
+//                String newVersion = UUID.randomUUID().toString();
+//                template.setVersion(newVersion);
+//                tempFile = FileVersionUtils.fillFileVersion(file.getInputStream(), newVersion);
+//                putFileResponse = objectStorage.putObject(tempFile, key);
+//            } else {
+//                putFileResponse = objectStorage.putObject(file.getInputStream(), key);
+//            }
+//            if (!putFileResponse.isResult()) {
+//                throw new BusLogException("上传文件失败:" + putFileResponse.getErrorMessage());
+//            }
+//            template.setTemplateUrl(putFileResponse.getUrl());
+//            fileTemplateMapper.updateById(template);
+//        } finally {
+//            FileUtils.deleteQuietly(tempFile);
+//        }
+//
+//
+//    }
+
+    private PutFileResponse uploadTemplate(FileTemplate fileTemplate, File file) throws IOException {
+
+        TemplateCatalog templateCatalog = importTemplateCatalogDao.selectById(fileTemplate.getCatalogId());
+        if (templateCatalog == null) {
+            throw new BusLogException("模板目录不存在");
         }
-        if (!template.getSavePath().endsWith("/")) {
-            key = key + "/";
+        Tika tika = new Tika();
+        String type = tika.detect(file);
+        String fileSuffix = FileContentType.getFileSuffixByContentType(type);
+        String key = templateCatalog.getSavePath() + fileTemplate.getTemplateCode() + fileSuffix;
+        PutFileResponse putFileResponse = objectStorage.putObject(file, key);
+        if (putFileResponse.isResult()) {
+            return putFileResponse;
         }
-        key = key + template.getTemplateCode() + fileType.getSuffix();
-
-        PutFileResponse putFileResponse;
-        File tempFile = null;
-        try {
-            if (refreshVersion) {
-
-
-                if (!SUPPORT_VERSION_TYPES.contains(fileType)) {
-                    throw new BusLogException("该文件类型暂不支持刷新版本");
-                }
-                String newVersion = UUID.randomUUID().toString();
-                template.setVersion(newVersion);
-                tempFile = FileVersionUtils.fillFileVersion(file.getInputStream(), newVersion);
-                putFileResponse = objectStorage.putObject(tempFile, key);
-            } else {
-                putFileResponse = objectStorage.putObject(file.getInputStream(), key);
-            }
-            if (!putFileResponse.isResult()) {
-                throw new BusLogException("上传文件失败:" + putFileResponse.getErrorMessage());
-            }
-            template.setTemplateUrl(putFileResponse.getUrl());
-            importTemplateDao.updateById(template);
-        } finally {
-            FileUtils.deleteQuietly(tempFile);
-        }
-
+        throw new BusException("上传模板文件失败");
 
     }
 
-    @Override
-    public String getNewTemplateFileVersion(String templateCode) {
-        Wrapper<Template> templateWrapper = Wrappers.lambdaQuery(Template.class)
-                .select(Template::getTemplateCode, Template::getVersion)
-                .eq(Template::getTemplateCode, templateCode);
-        Template template = importTemplateDao.selectOne(templateWrapper);
-        if (template == null) {
-            throw new BusLogException("模板文件不存在");
-        }
-        return template.getVersion();
-    }
+
 
     @Override
-    public void addTemplateFile(FileTemplateAddParams fileTemplateAddParams, MultipartFile file) throws IOException {
+    public void addTemplateFile(FileTemplateAddParams addParams, MultipartFile file) throws IOException {
+
+        TemplateCatalog templateCatalog = importTemplateCatalogDao.selectById(addParams.getCatalogId());
+        if (templateCatalog == null) {
+            throw new BusLogException("模板目录不存在");
+        }
         File tempFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
         FileUtils.copyInputStreamToFile(file.getInputStream(), tempFile);
-        Tika tika = new Tika();
-        String type = tika.detect(tempFile);
-        if (!FileContentType.xlsx.getContentType().equals(type)) {
-            throw new BusException("该模板文件暂时不支持");
-        }
-        CheckInfo checkInfo = fileTemplateAddParams.getCheckInfo();
-        CheckInfo.FileVersion fileVersion = checkInfo.getFileVersion();
-        if (Boolean.TRUE.equals(fileVersion.getEnableCheck())) {
+
+
+        FileTemplateCheckFileVersionParam checkFileVersionParam = addParams.getCheckFileVersion();
+        FileTemplateCheckFileVersion checkFileVersion = new FileTemplateCheckFileVersion();
+        if (checkFileVersionParam != null && Boolean.TRUE.equals(checkFileVersionParam.getEnableCheck())) {
             //TODO 填充版本
+            Tika tika = new Tika();
+            String type = tika.detect(tempFile);
+            if (!FileContentType.xlsx.getContentType().equals(type)) {
+                throw new BusException("该模板文件暂时不支持");
+            }
+            checkFileVersion.setEnableCheck(true);
+            checkFileVersion.setFileVersion(UUID.randomUUID().toString());
+        } else {
+            checkFileVersion.setEnableCheck(false);
         }
-        CheckInfo.RowInfo rowInfo = checkInfo.getRowInfo();
-        if (Boolean.TRUE.equals(rowInfo.getEnableCheck())) {
-            Assert.notNull(rowInfo.getStartRow(), "开始行不能为空");
-            Assert.notNull(rowInfo.getEndRow(), "结束行不能为空");
-            if (rowInfo.getEndRow() < rowInfo.getStartRow()) {
+
+        FileTemplateCheckRowInfo checkRowInfo = new FileTemplateCheckRowInfo();
+
+        FileTemplateCheckRowInfoParams checkRowInfoParams = addParams.getCheckRowInfo();
+        if (checkRowInfoParams != null && Boolean.TRUE.equals(checkRowInfoParams.getEnableCheck())) {
+            Assert.notNull(checkRowInfoParams.getStartRow(), "开始行不能为空");
+            Assert.notNull(checkRowInfoParams.getEndRow(), "结束行不能为空");
+            if (checkRowInfoParams.getEndRow() < checkRowInfoParams.getStartRow()) {
                 throw new BusException("结束行不能小于开始行");
             }
+            EasyExcelCheckRowReadListener checkHeadReadListener = new EasyExcelCheckRowReadListener(checkRowInfoParams.getStartRow(), checkRowInfoParams.getEndRow());
+            EasyExcel.read(tempFile, checkHeadReadListener).doReadAll();
+            byte[] rowBytes = JsonUtils.toJsonBytes(checkHeadReadListener.getHeadDataList());
+            String base64RowStr = org.apache.commons.codec.binary.Base64.encodeBase64String(rowBytes);
+            checkRowInfo.setStartRow(checkRowInfoParams.getStartRow());
+            checkRowInfo.setEndRow(checkRowInfoParams.getEndRow());
+            checkRowInfo.setEnableCheck(true);
+            checkRowInfo.setBase64RowStr(base64RowStr);
+        } else {
+            checkRowInfo.setEnableCheck(false);
         }
 
-        CheckHeadReadListener checkHeadReadListener = new CheckHeadReadListener(rowInfo.getStartRow(), rowInfo.getEndRow());
 
-        EasyExcel.read(tempFile, checkHeadReadListener).doReadAll();
-        System.out.println(checkHeadReadListener.headDataList);
+        FileTemplate fileTemplate = new FileTemplate();
+        fileTemplate.setTemplateCode(addParams.getTemplateCode());
+        fileTemplate.setCatalogId(addParams.getCatalogId());
+        fileTemplate.setTemplateCaption(addParams.getTemplateCaption());
+        fileTemplate.setRemark(addParams.getRemark());
+        fileTemplate.setCheckFileVersion(checkFileVersion);
+        fileTemplate.setCheckRowInfo(checkRowInfo);
 
-        System.out.println(type);
+        PutFileResponse putFileResponse = uploadTemplate(fileTemplate, tempFile);
+        fileTemplate.setTemplateUrl(putFileResponse.getUrl());
+        fileTemplate.setTemplateKey(putFileResponse.getKey());
     }
 
-    class CheckHeadReadListener implements ReadListener<LinkedHashMap<Integer, String>> {
-
-        private final int startRow;
-
-        private final int endRow;
-
-        private final List<LinkedHashMap<Integer, String>> headDataList;
 
 
-        public CheckHeadReadListener(int startRow, int endRow) {
-            this.startRow = startRow;
-            this.endRow = endRow;
-            headDataList = new ArrayList<>(endRow - startRow + 1);
-        }
-
-        @Override
-        public void onException(Exception exception, AnalysisContext context) throws Exception {
-            log.error("读取头失败");
-            throw exception;
-        }
-
-        @Override
-        public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
-            addCheckHeads(context);
-            System.out.println(headMap);
-        }
-
-        @Override
-        public void invoke(LinkedHashMap data, AnalysisContext context) {
-            if (context.readRowHolder().getRowIndex() > 100) {
-                throw new BusLogException("没有读取到头数据");
-            }
-            addCheckHeads(context);
-        }
-
-        private void addCheckHeads(AnalysisContext context) {
-            ReadRowHolder readRowHolder = context.readRowHolder();
-            int rowNumber = context.readRowHolder().getRowIndex() + 1;
-            if (startRow <= rowNumber && endRow >= rowNumber) {
-                Map<Integer, Cell> readCellDataLinkedHashMap = readRowHolder.getCellMap();
-                LinkedHashMap<Integer, String> headDataMap = new LinkedHashMap<>();
-                readCellDataLinkedHashMap.forEach((key, cellData) -> {
-                    ReadCellData<?> readCellData = (ReadCellData<?>) cellData;
-                    String stringValue = null;
-                    if (readCellData != null) {
-                        stringValue = readCellData.getStringValue();
-                    }
-                    headDataMap.put(key, stringValue);
-                });
-                headDataList.add(headDataMap);
-                System.out.println(rowNumber);
-            }
-        }
-
-
-        @Override
-        public void extra(CellExtra extra, AnalysisContext context) {
-            ReadListener.super.extra(extra, context);
-        }
-
-        @Override
-        public void doAfterAllAnalysed(AnalysisContext context) {
-
-        }
-
-        @Override
-        public boolean hasNext(AnalysisContext context) {
-            int rowNumber = context.readRowHolder().getRowIndex() + 1;
-            if (rowNumber <= endRow) {
-                return true;
-            }
-            return false;
-        }
-    }
 }

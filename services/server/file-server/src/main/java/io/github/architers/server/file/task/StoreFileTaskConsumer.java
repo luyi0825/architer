@@ -2,10 +2,10 @@ package io.github.architers.server.file.task;
 
 import io.github.architers.context.utils.JsonUtils;
 import io.github.architers.context.web.ResponseResult;
-import io.github.architers.server.file.domain.dto.ExecuteTaskParam;
+import io.github.architers.server.file.model.dto.ExecuteTaskParam;
 import io.github.architers.server.file.domain.dto.FileTaskParam;
-import io.github.architers.server.file.domain.entity.FileTask;
-import io.github.architers.server.file.domain.entity.FileTaskRecord;
+import io.github.architers.server.file.model.entity.FileTask;
+import io.github.architers.server.file.model.entity.FileTaskRecord;
 import io.github.architers.server.file.enums.TaskStatusEnum;
 import io.github.architers.server.file.service.IFileTaskService;
 import io.github.architers.server.file.service.ITaskRecordService;

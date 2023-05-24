@@ -1,12 +1,11 @@
 package io.github.architers.server.file.api;
 
 import io.github.architers.context.model.TreeNode;
-import io.github.architers.context.utils.NodeTreeUtils;
 import io.github.architers.context.valid.group.AddGroup;
 import io.github.architers.context.valid.group.EditGroup;
-import io.github.architers.server.file.domain.dto.TemplateCatalogDTO;
-import io.github.architers.server.file.domain.dto.TemplateDTO;
-import io.github.architers.server.file.domain.param.FileTemplateAddParams;
+import io.github.architers.server.file.model.dto.TemplateCatalogDTO;
+import io.github.architers.server.file.model.dto.TemplateDTO;
+import io.github.architers.server.file.model.param.FileTemplateAddParams;
 import io.github.architers.server.file.service.ImportTemplateService;
 import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;

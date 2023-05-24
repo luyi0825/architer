@@ -2,7 +2,7 @@ package io.github.architers.server.file.task;
 
 
 import io.github.architers.server.file.domain.dto.TaskRecordDTO;
-import io.github.architers.server.file.domain.entity.FileTaskRecord;
+import io.github.architers.server.file.model.entity.FileTaskRecord;
 import io.github.architers.server.file.service.ITaskRecordService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

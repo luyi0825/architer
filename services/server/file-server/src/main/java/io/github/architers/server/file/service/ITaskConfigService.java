@@ -1,7 +1,7 @@
 package io.github.architers.server.file.service;
 
 import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.server.file.domain.entity.FileTaskConfig;
+import io.github.architers.server.file.model.entity.FileTaskConfig;
 
 import java.util.List;
 

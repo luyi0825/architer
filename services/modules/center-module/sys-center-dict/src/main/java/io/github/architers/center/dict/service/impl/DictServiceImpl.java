@@ -11,6 +11,7 @@ import io.github.architers.center.dict.domain.entity.DictData;
 import io.github.architers.center.dict.dao.DictDataDao;
 import io.github.architers.center.dict.dao.DictDao;
 import io.github.architers.center.dict.service.DictService;
+import io.github.architers.context.exception.BusException;
 import io.github.architers.context.exception.BusLogException;
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
@@ -91,7 +92,7 @@ public class DictServiceImpl implements DictService {
         List<Dict> dictList = dictDao.selectForExportDict(exportDictDTO);
 
         if (CollectionUtils.isEmpty(dictList)) {
-            throw new NoStackBusLogException("没有数据字典需要导出");
+            throw new BusException("没有数据字典需要导出");
         }
         //查询数据字典值
         Set<String> dictCodes =
@@ -123,7 +124,7 @@ public class DictServiceImpl implements DictService {
             response.reset();
             response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
             response.setContentType("application/octet-stream");
-            outputStream.write(JsonUtils.toJSONBytes(importJsonDictList));
+            outputStream.write(JsonUtils.toJsonBytes(importJsonDictList));
             outputStream.flush();
         } catch (IOException ex) {
             log.error("download file error!", ex);
@@ -149,7 +150,7 @@ public class DictServiceImpl implements DictService {
         //TODO 判断数据是否重复
         int count = dictDao.countByDictCode(TenantUtils.getTenantId(), addParam.getDictCode());
         if (count > 0) {
-            throw new NoStackBusLogException("数据字典已经存在");
+            throw new BusException("数据字典已经存在");
         }
         Dict dict = new Dict();
         BeanUtils.copyProperties(addParam, dict);

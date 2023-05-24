@@ -1,4 +1,4 @@
-package io.github.architers.server.file.domain.dto;
+package io.github.architers.server.file.model.dto;
 
 import lombok.Data;
 

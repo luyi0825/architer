@@ -1,7 +1,7 @@
 package io.github.architers.server.file.service.impl;
 
-import io.github.architers.server.file.domain.entity.FileTaskConfig;
-import io.github.architers.server.file.domain.dto.ExecuteTaskParam;
+import io.github.architers.server.file.model.entity.FileTaskConfig;
+import io.github.architers.server.file.model.dto.ExecuteTaskParam;
 import io.github.architers.server.file.service.ITaskLimit;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;

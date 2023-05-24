@@ -1,6 +1,6 @@
 package io.github.architers.server.file.service.impl;
 
-import io.github.architers.server.file.domain.entity.FileTaskConfig;
+import io.github.architers.server.file.model.entity.FileTaskConfig;
 import io.github.architers.server.file.service.ITaskConfigService;
 import org.springframework.stereotype.Service;
 

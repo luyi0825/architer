@@ -1,4 +1,4 @@
-package io.github.architers.server.file.domain.entity;
+package io.github.architers.server.file.model.entity;
 
 import lombok.Data;
 

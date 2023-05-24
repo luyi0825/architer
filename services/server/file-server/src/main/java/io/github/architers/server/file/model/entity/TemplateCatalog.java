@@ -1,4 +1,4 @@
-package io.github.architers.server.file.domain.entity;
+package io.github.architers.server.file.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -19,6 +19,11 @@ public class TemplateCatalog extends BaseEntity {
      * 目录名称
      */
     private String catalogCaption;
+
+    /**
+     * 路径
+     */
+    private String savePath;
 
     /**
      * 父级ID

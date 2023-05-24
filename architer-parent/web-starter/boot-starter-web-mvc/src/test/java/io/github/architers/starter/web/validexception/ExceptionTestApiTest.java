@@ -89,7 +89,7 @@ class ExceptionTestApiTest {
                 .param("username", "12")
                 .param("password", "23");
         String str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
-        ResponseResult responseResult = JsonUtils.readValue(str, ResponseResult.class);
+        ResponseResult responseResult = JsonUtils.parseObject(str, ResponseResult.class);
         logger.info(JsonUtils.toJsonString(responseResult));
        // Assertions.assertEquals(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(),
       //          (int) responseResult.getCode());
