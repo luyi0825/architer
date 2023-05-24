@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-public interface ImportTemplateService extends IService<FileTemplate> {
+public interface FileTemplateService extends IService<FileTemplate> {
     /**
      * 添加模板目录
      *

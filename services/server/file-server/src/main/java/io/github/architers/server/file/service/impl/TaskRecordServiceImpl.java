@@ -6,7 +6,7 @@ import io.github.architers.common.jwttoken.UserInfoUtils;
 import io.github.architers.component.mybatisplus.MybatisPageUtils;
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
-import io.github.architers.server.file.mapper.FileTaskRecordDao;
+import io.github.architers.server.file.mapper.FileTaskRecordMapper;
 import io.github.architers.server.file.model.dto.TaskRecordsQueryDTO;
 import io.github.architers.server.file.model.entity.FileTaskRecord;
 import io.github.architers.server.file.enums.TaskStatusEnum;
@@ -24,7 +24,7 @@ import javax.annotation.Resource;
 public class TaskRecordServiceImpl implements ITaskRecordService {
 
     @Resource
-    private FileTaskRecordDao fileTaskRecordDao;
+    private FileTaskRecordMapper fileTaskRecordMapper;
 
     @Override
     public Long initTask(String taskCode) {
@@ -32,13 +32,13 @@ public class TaskRecordServiceImpl implements ITaskRecordService {
         fileTaskRecord.setTaskCode(taskCode);
         fileTaskRecord.setStatus(TaskStatusEnum.IN_LINE.getStatus());
         fileTaskRecord.setCreateBy(UserInfoUtils.getCurrentUserId());
-        fileTaskRecordDao.insert(fileTaskRecord);
+        fileTaskRecordMapper.insert(fileTaskRecord);
         return fileTaskRecord.getId();
     }
 
     @Override
     public void updateById(FileTaskRecord fileTaskRecord) {
-        fileTaskRecordDao.updateById(fileTaskRecord);
+        fileTaskRecordMapper.updateById(fileTaskRecord);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class TaskRecordServiceImpl implements ITaskRecordService {
         Wrapper<FileTaskRecord> updateWrapper = Wrappers.lambdaUpdate(FileTaskRecord.class)
                 .eq(FileTaskRecord::getId, fileTaskRecord.getId())
                 .eq(FileTaskRecord::getStatus, TaskStatusEnum.PROCESSING.getStatus());
-        fileTaskRecordDao.update(fileTaskRecord, updateWrapper);
+        fileTaskRecordMapper.update(fileTaskRecord, updateWrapper);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class TaskRecordServiceImpl implements ITaskRecordService {
             TaskRecordsQueryDTO taskRecordsQueryDTO = pageRequest.getRequestParam();
             Wrapper<FileTaskRecord> taskRecordWrapper = Wrappers.lambdaQuery(FileTaskRecord.class)
                     .eq(FileTaskRecord::getTaskCode, taskRecordsQueryDTO.getTaskCode());
-            return fileTaskRecordDao.selectList(taskRecordWrapper);
+            return fileTaskRecordMapper.selectList(taskRecordWrapper);
         });
 
     }

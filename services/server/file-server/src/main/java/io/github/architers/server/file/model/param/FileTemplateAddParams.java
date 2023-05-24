@@ -35,7 +35,7 @@ public class FileTemplateAddParams {
      * 校验文件版本
      */
     @Valid
-    @NotNull(message = "校验文件版本不能为空")
+    @NotNull(message = "校验文件版本信息不能为空")
     private FileTemplateCheckFileVersionParam checkFileVersion;
 
     /**

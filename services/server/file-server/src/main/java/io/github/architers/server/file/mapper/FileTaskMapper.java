@@ -6,5 +6,5 @@ import io.github.architers.server.file.model.entity.FileTask;
 /**
  * @author luyi
  */
-public interface FileTaskDao extends BaseMapper<FileTask> {
+public interface FileTaskMapper extends BaseMapper<FileTask> {
 }

@@ -51,6 +51,7 @@ public class AliCloudOssObjectStorage implements ObjectStorage {
             return PutFileResponse.success().seteTag(putObjectResult.getETag()).setVersionId(putObjectResult.getVersionId())
                     .setKey(key).setUrl("https://0825test.oss-cn-hangzhou.aliyuncs.com/" + key);
         } catch (Exception e) {
+            e.printStackTrace();
             return PutFileResponse.fail().setErrorMessage(e.getMessage());
         }
     }

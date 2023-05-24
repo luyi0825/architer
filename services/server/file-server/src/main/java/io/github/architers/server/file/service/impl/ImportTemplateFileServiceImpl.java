@@ -1,32 +1,30 @@
 package io.github.architers.server.file.service.impl;
 
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.read.listener.ReadListener;
 import io.github.architers.context.exception.BusException;
 import io.github.architers.context.exception.BusLogException;
 import io.github.architers.server.file.model.entity.FileTemplate;
 import io.github.architers.server.file.model.entity.FileTemplateCheckFileVersion;
 import io.github.architers.server.file.model.entity.FileTemplateCheckRowInfo;
 import io.github.architers.server.file.service.ImportTemplateFileService;
-import io.github.architers.server.file.service.ImportTemplateService;
+import io.github.architers.server.file.service.FileTemplateService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.File;
-import java.util.Map;
 
 @Service
 public class ImportTemplateFileServiceImpl implements ImportTemplateFileService {
 
     @Resource
-    private ImportTemplateService importTemplateService;
+    private FileTemplateService fileTemplateService;
 
     @Override
     public void importTemplateFile(File file, String templateCode) {
 
-        FileTemplate fileTemplate = importTemplateService.getFileTemplateByTemplateCode(templateCode);
+        FileTemplate fileTemplate = fileTemplateService.getFileTemplateByTemplateCode(templateCode);
         if (fileTemplate == null) {
-            throw new BusLogException("文件目录不存在");
+            throw new BusLogException("模板文件不存在");
         }
         FileTemplateCheckFileVersion checkFileVersion = fileTemplate.getCheckFileVersion();
         if (Boolean.TRUE.equals(checkFileVersion.getEnableCheck())) {

@@ -96,11 +96,6 @@
             <version>${architer.revision}</version>
         </dependency>
 
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>cloud-dubbo</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>io.github.architers</groupId>

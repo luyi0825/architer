@@ -3,12 +3,15 @@ package io.github.architers.server.file.service.impl;
 import cn.hutool.core.lang.Assert;
 import com.alibaba.excel.EasyExcel;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.architers.context.exception.BusException;
 import io.github.architers.context.exception.BusLogException;
 import io.github.architers.context.model.TreeNode;
 import io.github.architers.context.utils.JsonUtils;
 import io.github.architers.context.utils.NodeTreeUtils;
+import io.github.architers.context.utils.UserUtils;
 import io.github.architers.objectstorage.ObjectStorage;
 import io.github.architers.objectstorage.ObjectStorageType;
 import io.github.architers.objectstorage.PutFileResponse;
@@ -17,16 +20,18 @@ import io.github.architers.server.file.model.param.FileTemplateAddParams;
 import io.github.architers.server.file.eums.FileContentType;
 import io.github.architers.server.file.model.param.FileTemplateCheckFileVersionParam;
 import io.github.architers.server.file.model.param.FileTemplateCheckRowInfoParams;
-import io.github.architers.server.file.mapper.ImportTemplateCatalogDao;
+import io.github.architers.server.file.mapper.FileTemplateCatalogMapper;
 import io.github.architers.server.file.mapper.FileTemplateMapper;
 import io.github.architers.server.file.model.dto.TemplateCatalogDTO;
 import io.github.architers.server.file.model.dto.TemplateDTO;
 import io.github.architers.server.file.eums.FileType;
-import io.github.architers.server.file.service.ImportTemplateService;
+import io.github.architers.server.file.service.FileTemplateService;
+import io.github.architers.server.file.utils.ExcelVersionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.tika.Tika;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,10 +48,10 @@ import java.util.function.Function;
  */
 @Service
 @Slf4j
-public abstract class ImportTemplateServiceImpl extends ServiceImpl<FileTemplateMapper,FileTemplate> implements ImportTemplateService {
+public class FileTemplateServiceImpl extends ServiceImpl<FileTemplateMapper, FileTemplate> implements FileTemplateService {
 
     @Resource
-    private ImportTemplateCatalogDao importTemplateCatalogDao;
+    private FileTemplateCatalogMapper fileTemplateCatalogMapper;
 
     @Resource
     private FileTemplateMapper fileTemplateMapper;
@@ -59,7 +64,7 @@ public abstract class ImportTemplateServiceImpl extends ServiceImpl<FileTemplate
         TemplateCatalog importTemplateCatalog = new TemplateCatalog();
         BeanUtils.copyProperties(templateCatalog, importTemplateCatalog);
         importTemplateCatalog.setCreateTime(new Date());
-        importTemplateCatalogDao.insert(importTemplateCatalog);
+        fileTemplateCatalogMapper.insert(importTemplateCatalog);
     }
 
     @Override
@@ -67,12 +72,12 @@ public abstract class ImportTemplateServiceImpl extends ServiceImpl<FileTemplate
         TemplateCatalog importTemplateCatalog = new TemplateCatalog();
         BeanUtils.copyProperties(templateCatalog, importTemplateCatalog);
         importTemplateCatalog.setCreateTime(new Date());
-        importTemplateCatalogDao.updateById(importTemplateCatalog);
+        fileTemplateCatalogMapper.updateById(importTemplateCatalog);
     }
 
     @Override
     public List<TreeNode> getTemplateCatalog() {
-        List<TemplateCatalog> templateCatalogs = importTemplateCatalogDao.selectList(null);
+        List<TemplateCatalog> templateCatalogs = fileTemplateCatalogMapper.selectList(null);
         return NodeTreeUtils.convertToTree(templateCatalogs, "parentId", new Function<TemplateCatalog, TreeNode>() {
             @Override
             public TreeNode apply(TemplateCatalog templateCatalog) {
@@ -87,11 +92,11 @@ public abstract class ImportTemplateServiceImpl extends ServiceImpl<FileTemplate
 
     @Override
     public void addTemplate(TemplateDTO templateDTO) {
-        TemplateCatalog templateCatalog = importTemplateCatalogDao.selectById(templateDTO.getCatalogId());
+        TemplateCatalog templateCatalog = fileTemplateCatalogMapper.selectById(templateDTO.getCatalogId());
         if (templateCatalog == null) {
             throw new BusLogException("模板目录不存在");
         }
-        FileTemplate  template = new FileTemplate();
+        FileTemplate template = new FileTemplate();
         BeanUtils.copyProperties(templateDTO, template);
         templateCatalog.setCreateTime(new Date());
         fileTemplateMapper.insert(template);
@@ -102,6 +107,11 @@ public abstract class ImportTemplateServiceImpl extends ServiceImpl<FileTemplate
         FileTemplate template = new FileTemplate();
         BeanUtils.copyProperties(templateDTO, template);
         fileTemplateMapper.updateById(template);
+    }
+
+    @Override
+    public String getNewTemplateFileVersion(String templateCode) {
+        return null;
     }
 
 
@@ -117,7 +127,7 @@ public abstract class ImportTemplateServiceImpl extends ServiceImpl<FileTemplate
 
     @Override
     public FileTemplate getFileTemplateByTemplateCode(String templateCode) {
-        return null;
+        return baseMapper.selectByTemplateCode(templateCode);
     }
 
 //    /**
@@ -173,14 +183,14 @@ public abstract class ImportTemplateServiceImpl extends ServiceImpl<FileTemplate
 
     private PutFileResponse uploadTemplate(FileTemplate fileTemplate, File file) throws IOException {
 
-        TemplateCatalog templateCatalog = importTemplateCatalogDao.selectById(fileTemplate.getCatalogId());
+        TemplateCatalog templateCatalog = fileTemplateCatalogMapper.selectById(fileTemplate.getCatalogId());
         if (templateCatalog == null) {
             throw new BusLogException("模板目录不存在");
         }
         Tika tika = new Tika();
         String type = tika.detect(file);
         String fileSuffix = FileContentType.getFileSuffixByContentType(type);
-        String key = templateCatalog.getSavePath() + fileTemplate.getTemplateCode() + fileSuffix;
+        String key = templateCatalog.getSavePath() + "/" + fileTemplate.getTemplateCode() + fileSuffix;
         PutFileResponse putFileResponse = objectStorage.putObject(file, key);
         if (putFileResponse.isResult()) {
             return putFileResponse;
@@ -190,68 +200,78 @@ public abstract class ImportTemplateServiceImpl extends ServiceImpl<FileTemplate
     }
 
 
-
     @Override
     public void addTemplateFile(FileTemplateAddParams addParams, MultipartFile file) throws IOException {
 
-        TemplateCatalog templateCatalog = importTemplateCatalogDao.selectById(addParams.getCatalogId());
+        TemplateCatalog templateCatalog = fileTemplateCatalogMapper.selectById(addParams.getCatalogId());
         if (templateCatalog == null) {
             throw new BusLogException("模板目录不存在");
         }
+        FileTemplate existTemplate = this.getFileTemplateByTemplateCode(addParams.getTemplateCode());
+        if (existTemplate != null) {
+            throw new BusException("改模板编码已经存在");
+        }
         File tempFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
-        FileUtils.copyInputStreamToFile(file.getInputStream(), tempFile);
+        try {
+            FileUtils.copyInputStreamToFile(file.getInputStream(), tempFile);
 
-
-        FileTemplateCheckFileVersionParam checkFileVersionParam = addParams.getCheckFileVersion();
-        FileTemplateCheckFileVersion checkFileVersion = new FileTemplateCheckFileVersion();
-        if (checkFileVersionParam != null && Boolean.TRUE.equals(checkFileVersionParam.getEnableCheck())) {
-            //TODO 填充版本
-            Tika tika = new Tika();
-            String type = tika.detect(tempFile);
-            if (!FileContentType.xlsx.getContentType().equals(type)) {
-                throw new BusException("该模板文件暂时不支持");
+            FileTemplateCheckFileVersionParam checkFileVersionParam = addParams.getCheckFileVersion();
+            FileTemplateCheckFileVersion checkFileVersion = new FileTemplateCheckFileVersion();
+            if (checkFileVersionParam != null && Boolean.TRUE.equals(checkFileVersionParam.getEnableCheck())) {
+                Tika tika = new Tika();
+                String type = tika.detect(tempFile);
+                if (!FileContentType.xlsx.getContentType().equals(type)) {
+                    throw new BusException("该模板文件暂时不支持");
+                }
+                String version = UUID.randomUUID().toString();
+                //填充版本
+                tempFile = ExcelVersionUtils.fillFileVersion(tempFile, version);
+                checkFileVersion.setEnableCheck(true);
+                checkFileVersion.setFileVersion(version);
+            } else {
+                checkFileVersion.setEnableCheck(false);
             }
-            checkFileVersion.setEnableCheck(true);
-            checkFileVersion.setFileVersion(UUID.randomUUID().toString());
-        } else {
-            checkFileVersion.setEnableCheck(false);
-        }
 
-        FileTemplateCheckRowInfo checkRowInfo = new FileTemplateCheckRowInfo();
+            FileTemplateCheckRowInfo checkRowInfo = new FileTemplateCheckRowInfo();
 
-        FileTemplateCheckRowInfoParams checkRowInfoParams = addParams.getCheckRowInfo();
-        if (checkRowInfoParams != null && Boolean.TRUE.equals(checkRowInfoParams.getEnableCheck())) {
-            Assert.notNull(checkRowInfoParams.getStartRow(), "开始行不能为空");
-            Assert.notNull(checkRowInfoParams.getEndRow(), "结束行不能为空");
-            if (checkRowInfoParams.getEndRow() < checkRowInfoParams.getStartRow()) {
-                throw new BusException("结束行不能小于开始行");
+            FileTemplateCheckRowInfoParams checkRowInfoParams = addParams.getCheckRowInfo();
+            if (checkRowInfoParams != null && Boolean.TRUE.equals(checkRowInfoParams.getEnableCheck())) {
+                Assert.notNull(checkRowInfoParams.getStartRow(), "开始行不能为空");
+                Assert.notNull(checkRowInfoParams.getEndRow(), "结束行不能为空");
+                if (checkRowInfoParams.getEndRow() < checkRowInfoParams.getStartRow()) {
+                    throw new BusException("结束行不能小于开始行");
+                }
+                EasyExcelCheckRowReadListener checkHeadReadListener = new EasyExcelCheckRowReadListener(checkRowInfoParams.getStartRow(), checkRowInfoParams.getEndRow());
+                EasyExcel.read(tempFile, checkHeadReadListener).doReadAll();
+                byte[] rowBytes = JsonUtils.toJsonBytes(checkHeadReadListener.getHeadDataList());
+                String base64RowStr = org.apache.commons.codec.binary.Base64.encodeBase64String(rowBytes);
+                checkRowInfo.setStartRow(checkRowInfoParams.getStartRow());
+                checkRowInfo.setEndRow(checkRowInfoParams.getEndRow());
+                checkRowInfo.setEnableCheck(true);
+                checkRowInfo.setBase64RowStr(base64RowStr);
+            } else {
+                checkRowInfo.setEnableCheck(false);
             }
-            EasyExcelCheckRowReadListener checkHeadReadListener = new EasyExcelCheckRowReadListener(checkRowInfoParams.getStartRow(), checkRowInfoParams.getEndRow());
-            EasyExcel.read(tempFile, checkHeadReadListener).doReadAll();
-            byte[] rowBytes = JsonUtils.toJsonBytes(checkHeadReadListener.getHeadDataList());
-            String base64RowStr = org.apache.commons.codec.binary.Base64.encodeBase64String(rowBytes);
-            checkRowInfo.setStartRow(checkRowInfoParams.getStartRow());
-            checkRowInfo.setEndRow(checkRowInfoParams.getEndRow());
-            checkRowInfo.setEnableCheck(true);
-            checkRowInfo.setBase64RowStr(base64RowStr);
-        } else {
-            checkRowInfo.setEnableCheck(false);
+            FileTemplate fileTemplate = new FileTemplate();
+            fileTemplate.setTemplateCode(addParams.getTemplateCode());
+            fileTemplate.setCatalogId(addParams.getCatalogId());
+            fileTemplate.setTemplateCaption(addParams.getTemplateCaption());
+            fileTemplate.setRemark(addParams.getRemark());
+            fileTemplate.setCheckFileVersion(checkFileVersion);
+            fileTemplate.setCheckRowInfo(checkRowInfo);
+            fileTemplate.setUpdateBy(UserUtils.getUserId());
+            fileTemplate.setCreateBy(UserUtils.getUserId());
+            PutFileResponse putFileResponse = uploadTemplate(fileTemplate, tempFile);
+            fileTemplate.setTemplateUrl(putFileResponse.getUrl());
+            fileTemplate.setTemplateKey(putFileResponse.getKey());
+            try {
+                this.save(fileTemplate);
+            } catch (DuplicateKeyException e) {
+                log.info("模板编码[{}]已经存在", fileTemplate.getTemplateCode());
+                throw new BusException("模板编码已经存在");
+            }
+        } finally {
+            FileUtils.deleteQuietly(tempFile);
         }
-
-
-        FileTemplate fileTemplate = new FileTemplate();
-        fileTemplate.setTemplateCode(addParams.getTemplateCode());
-        fileTemplate.setCatalogId(addParams.getCatalogId());
-        fileTemplate.setTemplateCaption(addParams.getTemplateCaption());
-        fileTemplate.setRemark(addParams.getRemark());
-        fileTemplate.setCheckFileVersion(checkFileVersion);
-        fileTemplate.setCheckRowInfo(checkRowInfo);
-
-        PutFileResponse putFileResponse = uploadTemplate(fileTemplate, tempFile);
-        fileTemplate.setTemplateUrl(putFileResponse.getUrl());
-        fileTemplate.setTemplateKey(putFileResponse.getKey());
     }
-
-
-
 }

@@ -1,5 +1,6 @@
 package io.github.architers.syscenter.user.service.impl;
 
+import io.github.architers.context.exception.BusException;
 import io.github.architers.syscenter.user.dao.MenuDao;
 import io.github.architers.syscenter.user.domain.entity.SysMenu;
 import io.github.architers.syscenter.user.domain.vo.MenuNode;
@@ -71,11 +72,11 @@ public class MenuServiceImpl implements MenuService {
         //判断子菜单
         SysMenu sysMenu = menuDao.selectById(menuId);
         if (sysMenu == null) {
-            throw new NoStackBusLogException("删除菜单失败");
+            throw new BusException("删除菜单失败");
         }
         List<SysMenu> sysMenus = menuDao.selectByParentCode(TenantUtils.getTenantId(), sysMenu.getMenuCode());
         if (!CollectionUtils.isEmpty(sysMenus)) {
-            throw new NoStackBusLogException("请先删除子菜单");
+            throw new BusException("请先删除子菜单");
         }
         int count = menuDao.deleteById(menuId);
         if (count != 1) {

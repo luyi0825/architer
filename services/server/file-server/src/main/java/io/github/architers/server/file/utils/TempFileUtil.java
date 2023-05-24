@@ -40,4 +40,9 @@ public class TempFileUtil {
         return new File(TMP_DIR + File.separator + UUID.randomUUID() + ".XLSX");
     }
 
+    public static File generateTempFile(String oldFileName) {
+        String fileSuffix = oldFileName.substring(oldFileName.lastIndexOf("."));
+        return new File(TMP_DIR + File.separator + UUID.randomUUID() + fileSuffix);
+    }
+
 }

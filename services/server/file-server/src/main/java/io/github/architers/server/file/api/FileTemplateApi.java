@@ -1,12 +1,16 @@
 package io.github.architers.server.file.api;
 
+import cn.hutool.extra.spring.SpringUtil;
 import io.github.architers.context.model.TreeNode;
 import io.github.architers.context.valid.group.AddGroup;
 import io.github.architers.context.valid.group.EditGroup;
 import io.github.architers.server.file.model.dto.TemplateCatalogDTO;
 import io.github.architers.server.file.model.dto.TemplateDTO;
 import io.github.architers.server.file.model.param.FileTemplateAddParams;
-import io.github.architers.server.file.service.ImportTemplateService;
+import io.github.architers.server.file.service.FileTemplateService;
+import io.github.architers.server.file.service.ImportTemplateFileService;
+import io.github.architers.server.file.utils.TempFileUtil;
+import org.apache.commons.io.FileUtils;
 import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 导入模板
@@ -27,7 +33,7 @@ import java.util.List;
 public class FileTemplateApi {
 
     @Resource
-    private ImportTemplateService importTemplateService;
+    private FileTemplateService fileTemplateService;
 
     /**
      * 添加模板目录
@@ -35,7 +41,21 @@ public class FileTemplateApi {
     @PutMapping("/addTemplateFile")
     public void addTemplateFile(@Valid FileTemplateAddParams fileTemplateAddParams, MultipartFile file) throws IOException {
         Assert.notNull(file, "模板文件不能为空");
-        importTemplateService.addTemplateFile(fileTemplateAddParams, file);
+        fileTemplateService.addTemplateFile(fileTemplateAddParams, file);
+    }
+
+    /**
+     * 测试上传模版文件
+     */
+    @PostMapping("/testUploadFile")
+    public void testUploadFile(@RequestParam("templateCode") String templateCode,
+                               MultipartFile file) throws IOException {
+        ImportTemplateFileService importTemplateFileService = SpringUtil.getBean(ImportTemplateFileService.class);
+        File tempFile =
+                TempFileUtil.generateTempFile(Objects.requireNonNull(file.getOriginalFilename()));
+        FileUtils.copyInputStreamToFile(file.getInputStream(), tempFile);
+        importTemplateFileService.importTemplateFile(tempFile, templateCode);
+        tempFile.delete();
     }
 
     /**
@@ -43,7 +63,7 @@ public class FileTemplateApi {
      */
     @PostMapping("/addTemplateCatalog")
     public void addTemplateCatalog(@RequestBody @Validated(AddGroup.class) TemplateCatalogDTO templateCatalog) {
-        importTemplateService.addTemplateCatalog(templateCatalog);
+        fileTemplateService.addTemplateCatalog(templateCatalog);
     }
 
     /**
@@ -51,7 +71,7 @@ public class FileTemplateApi {
      */
     @PutMapping("/editTemplateCatalog")
     public void editTemplateCatalog(@RequestBody @Validated(EditGroup.class) TemplateCatalogDTO templateCatalog) {
-        importTemplateService.editTemplateCatalog(templateCatalog);
+        fileTemplateService.editTemplateCatalog(templateCatalog);
     }
 
     /**
@@ -59,7 +79,7 @@ public class FileTemplateApi {
      */
     @GetMapping("/getTemplateCatalog")
     public List<TreeNode> getTemplateCatalog() {
-        return importTemplateService.getTemplateCatalog();
+        return fileTemplateService.getTemplateCatalog();
     }
 
     /**
@@ -67,7 +87,7 @@ public class FileTemplateApi {
      */
     @PostMapping("/addTemplate")
     public void addTemplate(@RequestBody @Validated(AddGroup.class) TemplateDTO templateDTO) {
-        importTemplateService.addTemplate(templateDTO);
+        fileTemplateService.addTemplate(templateDTO);
     }
 
     /**
@@ -75,7 +95,7 @@ public class FileTemplateApi {
      */
     @PostMapping("/editTemplate")
     public void editTemplate(@RequestBody @Validated(EditGroup.class) TemplateDTO templateDTO) {
-        importTemplateService.editTemplate(templateDTO);
+        fileTemplateService.editTemplate(templateDTO);
     }
 
     /**
@@ -98,7 +118,7 @@ public class FileTemplateApi {
      */
     @GetMapping("/getNewTemplateFileVersion")
     public String getNewTemplateFileVersion(@RequestParam("templateCode") String templateCode) {
-        return importTemplateService.getNewTemplateFileVersion(templateCode);
+        return fileTemplateService.getNewTemplateFileVersion(templateCode);
     }
 
 }

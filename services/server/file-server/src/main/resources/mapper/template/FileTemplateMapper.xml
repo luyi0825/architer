@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.architers.server.file.mapper.FileTemplateMapper">
+
+    <resultMap id="baseResultMap"  type="io.github.architers.server.file.model.entity.FileTemplate">
+        <result  column="check_row_info" property="checkRowInfo" jdbcType="VARCHAR"
+                 javaType="io.github.architers.server.file.model.entity.FileTemplateCheckRowInfo"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result column="check_file_version" property="checkFileVersion" jdbcType="VARCHAR"
+                javaType="io.github.architers.server.file.model.entity.FileTemplateCheckFileVersion"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+    </resultMap>
+
+    <select id="selectByTemplateCode" resultType="io.github.architers.server.file.model.entity.FileTemplate">
+        select * from file_template where template_code = #{templateCode}
+    </select>
+
+</mapper>

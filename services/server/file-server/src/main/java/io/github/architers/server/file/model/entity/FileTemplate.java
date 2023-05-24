@@ -1,6 +1,14 @@
 package io.github.architers.server.file.model.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import io.github.architers.context.autocode.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.apache.ibatis.type.JdbcType;
 
 import java.util.Date;
 
@@ -9,8 +17,10 @@ import java.util.Date;
  *
  * @author luyi
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class FileTemplate {
+@TableName( autoResultMap = true,resultMap = "baseResultMap")
+public class FileTemplate extends BaseEntity {
     /**
      * 模板ID
      */
@@ -31,19 +41,20 @@ public class FileTemplate {
      */
     private String templateCaption;
 
-    /**
-     * 模板md5字符串
-     */
-    private String md5;
 
     /**
      * 校验行信息
      */
+    @TableField( jdbcType = JdbcType.VARCHAR,  typeHandler =
+            JacksonTypeHandler.class, insertStrategy = FieldStrategy.NOT_NULL,
+            updateStrategy = FieldStrategy.NOT_NULL)
     private FileTemplateCheckRowInfo checkRowInfo;
 
     /**
      * 校验版本信息
      */
+    @TableField( jdbcType = JdbcType.VARCHAR, typeHandler =
+            JacksonTypeHandler.class, insertStrategy = FieldStrategy.NOT_NULL, updateStrategy = FieldStrategy.NOT_NULL)
     private FileTemplateCheckFileVersion checkFileVersion;
 
 
@@ -56,28 +67,6 @@ public class FileTemplate {
      * 模板key
      */
     private String templateKey;
-
-    /**
-     * 更新人
-     */
-    private String updatedBy;
-    /**
-     * 更新时间
-     */
-    private Date updatedAt;
-    /**
-     * 创建人
-     */
-    private String createdBy;
-    /**
-     * 创建时间
-     */
-    private Date createdAt;
-    /**
-     * 是否删除: 0,否 1,是
-     */
-    private Integer isDelete;
-
     /**
      * 描述
      */

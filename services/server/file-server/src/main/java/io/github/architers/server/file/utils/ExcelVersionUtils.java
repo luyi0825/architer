@@ -1,7 +1,7 @@
 package io.github.architers.server.file.utils;
 
-import io.github.architers.context.exception.BusException;
 import io.github.architers.context.exception.BusLogException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ooxml.POIXMLProperties;
@@ -17,9 +17,10 @@ import java.io.*;
  *
  * @author luyi
  */
-public class FileVersionUtils {
+@Slf4j
+public class ExcelVersionUtils {
 
-    private static final String CUSTOM_FILE_VERSION = "custom_version";
+    private static final String TEMPLATE_VERSION = "template_version";
 
 
     public static File fillFileVersion(File file, String version) {
@@ -42,7 +43,7 @@ public class FileVersionUtils {
     public static String getFileVersion(InputStream inputStream) {
         try (OPCPackage pkg = OPCPackage.open(inputStream)) {
             POIXMLProperties poixmlProperties = new POIXMLProperties(pkg);
-            CTProperty ctProperty = poixmlProperties.getCustomProperties().getProperty(CUSTOM_FILE_VERSION);
+            CTProperty ctProperty = poixmlProperties.getCustomProperties().getProperty(TEMPLATE_VERSION);
             if (ctProperty == null) {
                 return null;
             }
@@ -55,25 +56,33 @@ public class FileVersionUtils {
 
     public static File fillFileVersion(InputStream inputStream, String version) {
         Assert.notNull(version, "版本不能为空");
-        XSSFWorkbook xssfWorkbook = null;
+        File tempFile;
+        OPCPackage pkg = null;
+
         try {
-            xssfWorkbook = new XSSFWorkbook(inputStream);
-            POIXMLProperties.CustomProperties customProperties = xssfWorkbook.getProperties().getCustomProperties();
-            CTProperty ctProperty = customProperties.getProperty(CUSTOM_FILE_VERSION);
+            //用OPCPackage填充版本号，防止oom
+            pkg = OPCPackage.open(inputStream);
+            POIXMLProperties poixmlProperties = new POIXMLProperties(pkg);
+            POIXMLProperties.CustomProperties customProperties = poixmlProperties.getCustomProperties();
+            CTProperty ctProperty = customProperties.getProperty(TEMPLATE_VERSION);
             if (ctProperty != null) {
                 ctProperty.setLpwstr(version);
             } else {
-                customProperties.addProperty(CUSTOM_FILE_VERSION, version);
+                customProperties.addProperty(TEMPLATE_VERSION, version);
             }
-            File file = TempFileUtil.generateXlsxTempFile();
-            FileOutputStream fos = new FileOutputStream(file);
-            xssfWorkbook.write(fos);
-            return file;
-        } catch (IOException e) {
+            //提交属性值
+            poixmlProperties.commit();
+            pkg.flush();
+            tempFile = TempFileUtil.generateXlsxTempFile();
+            pkg.save(tempFile);
+
+            return tempFile;
+        } catch (Exception e) {
+            log.error("填充模板文件模板失败", e);
             //异常转换
             throw new RuntimeException("填充模板文件模板失败", e);
         } finally {
-            IOUtils.closeQuietly(xssfWorkbook);
+            IOUtils.closeQuietly(pkg);
             IOUtils.closeQuietly(inputStream);
         }
     }

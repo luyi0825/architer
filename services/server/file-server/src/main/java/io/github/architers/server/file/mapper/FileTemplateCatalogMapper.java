@@ -6,5 +6,5 @@ import io.github.architers.server.file.model.entity.TemplateCatalog;
 /**
  * @author luyi
  */
-public interface ImportTemplateCatalogDao extends BaseMapper<TemplateCatalog> {
+public interface FileTemplateCatalogMapper extends BaseMapper<TemplateCatalog> {
 }
