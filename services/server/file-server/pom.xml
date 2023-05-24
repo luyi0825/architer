@@ -98,8 +98,14 @@
 
         <dependency>
             <groupId>io.github.architers</groupId>
+            <artifactId>cloud-dubbo</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.architers</groupId>
             <artifactId>spring-boot-starter-web-mvc</artifactId>
-            <version>${architer.revision}</version>
+            <version>${project.version}</version>
         </dependency>
 
 

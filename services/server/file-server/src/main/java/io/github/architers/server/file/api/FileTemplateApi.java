@@ -88,7 +88,7 @@ public class FileTemplateApi {
     public void uploadTemplateFile(MultipartFile file,
                                    @RequestParam("templateId") Integer templateId,
                                    @RequestParam("refreshVersion") boolean refreshVersion) throws IOException {
-        importTemplateService.uploadTemplateFile(file, templateId, refreshVersion);
+        //importTemplateService.uploadTemplateFile(file, templateId, refreshVersion);
     }
 
     /**

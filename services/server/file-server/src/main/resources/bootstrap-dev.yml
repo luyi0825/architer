@@ -21,6 +21,13 @@ spring:
         #group: dev
         namespace: study
         enabled: true
+dubbo:
+  application:
+    name: ${spring.applicaion.name}
+  registry:
+    address: nacos://127.0.0.1:8848
+
+
 
 ##mybatis-plus:
 ##  lazy-initialization: true
