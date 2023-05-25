@@ -13,7 +13,7 @@ public class UserInfoUtils {
         if (StringUtils.isNotEmpty(authorization) && authorization.startsWith("Bearer")) {
             String token = authorization.replace("Bearer ", "");
             String userInfo = JwtTokenUtils.userInfo(token);
-            return JsonUtils.parseObject(userInfo, UserInfo.class);
+            return JsonUtils.readValue(userInfo, UserInfo.class);
         }
         throw new RuntimeException("用户信息为空");
     }

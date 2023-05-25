@@ -34,7 +34,7 @@ class ExceptionTestApiTest {
         //没有参数的校验
         MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get(API + "/missingServletRequestParameterException");//.param("test", "a54");
         String str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
-        ResponseResult responseResult = JsonUtils.parseObject(str, ResponseResult.class);
+        ResponseResult responseResult = JsonUtils.readValue(str, ResponseResult.class);
        // Assertions.assertEquals(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(),
        //         (int) responseResult.getCode());
        // Assertions.assertEquals(MessageFormat.format(GlobalExceptionHandler
@@ -42,7 +42,7 @@ class ExceptionTestApiTest {
         //有参数
         builder = MockMvcRequestBuilders.get(API + "/missingServletRequestParameterException").param("test", "123");
         str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
-        responseResult = JsonUtils.parseObject(str, ResponseResult.class);
+        responseResult = JsonUtils.readValue(str, ResponseResult.class);
         Assertions.assertEquals(ResponseStatusEnum.SUCCESS.getCode(), (int) responseResult.getCode());
     }
 
@@ -53,7 +53,7 @@ class ExceptionTestApiTest {
                 .param("test", "a54")
                 .param("test2", "2");
         String str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
-        ResponseResult responseResult = JsonUtils.parseObject(str, ResponseResult.class);
+        ResponseResult responseResult = JsonUtils.readValue(str, ResponseResult.class);
         logger.info(JsonUtils.toJsonString(responseResult));
        // Assertions.assertEquals(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(),
        //         (int) responseResult.getCode());
@@ -63,7 +63,7 @@ class ExceptionTestApiTest {
                 .param("test", "1".repeat(11))
                 .param("test2", "1".repeat(20));
         str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
-        responseResult = JsonUtils.parseObject(str, ResponseResult.class);
+        responseResult = JsonUtils.readValue(str, ResponseResult.class);
         logger.info(JsonUtils.toJsonString(responseResult));
         Assertions.assertEquals(ResponseStatusEnum.SUCCESS.getCode(), (int) responseResult.getCode());
     }
@@ -76,7 +76,7 @@ class ExceptionTestApiTest {
         MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post(API + "/methodArgumentNotValidException")
                 .contentType(MediaType.APPLICATION_JSON).content(JsonUtils.toJsonString(user));
         String str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
-        ResponseResult responseResult = JsonUtils.parseObject(str, ResponseResult.class);
+        ResponseResult responseResult = JsonUtils.readValue(str, ResponseResult.class);
         logger.info(JsonUtils.toJsonString(responseResult));
         //Assertions.assertEquals(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(),
         //        (int) responseResult.getCode());
@@ -89,7 +89,7 @@ class ExceptionTestApiTest {
                 .param("username", "12")
                 .param("password", "23");
         String str = mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
-        ResponseResult responseResult = JsonUtils.parseObject(str, ResponseResult.class);
+        ResponseResult responseResult = JsonUtils.readValue(str, ResponseResult.class);
         logger.info(JsonUtils.toJsonString(responseResult));
        // Assertions.assertEquals(ResponseStatusEnum.PARAMS_VALID_EXCEPTION.getCode(),
       //          (int) responseResult.getCode());

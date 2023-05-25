@@ -6,7 +6,6 @@ spring:
     active: dev
   application:
     name: file-app
-
 server:
   servlet:
     context-path: /file
@@ -18,3 +17,4 @@ server:
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
+

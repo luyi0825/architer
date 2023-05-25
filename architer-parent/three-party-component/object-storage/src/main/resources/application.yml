@@ -1,20 +1,20 @@
 #server:
 #  port: 8000
 #
-#architecture:
-#  object-storage:
-#    minio:
-#      enabled: true
-#      endpoint: http://120.48.170.201:9000
-#      accessKey: "test"
-#      secretKey: testtest
-#      defaultBucket: luyi-dev
-#    oss:
-#      enabled: true
-#      endpoint: "https://oss-cn-hangzhou.aliyuncs.com"
-#      accessKey: ""
-#      secretKey: ""
-#      defaultBucket: "0825test"
+architecture:
+  object-storage:
+    minio:
+      enabled: true
+      endpoint: http://120.48.170.201:9000
+      accessKey: "test"
+      secretKey: testtest
+      defaultBucket: luyi-dev
+    oss:
+      enabled: true
+      endpoint: "https://oss-cn-hangzhou.aliyuncs.com"
+      accessKey: ""
+      secretKey: ""
+      defaultBucket: "0825test"
 #    cos:
 #      enabled: true
 #      endpoint: "https://luyi-dev-1300135689.cos.ap-nanjing.myqcloud.com"
