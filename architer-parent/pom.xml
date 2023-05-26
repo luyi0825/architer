@@ -19,7 +19,7 @@
 
         <alibaba-druid.version>1.1.25</alibaba-druid.version>
         <commons-lang3.version>3.11</commons-lang3.version>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
+        <mybatis-plus.version>3.5.3</mybatis-plus.version>
         <lombok.version>1.18.20</lombok.version>
         <easyexcel.verion>2.2.8</easyexcel.verion>
         <jsoup.verion>1.14.2</jsoup.verion>

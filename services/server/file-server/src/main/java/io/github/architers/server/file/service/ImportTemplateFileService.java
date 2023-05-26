@@ -1,6 +1,7 @@
 package io.github.architers.server.file.service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * 导入模板文件
@@ -9,5 +10,5 @@ import java.io.File;
  */
 public interface ImportTemplateFileService {
 
-    void importTemplateFile(File file, String templateCode);
+    void importTemplateFile(File file, String templateCode) throws FileNotFoundException;
 }

@@ -1,4 +1,4 @@
-package io.github.architers.server.file.model.dto;
+package io.github.architers.server.file.domain.param;
 
 import io.github.architers.context.autocode.BaseEntity;
 import io.github.architers.context.valid.group.AddGroup;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
  * @author luyi
  */
 @Data
-public class TemplateCatalogDTO extends BaseEntity {
+public class TemplateCatalogParam  {
     /**
      * 模板目录ID
      */

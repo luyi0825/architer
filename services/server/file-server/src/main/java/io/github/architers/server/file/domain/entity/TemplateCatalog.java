@@ -1,4 +1,4 @@
-package io.github.architers.server.file.model.entity;
+package io.github.architers.server.file.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

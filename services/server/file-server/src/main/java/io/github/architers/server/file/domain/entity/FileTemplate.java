@@ -1,24 +1,20 @@
-package io.github.architers.server.file.model.entity;
+package io.github.architers.server.file.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import io.github.architers.context.autocode.BaseEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.apache.ibatis.type.JdbcType;
-
-import java.util.Date;
 
 /**
  * 文件模板
  *
  * @author luyi
  */
-@EqualsAndHashCode(callSuper = true)
+
 @Data
-@TableName( autoResultMap = true,resultMap = "baseResultMap")
+@TableName( autoResultMap = true)
 public class FileTemplate extends BaseEntity {
     /**
      * 模板ID
@@ -44,17 +40,8 @@ public class FileTemplate extends BaseEntity {
     /**
      * 校验行信息
      */
-    @TableField( jdbcType = JdbcType.VARCHAR,  typeHandler =
-            JacksonTypeHandler.class, insertStrategy = FieldStrategy.NOT_NULL,
-            updateStrategy = FieldStrategy.NOT_NULL)
+    @TableField( jdbcType = JdbcType.VARCHAR,  typeHandler = JacksonTypeHandler.class)
     private FileTemplateCheckRowInfo checkRowInfo;
-
-    /**
-     * 校验版本信息
-     */
-    @TableField( jdbcType = JdbcType.VARCHAR, typeHandler =
-            JacksonTypeHandler.class, insertStrategy = FieldStrategy.NOT_NULL, updateStrategy = FieldStrategy.NOT_NULL)
-    private FileTemplateCheckFileVersion checkFileVersion;
 
 
     /**

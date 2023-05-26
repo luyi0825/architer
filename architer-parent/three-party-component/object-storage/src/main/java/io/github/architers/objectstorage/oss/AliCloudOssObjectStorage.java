@@ -57,12 +57,10 @@ public class AliCloudOssObjectStorage implements ObjectStorage {
     }
 
     @Override
-    public void getObject(OutputStream outputStream, String key) throws Exception {
+    public InputStream getObjectInputStream(String key) {
         GetObjectRequest getObjectRequest = new GetObjectRequest(ossProperties.getDefaultBucket(), key);
         OSSObject ossObject = ossClient.getObject(getObjectRequest);
-        try (InputStream inputStream = ossObject.getObjectContent()) {
-            inputStream.transferTo(outputStream);
-        }
+        return ossObject.getObjectContent();
     }
 
     @Override

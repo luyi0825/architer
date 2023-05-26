@@ -4,9 +4,8 @@ import cn.hutool.extra.spring.SpringUtil;
 import io.github.architers.context.model.TreeNode;
 import io.github.architers.context.valid.group.AddGroup;
 import io.github.architers.context.valid.group.EditGroup;
-import io.github.architers.server.file.model.dto.TemplateCatalogDTO;
-import io.github.architers.server.file.model.dto.TemplateDTO;
-import io.github.architers.server.file.model.param.FileTemplateAddParams;
+import io.github.architers.server.file.domain.param.TemplateCatalogParam;
+import io.github.architers.server.file.domain.param.FileTemplateParams;
 import io.github.architers.server.file.service.FileTemplateService;
 import io.github.architers.server.file.service.ImportTemplateFileService;
 import io.github.architers.server.file.utils.TempFileUtil;
@@ -35,34 +34,12 @@ public class FileTemplateApi {
     @Resource
     private FileTemplateService fileTemplateService;
 
-    /**
-     * 添加模板目录
-     */
-    @PutMapping("/addTemplateFile")
-    public void addTemplateFile(@Valid FileTemplateAddParams fileTemplateAddParams, MultipartFile file) throws IOException {
-        Assert.notNull(file, "模板文件不能为空");
-        fileTemplateService.addTemplateFile(fileTemplateAddParams, file);
-    }
-
-    /**
-     * 测试上传模版文件
-     */
-    @PostMapping("/testUploadFile")
-    public void testUploadFile(@RequestParam("templateCode") String templateCode,
-                               MultipartFile file) throws IOException {
-        ImportTemplateFileService importTemplateFileService = SpringUtil.getBean(ImportTemplateFileService.class);
-        File tempFile =
-                TempFileUtil.generateTempFile(Objects.requireNonNull(file.getOriginalFilename()));
-        FileUtils.copyInputStreamToFile(file.getInputStream(), tempFile);
-        importTemplateFileService.importTemplateFile(tempFile, templateCode);
-        tempFile.delete();
-    }
 
     /**
      * 添加目录
      */
     @PostMapping("/addTemplateCatalog")
-    public void addTemplateCatalog(@RequestBody @Validated(AddGroup.class) TemplateCatalogDTO templateCatalog) {
+    public void addTemplateCatalog(@RequestBody @Validated(AddGroup.class) TemplateCatalogParam templateCatalog) {
         fileTemplateService.addTemplateCatalog(templateCatalog);
     }
 
@@ -70,7 +47,7 @@ public class FileTemplateApi {
      * 编辑目录
      */
     @PutMapping("/editTemplateCatalog")
-    public void editTemplateCatalog(@RequestBody @Validated(EditGroup.class) TemplateCatalogDTO templateCatalog) {
+    public void editTemplateCatalog(@RequestBody @Validated(EditGroup.class) TemplateCatalogParam templateCatalog) {
         fileTemplateService.editTemplateCatalog(templateCatalog);
     }
 
@@ -83,19 +60,39 @@ public class FileTemplateApi {
     }
 
     /**
-     * 新建模板文件
+     * 添加模板目录
      */
-    @PostMapping("/addTemplate")
-    public void addTemplate(@RequestBody @Validated(AddGroup.class) TemplateDTO templateDTO) {
-        fileTemplateService.addTemplate(templateDTO);
+    @PutMapping("/addTemplateFile")
+    public void addTemplateFile(@RequestBody @Validated(AddGroup.class) FileTemplateParams fileTemplateParams) throws IOException {
+        fileTemplateService.addTemplateFile(fileTemplateParams);
     }
+
+    /**
+     * 测试上传模版文件
+     */
+    @PostMapping("/testUploadFile")
+    public void testUploadFile(@RequestParam("templateCode") String templateCode,
+                               MultipartFile file) throws IOException {
+        ImportTemplateFileService importTemplateFileService = SpringUtil.getBean(ImportTemplateFileService.class);
+        File tempFile = null;
+        try {
+            tempFile = TempFileUtil.generateTempFile(Objects.requireNonNull(file.getOriginalFilename()));
+            FileUtils.copyInputStreamToFile(file.getInputStream(), tempFile);
+            importTemplateFileService.importTemplateFile(tempFile, templateCode);
+        } finally {
+            //删除文件
+            FileUtils.deleteQuietly(tempFile);
+        }
+    }
+
+
 
     /**
      * 编辑模板文件
      */
-    @PostMapping("/editTemplate")
-    public void editTemplate(@RequestBody @Validated(EditGroup.class) TemplateDTO templateDTO) {
-        fileTemplateService.editTemplate(templateDTO);
+    @PutMapping("/editFileTemplate")
+    public void editFileTemplate(@RequestBody @Validated(EditGroup.class)  FileTemplateParams editParam) throws Exception {
+        fileTemplateService.editFileTemplate(editParam);
     }
 
     /**
@@ -104,11 +101,10 @@ public class FileTemplateApi {
      * @param file       上传的模板文件
      * @param templateId 模板ID
      */
-    @PutMapping("/uploadTemplateFile")
+    @PostMapping("/uploadTemplateFile")
     public void uploadTemplateFile(MultipartFile file,
-                                   @RequestParam("templateId") Integer templateId,
-                                   @RequestParam("refreshVersion") boolean refreshVersion) throws IOException {
-        //importTemplateService.uploadTemplateFile(file, templateId, refreshVersion);
+                                   @RequestParam("templateId") Integer templateId) throws IOException {
+        fileTemplateService.uploadTemplateFile(file, templateId);
     }
 
     /**

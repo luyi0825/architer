@@ -1,4 +1,4 @@
-package io.github.architers.server.file.model.entity;
+package io.github.architers.server.file.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -12,8 +12,8 @@ import lombok.Data;
  * @author luyi
  */
 @Data
-@TableName("file_task_record")
-public class FileTaskRecord extends BaseEntity {
+@TableName("file_task_import_record")
+public class FileTaskImportRecord extends BaseEntity {
 
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -21,10 +21,16 @@ public class FileTaskRecord extends BaseEntity {
     /**
      * 任务编码
      */
-    private String taskCode;
+    private String taskId;
+
+    /**
+     * 请求参数
+     */
+    private String requestParam;
 
     /**
      * 任务状态
+     *
      * @see io.github.architers.server.file.enums.TaskStatusEnum
      */
     private Integer status;
@@ -40,15 +46,19 @@ public class FileTaskRecord extends BaseEntity {
     private Integer successNum;
 
     /**
-     * 结果地址
+     * 源文件地址
      */
-    private String resultUrl;
+    private String sourceUrl;
+
+    /**
+     * 错误的url
+     */
+    private String errorUrl;
 
     /**
      * 备注信息
      */
     private String remark;
-
 
 
 }

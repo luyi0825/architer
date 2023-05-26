@@ -1,14 +1,14 @@
-package io.github.architers.server.file.model.entity;
+package io.github.architers.server.file.domain.entity;
 
 import lombok.Data;
 
 /**
- * 任务下载配置
+ * 文件任务限流配置
  *
  * @author luyi
  */
 @Data
-public class FileTaskConfig {
+public class FileTaskLimitConfig {
 
     /**
      * 主键ID

@@ -2,8 +2,8 @@ package io.github.architers.server.file.service;
 
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
-import io.github.architers.server.file.model.dto.TaskRecordsQueryDTO;
-import io.github.architers.server.file.model.entity.FileTaskRecord;
+import io.github.architers.server.file.domain.param.TaskRecordsQueryParam;
+import io.github.architers.server.file.domain.entity.FileTaskExportRecord;
 
 /**
  * @author Administrator
@@ -21,16 +21,16 @@ public interface ITaskRecordService {
     /**
      * 通过ID更新
      *
-     * @param fileTaskRecord 需要更新的记录
+     * @param fileTaskExportRecord 需要更新的记录
      */
-    void updateById(FileTaskRecord fileTaskRecord);
+    void updateById(FileTaskExportRecord fileTaskExportRecord);
 
     /**
      * 更新处理中的任务的结果(乐观锁)
      *
-     * @param fileTaskRecord 更新的数据
+     * @param fileTaskExportRecord 更新的数据
      */
-    void updateProcessingResultWithOptimisticLock(FileTaskRecord fileTaskRecord);
+    void updateProcessingResultWithOptimisticLock(FileTaskExportRecord fileTaskExportRecord);
 
-    PageResult<FileTaskRecord> getTaskRecordsByPage(PageRequest<TaskRecordsQueryDTO> pageRequest);
+    PageResult<FileTaskExportRecord> getTaskRecordsByPage(PageRequest<TaskRecordsQueryParam> pageRequest);
 }

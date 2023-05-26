@@ -1,6 +1,6 @@
 package io.github.architers.server.file.service;
 
-import io.github.architers.server.file.model.dto.ExecuteTaskParam;
+import io.github.architers.server.file.domain.param.ExecuteTaskParam;
 
 /**
  * @author luyi

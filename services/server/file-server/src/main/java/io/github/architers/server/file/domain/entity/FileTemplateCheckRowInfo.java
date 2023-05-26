@@ -1,8 +1,9 @@
-package io.github.architers.server.file.model.param;
+package io.github.architers.server.file.domain.entity;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 文件模板校验行信息
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotNull;
  * @author luyi
  */
 @Data
-public class FileTemplateCheckRowInfoParams {
+public class FileTemplateCheckRowInfo implements Serializable {
     /**
      * 是否开启行校验
      */
@@ -18,4 +19,6 @@ public class FileTemplateCheckRowInfoParams {
     private Boolean enableCheck;
     private Integer startRow;
     private Integer endRow;
+    private String base64RowStr;
+
 }

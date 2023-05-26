@@ -1,4 +1,4 @@
-package io.github.architers.server.file.model.dto;
+package io.github.architers.server.file.domain.param;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import lombok.Data;
  * @author luyi
  */
 @Data
-public class TaskRecordsQueryDTO {
+public class TaskRecordsQueryParam {
 
     /**
      * 任务编码

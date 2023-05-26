@@ -1,13 +1,14 @@
 package io.github.architers.server.file.service.impl;
 
 import io.github.architers.context.exception.BusLogException;
-import io.github.architers.server.file.model.entity.FileTaskConfig;
-import io.github.architers.server.file.model.dto.ExecuteTaskParam;
+import io.github.architers.server.file.domain.entity.FileTaskLimitConfig;
+import io.github.architers.server.file.domain.param.ExecuteTaskParam;
 import io.github.architers.server.file.service.ITaskConfigService;
 import io.github.architers.server.file.service.ITaskLimit;
 import io.github.architers.server.file.service.TaskService;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -22,7 +23,6 @@ public class TaskServiceImpl implements TaskService {
     @Resource
     private ITaskConfigService taskConfigService;
 
-    private ConcurrentMap<String, List<FileTaskConfig>> taskLimitMap = new ConcurrentHashMap<>();
     @Resource
     private StreamBridge streamBridge;
 
@@ -30,8 +30,11 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public boolean sendTask(ExecuteTaskParam executeTaskParam) {
         //判断是否能够执行
-        List<FileTaskConfig> fileTaskConfig = taskConfigService.findByTaskCode(executeTaskParam.getTaskCode());
-        for (FileTaskConfig config : fileTaskConfig) {
+        List<FileTaskLimitConfig> fileTaskLimitConfig = taskConfigService.findByTaskCode(executeTaskParam.getTaskCode());
+        if (CollectionUtils.isEmpty(fileTaskLimitConfig)) {
+
+        }
+        for (FileTaskLimitConfig config : fileTaskLimitConfig) {
             for (ITaskLimit limit : taskLimits) {
                 if (!limit.canExecute(executeTaskParam, config)) {
                     //拒绝处理

@@ -7,8 +7,8 @@ import io.github.architers.component.mybatisplus.MybatisPageUtils;
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
 import io.github.architers.server.file.mapper.FileTaskRecordMapper;
-import io.github.architers.server.file.model.dto.TaskRecordsQueryDTO;
-import io.github.architers.server.file.model.entity.FileTaskRecord;
+import io.github.architers.server.file.domain.param.TaskRecordsQueryParam;
+import io.github.architers.server.file.domain.entity.FileTaskExportRecord;
 import io.github.architers.server.file.enums.TaskStatusEnum;
 import io.github.architers.server.file.service.ITaskRecordService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,33 +28,33 @@ public class TaskRecordServiceImpl implements ITaskRecordService {
 
     @Override
     public Long initTask(String taskCode) {
-        FileTaskRecord fileTaskRecord = new FileTaskRecord();
-        fileTaskRecord.setTaskCode(taskCode);
-        fileTaskRecord.setStatus(TaskStatusEnum.IN_LINE.getStatus());
-        fileTaskRecord.setCreateBy(UserInfoUtils.getCurrentUserId());
-        fileTaskRecordMapper.insert(fileTaskRecord);
-        return fileTaskRecord.getId();
+        FileTaskExportRecord fileTaskExportRecord = new FileTaskExportRecord();
+        fileTaskExportRecord.setTaskCode(taskCode);
+        fileTaskExportRecord.setStatus(TaskStatusEnum.IN_LINE.getStatus());
+        fileTaskExportRecord.setCreateBy(UserInfoUtils.getCurrentUserId());
+        fileTaskRecordMapper.insert(fileTaskExportRecord);
+        return fileTaskExportRecord.getId();
     }
 
     @Override
-    public void updateById(FileTaskRecord fileTaskRecord) {
-        fileTaskRecordMapper.updateById(fileTaskRecord);
+    public void updateById(FileTaskExportRecord fileTaskExportRecord) {
+        fileTaskRecordMapper.updateById(fileTaskExportRecord);
     }
 
     @Override
-    public void updateProcessingResultWithOptimisticLock(FileTaskRecord fileTaskRecord) {
-        Wrapper<FileTaskRecord> updateWrapper = Wrappers.lambdaUpdate(FileTaskRecord.class)
-                .eq(FileTaskRecord::getId, fileTaskRecord.getId())
-                .eq(FileTaskRecord::getStatus, TaskStatusEnum.PROCESSING.getStatus());
-        fileTaskRecordMapper.update(fileTaskRecord, updateWrapper);
+    public void updateProcessingResultWithOptimisticLock(FileTaskExportRecord fileTaskExportRecord) {
+        Wrapper<FileTaskExportRecord> updateWrapper = Wrappers.lambdaUpdate(FileTaskExportRecord.class)
+                .eq(FileTaskExportRecord::getId, fileTaskExportRecord.getId())
+                .eq(FileTaskExportRecord::getStatus, TaskStatusEnum.PROCESSING.getStatus());
+        fileTaskRecordMapper.update(fileTaskExportRecord, updateWrapper);
     }
 
     @Override
-    public PageResult<FileTaskRecord> getTaskRecordsByPage(PageRequest<TaskRecordsQueryDTO> pageRequest) {
+    public PageResult<FileTaskExportRecord> getTaskRecordsByPage(PageRequest<TaskRecordsQueryParam> pageRequest) {
         return MybatisPageUtils.pageQuery(pageRequest.getPageParam(), () -> {
-            TaskRecordsQueryDTO taskRecordsQueryDTO = pageRequest.getRequestParam();
-            Wrapper<FileTaskRecord> taskRecordWrapper = Wrappers.lambdaQuery(FileTaskRecord.class)
-                    .eq(FileTaskRecord::getTaskCode, taskRecordsQueryDTO.getTaskCode());
+            TaskRecordsQueryParam taskRecordsQueryParam = pageRequest.getRequestParam();
+            Wrapper<FileTaskExportRecord> taskRecordWrapper = Wrappers.lambdaQuery(FileTaskExportRecord.class)
+                    .eq(FileTaskExportRecord::getTaskCode, taskRecordsQueryParam.getTaskCode());
             return fileTaskRecordMapper.selectList(taskRecordWrapper);
         });
 

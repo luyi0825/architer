@@ -2,9 +2,9 @@ package io.github.architers.server.file.api;
 
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
-import io.github.architers.server.file.model.dto.ExecuteTaskParam;
-import io.github.architers.server.file.model.dto.TaskRecordsQueryDTO;
-import io.github.architers.server.file.model.entity.FileTaskRecord;
+import io.github.architers.server.file.domain.param.ExecuteTaskParam;
+import io.github.architers.server.file.domain.param.TaskRecordsQueryParam;
+import io.github.architers.server.file.domain.entity.FileTaskExportRecord;
 import io.github.architers.server.file.service.ITaskRecordService;
 import io.github.architers.server.file.service.TaskService;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/taskApi")
-public class TaskApi {
+public class FileTaskApi {
 
     @Resource
     private TaskService taskService;
@@ -35,12 +35,14 @@ public class TaskApi {
     }
 
     /**
-     * 分页查询任务记录
+     * 分页查询导出任务记录
      */
-    @PostMapping("/getTaskRecordsByPage")
-    public PageResult<FileTaskRecord> getTaskRecordsByPage(@RequestBody @Validated PageRequest<TaskRecordsQueryDTO> pageRequest) {
+    @PostMapping("/getExportRecordsByPage")
+    public PageResult<FileTaskExportRecord> getTaskRecordsByPage(@RequestBody @Validated PageRequest<TaskRecordsQueryParam> pageRequest) {
         return taskRecordService.getTaskRecordsByPage(pageRequest);
     }
+
+
 
 
 }

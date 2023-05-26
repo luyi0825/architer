@@ -2,10 +2,10 @@ package io.github.architers.server.file.task;
 
 import io.github.architers.context.utils.JsonUtils;
 import io.github.architers.context.web.ResponseResult;
-import io.github.architers.server.file.model.dto.ExecuteTaskParam;
+import io.github.architers.server.file.domain.param.ExecuteTaskParam;
 import io.github.architers.server.file.domain.dto.FileTaskParam;
-import io.github.architers.server.file.model.entity.FileTask;
-import io.github.architers.server.file.model.entity.FileTaskRecord;
+import io.github.architers.server.file.domain.entity.FileTask;
+import io.github.architers.server.file.domain.entity.FileTaskExportRecord;
 import io.github.architers.server.file.enums.TaskStatusEnum;
 import io.github.architers.server.file.service.IFileTaskService;
 import io.github.architers.server.file.service.ITaskRecordService;
@@ -78,24 +78,24 @@ public class StoreFileTaskConsumer {
         } catch (Exception e) {
             log.error("远程调用失败", e);
             //说明直接就远程调用失败
-            FileTaskRecord fileTaskRecord = new FileTaskRecord();
-            fileTaskRecord.setId(taskId);
-            fileTaskRecord.setRemark(e.getMessage());
-            fileTaskRecord.setStatus(TaskStatusEnum.FAIL.getStatus());
-            taskRecordService.updateById(fileTaskRecord);
+            FileTaskExportRecord fileTaskExportRecord = new FileTaskExportRecord();
+            fileTaskExportRecord.setId(taskId);
+            fileTaskExportRecord.setRemark(e.getMessage());
+            fileTaskExportRecord.setStatus(TaskStatusEnum.FAIL.getStatus());
+            taskRecordService.updateById(fileTaskExportRecord);
             return;
         }
         if (HttpStatus.OK.value() == responseResult.getCode()) {
-            FileTaskRecord fileTaskRecord = new FileTaskRecord();
-            fileTaskRecord.setId(taskId);
-            fileTaskRecord.setStatus(TaskStatusEnum.PROCESSING.getStatus());
-            taskRecordService.updateById(fileTaskRecord);
+            FileTaskExportRecord fileTaskExportRecord = new FileTaskExportRecord();
+            fileTaskExportRecord.setId(taskId);
+            fileTaskExportRecord.setStatus(TaskStatusEnum.PROCESSING.getStatus());
+            taskRecordService.updateById(fileTaskExportRecord);
         } else {
-            FileTaskRecord fileTaskRecord = new FileTaskRecord();
-            fileTaskRecord.setId(taskId);
-            fileTaskRecord.setRemark(responseResult.getMessage());
-            fileTaskRecord.setStatus(TaskStatusEnum.FAIL.getStatus());
-            taskRecordService.updateById(fileTaskRecord);
+            FileTaskExportRecord fileTaskExportRecord = new FileTaskExportRecord();
+            fileTaskExportRecord.setId(taskId);
+            fileTaskExportRecord.setRemark(responseResult.getMessage());
+            fileTaskExportRecord.setStatus(TaskStatusEnum.FAIL.getStatus());
+            taskRecordService.updateById(fileTaskExportRecord);
         }
     }
 }

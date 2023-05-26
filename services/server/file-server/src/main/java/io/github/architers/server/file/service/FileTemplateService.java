@@ -2,10 +2,9 @@ package io.github.architers.server.file.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.github.architers.context.model.TreeNode;
-import io.github.architers.server.file.model.dto.TemplateCatalogDTO;
-import io.github.architers.server.file.model.dto.TemplateDTO;
-import io.github.architers.server.file.model.entity.FileTemplate;
-import io.github.architers.server.file.model.param.FileTemplateAddParams;
+import io.github.architers.server.file.domain.param.TemplateCatalogParam;
+import io.github.architers.server.file.domain.entity.FileTemplate;
+import io.github.architers.server.file.domain.param.FileTemplateParams;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,26 +16,22 @@ public interface FileTemplateService extends IService<FileTemplate> {
      *
      * @param templateCatalog 需要添加的模板目录信息
      */
-    void addTemplateCatalog(TemplateCatalogDTO templateCatalog);
+    void addTemplateCatalog(TemplateCatalogParam templateCatalog);
 
-    void editTemplateCatalog(TemplateCatalogDTO templateCatalog);
+    void editTemplateCatalog(TemplateCatalogParam templateCatalog);
 
     List<TreeNode> getTemplateCatalog();
 
-    void addTemplate(TemplateDTO templateDTO);
-
-    void editTemplate(TemplateDTO templateDTO);
-
-//    void uploadTemplateFile(MultipartFile file,
-//                            Integer templateId,
-//                            boolean refreshVersion
-//                            ) throws IOException;
 
     String getNewTemplateFileVersion(String templateCode);
 
     FileTemplate getFileTemplateByTemplateCode(String templateCode);
 
-    void addTemplateFile(FileTemplateAddParams fileTemplateAddParams, MultipartFile file) throws IOException;
+    void addTemplateFile(FileTemplateParams fileTemplateParams) throws IOException;
 
 
+    void editFileTemplate(FileTemplateParams editParam) throws Exception;
+
+    void uploadTemplateFile(MultipartFile file,
+                            Integer templateId) throws IOException;
 }
