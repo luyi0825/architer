@@ -22,8 +22,12 @@ spring:
         namespace: study
         enabled: true
       server-addr: nacos.com
+rocketmq:
+  producer:
+    group: app-group
+  #dubbo:
+  name-server: rocketmq.com:9876
 
-      #dubbo:
 #  application:
 #    name: ${spring.applicaion.name}
 #  registry:

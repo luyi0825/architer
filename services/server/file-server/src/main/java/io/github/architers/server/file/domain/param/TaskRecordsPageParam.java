@@ -7,7 +7,7 @@ import lombok.Data;
  * @author luyi
  */
 @Data
-public class TaskRecordsQueryParam {
+public class TaskRecordsPageParam {
 
     /**
      * 任务编码

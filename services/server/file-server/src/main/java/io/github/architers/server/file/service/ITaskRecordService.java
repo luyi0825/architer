@@ -2,7 +2,7 @@ package io.github.architers.server.file.service;
 
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
-import io.github.architers.server.file.domain.param.TaskRecordsQueryParam;
+import io.github.architers.server.file.domain.param.TaskRecordsPageParam;
 import io.github.architers.server.file.domain.entity.FileTaskExportRecord;
 
 /**
@@ -32,5 +32,5 @@ public interface ITaskRecordService {
      */
     void updateProcessingResultWithOptimisticLock(FileTaskExportRecord fileTaskExportRecord);
 
-    PageResult<FileTaskExportRecord> getTaskRecordsByPage(PageRequest<TaskRecordsQueryParam> pageRequest);
+    PageResult<FileTaskExportRecord> getTaskRecordsByPage(PageRequest<TaskRecordsPageParam> pageRequest);
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.github.architers.context.autocode.BaseEntity;
+import io.github.architers.server.file.enums.TaskRecordStatusEnum;
 import lombok.Data;
 
 /**
@@ -31,7 +32,7 @@ public class FileTaskImportRecord extends BaseEntity {
     /**
      * 任务状态
      *
-     * @see io.github.architers.server.file.enums.TaskStatusEnum
+     * @see TaskRecordStatusEnum
      */
     private Integer status;
 

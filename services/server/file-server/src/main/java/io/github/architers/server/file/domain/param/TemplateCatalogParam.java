@@ -1,6 +1,5 @@
 package io.github.architers.server.file.domain.param;
 
-import io.github.architers.context.autocode.BaseEntity;
 import io.github.architers.context.valid.group.AddGroup;
 import io.github.architers.context.valid.group.EditGroup;
 import lombok.Data;

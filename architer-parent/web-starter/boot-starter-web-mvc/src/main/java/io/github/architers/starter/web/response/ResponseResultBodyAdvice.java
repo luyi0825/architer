@@ -35,7 +35,7 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object>, Ord
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         IgnoreResponseResult ignoreResponseResult =
                 returnType.getMethodAnnotation(IgnoreResponseResult.class);
-        return ignoreResponseResult != null;
+        return ignoreResponseResult == null;
     }
 
 
@@ -56,6 +56,5 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object>, Ord
             return body;
         }
         return ResponseResult.ok(body);
-
     }
 }

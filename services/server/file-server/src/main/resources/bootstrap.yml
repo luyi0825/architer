@@ -1,7 +1,7 @@
 spring:
   main:
     #懒加载
-    lazy-initialization: true
+    lazy-initialization: false
   profiles:
     active: dev
   application:

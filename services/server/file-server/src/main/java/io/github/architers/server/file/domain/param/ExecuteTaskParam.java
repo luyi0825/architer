@@ -25,7 +25,7 @@ public class ExecuteTaskParam {
      * 执行参数
      */
     @NotNull(message = "执行参数不能为空")
-    private Map<String, Object> executeParam;
+    private Map<String, Object> requestBody;
 
 
 }

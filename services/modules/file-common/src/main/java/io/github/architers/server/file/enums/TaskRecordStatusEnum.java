@@ -6,12 +6,9 @@ package io.github.architers.server.file.enums;
  *
  * @author luyi
  */
-public enum TaskStatusEnum {
+public enum TaskRecordStatusEnum {
 
-    /**
-     * 取消
-     */
-    CANCEL(0),
+
     /**
      * 排队中
      */
@@ -29,11 +26,16 @@ public enum TaskStatusEnum {
     /**
      * 失败
      */
-    FAIL(4);
+    FAILED(4),
+
+    /**
+     * 取消
+     */
+    CANCEL(5);
 
     private final Integer status;
 
-    TaskStatusEnum(Integer status) {
+    TaskRecordStatusEnum(Integer status) {
         this.status = status;
     }
 

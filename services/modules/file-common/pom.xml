@@ -24,6 +24,13 @@
             <version>${architer.revision}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>2.2.3</version>
+            <scope>provided</scope>
+        </dependency>
+
 
     </dependencies>
 

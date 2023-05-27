@@ -16,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
  */
 @SpringBootApplication
 @MapperScan(basePackages = "io.github.architers.server.file.mapper")
-@EnableAsync
 public class FileSeverStart {
 
     public static void main(String[] args) {

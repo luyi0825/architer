@@ -1,6 +1,5 @@
 package io.github.architers.server.file.service.impl;
 
-import cn.hutool.core.lang.Assert;
 import com.alibaba.excel.EasyExcel;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -16,14 +15,11 @@ import io.github.architers.objectstorage.PutFileResponse;
 import io.github.architers.server.file.domain.entity.*;
 import io.github.architers.server.file.domain.param.FileTemplateParams;
 import io.github.architers.server.file.eums.FileContentType;
-import io.github.architers.server.file.domain.param.FileTemplateCheckFileVersionParam;
 import io.github.architers.server.file.domain.param.FileTemplateCheckRowInfoParams;
 import io.github.architers.server.file.mapper.FileTemplateCatalogMapper;
 import io.github.architers.server.file.mapper.FileTemplateMapper;
 import io.github.architers.server.file.domain.param.TemplateCatalogParam;
-import io.github.architers.server.file.eums.FileType;
 import io.github.architers.server.file.service.FileTemplateService;
-import io.github.architers.server.file.utils.ExcelVersionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.tika.Tika;
@@ -92,16 +88,6 @@ public class FileTemplateServiceImpl extends ServiceImpl<FileTemplateMapper, Fil
     @Override
     public String getNewTemplateFileVersion(String templateCode) {
         return null;
-    }
-
-
-    /**
-     * 支持模板
-     */
-    private static final List<FileType> SUPPORT_VERSION_TYPES = new ArrayList<>();
-
-    static {
-        SUPPORT_VERSION_TYPES.add(FileType.xlsx);
     }
 
 
