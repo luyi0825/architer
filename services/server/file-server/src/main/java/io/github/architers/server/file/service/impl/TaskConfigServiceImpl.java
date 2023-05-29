@@ -1,6 +1,6 @@
 package io.github.architers.server.file.service.impl;
 
-import io.github.architers.server.file.model.entity.FileTaskConfig;
+import io.github.architers.server.file.domain.entity.FileTaskLimitConfig;
 import io.github.architers.server.file.service.ITaskConfigService;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +15,9 @@ import java.util.List;
 @Service
 public class TaskConfigServiceImpl implements ITaskConfigService {
     @Override
-    public List<FileTaskConfig> findByTaskCode(String taskCode) {
-        List<FileTaskConfig> configs = new ArrayList<>();
-        FileTaskConfig config = new FileTaskConfig();
+    public List<FileTaskLimitConfig> findByTaskCode(String taskCode) {
+        List<FileTaskLimitConfig> configs = new ArrayList<>();
+        FileTaskLimitConfig config = new FileTaskLimitConfig();
         config.setLimitSecond(60L);
         config.setLimitCount(2);
         configs.add(config);

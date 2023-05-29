@@ -7,21 +7,27 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: nacos:8848
+        server-addr: nacos.com:8848
         fileExtension: yml
         namespace: study
         group: DEFAULT_GROUP
         shared-configs:
          - #数据库配置
-          data-id: application-mysql-dev.yml
+          data-id: mysql-dev.yml
           group: ${spring.cloud.nacos.config.group}
           refresh: false
       discovery:
-        server-addr: nacos:8848
+        server-addr: nacos.com:8848
         #group: dev
         namespace: study
         enabled: true
-#dubbo:
+      server-addr: nacos.com
+rocketmq:
+  producer:
+    group: app-group
+  #dubbo:
+  name-server: rocketmq.com:9876
+
 #  application:
 #    name: ${spring.applicaion.name}
 #  registry:

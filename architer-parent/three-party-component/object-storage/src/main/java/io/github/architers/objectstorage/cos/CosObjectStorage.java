@@ -44,9 +44,11 @@ public class CosObjectStorage implements ObjectStorage {
     }
 
     @Override
-    public void getObject(OutputStream outputStream, String key) throws Exception {
-
+    public InputStream getObjectInputStream(String key) throws Exception {
+        return null;
     }
+
+
 
     @Override
     public boolean deleteObject(String key) {

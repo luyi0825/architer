@@ -1,7 +1,7 @@
 package io.github.architers.server.file.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.github.architers.server.file.model.entity.FileTaskRecord;
+import io.github.architers.server.file.domain.entity.FileTaskExportRecord;
 
-public interface FileTaskRecordMapper extends BaseMapper<FileTaskRecord> {
+public interface FileTaskRecordMapper extends BaseMapper<FileTaskExportRecord> {
 }

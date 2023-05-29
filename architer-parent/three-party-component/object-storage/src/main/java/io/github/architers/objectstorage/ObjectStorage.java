@@ -22,7 +22,7 @@ public interface ObjectStorage {
 
     PutFileResponse putObject(InputStream inputStream, String key);
 
-    void getObject(OutputStream outputStream, String key) throws Exception;
+    InputStream getObjectInputStream(String key) throws Exception;
 
     /**
      * 删除文件

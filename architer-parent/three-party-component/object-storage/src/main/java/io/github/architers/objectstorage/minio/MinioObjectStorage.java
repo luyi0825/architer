@@ -55,13 +55,12 @@ public class MinioObjectStorage implements ObjectStorage {
     }
 
     @Override
-    public void getObject(OutputStream outputStream, String key) throws Exception {
-        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
+    public InputStream getObjectInputStream(String key) throws Exception {
         GetObjectArgs getObjectArgs = GetObjectArgs.builder().bucket(minioProperties.getDefaultBucket())
                 .object(key).build();
-        GetObjectResponse getObjectResponse = client.getObject(getObjectArgs);
-        getObjectResponse.transferTo(bufferedOutputStream);
+        return client.getObject(getObjectArgs);
     }
+
 
     @Override
     public boolean deleteObject(String key) {
