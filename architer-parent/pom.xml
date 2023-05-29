@@ -17,19 +17,19 @@
         <maven.compiler.target>11</maven.compiler.target>
         <java.version>11</java.version>
 
-        <alibaba-druid.version>1.1.25</alibaba-druid.version>
+        <alibaba-druid.version>1.2.18</alibaba-druid.version>
         <commons-lang3.version>3.11</commons-lang3.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <lombok.version>1.18.20</lombok.version>
+        <lombok.version>1.18.24</lombok.version>
         <easyexcel.verion>2.2.8</easyexcel.verion>
         <jsoup.verion>1.14.2</jsoup.verion>
         <zookeeper.version>3.7.0</zookeeper.version>
         <redisson.version>3.20.0</redisson.version>
         <jackson.version>2.12.2</jackson.version>
-        <spring.version>5.3.24</spring.version>
+        <spring.version>5.3.27</spring.version>
         <spring-boot.version>2.7.12</spring-boot.version>
         <!--spring-cloud-alibaba的版本-->
-        <alibaba-cloud.version>2021.1</alibaba-cloud.version>
+        <alibaba-cloud.version>2021.0.5.0</alibaba-cloud.version>
         <!--spring-cloud的版本-->
         <spring-cloud.version>2021.0.6</spring-cloud.version>
         <!-- log4j2的版本-->
@@ -96,6 +96,7 @@
         </repository>
     </distributionManagement>
     <dependencyManagement>
+
         <dependencies>
 <!--            <dependency>-->
 <!--                <groupId>org.apache.shardingsphere.elasticjob</groupId>-->

@@ -15,7 +15,7 @@ public interface CacheLockService {
     String test1(String lockKey);
 
     @Locked(lockName = "CacheLockService_test1", key = "#lockKey", tryTime = 1, timeUnit = TimeUnit.SECONDS)
-    @PutCache(cacheName = "test", key = "#lockKey", expireTime = 2)
+    @PutCache(cacheName = "test", key = "#lockKey", expireTime = 2,cacheValue = "#lockKey")
     void test2(String lockKey);
 
 
