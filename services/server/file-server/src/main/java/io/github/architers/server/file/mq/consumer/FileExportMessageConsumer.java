@@ -41,7 +41,7 @@ public class FileExportMessageConsumer implements RocketMQListener<MessageExt> {
 
     @Override
     public void onMessage(MessageExt messageExt) {
-        FileTaskExportRecord exportRecord = JsonUtils.parseObject(messageExt.getBody(), FileTaskExportRecord.class);
+        FileTaskExportRecord exportRecord = JsonUtils.readValue(messageExt.getBody(), FileTaskExportRecord.class);
         if (messageExt.getReconsumeTimes() >= 3) {
             //三次就导出失败
             FileTaskExportRecord fileTaskExportRecord = new FileTaskExportRecord();

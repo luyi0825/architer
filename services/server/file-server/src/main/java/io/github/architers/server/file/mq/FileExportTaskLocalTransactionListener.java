@@ -26,7 +26,7 @@ public class FileExportTaskLocalTransactionListener implements LocalTransactionE
 
     @Override
     public RocketMQLocalTransactionState checkLocalTransaction(Message<?> msg) {
-        FileTaskExportRecord fileTaskExportRecord = JsonUtils.parseObject((byte[]) msg.getPayload(), FileTaskExportRecord.class);
+        FileTaskExportRecord fileTaskExportRecord = JsonUtils.readValue((byte[]) msg.getPayload(), FileTaskExportRecord.class);
 
         return RocketMQLocalTransactionState.COMMIT;
     }
@@ -37,7 +37,7 @@ public class FileExportTaskLocalTransactionListener implements LocalTransactionE
         TaskRecordStatusEnum taskRecordStatusEnum = (TaskRecordStatusEnum) arg;
 
         if (TaskRecordStatusEnum.IN_LINE.equals(taskRecordStatusEnum)) {
-            FileTaskExportRecord fileTaskExportRecord = JsonUtils.parseObject((byte[]) msg.getPayload(), FileTaskExportRecord.class);
+            FileTaskExportRecord fileTaskExportRecord = JsonUtils.readValue((byte[]) msg.getPayload(), FileTaskExportRecord.class);
             if (fileTaskExportRecordService.save(fileTaskExportRecord)) {
                 return RocketMQLocalTransactionState.COMMIT;
             }

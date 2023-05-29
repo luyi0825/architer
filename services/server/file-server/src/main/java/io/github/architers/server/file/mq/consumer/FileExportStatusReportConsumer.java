@@ -3,7 +3,6 @@ package io.github.architers.server.file.mq.consumer;
 import io.github.architers.server.file.domain.dto.ExportStatusReportDTO;
 import io.github.architers.server.file.domain.entity.FileTaskExportRecord;
 import io.github.architers.server.file.service.IFileTaskExportRecordService;
-import org.apache.rocketmq.client.consumer.listener.MessageListener;
 import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;

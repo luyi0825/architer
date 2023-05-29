@@ -6,7 +6,6 @@ import org.redisson.client.codec.Codec;
 import org.redisson.config.*;
 import org.redisson.connection.AddressResolverGroupFactory;
 import org.redisson.connection.ConnectionListener;
-import org.redisson.connection.ConnectionManager;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -123,11 +122,6 @@ public class RedissonConfig extends Config implements Serializable {
     @Override
     public ReplicatedServersConfig useReplicatedServers() {
         return super.useReplicatedServers();
-    }
-
-    @Override
-    public void useCustomServers(ConnectionManager connectionManager) {
-        super.useCustomServers(connectionManager);
     }
 
     @Override

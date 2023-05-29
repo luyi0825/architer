@@ -14,6 +14,7 @@ import io.github.architers.server.file.service.ITaskLimit;
 import io.github.architers.server.file.service.TaskService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -69,6 +70,11 @@ public class TaskServiceImpl implements TaskService {
         fileTaskExportRecord.setUpdateBy(UserUtils.getUserId());
         fileTaskExportRecord.setTaskCode(executeTaskParam.getTaskCode());
         return fileExportMessageSender.sendExportTaskMessage(fileTaskExportRecord);
+    }
+
+    @Override
+    public TransactionMessageResult executeImportTask(ExecuteTaskParam executeTaskParam, MultipartFile file) {
+        return null;
     }
 
 

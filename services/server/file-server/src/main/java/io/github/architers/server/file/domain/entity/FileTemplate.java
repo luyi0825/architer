@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import io.github.architers.context.autocode.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.ibatis.type.JdbcType;
 
 /**
@@ -13,6 +14,7 @@ import org.apache.ibatis.type.JdbcType;
  * @author luyi
  */
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName( autoResultMap = true)
 public class FileTemplate extends BaseEntity {

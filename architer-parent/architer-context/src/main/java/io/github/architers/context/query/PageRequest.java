@@ -22,6 +22,7 @@ public class PageRequest<T> {
      * 请求数据
      */
     @Valid
+    @NotNull(message = "请求参数不能为空")
     private T requestParam;
 
 }

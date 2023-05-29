@@ -1,17 +1,23 @@
 package io.github.architers.server.file.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import io.github.architers.context.autocode.BaseEntity;
 import io.github.architers.server.file.enums.TaskRecordStatusEnum;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.util.Map;
 
 /**
  * 任务进度
  *
  * @author luyi
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("file_task_import_record")
 public class FileTaskImportRecord extends BaseEntity {
@@ -22,12 +28,13 @@ public class FileTaskImportRecord extends BaseEntity {
     /**
      * 任务编码
      */
-    private String taskId;
+    private String taskCode;
 
     /**
      * 请求参数
      */
-    private String requestParam;
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private Map<String, Object> requestBody;
 
     /**
      * 任务状态

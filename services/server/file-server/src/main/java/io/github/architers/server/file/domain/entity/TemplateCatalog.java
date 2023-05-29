@@ -5,11 +5,13 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.github.architers.context.autocode.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author luyi
  * 导入模板目录
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("file_template_catalog")
 public class TemplateCatalog extends BaseEntity {

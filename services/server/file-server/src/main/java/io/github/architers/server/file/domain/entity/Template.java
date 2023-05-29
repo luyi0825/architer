@@ -5,12 +5,14 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.github.architers.context.autocode.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 导入模板
  *
  * @author luyi
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("file_template")
 public class Template extends BaseEntity {
