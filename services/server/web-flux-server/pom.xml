@@ -55,33 +55,9 @@
             <version>3.5.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.rocketmq</groupId>
-                    <artifactId>rocketmq-client</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.rocketmq</groupId>
-                    <artifactId>rocketmq-acl</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-client -->
-        <dependency>
-            <groupId>org.apache.rocketmq</groupId>
-            <artifactId>rocketmq-client</artifactId>
-            <version>4.9.4</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-acl -->
-        <dependency>
-            <groupId>org.apache.rocketmq</groupId>
-            <artifactId>rocketmq-acl</artifactId>
-            <version>4.9.4</version>
-        </dependency>
+
+
 
         <dependency>
             <groupId>io.github.architers</groupId>
