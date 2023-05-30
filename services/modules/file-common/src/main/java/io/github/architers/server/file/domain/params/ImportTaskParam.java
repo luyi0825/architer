@@ -22,6 +22,11 @@ public class ImportTaskParam<T> implements ExecuteTaskParam {
     private String taskCode;
 
     /**
+     * 源文件
+     */
+    private String sourceUrl;
+
+    /**
      * 导出人
      */
     private Long exportUserId;

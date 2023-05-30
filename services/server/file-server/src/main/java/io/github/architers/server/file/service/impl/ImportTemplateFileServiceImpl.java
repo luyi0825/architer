@@ -4,11 +4,9 @@ import com.alibaba.excel.EasyExcel;
 import io.github.architers.context.exception.BusException;
 import io.github.architers.context.exception.BusLogException;
 import io.github.architers.server.file.domain.entity.FileTemplate;
-import io.github.architers.server.file.domain.entity.FileTemplateCheckFileVersion;
 import io.github.architers.server.file.domain.entity.FileTemplateCheckRowInfo;
 import io.github.architers.server.file.service.ImportTemplateFileService;
 import io.github.architers.server.file.service.FileTemplateService;
-import io.github.architers.server.file.utils.ExcelVersionUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 

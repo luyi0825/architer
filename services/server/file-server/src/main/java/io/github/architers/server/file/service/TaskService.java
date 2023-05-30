@@ -4,6 +4,8 @@ import io.github.architers.server.file.domain.param.ExecuteTaskParam;
 import io.github.architers.server.file.eums.TransactionMessageResult;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 /**
  * @author luyi
  */
@@ -14,5 +16,5 @@ public interface TaskService {
 
     TransactionMessageResult executeExportTask(ExecuteTaskParam executeTaskParam);
 
-    TransactionMessageResult executeImportTask(ExecuteTaskParam executeTaskParam, MultipartFile file);
+    TransactionMessageResult executeImportTask(ExecuteTaskParam executeTaskParam, MultipartFile file) throws IOException;
 }

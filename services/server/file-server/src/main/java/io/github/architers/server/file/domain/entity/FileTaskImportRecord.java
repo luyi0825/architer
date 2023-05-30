@@ -5,11 +5,13 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.github.architers.context.autocode.BaseEntity;
 import io.github.architers.server.file.enums.TaskRecordStatusEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -24,6 +26,11 @@ public class FileTaskImportRecord extends BaseEntity {
 
     @TableId(type = IdType.AUTO)
     private Long id;
+
+    /**
+     * 请求ID
+     */
+    private String requestId;
 
     /**
      * 任务编码
@@ -67,6 +74,18 @@ public class FileTaskImportRecord extends BaseEntity {
      * 备注信息
      */
     private String remark;
+
+    /**
+     * 开始时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date startTime;
+
+    /**
+     * 结束时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date endTime;
 
 
 }

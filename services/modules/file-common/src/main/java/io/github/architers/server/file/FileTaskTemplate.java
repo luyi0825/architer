@@ -45,6 +45,7 @@ public class FileTaskTemplate {
         try {
             importStatusReportDTO.setRequestId(importTaskParam.getRequestId());
             importStatusReportDTO.setTaskCode(importTaskParam.getTaskCode());
+
             //开始导入
             importStatusReport.processing(importStatusReportDTO);
             boolean success = importTaskFunction.apply(importTaskParam, importStatusReportDTO);

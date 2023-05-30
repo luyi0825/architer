@@ -2,6 +2,7 @@ package io.github.arthiters.test;
 
 import io.github.architers.server.file.FileTaskTemplate;
 import io.github.architers.server.file.RocketMqExportStatusReport;
+import io.github.architers.server.file.RocketMqImportStatusReport;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +18,12 @@ public class TestApp {
     public RocketMqExportStatusReport rocketMqExportStatusReport(RocketMQTemplate rocketMQTemplate) {
         return new RocketMqExportStatusReport(rocketMQTemplate);
     }
+
+    @Bean
+    public RocketMqImportStatusReport rocketMqImportStatusReport(RocketMQTemplate rocketMQTemplate) {
+        return new RocketMqImportStatusReport(rocketMQTemplate);
+    }
+
 
     @Bean
     public FileTaskTemplate fileTaskTemplate() {

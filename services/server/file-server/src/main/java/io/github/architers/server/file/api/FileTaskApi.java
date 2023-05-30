@@ -10,12 +10,14 @@ import io.github.architers.server.file.eums.TransactionMessageResult;
 import io.github.architers.server.file.service.IFileTaskExportRecordService;
 import io.github.architers.server.file.service.IFileTaskImportRecordService;
 import io.github.architers.server.file.service.TaskService;
+import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 
 /**
  * @author luyi
@@ -64,7 +66,8 @@ public class FileTaskApi {
      */
     @PostMapping("/executeImportTask")
     public TransactionMessageResult executeImportTask(@Validated ExecuteTaskParam executeTaskParam,
-                                                      @NotNull(message = "导入文件不能为空") MultipartFile file) {
+                                                      @NotNull(message = "导入文件不能为空") MultipartFile file) throws IOException {
+        Assert.notNull(file,"导入文件不能为空");
         return taskService.executeImportTask(executeTaskParam, file);
     }
 

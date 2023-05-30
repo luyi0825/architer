@@ -1,7 +1,9 @@
 package io.github.architers.server.file.utils;
 
+import io.github.architers.context.exception.BusException;
 import io.github.architers.context.exception.SysException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.util.UUID;
@@ -43,6 +45,17 @@ public class TempFileUtil {
     public static File generateTempFile(String oldFileName) {
         String fileSuffix = oldFileName.substring(oldFileName.lastIndexOf("."));
         return new File(TMP_DIR + File.separator + UUID.randomUUID() + fileSuffix);
+    }
+
+    /**
+     * 得到文件后缀
+     */
+    public static String getFileSuffix(String fileName) {
+        if (!StringUtils.hasText(fileName)) {
+            throw new BusException("文件名为空");
+        }
+        return fileName.substring(fileName.lastIndexOf("."));
+
     }
 
 }

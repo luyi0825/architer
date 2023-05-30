@@ -35,7 +35,7 @@ public class ImportStatusReportDTO implements FileStatusReportDTO {
     /**
      * 总数量
      */
-    private String totalNum;
+    private Integer totalNum;
 
     /**
      * 成功数量

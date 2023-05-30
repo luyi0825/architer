@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.architers.component.mybatisplus.MybatisPageUtils;
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
+import io.github.architers.server.file.domain.entity.FileTaskExportRecord;
 import io.github.architers.server.file.domain.entity.FileTaskImportRecord;
 import io.github.architers.server.file.mapper.FileTaskImportRecordMapper;
 import io.github.architers.server.file.domain.param.TaskRecordsPageParam;
@@ -18,12 +19,13 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 
 /**
- * @author Administrator
+ * 文件导入记录service
+ *
+ * @author luyi
  */
 @Service
 @Slf4j
-public class FileTaskImportRecordServiceImpl extends ServiceImpl<FileTaskImportRecordMapper,FileTaskImportRecord> implements IFileTaskImportRecordService {
-
+public class FileTaskImportRecordServiceImpl extends ServiceImpl<FileTaskImportRecordMapper, FileTaskImportRecord> implements IFileTaskImportRecordService {
 
 
     @Resource
@@ -39,5 +41,11 @@ public class FileTaskImportRecordServiceImpl extends ServiceImpl<FileTaskImportR
                     .orderByDesc(FileTaskImportRecord::getId);
             return fileTaskImportRecordMapper.selectList(taskRecordWrapper);
         });
+    }
+
+    @Override
+    public boolean updateByRequestId(FileTaskImportRecord fileTaskImportRecord) {
+        Wrapper<FileTaskImportRecord> updateWrapper = Wrappers.lambdaUpdate(FileTaskImportRecord.class).eq(FileTaskImportRecord::getRequestId, fileTaskImportRecord.getRequestId());
+        return this.baseMapper.update(fileTaskImportRecord, updateWrapper) == 1;
     }
 }

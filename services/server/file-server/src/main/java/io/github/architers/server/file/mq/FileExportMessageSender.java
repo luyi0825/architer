@@ -2,6 +2,7 @@ package io.github.architers.server.file.mq;
 
 
 import io.github.architers.server.file.domain.entity.FileTaskExportRecord;
+import io.github.architers.server.file.domain.entity.FileTaskImportRecord;
 import io.github.architers.server.file.enums.TaskRecordStatusEnum;
 import io.github.architers.server.file.eums.TransactionMessageResult;
 import io.github.architers.server.file.mq.mq.LocalTransactionBusinessKey;
@@ -31,5 +32,16 @@ public class FileExportMessageSender {
         return TransactionMessageResult.of(transactionSendResult.getLocalTransactionState());
     }
 
+    /**
+     * 发送导入文件的消息
+     */
 
+    public TransactionMessageResult sendImportTaskMessage(FileTaskImportRecord fileTaskImportRecord) {
+        Message<FileTaskImportRecord> importRecordMessage = MessageBuilder.withPayload(fileTaskImportRecord)
+                .setHeader(LocalTransactionBusinessKey.BUSINESS_KEY_HEADER, "file_import_task")
+                .setHeader(RocketMQHeaders.PREFIX+RocketMQHeaders.KEYS,fileTaskImportRecord.getRequestId())
+                .build();
+        TransactionSendResult transactionSendResult = rocketMQTemplate.sendMessageInTransaction("file_import_task", importRecordMessage, TaskRecordStatusEnum.IN_LINE);
+        return TransactionMessageResult.of(transactionSendResult.getLocalTransactionState());
+    }
 }
