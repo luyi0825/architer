@@ -1,6 +1,7 @@
 package io.github.architers.server.file.service.impl;
 
 import cn.hutool.core.lang.UUID;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import io.github.architers.context.exception.BusException;
 import io.github.architers.context.exception.BusLogException;
 import io.github.architers.context.utils.UserUtils;
@@ -72,7 +73,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TransactionMessageResult executeExportTask(ExecuteTaskParam executeTaskParam) {
         FileTaskExportRecord fileTaskExportRecord = new FileTaskExportRecord();
-        fileTaskExportRecord.setRequestId(UUID.fastUUID().toString(true));
+        fileTaskExportRecord.setId(IdWorker.getId(FileTaskExportRecord.class));
         fileTaskExportRecord.setRequestBody(executeTaskParam.getRequestBody());
         fileTaskExportRecord.setStatus(TaskRecordStatusEnum.IN_LINE.getStatus());
         fileTaskExportRecord.setCreateBy(UserUtils.getUserId());
@@ -91,8 +92,8 @@ public class TaskServiceImpl implements TaskService {
             throw new BusException("上传文件失败");
         }
         FileTaskImportRecord fileTaskImportRecord = new FileTaskImportRecord();
+        fileTaskImportRecord.setId(IdWorker.getId(FileTaskImportRecord.class));
         fileTaskImportRecord.setSourceUrl(putFileResponse.getUrl());
-        fileTaskImportRecord.setRequestId(UUID.fastUUID().toString(true));
         fileTaskImportRecord.setRequestBody(executeTaskParam.getRequestBody());
         fileTaskImportRecord.setStatus(TaskRecordStatusEnum.IN_LINE.getStatus());
         fileTaskImportRecord.setCreateBy(UserUtils.getUserId());

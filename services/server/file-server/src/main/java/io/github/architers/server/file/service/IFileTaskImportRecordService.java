@@ -18,6 +18,4 @@ public interface IFileTaskImportRecordService extends IService<FileTaskImportRec
 
     PageResult<FileTaskImportRecord> getImportRecordsByPage(PageRequest<TaskRecordsPageParam> pageRequest);
 
-
-    boolean updateByRequestId(FileTaskImportRecord fileTaskImportRecord);
 }

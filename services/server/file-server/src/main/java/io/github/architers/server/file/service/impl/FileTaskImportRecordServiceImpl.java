@@ -43,9 +43,4 @@ public class FileTaskImportRecordServiceImpl extends ServiceImpl<FileTaskImportR
         });
     }
 
-    @Override
-    public boolean updateByRequestId(FileTaskImportRecord fileTaskImportRecord) {
-        Wrapper<FileTaskImportRecord> updateWrapper = Wrappers.lambdaUpdate(FileTaskImportRecord.class).eq(FileTaskImportRecord::getRequestId, fileTaskImportRecord.getRequestId());
-        return this.baseMapper.update(fileTaskImportRecord, updateWrapper) == 1;
-    }
 }

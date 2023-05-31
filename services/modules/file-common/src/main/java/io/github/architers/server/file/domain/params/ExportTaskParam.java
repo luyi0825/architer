@@ -12,9 +12,9 @@ import java.io.Serializable;
 @Data
 public class ExportTaskParam<T>  implements ExecuteTaskParam {
     /**
-     * 任务请求ID
+     * 请求记录ID
      */
-    private String requestId;
+    private Long recordId;
 
     /**
      * 任务编码

@@ -49,9 +49,4 @@ public class FileTaskExportRecordServiceImpl extends ServiceImpl<FileTaskExportR
         baseMapper.update(fileTaskExportRecord, updateWrapper);
     }
 
-    @Override
-    public boolean updateByRequestId(FileTaskExportRecord fileTaskExportRecord) {
-        Wrapper<FileTaskExportRecord> updateWrapper = Wrappers.lambdaUpdate(FileTaskExportRecord.class).eq(FileTaskExportRecord::getRequestId, fileTaskExportRecord.getRequestId());
-        return this.baseMapper.update(fileTaskExportRecord, updateWrapper) == 1;
-    }
 }

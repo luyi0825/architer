@@ -26,10 +26,6 @@ public class FileTaskExportRecord extends BaseEntity {
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 任务请求ID
-     */
-    private String requestId;
 
     /**
      * 任务编码

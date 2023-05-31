@@ -48,9 +48,9 @@ public class FileImportMessageConsumer implements RocketMQListener<MessageExt> {
             //三次就导出失败
             FileTaskImportRecord fileTaskImportRecord = new FileTaskImportRecord();
             fileTaskImportRecord.setStatus(TaskRecordStatusEnum.CANCEL.getStatus());
-            fileTaskImportRecord.setRequestId(importRecord.getRequestId());
+            fileTaskImportRecord.setId(importRecord.getId());
             fileTaskImportRecord.setRemark("导出重试达到指定次数，任务取消");
-            fileTaskImportRecordService.updateByRequestId(fileTaskImportRecord);
+            fileTaskImportRecordService.updateById(fileTaskImportRecord);
             return;
         }
         FileTask fileTask = fileTaskService.findByTaskCode(importRecord.getTaskCode());
@@ -58,7 +58,7 @@ public class FileImportMessageConsumer implements RocketMQListener<MessageExt> {
         importTaskParam.setSourceUrl(importRecord.getSourceUrl());
         importTaskParam.setExportUserId(importRecord.getCreateBy());
         importTaskParam.setTaskCode(importRecord.getTaskCode());
-        importTaskParam.setRequestId(importRecord.getRequestId());
+        importTaskParam.setRecordId(importRecord.getId());
         importTaskParam.setRequestBody(importRecord.getRequestBody());
         //请求头
         HttpHeaders headers = new HttpHeaders();

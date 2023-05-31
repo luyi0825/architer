@@ -26,7 +26,7 @@ public class FileExportMessageSender {
     public TransactionMessageResult sendExportTaskMessage(FileTaskExportRecord fileTaskExportRecord) {
         Message<FileTaskExportRecord> exportRecordMessage = MessageBuilder.withPayload(fileTaskExportRecord)
                 .setHeader(LocalTransactionBusinessKey.BUSINESS_KEY_HEADER, "file_export_task")
-                .setHeader(RocketMQHeaders.PREFIX+RocketMQHeaders.KEYS,fileTaskExportRecord.getRequestId())
+                .setHeader(RocketMQHeaders.PREFIX+RocketMQHeaders.KEYS,fileTaskExportRecord.getId())
                 .build();
         TransactionSendResult transactionSendResult = rocketMQTemplate.sendMessageInTransaction(topic, exportRecordMessage, TaskRecordStatusEnum.IN_LINE);
         return TransactionMessageResult.of(transactionSendResult.getLocalTransactionState());
@@ -39,7 +39,7 @@ public class FileExportMessageSender {
     public TransactionMessageResult sendImportTaskMessage(FileTaskImportRecord fileTaskImportRecord) {
         Message<FileTaskImportRecord> importRecordMessage = MessageBuilder.withPayload(fileTaskImportRecord)
                 .setHeader(LocalTransactionBusinessKey.BUSINESS_KEY_HEADER, "file_import_task")
-                .setHeader(RocketMQHeaders.PREFIX+RocketMQHeaders.KEYS,fileTaskImportRecord.getRequestId())
+                .setHeader(RocketMQHeaders.PREFIX+RocketMQHeaders.KEYS,fileTaskImportRecord.getId())
                 .build();
         TransactionSendResult transactionSendResult = rocketMQTemplate.sendMessageInTransaction("file_import_task", importRecordMessage, TaskRecordStatusEnum.IN_LINE);
         return TransactionMessageResult.of(transactionSendResult.getLocalTransactionState());

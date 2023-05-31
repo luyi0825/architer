@@ -12,11 +12,6 @@ import io.github.architers.server.file.domain.entity.FileTaskExportRecord;
 public interface IFileTaskExportRecordService extends IService<FileTaskExportRecord> {
 
     /**
-     * 通过requestId更新
-     */
-    boolean updateByRequestId(FileTaskExportRecord fileTaskExportRecord);
-
-    /**
      * 初始化任务
      *
      * @param taskCode 任务编码

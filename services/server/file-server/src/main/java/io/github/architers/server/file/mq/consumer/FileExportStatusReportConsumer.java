@@ -22,7 +22,7 @@ public class FileExportStatusReportConsumer implements RocketMQListener<ExportSt
     @Override
     public void onMessage(ExportStatusReportDTO statusReport) {
         FileTaskExportRecord fileTaskExportRecord = new FileTaskExportRecord();
-        fileTaskExportRecord.setRequestId(statusReport.getRequestId());
+        fileTaskExportRecord.setId(statusReport.getRecordId());
         fileTaskExportRecord.setStatus(statusReport.getStatus());
         fileTaskExportRecord.setResultUrl(statusReport.getResultUrl());
         fileTaskExportRecord.setSuccessNum(statusReport.getSuccessNum());
@@ -31,6 +31,6 @@ public class FileExportStatusReportConsumer implements RocketMQListener<ExportSt
         fileTaskExportRecord.setEndTime(statusReport.getEndTime());
         fileTaskExportRecord.setEndTime(statusReport.getEndTime());
         fileTaskExportRecord.setFileName(statusReport.getFileName());
-        fileTaskExportRecordService.updateByRequestId(fileTaskExportRecord);
+        fileTaskExportRecordService.updateById(fileTaskExportRecord);
     }
 }

@@ -25,7 +25,7 @@ public class FileImportStatusReportConsumer implements RocketMQListener<ImportSt
     @Override
     public void onMessage(ImportStatusReportDTO statusReport) {
         FileTaskImportRecord fileTaskImportRecord = new FileTaskImportRecord();
-        fileTaskImportRecord.setRequestId(statusReport.getRequestId());
+        fileTaskImportRecord.setId(statusReport.getRecordId());
         fileTaskImportRecord.setStatus(statusReport.getStatus());
         fileTaskImportRecord.setErrorUrl(statusReport.getErrorUrl());
         fileTaskImportRecord.setTotalNum(statusReport.getTotalNum());
@@ -34,6 +34,6 @@ public class FileImportStatusReportConsumer implements RocketMQListener<ImportSt
         fileTaskImportRecord.setStartTime(statusReport.getStartTime());
         fileTaskImportRecord.setEndTime(statusReport.getEndTime());
         fileTaskImportRecord.setEndTime(statusReport.getEndTime());
-        fileTaskImportRecordService.updateByRequestId(fileTaskImportRecord);
+        fileTaskImportRecordService.updateById(fileTaskImportRecord);
     }
 }

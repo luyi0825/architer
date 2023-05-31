@@ -12,9 +12,9 @@ import java.util.Date;
 public class ExportStatusReportDTO implements FileStatusReportDTO {
 
     /**
-     * 请求ID
+     * 请求记录ID
      */
-    private String requestId;
+    private Long recordId;
 
     /**
      * 任务编码

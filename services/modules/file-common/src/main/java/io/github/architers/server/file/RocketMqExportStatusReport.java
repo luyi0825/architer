@@ -57,7 +57,7 @@ public class RocketMqExportStatusReport implements ExportStatusReport {
 
     private void sendMessage(ExportStatusReportDTO exportStatusReportDTO) {
         Message<ExportStatusReportDTO> message = MessageBuilder.withPayload(exportStatusReportDTO)
-                .setHeader(RocketMQHeaders.PREFIX + RocketMQHeaders.KEYS, exportStatusReportDTO.getRequestId())
+                .setHeader(RocketMQHeaders.PREFIX + RocketMQHeaders.KEYS, exportStatusReportDTO.getRecordId())
                 .setHeader(RocketMQHeaders.PREFIX + RocketMQHeaders.TAGS, exportStatusReportDTO.getTaskCode())
                 .build();
 

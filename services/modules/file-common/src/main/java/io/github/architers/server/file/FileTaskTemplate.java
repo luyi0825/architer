@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 
 @Service
 @Slf4j
@@ -23,7 +22,7 @@ public class FileTaskTemplate {
     public void exportFile(ExportTaskParam<?> exportTaskParam, BiFunction<ExportTaskParam<?>,ExportStatusReportDTO,Boolean> exportTaskExecute) {
         ExportStatusReportDTO exportStatusReportDTO = new ExportStatusReportDTO();
         try {
-            exportStatusReportDTO.setRequestId(exportTaskParam.getRequestId());
+            exportStatusReportDTO.setRecordId(exportTaskParam.getRecordId());
             exportStatusReportDTO.setTaskCode(exportTaskParam.getTaskCode());
             //开始导出
             exportStatusReport.processing(exportStatusReportDTO);
@@ -43,7 +42,7 @@ public class FileTaskTemplate {
     public void importFile(ImportTaskParam<?> importTaskParam, BiFunction<ImportTaskParam<?>,ImportStatusReportDTO,Boolean> importTaskFunction) {
         ImportStatusReportDTO importStatusReportDTO = new ImportStatusReportDTO();
         try {
-            importStatusReportDTO.setRequestId(importTaskParam.getRequestId());
+            importStatusReportDTO.setRecordId(importTaskParam.getRecordId());
             importStatusReportDTO.setTaskCode(importTaskParam.getTaskCode());
 
             //开始导入
