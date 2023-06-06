@@ -1,7 +1,6 @@
 package io.github.architers.redisson.cache.batchdelete.value;
 
 import io.github.architers.redisson.cache.CacheUser;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.test.context.SpringBootTest;
