@@ -14,9 +14,9 @@ import java.util.Map;
 public class CaffeineProperties {
 
     /**
-     * 当没有设置过期时间（也就是-1)的过期时间-默认15年）
+     * 当没有设置过期时间（也就是-1)的过期时间-默认10年）
      */
-    private final Long expireNanosWhenNoSet = (Long.MAX_VALUE >> 1);
+    private final Long expireNanosWhenNoSet = 10L * 365L * 24L * 60L * 60L * 1000L * 1000L;
 
 
     private Map<String, CaffeineConfig> caches;

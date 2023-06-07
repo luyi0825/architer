@@ -5,6 +5,7 @@ import io.github.architers.context.cache.annotation.DeleteCache;
 import io.github.architers.context.cache.model.DeleteParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
+import io.github.architers.context.utils.JsonUtils;
 
 import java.lang.annotation.Annotation;
 
@@ -44,7 +45,7 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
         deleteParam.setCacheName(cacheName);
         Object key = super.parseCacheKey(expressionMetadata, deleteCache.key());
 
-        deleteParam.setKey(key);
+        deleteParam.setKey(JsonUtils.toJsonString(key));
         deleteParam.setAsync(deleteCache.async());
         //deleteCacheParam.setKeyGenerator();
        // deleteCacheParam.setCacheOperate(super.cacheCacheOperateFactory.getCacheOperate(deleteCache.cacheOperate()));

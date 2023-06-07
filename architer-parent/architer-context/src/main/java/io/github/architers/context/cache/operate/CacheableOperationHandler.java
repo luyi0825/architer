@@ -8,6 +8,8 @@ import io.github.architers.context.cache.model.GetParam;
 import io.github.architers.context.cache.model.PutParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
+import io.github.architers.context.utils.JsonUtils;
+import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
 
@@ -40,14 +42,20 @@ public class CacheableOperationHandler extends CacheOperationHandler {
         CacheOperate cacheOperate = super.cacheOperateFactory.getCacheOperate(cacheable.cacheOperate());
 
         Object key = super.parseCacheKey(expressionMetadata, cacheable.key());
-        CacheNameWrapper cacheNameWrapper = cacheNameWrapperFactory.getCacheNameWrapper(cacheable.cacheNameWrapper());
-        String cacheName = cacheNameWrapper.getCacheName(expressionMetadata, cacheable.cacheName());
+        String cacheName;
+        if (StringUtils.hasText(cacheable.cacheNameWrapper())) {
+            CacheNameWrapper cacheNameWrapper = cacheNameWrapperFactory.getCacheNameWrapper(cacheable.cacheNameWrapper());
+            cacheName = cacheNameWrapper.getCacheName(expressionMetadata, cacheable.cacheName());
+        } else {
+            cacheName = cacheable.cacheName();
+        }
+
         GetParam getParam = new GetParam();
         getParam.setCacheOperate(cacheOperate);
         //同步：没有值才查询数据库
         getParam.setAsync(false);
         getParam.setCacheName(cacheable.cacheName());
-        getParam.setKey(key);
+        getParam.setKey(JsonUtils.toJsonString(key));
         Object value = cacheOperate.get(getParam);
         if (!isNullValue(value)) {
             cacheValue = value;
@@ -59,7 +67,7 @@ public class CacheableOperationHandler extends CacheOperationHandler {
             PutParam putParam = new PutParam();
             putParam.setCacheName(cacheName);
             putParam.setCacheValue(returnValue);
-            putParam.setKey(key);
+            putParam.setKey(JsonUtils.toJsonString(key));
             putParam.setTimeUnit(cacheable.timeUnit());
             putParam.setExpireTime(expireTime);
             cacheOperate.put(putParam);

@@ -26,7 +26,7 @@ public abstract class BaseCacheOperationParam implements CacheOperationParam {
     /**
      * 解析后的缓存key
      */
-    private Object key;
+    private String key;
 
     /**
      * key的生成器

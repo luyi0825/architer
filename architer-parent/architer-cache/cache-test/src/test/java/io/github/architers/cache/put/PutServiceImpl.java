@@ -15,7 +15,7 @@ public class PutServiceImpl implements PutService {
     }
 
     @Override
-    public UserInfo getUserInfo(String userName) {
+    public UserInfo getUserInfo(String username) {
         return null;
     }
 

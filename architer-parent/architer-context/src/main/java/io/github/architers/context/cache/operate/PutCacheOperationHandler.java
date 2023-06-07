@@ -6,6 +6,7 @@ import io.github.architers.context.cache.annotation.PutCache;
 import io.github.architers.context.cache.model.PutParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
+import io.github.architers.context.utils.JsonUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
@@ -55,12 +56,11 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         CacheOperate cacheOperate = super.cacheOperateFactory.getCacheOperate(putCache.cacheOperate());
         PutParam putParam = new PutParam();
         putParam.setCacheName(cacheName);
-        putParam.setKey(key);
+        putParam.setKey(JsonUtils.toJsonString(key));
         putParam.setCacheOperate(cacheOperate);
-        putParam.setCacheName(putParam.getCacheName());
         putParam.setCacheValue(value);
         putParam.setExpireTime(expireTime);
-        putParam.setTimeUnit(putParam.getTimeUnit());
+        putParam.setTimeUnit(putCache.timeUnit());
         cacheOperate.put(putParam);
 
     }
