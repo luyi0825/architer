@@ -1,9 +1,9 @@
 
-package io.github.architers.redisson.cache;
+package io.github.architers.cache.redisson;
 
 
-import io.github.architers.redisson.cache.support.MapCacheOperate;
-import io.github.architers.redisson.cache.support.ValueCacheOperate;
+import io.github.architers.cache.redisson.support.RedissonMapCacheOperate;
+import io.github.architers.cache.redisson.support.RedissonValueCacheOperate;
 import io.github.architers.context.cache.annotation.EnableArchiterCaching;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -31,7 +31,7 @@ import java.io.InputStream;
 @EnableConfigurationProperties(RedissonProperties.class)
 public class RedissonCacheAutoConfiguration {
 
-    private final String CACHE_CLIENT_BEAN_NAME = "redissonCacheClient";
+    public final static String CACHE_CLIENT_BEAN_NAME = "redissonCacheClient";
     @Resource
     private RedissonProperties redissonProperties;
 
@@ -89,13 +89,13 @@ public class RedissonCacheAutoConfiguration {
 //    }
 
     @Bean
-    public ValueCacheOperate valueCacheOperate(@Qualifier(CACHE_CLIENT_BEAN_NAME) RedissonClient redissonClient) {
-        return new ValueCacheOperate(redissonClient);
+    public RedissonValueCacheOperate valueCacheOperate(@Qualifier(CACHE_CLIENT_BEAN_NAME) RedissonClient redissonClient) {
+        return new RedissonValueCacheOperate(redissonClient);
     }
 
     @Bean
-    public MapCacheOperate mapCacheOperate(@Qualifier(CACHE_CLIENT_BEAN_NAME) RedissonClient redissonClient) {
-        return new MapCacheOperate(redissonClient);
+    public RedissonMapCacheOperate mapCacheOperate(@Qualifier(CACHE_CLIENT_BEAN_NAME) RedissonClient redissonClient) {
+        return new RedissonMapCacheOperate(redissonClient);
     }
 
 //    @Bean("cacheStringRedisTemplate")

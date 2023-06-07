@@ -15,7 +15,7 @@ public class MqttTest2 {
         String pubTopic = "testtopic/1";
         String content = "Hello World";
         int qos = 2;
-        String broker = "tcp://broker.emqx:1883";
+        String broker = "tcp://emqx.broker:1883";
         String clientId = "emqx_test2";
         MemoryPersistence persistence = new MemoryPersistence();
 

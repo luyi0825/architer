@@ -11,9 +11,11 @@
 #          masterAddress: redis://192.168.2.222:6379
 #          slaveAddresses: redis://192.168.2.222:6380
 
+#architers:
+#  cache:
+#    default-cache-operate-class: io.github.architers.cache.redisson.support.ValueCacheOperate
 architers:
   cache:
-    default-cache-operate-class: io.github.architers.redisson.cache.support.ValueCacheOperate
-
+    default-cache-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
 
 

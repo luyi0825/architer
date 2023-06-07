@@ -15,6 +15,11 @@ public class PutServiceImpl implements PutService {
     }
 
     @Override
+    public UserInfo getUserInfo(String userName) {
+        return null;
+    }
+
+    @Override
     public void twoPut(UserInfo userInfo) {
         System.out.println("保存到数据库");
     }

@@ -45,8 +45,13 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
 
 
         Object key = parseCacheKey(expressionMetadata, putCache.key());
-        CacheNameWrapper cacheNameWrapper = cacheNameWrapperFactory.getCacheNameWrapper(putCache.cacheNameWrapper());
-        String cacheName = cacheNameWrapper.getCacheName(expressionMetadata, putCache.cacheName());
+        String cacheName;
+        if (StringUtils.hasText(putCache.cacheNameWrapper())) {
+            CacheNameWrapper cacheNameWrapper = cacheNameWrapperFactory.getCacheNameWrapper(putCache.cacheNameWrapper());
+            cacheName = cacheNameWrapper.getCacheName(expressionMetadata, putCache.cacheName());
+        } else {
+            cacheName = putCache.cacheName();
+        }
         CacheOperate cacheOperate = super.cacheOperateFactory.getCacheOperate(putCache.cacheOperate());
         PutParam putParam = new PutParam();
         putParam.setCacheName(cacheName);

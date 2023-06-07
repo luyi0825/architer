@@ -1,4 +1,4 @@
-package io.github.architers.server.file.mapper;
+package io.github.architers.server.file;
 
 import org.eclipse.paho.mqttv5.client.MqttCallback;
 import org.eclipse.paho.mqttv5.client.MqttClient;
@@ -8,51 +8,53 @@ import org.eclipse.paho.mqttv5.common.MqttException;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.MqttSubscription;
 
-import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
-public class MqttTest {
-    public static void main(String[] args) {
+public class Test {
+    public static void main(String[] args) throws MqttException {
         String subTopic = "testtopic/#";
         String pubTopic = "testtopic/1";
         String content = "Hello World";
         int qos = 2;
-        String broker = "tcp://emqx.broker:1883";
-        String clientId = "emqx_test1";
+        String broker = "tcp://120.48.170.201:1883";
+        String clientId = "file_task";
+        MqttClient mt = new MqttClient(broker, clientId);
         MemoryPersistence persistence = new MemoryPersistence();
-
         try {
             MqttClient client = new MqttClient(broker, clientId, persistence);
 
-            // MQTT connection option
+            // MQTT 连接选项
             MqttConnectionOptions connOpts = new MqttConnectionOptions();
-            connOpts.setUserName("emqx_test");
-            connOpts.setPassword("emqx_test_password".getBytes(StandardCharsets.UTF_8));
-            // retain session
-           // connOpts.setCleanSession(true);
+            connOpts.setUserName("test");
+            connOpts.setPassword("test".getBytes());
+            // 保留会话
+            connOpts.setCleanStart(false);
 
-            // set callback
+            // 设置回调
             client.setCallback(new OnMessageCallback());
 
-            // establish a connection
+            // 建立连接
             System.out.println("Connecting to broker: " + broker);
             client.connect(connOpts);
 
-            System.out.println("Connected");
             System.out.println("Publishing message: " + content);
-            MqttSubscription mqttSubscription = new  MqttSubscription(subTopic);
-            // Subscribe
+
+            MqttSubscription mqttSubscription = new MqttSubscription(subTopic);
+
+
+            // 订阅
             client.subscribe(new MqttSubscription[]{mqttSubscription});
 
-            // Required parameters for message publishing
+            // 消息发布所需参数
             MqttMessage message = new MqttMessage(content.getBytes());
             message.setQos(qos);
             client.publish(pubTopic, message);
-            System.out.println("Message published");
+            // System.out.println("Message published");
 
-           // client.disconnect();
-           // System.out.println("Disconnected");
-           // client.close();
-           // System.exit(0);
+//            client.disconnect();
+//            System.out.println("Disconnected");
+//            client.close();
+//            System.exit(0);
         } catch (MqttException me) {
             System.out.println("reason " + me.getReasonCode());
             System.out.println("msg " + me.getMessage());
@@ -62,4 +64,6 @@ public class MqttTest {
             me.printStackTrace();
         }
     }
+
+
 }

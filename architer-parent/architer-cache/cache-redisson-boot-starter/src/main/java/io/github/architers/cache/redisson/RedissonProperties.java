@@ -1,5 +1,6 @@
-package io.github.architers.redisson.cache;
+package io.github.architers.cache.redisson;
 
+import io.github.architers.cache.redisson.RedissonConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.Serializable;

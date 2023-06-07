@@ -1,4 +1,4 @@
-package io.github.architers.redisson.cache.support;
+package io.github.architers.cache.redisson.support;
 
 import io.github.architers.context.Symbol;
 import io.github.architers.context.cache.utils.BatchValueUtils;
@@ -16,11 +16,11 @@ import java.util.Map;
  *
  * @author luyi
  */
-public class MapCacheOperate implements CacheOperate {
+public class RedissonMapCacheOperate implements CacheOperate {
 
     private final RedissonClient redissonClient;
 
-    public MapCacheOperate(RedissonClient redissonClient) {
+    public RedissonMapCacheOperate(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
     }
 

@@ -2,22 +2,22 @@ package io.github.architers.redisson.cache.cacheable.map;
 
 
 import io.github.architers.redisson.cache.CacheUser;
-import io.github.architers.redisson.cache.support.MapCacheOperate;
+import io.github.architers.cache.redisson.support.RedissonMapCacheOperate;
 import io.github.architers.context.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface MapCacheableService {
     @Cacheable(cacheName = "mapCacheableService:oneCacheable", key = "#userName", cacheOperate =
-            MapCacheOperate.class)
+            RedissonMapCacheOperate.class)
     CacheUser oneCacheable(String userName);
 
     @Cacheable(cacheName = "mapCacheableService:twoCacheable_key1", key = "#userName",
             cacheOperate =
-                    MapCacheOperate.class)
+                    RedissonMapCacheOperate.class)
     @Cacheable(cacheName = "mapCacheableService:twoCacheable_key2", key = "#result.phone",
             cacheOperate =
-                    MapCacheOperate.class)
+                    RedissonMapCacheOperate.class)
     CacheUser twoCacheable(String userName);
 
     /**
@@ -25,7 +25,7 @@ public interface MapCacheableService {
      */
     @Cacheable(cacheName = "mapCacheableService:expireTime_never", key = "#userName", expireTime
             = -1L, cacheOperate =
-            MapCacheOperate.class)
+            RedissonMapCacheOperate.class)
     CacheUser expireTime_never(String userName);
 
 
@@ -34,28 +34,28 @@ public interface MapCacheableService {
      */
     @Cacheable(cacheName = "mapCacheableService:expireTime_1_minutes", key = "#userName",
             cacheOperate =
-                    MapCacheOperate.class, expireTime = 1)
+                    RedissonMapCacheOperate.class, expireTime = 1)
     CacheUser expireTime_1_minutes(String userName);
 
     /**
      * 随机时间
      */
     @Cacheable(cacheName = "mapCacheableService:randomTime", key = "#userName", expireTime = 120,
-            randomTime = 40, cacheOperate = MapCacheOperate.class)
+            randomTime = 40, cacheOperate = RedissonMapCacheOperate.class)
     CacheUser randomTime(String userName);
 
     /**
      * userName长度大于10
      */
     @Cacheable(cacheName = "mapCacheableService:condition", key = "#userName", condition =
-            "#userName.length>10", cacheOperate = MapCacheOperate.class)
+            "#userName.length>10", cacheOperate = RedissonMapCacheOperate.class)
     CacheUser condition(String userName);
 
     /**
      * unless的不缓存
      */
     @Cacheable(cacheName = "mapCacheableService:unless", key = "#userName", unless = "#userName" +
-            ".startsWith('unless')", cacheOperate = MapCacheOperate.class)
+            ".startsWith('unless')", cacheOperate = RedissonMapCacheOperate.class)
     CacheUser unless(String userName);
 
     /**

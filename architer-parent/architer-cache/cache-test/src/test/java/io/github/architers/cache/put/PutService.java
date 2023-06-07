@@ -1,11 +1,15 @@
 package io.github.architers.cache.put;
 
 import io.github.architers.cache.UserInfo;
+import io.github.architers.context.cache.annotation.Cacheable;
 import io.github.architers.context.cache.annotation.PutCache;
 
 public interface PutService {
     @PutCache(cacheName = "onePut", key = "#userInfo.username", cacheValue = "#userInfo")
     void onePut(UserInfo userInfo);
+
+    @Cacheable(cacheName = "onePut", key = "#username")
+    UserInfo getUserInfo(String username);
 
     @PutCache(cacheName = "twoPut", key = "#userInfo.username+'_1'", cacheValue = "#userInfo")
     @PutCache(cacheName = "twoPut", key = "#userInfo.username+'_2'", cacheValue = "#userInfo")

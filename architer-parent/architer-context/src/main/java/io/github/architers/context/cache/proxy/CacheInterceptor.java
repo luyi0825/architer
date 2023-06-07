@@ -99,11 +99,12 @@ public class CacheInterceptor implements MethodInterceptor {
             for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
                 if (cacheOperationHandler.match(operationAnnotation)) {
                     cacheOperationHandler.handler(operationAnnotation, methodReturnValueFunction, expressionMetadata);
-                    break;
+                    return returnValue.get();
                 }
             }
         }
-        return returnValue.get();
+        throw new RuntimeException("没有匹配到CacheOperationHandler");
+
     }
 
     /**

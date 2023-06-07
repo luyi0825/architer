@@ -22,6 +22,9 @@ public class PutTest {
     public void testOnePut() {
         UserInfo userInfo = UserInfo.getRandomUserInfo();
         putService.onePut(userInfo);
+
+        userInfo = putService.getUserInfo(userInfo.getUsername());
+        System.out.println(userInfo);
     }
 
     /**

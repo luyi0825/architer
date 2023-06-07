@@ -14,15 +14,20 @@
     <description>测试缓存</description>
     <packaging>jar</packaging>
     <dependencies>
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>cache-redisson-boot-starter</artifactId>
-            <version>${revision}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.github.architers</groupId>-->
+<!--            <artifactId>cache-redisson-boot-starter</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>cache-caffeine-boot-starter</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
