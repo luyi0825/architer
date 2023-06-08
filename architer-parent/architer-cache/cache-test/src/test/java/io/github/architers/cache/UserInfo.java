@@ -6,6 +6,7 @@ import io.github.architers.context.cache.annotation.CacheValue;
 import java.io.Serializable;
 import java.util.UUID;
 
+
 @CacheValue
 public class UserInfo implements Serializable {
     @CacheKey(order = 2)
@@ -61,3 +62,6 @@ public class UserInfo implements Serializable {
         return this;
     }
 }
+
+
+

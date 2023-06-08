@@ -19,10 +19,6 @@ public class CaffeineConfig {
     private long maximumWeight = -1;
 
     /**
-     * read后是否刷新缓存时间(默认为false)
-     */
-    private boolean readRefreshExpired = false;
-    /**
      * 更新后是否刷新缓存时间(默认为false)
      */
     private boolean updateRefreshExpired = false;

@@ -40,8 +40,14 @@ public class RedissonValueCacheOperate implements CacheOperate {
     }
 
     private void put(RBucket<Object> rBucket, Object value, long expireTime, TimeUnit timeUnit) {
+
+        if (value instanceof NullValue) {
+            //空值就防止一个空值，防止缓存穿透
+            rBucket.set(value, 5, TimeUnit.MINUTES);
+            return;
+        }
         if (expireTime > 0) {
-            //过期+同步步
+            //过期+同步
             rBucket.set(value, expireTime, timeUnit);
         } else {
             //不过期+同步
@@ -50,6 +56,11 @@ public class RedissonValueCacheOperate implements CacheOperate {
     }
 
     private void putAsync(RBucket<Object> rBucket, Object value, long expireTime, TimeUnit timeUnit) {
+        if (value instanceof NullValue) {
+            //空值就防止一个空值，防止缓存穿透
+            rBucket.set(value, 5, TimeUnit.MINUTES);
+            return;
+        }
         if (expireTime > 0) {
             //过期+异步
             rBucket.setAsync(value, expireTime, timeUnit);

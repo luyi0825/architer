@@ -31,8 +31,7 @@ public class BatchPutOperationHandler extends CacheOperationHandler {
             return;
         }
         //得到缓存名称
-        CacheNameWrapper cacheNameWrapper =
-                cacheNameWrapperFactory.getCacheNameWrapper(batchPutCache.cacheNameWrapper());
+        CacheNameWrapper cacheNameWrapper = cacheNameWrapperFactory.getCacheNameWrapper(batchPutCache.cacheNameWrapper());
         String cacheName = cacheNameWrapper.getCacheName(expressionMetadata, batchPutCache.cacheName());
         BatchPutParam batchPutParam = new BatchPutParam();
         batchPutParam.setCacheName(cacheName);

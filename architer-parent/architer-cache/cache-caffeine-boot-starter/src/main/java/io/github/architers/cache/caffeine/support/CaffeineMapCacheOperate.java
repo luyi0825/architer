@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -38,6 +39,11 @@ public class CaffeineMapCacheOperate implements CacheOperate {
         Cache<String, Object> cache = caffeineCacheFactory.getCache(putParam.getCacheName());
 
         Object cacheValue = putParam.getCacheValue();
+        if (cacheValue instanceof NullValue) {
+            //空值就防止一个空值，防止缓存穿透
+            ExpireTimeLocal.set(SECONDS.convert(5, TimeUnit.MINUTES));
+            return;
+        }
         try {
             //存在过期时间
             if (putParam.getExpireTime() > 0) {
@@ -66,15 +72,15 @@ public class CaffeineMapCacheOperate implements CacheOperate {
     }
 
     @Override
-    public void deleteAll(DeleteParam deleteParam) {
-        Cache<String, Object> cache = caffeineCacheFactory.getCache(deleteParam.getCacheName());
+    public void deleteAll(DeleteAllParam deleteAllParam) {
+        Cache<String, Object> cache = caffeineCacheFactory.getCache(deleteAllParam.getCacheName());
         cache.cleanUp();
     }
 
     @Override
     public void batchDelete(BatchDeleteParam batchDeleteParam) {
         Cache<String, Object> cache = caffeineCacheFactory.getCache(batchDeleteParam.getCacheName());
-        cache.invalidateAll( new HashSet<String>((Collection<? extends String>) batchDeleteParam.getKeys()));
+        cache.invalidateAll(new HashSet<String>((Collection<? extends String>) batchDeleteParam.getKeys()));
     }
 
     @Override

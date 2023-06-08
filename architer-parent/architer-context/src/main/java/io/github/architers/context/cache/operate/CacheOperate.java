@@ -10,7 +10,7 @@ import io.github.architers.context.cache.model.*;
  */
 public interface CacheOperate {
 
-    public CacheOperate DEFAULT = new CacheOperate() {
+    DefaultCacheOperate DEFAULT = new DefaultCacheOperate() {
     };
 
     /**
@@ -25,7 +25,6 @@ public interface CacheOperate {
     default void noSupport() {
         throw new RuntimeException("该方法暂时不支持");
     }
-
 
 
     /**
@@ -44,7 +43,7 @@ public interface CacheOperate {
     /**
      * 清理所有
      */
-    default void deleteAll(DeleteParam deleteParam) {
+    default void deleteAll(DeleteAllParam deleteParam) {
         noSupport();
     }
 

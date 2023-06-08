@@ -10,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * hash缓存操作
@@ -28,6 +29,11 @@ public class RedissonMapCacheOperate implements CacheOperate {
     public void put(PutParam putParam) {
         RMapCache<Object, Object> rMap = redissonClient.getMapCache(putParam.getCacheName());
         Object cacheValue = putParam.getCacheValue();
+        if (cacheValue instanceof NullValue) {
+            //空值就防止一个空值，防止缓存穿透
+            rMap.putIfAbsent(putParam.getKey(), cacheValue, 5, TimeUnit.MINUTES);
+            return;
+        }
         //存在过期时间
         if (putParam.getExpireTime() > 0) {
             if (putParam.isAsync()) {
@@ -55,16 +61,17 @@ public class RedissonMapCacheOperate implements CacheOperate {
 
     @Override
     public Object get(GetParam getParam) {
-        return redissonClient.getMapCache(getParam.getCacheName()).get(getParam.getKey());
+        RMapCache<String, Object> rMapCache = redissonClient.getMapCache(getParam.getCacheName());
+        return rMapCache.get(getParam.getKey());
     }
 
     @Override
-    public void deleteAll(DeleteParam deleteParam) {
-        if (deleteParam.isAsync()) {
-            redissonClient.getMapCache(deleteParam.getCacheName()).delete();
+    public void deleteAll(DeleteAllParam deleteAllParam) {
+        if (deleteAllParam.isAsync()) {
+            redissonClient.getMapCache(deleteAllParam.getCacheName()).delete();
         }
 
-        if (redissonClient.getMapCache(deleteParam.getCacheName()).delete()) {
+        if (redissonClient.getMapCache(deleteAllParam.getCacheName()).delete()) {
             throw new RuntimeException("删除缓存失败");
         }
     }

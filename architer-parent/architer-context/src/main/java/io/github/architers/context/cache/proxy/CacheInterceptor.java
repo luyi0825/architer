@@ -40,8 +40,7 @@ public class CacheInterceptor implements MethodInterceptor {
          */
         ExpressionMetadata expressionMetadata = this.buildExpressionMeta(invocation);
 
-        Collection<? extends Annotation> operationAnnotations =
-                cacheAnnotationsParser.parse(invocation.getMethod());
+        Collection<? extends Annotation> operationAnnotations = cacheAnnotationsParser.parse(invocation.getMethod());
         if (!CollectionUtils.isEmpty(operationAnnotations)) {
             Object returnValue = execute(invocation, operationAnnotations, expressionMetadata);
             //已经调用了方法，缓存中放的空值

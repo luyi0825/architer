@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
 import java.text.MessageFormat;
+import java.util.List;
 
 
 /**
@@ -29,6 +30,8 @@ public abstract class CacheOperationHandler {
     @Autowired(required = false)
     protected ExpressionParser expressionParser;
 
+    @Autowired (required = false)
+    protected  List<CacheOperateHook> cacheOperateHooks;
 
     public Object value(String valueExpression, ExpressionMetadata expressionMetadata) {
         return expressionParser.parserExpression(expressionMetadata, valueExpression);

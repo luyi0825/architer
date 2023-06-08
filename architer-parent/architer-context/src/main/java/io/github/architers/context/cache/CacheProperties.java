@@ -4,6 +4,9 @@ import io.github.architers.context.cache.operate.CacheOperate;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 缓存属性配置
  *
@@ -14,6 +17,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class CacheProperties {
 
     /**
+     * 缓存配置
+     */
+    private Map<String, CacheConfig> cacheConfigs = new HashMap<>();
+
+    /**
      * 默认的缓存操作处理器
      */
     private Class<? extends CacheOperate> defaultCacheOperateClass;
@@ -22,6 +30,8 @@ public class CacheProperties {
      * 是否延迟双删(解决缓存一致性）
      */
     private boolean delayDoubleDelete = false;
+
+
 
 
 }
