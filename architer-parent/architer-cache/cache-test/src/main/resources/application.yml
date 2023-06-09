@@ -17,6 +17,8 @@
 architers:
   cache:
     default-cache-operate-class: io.github.architers.cache.redisson.support.RedissonMapCacheOperate
-  #default-cache-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
 
+  #default-cache-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
+rocketmq:
+  name-server: rocketmq:8848
 

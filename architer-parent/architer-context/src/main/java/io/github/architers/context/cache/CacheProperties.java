@@ -27,9 +27,9 @@ public class CacheProperties {
     private Class<? extends CacheOperate> defaultCacheOperateClass;
 
     /**
-     * 是否延迟双删(解决缓存一致性）
+     * 是否延迟删(解决缓存一致性）
      */
-    private boolean delayDoubleDelete = false;
+    private boolean delayDelete = true;
 
 
 

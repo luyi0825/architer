@@ -1,6 +1,7 @@
 package io.github.architers.context.cache.operate;
 
 
+import io.github.architers.context.cache.CacheConfig;
 import io.github.architers.context.cache.utils.CacheUtils;
 import io.github.architers.context.cache.annotation.PutCache;
 import io.github.architers.context.cache.model.PutParam;
@@ -62,6 +63,11 @@ public class PutCacheOperationHandler extends CacheOperationHandler {
         putParam.setExpireTime(expireTime);
         putParam.setTimeUnit(putCache.timeUnit());
         cacheOperate.put(putParam);
+        if (cacheChangeNotify != null) {
+            cacheChangeNotify.notify(cacheOperate, putParam);
+        }
+
+
     }
 
 }

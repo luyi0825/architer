@@ -18,6 +18,11 @@ public class CacheConfig {
     private boolean readRefreshExpired = false;
 
     /**
+     * 是否延迟删(解决缓存一致性）
+     */
+    private boolean delayDelete = true;
+
+    /**
      * 缓存操作处理器
      */
     private Class<? extends CacheOperate> cacheOperateClass = DefaultCacheOperate.class;

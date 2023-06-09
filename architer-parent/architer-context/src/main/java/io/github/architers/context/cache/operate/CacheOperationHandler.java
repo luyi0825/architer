@@ -8,6 +8,7 @@ import io.github.architers.context.expression.ExpressionParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.lang.annotation.Annotation;
 import java.text.MessageFormat;
 import java.util.List;
@@ -30,8 +31,8 @@ public abstract class CacheOperationHandler {
     @Autowired(required = false)
     protected ExpressionParser expressionParser;
 
-    @Autowired (required = false)
-    protected  List<CacheOperateHook> cacheOperateHooks;
+    @Autowired(required = false)
+    protected ICacheChangeNotify cacheChangeNotify;
 
     public Object value(String valueExpression, ExpressionMetadata expressionMetadata) {
         return expressionParser.parserExpression(expressionMetadata, valueExpression);
