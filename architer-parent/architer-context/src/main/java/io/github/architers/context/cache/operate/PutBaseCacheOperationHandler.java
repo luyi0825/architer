@@ -51,7 +51,6 @@ public class PutBaseCacheOperationHandler extends BaseCacheOperationHandler {
         putParam.setWrapperCacheName(super.getWrapperCacheName(putCache.cacheName(), expressionMetadata));
         putParam.setOriginCacheName(putCache.cacheName());
         putParam.setKey(JsonUtils.toJsonString(key));
-        //putParam.setCacheOperate(cacheOperate);
         putParam.setCacheValue(value);
         putParam.setExpireTime(expireTime);
         putParam.setTimeUnit(putCache.timeUnit());

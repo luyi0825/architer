@@ -64,10 +64,11 @@ public class CacheInterceptor implements MethodInterceptor {
         //返回值构建，也方便多个注解的时候，重复调用方法
         AtomicReference<Object> returnValue = new AtomicReference<>();
         MethodReturnValueFunction methodReturnValueFunction = new MethodReturnValueFunction() {
+            /**
+             *  调用方法，只有第一次调用是真的调用
+             */
             @Override
             public Object proceed() throws Throwable {
-                //TODO 是否要用锁
-                //  synchronized (this) {
                 if (returnValue.get() == null) {
                     //执行方法
                     Object value = invocation.proceed();
@@ -78,12 +79,10 @@ public class CacheInterceptor implements MethodInterceptor {
                     setValue(value);
                 }
                 return returnValue.get();
-                //  }
             }
 
             @Override
             public void setValue(Object value) {
-                // synchronized (this) {
                 if (value != null && !(value instanceof InvalidCacheValue)) {
                     //支持#result表达式
                     expressionMetadata.getEvaluationContext().setVariable("result", value);
@@ -91,7 +90,6 @@ public class CacheInterceptor implements MethodInterceptor {
                 if (value != null && returnValue.get() == null) {
                     returnValue.set(value);
                 }
-                //  }
             }
         };
         for (Annotation operationAnnotation : operationAnnotations) {

@@ -30,7 +30,7 @@ public class CacheableOperationHandler extends BaseCacheOperationHandler {
 
     @Override
     protected void executeCacheOperate(Annotation operationAnnotation, ExpressionMetadata expressionMetadata,
-                           MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
+                                       MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         Cacheable cacheable = (Cacheable) operationAnnotation;
 
         Object cacheValue = null;
@@ -43,7 +43,6 @@ public class CacheableOperationHandler extends BaseCacheOperationHandler {
         Object key = super.parseCacheKey(expressionMetadata, cacheable.key());
 
         GetParam getParam = new GetParam();
-        //getParam.setCacheOperate(cacheOperate);
         //同步：没有值才查询数据库
         getParam.setAsync(false);
         getParam.setOriginCacheName(cacheable.cacheName());
@@ -54,19 +53,37 @@ public class CacheableOperationHandler extends BaseCacheOperationHandler {
             cacheValue = value;
         }
         if (cacheValue == null) {
-            //调用方法，只有第一次调用是真的调用
-            Object returnValue = methodReturnValueFunction.proceed();
-            long expireTime = CacheUtils.getExpireTime(cacheable.expireTime(), cacheable.randomTime());
-            PutParam putParam = new PutParam();
-            putParam.setWrapperCacheName(getParam.getWrapperCacheName());
-            putParam.setOriginCacheName(getParam.getOriginCacheName());
-            putParam.setCacheValue(returnValue);
-            putParam.setKey(JsonUtils.toJsonString(key));
-            putParam.setTimeUnit(cacheable.timeUnit());
-            putParam.setExpireTime(expireTime);
-            cacheOperate.put(putParam);
+
+            //本地缓存多次put没关系，当时防止多次查询数据库
+            synchronized (cacheable.cacheName().intern()) {
+                //先判断缓存有没有，缓存有值就返回
+                getParam.setAsync(false);
+                getParam.setOriginCacheName(cacheable.cacheName());
+                getParam.setWrapperCacheName(getWrapperCacheName(cacheable.cacheName(), expressionMetadata));
+                getParam.setKey(JsonUtils.toJsonString(key));
+                value = cacheOperate.get(getParam);
+
+                if (value != null) {
+                    methodReturnValueFunction.setValue(value);
+                    return;
+                }
+                //没有值就再调用
+                Object returnValue = methodReturnValueFunction.proceed();
+                long expireTime = CacheUtils.getExpireTime(cacheable.expireTime(), cacheable.randomTime());
+                PutParam putParam = new PutParam();
+                putParam.setWrapperCacheName(getParam.getWrapperCacheName());
+                putParam.setOriginCacheName(getParam.getOriginCacheName());
+                putParam.setCacheValue(returnValue);
+                putParam.setKey(JsonUtils.toJsonString(key));
+                putParam.setTimeUnit(cacheable.timeUnit());
+                putParam.setExpireTime(expireTime);
+                cacheOperate.put(putParam);
+
+
+            }
+
         } else {
-            //设置返回值，防止重复调用
+            //设置返回值，防止方法出现其他注解调用methodReturnValueFunction.proceed()，造成重复调用
             methodReturnValueFunction.setValue(cacheValue);
         }
     }

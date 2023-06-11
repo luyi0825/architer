@@ -34,6 +34,10 @@ architers:
         operateClass: io.github.architers.context.cache.operate.TwoLevelCacheOperate
         #改变延迟删
         change-delay-delete: false
+      #两级缓存-集群
+      twoLevelCluster:
+        #缓存操作类
+        operateClass: io.github.architers.context.cache.operate.TwoLevelCacheOperate
 
 
   #default-cache-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate

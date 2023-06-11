@@ -1,10 +1,9 @@
 package io.github.architers.context.cache.consistency.rocketmq;
 
-import io.github.architers.context.cache.model.DeleteParam;
-import io.github.architers.context.cache.model.PutParam;
+
 import io.github.architers.context.cache.operate.CacheOperate;
 import io.github.architers.context.cache.operate.CacheOperateSupport;
-import io.github.architers.context.utils.JsonUtils;
+import io.github.architers.context.cache.operate.TwoLevelCacheOperate;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.MessageModel;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -26,21 +25,19 @@ public class RocketmqCacheDelayDeleteConsumer implements RocketMQListener<Messag
 
     @Override
     public void onMessage(MessageExt message) {
-        String cacheParamName = message.getProperty("cache_param_name");
         String originCacheName = message.getProperty("origin_cache_name");
         if (!StringUtils.hasText(originCacheName)) {
             return;
         }
         CacheOperate cacheOperate = cacheOperateSupport.getCacheOperate(originCacheName);
-
-        if (PutParam.class.getSimpleName().equals(cacheParamName)) {
-            PutParam putParam = JsonUtils.readValue(message.getBody(), PutParam.class);
-            DeleteParam deleteParam = new DeleteParam();
-            deleteParam.setOriginCacheName(putParam.getOriginCacheName());
-            deleteParam.setWrapperCacheName(putParam.getWrapperCacheName());
-            deleteParam.setKey(putParam.getKey());
-            cacheOperate.delete(deleteParam);
+        if (cacheOperate instanceof TwoLevelCacheOperate) {
+            //两级缓存删除远程分布式缓存
+            DeleteCacheUtils.delete(message, ((TwoLevelCacheOperate) cacheOperate).getRemoteCacheOperate());
+        } else {
+            //不是两级缓存，直接删除
+            DeleteCacheUtils.delete(message, cacheOperate);
         }
+
     }
 
 

@@ -32,12 +32,12 @@ public class DeleteCacheOperationHandler extends BaseCacheOperationHandler {
     @Override
     protected void executeCacheOperate(Annotation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
 
-        //调用方法（没有cacheable就是真的调用）
-        methodReturnValueFunction.proceed();
+
         DeleteCache deleteCache = (DeleteCache) operation;
         if (!canDoCacheOperate(deleteCache.condition(), deleteCache.unless(), expressionMetadata)) {
             return;
         }
+
         CacheOperate cacheOperate = cacheOperateSupport.getCacheOperate(deleteCache.cacheName());
         DeleteParam deleteParam = new DeleteParam();
         deleteParam.setWrapperCacheName(getWrapperCacheName(deleteCache.cacheName(), expressionMetadata));
@@ -46,13 +46,23 @@ public class DeleteCacheOperationHandler extends BaseCacheOperationHandler {
 
         deleteParam.setKey(JsonUtils.toJsonString(key));
         deleteParam.setAsync(deleteCache.async());
-        //deleteCacheParam.setKeyGenerator();
-       // deleteCacheParam.setCacheOperate(super.cacheCacheOperateFactory.getCacheOperate(deleteCache.cacheOperate()));
+        if(!CollectionUtils.isEmpty(cacheOperateEndHooks)){
+            for (CacheOperateEndHook cacheOperateEndHook : cacheOperateEndHooks) {
+                cacheOperateEndHook.start(deleteParam,cacheOperate);
+            }
+        }
         //删除缓存
         cacheOperate.delete(deleteParam);
         if(!CollectionUtils.isEmpty(cacheOperateEndHooks)){
             for (CacheOperateEndHook cacheOperateEndHook : cacheOperateEndHooks) {
                 cacheOperateEndHook.end(deleteParam, cacheOperate);
+            }
+        }
+        //调用方法（没有cacheable就是真的调用）->删除缓存后，再操作数据库
+        methodReturnValueFunction.proceed();
+        if(!CollectionUtils.isEmpty(cacheOperateEndHooks)){
+            for (CacheOperateEndHook cacheOperateEndHook : cacheOperateEndHooks) {
+                cacheOperateEndHook.end(deleteParam,cacheOperate);
             }
         }
     }
