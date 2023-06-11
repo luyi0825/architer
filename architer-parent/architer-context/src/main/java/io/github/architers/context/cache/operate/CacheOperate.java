@@ -6,12 +6,9 @@ import io.github.architers.context.cache.model.*;
 /**
  * @author luyi
  * @version 1.0.0
- * 缓存管理接口类，用于获取不同缓存的实例对象
+ * 缓存操作,不同的中间件有不同的实现
  */
 public interface CacheOperate {
-
-    DefaultCacheOperate DEFAULT = new DefaultCacheOperate() {
-    };
 
     /**
      * 设置缓存
@@ -49,13 +46,14 @@ public interface CacheOperate {
 
     /**
      * 批量删除
-     *
-     * @param batchDeleteParam
      */
     default void batchDelete(BatchDeleteParam batchDeleteParam) {
         noSupport();
     }
 
+    /**
+     * 批量put缓存
+     */
     default void batchPut(BatchPutParam batchPutParam) {
         noSupport();
     }

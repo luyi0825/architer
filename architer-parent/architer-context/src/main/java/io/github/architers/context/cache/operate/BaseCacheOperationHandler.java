@@ -19,20 +19,19 @@ import java.util.List;
  * 缓存operation处理基类
  * <li>对于实现类order排序,按照操作的频率排好序，增加程序效率：比如缓存读多，就把cacheable对应的处理器放最前边</li>
  */
-public abstract class CacheOperationHandler {
+public abstract class BaseCacheOperationHandler {
 
 
-    @Autowired(required = false)
-    protected CacheOperateFactory cacheOperateFactory;
+    @Resource
+    protected CacheOperateSupport cacheOperateSupport;
 
-    @Autowired(required = false)
-    protected CacheNameWrapperFactory cacheNameWrapperFactory;
 
     @Autowired(required = false)
     protected ExpressionParser expressionParser;
 
     @Autowired(required = false)
-    protected ICacheChangeNotify cacheChangeNotify;
+    protected List<CacheOperateEndHook> cacheOperateEndHooks;
+
 
     public Object value(String valueExpression, ExpressionMetadata expressionMetadata) {
         return expressionParser.parserExpression(expressionMetadata, valueExpression);
@@ -71,7 +70,8 @@ public abstract class CacheOperationHandler {
     public void handler(Annotation operationAnnotation,
                         MethodReturnValueFunction methodReturnValueFunction,
                         ExpressionMetadata expressionMetadata) throws Throwable {
-        this.execute(operationAnnotation, expressionMetadata, methodReturnValueFunction);
+        this.executeCacheOperate(operationAnnotation, expressionMetadata, methodReturnValueFunction);
+
     }
 
 
@@ -99,6 +99,15 @@ public abstract class CacheOperationHandler {
         return true;
     }
 
+    protected String getWrapperCacheName(String originCacheName, ExpressionMetadata expressionMetadata) {
+
+        CacheNameWrapper cacheNameWrapper = cacheOperateSupport.getCacheNameWrapper(originCacheName);
+        if (cacheNameWrapper == null) {
+            return originCacheName;
+        }
+        return cacheNameWrapper.getCacheName(expressionMetadata, originCacheName);
+    }
+
 
     /**
      * 是否unless
@@ -123,10 +132,10 @@ public abstract class CacheOperationHandler {
      * @param methodReturnValueFunction 返回值功能函数
      * @throws Throwable
      */
-    protected abstract void execute(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable;
+    protected abstract void executeCacheOperate(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable;
 
 
-    public CacheOperationHandler setExpressionParser(ExpressionParser expressionParser) {
+    public BaseCacheOperationHandler setExpressionParser(ExpressionParser expressionParser) {
         this.expressionParser = expressionParser;
         return this;
     }

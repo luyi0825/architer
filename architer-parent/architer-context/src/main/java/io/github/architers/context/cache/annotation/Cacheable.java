@@ -65,14 +65,6 @@ public @interface Cacheable {
      * 条件满足的时候，不进行缓存操作
      */
     String unless() default "";
-    /**
-     * 缓存名称包装器:可以对缓存名称进行再次包装
-     */
-    String cacheNameWrapper() default "";
 
-    /**
-     * 缓存操作器
-     */
-    Class<? extends CacheOperate> cacheOperate() default DefaultCacheOperate.class;
 
 }

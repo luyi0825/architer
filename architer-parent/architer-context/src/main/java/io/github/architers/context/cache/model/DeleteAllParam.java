@@ -1,23 +1,15 @@
 package io.github.architers.context.cache.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Collection;
 
 /**
  * @author Administrator
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class DeleteAllParam implements CacheOperationParam {
-    /**
-     * 缓存名称
-     */
-    private String cacheName;
+public class DeleteAllParam extends CacheChangeParam {
 
-
-
-    /**
-     * 是否异步
-     */
-    private boolean async = false;
 }

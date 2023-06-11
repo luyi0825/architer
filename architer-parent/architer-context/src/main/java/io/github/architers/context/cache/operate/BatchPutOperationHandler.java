@@ -5,6 +5,7 @@ import io.github.architers.context.cache.annotation.BatchPutCache;
 import io.github.architers.context.cache.model.BatchPutParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
 
@@ -13,7 +14,7 @@ import java.lang.annotation.Annotation;
  *
  * @author luyi
  */
-public class BatchPutOperationHandler extends CacheOperationHandler {
+public class BatchPutOperationHandler extends BaseCacheOperationHandler {
 
 
     @Override
@@ -22,7 +23,7 @@ public class BatchPutOperationHandler extends CacheOperationHandler {
     }
 
     @Override
-    protected void execute(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
+    protected void executeCacheOperate(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         BatchPutCache batchPutCache = (BatchPutCache) operationAnnotation;
         //执行方法
         methodReturnValueFunction.proceed();
@@ -30,20 +31,24 @@ public class BatchPutOperationHandler extends CacheOperationHandler {
         if (!super.canDoCacheOperate(batchPutCache.condition(), batchPutCache.unless(), expressionMetadata)) {
             return;
         }
-        //得到缓存名称
-        CacheNameWrapper cacheNameWrapper = cacheNameWrapperFactory.getCacheNameWrapper(batchPutCache.cacheNameWrapper());
-        String cacheName = cacheNameWrapper.getCacheName(expressionMetadata, batchPutCache.cacheName());
+        String wrapperCacheName = super.getWrapperCacheName(batchPutCache.cacheName(),expressionMetadata);
         BatchPutParam batchPutParam = new BatchPutParam();
-        batchPutParam.setCacheName(cacheName);
+        batchPutParam.setOriginCacheName(batchPutCache.cacheName());
+        batchPutParam.setWrapperCacheName(wrapperCacheName);
         batchPutParam.setAsync(batchPutCache.async());
         batchPutParam.setTimeUnit(batchPutCache.timeUnit());
         batchPutParam.setExpireTime(batchPutCache.expireTime());
         batchPutParam.setExpireTime(batchPutCache.randomTime());
-        Object batchCacheValue = super.expressionParser.parserExpression(expressionMetadata,
-                batchPutCache.cacheValue());
+        Object batchCacheValue = super.expressionParser.parserExpression(expressionMetadata, batchPutCache.cacheValue());
         batchPutParam.setBatchCacheValue(batchCacheValue);
         //批量删除
-        CacheOperate cacheOperate = super.cacheOperateFactory.getCacheOperate(batchPutCache.cacheOperate());
+        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(batchPutCache.cacheName());
         cacheOperate.batchPut(batchPutParam);
+        if (!CollectionUtils.isEmpty(cacheOperateEndHooks)) {
+            for (CacheOperateEndHook cacheOperateEndHook : cacheOperateEndHooks) {
+                cacheOperateEndHook.end(batchPutParam, cacheOperate);
+            }
+        }
+
     }
 }

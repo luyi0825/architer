@@ -1,7 +1,7 @@
 package io.github.architers.context.cache;
 
-import io.github.architers.context.cache.operate.CacheOperateFactory;
-import io.github.architers.context.cache.operate.CacheOperationHandler;
+import io.github.architers.context.cache.operate.CacheOperateSupport;
+import io.github.architers.context.cache.operate.BaseCacheOperationHandler;
 import io.github.architers.context.cache.proxy.AnnotationCacheOperationSource;
 import io.github.architers.context.cache.proxy.BeanFactoryCacheSourceAdvisor;
 import io.github.architers.context.cache.proxy.CacheInterceptor;
@@ -42,9 +42,9 @@ public class CacheAutoConfiguration {
 
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
-    public CacheInterceptor cacheInterceptor(List<CacheOperationHandler> cacheOperationHandlers, CacheAnnotationsParser cacheAnnotationsParser) {
+    public CacheInterceptor cacheInterceptor(List<BaseCacheOperationHandler> baseCacheOperationHandlers, CacheAnnotationsParser cacheAnnotationsParser) {
         CacheInterceptor cacheInterceptor = new CacheInterceptor();
-        cacheInterceptor.setCacheOperationHandlers(cacheOperationHandlers);
+        cacheInterceptor.setCacheOperationHandlers(baseCacheOperationHandlers);
         cacheInterceptor.setCacheAnnotationsParser(cacheAnnotationsParser);
         return cacheInterceptor;
     }
@@ -60,8 +60,8 @@ public class CacheAutoConfiguration {
     }
 
     @Bean
-    public CacheOperateFactory cacheOperateFactory(CacheProperties cacheProperties) {
-        return new CacheOperateFactory(cacheProperties.getDefaultCacheOperateClass());
+    public CacheOperateSupport cacheOperateFactory() {
+        return new CacheOperateSupport();
     }
 
     @Bean

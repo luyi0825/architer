@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author luyi
  */
-public class RedissonValueCacheOperate implements CacheOperate {
+public class RedissonValueCacheOperate implements RemoteCacheOperate {
 
 
     private final RedissonClient redissonClient;
@@ -30,7 +30,7 @@ public class RedissonValueCacheOperate implements CacheOperate {
 
     @Override
     public void put(PutParam put) {
-        String cacheKey = getCacheKey(put);
+        String cacheKey = getCacheKey(put.getWrapperCacheName(),put.getKey());
         RBucket<Object> rBucket = redissonClient.getBucket(cacheKey);
         if (put.isAsync()) {
             this.putAsync(rBucket, put.getCacheValue(), put.getExpireTime(), put.getTimeUnit());
@@ -41,7 +41,7 @@ public class RedissonValueCacheOperate implements CacheOperate {
 
     private void put(RBucket<Object> rBucket, Object value, long expireTime, TimeUnit timeUnit) {
 
-        if (value instanceof NullValue) {
+        if (value instanceof InvalidCacheValue) {
             //空值就防止一个空值，防止缓存穿透
             rBucket.set(value, 5, TimeUnit.MINUTES);
             return;
@@ -56,7 +56,7 @@ public class RedissonValueCacheOperate implements CacheOperate {
     }
 
     private void putAsync(RBucket<Object> rBucket, Object value, long expireTime, TimeUnit timeUnit) {
-        if (value instanceof NullValue) {
+        if (value instanceof InvalidCacheValue) {
             //空值就防止一个空值，防止缓存穿透
             rBucket.set(value, 5, TimeUnit.MINUTES);
             return;
@@ -73,26 +73,24 @@ public class RedissonValueCacheOperate implements CacheOperate {
 
     @Override
     public void delete(DeleteParam delete) {
-        String cacheKey = getCacheKey(delete);
+        String bucketName = getCacheKey(delete.getWrapperCacheName(), delete.getKey());
         if (delete.isAsync()) {
-            redissonClient.getBucket(cacheKey).deleteAsync();
+            redissonClient.getBucket(bucketName).deleteAsync();
         } else {
-            redissonClient.getBucket(cacheKey).delete();
+            redissonClient.getBucket(bucketName).delete();
         }
     }
 
     @Override
-    public Object get(GetParam get) {
-        return redissonClient.getBucket(getCacheKey(get)).get();
+    public Object get(GetParam getParam) {
+        String bucketName = getCacheKey(getParam.getWrapperCacheName(), getParam.getKey());
+        return redissonClient.getBucket(bucketName).get();
     }
 
-    private String getCacheKey(BaseCacheOperationParam cacheOperationParam) {
-        return cacheOperationParam.getCacheName() + ":" + cacheOperationParam.getKey();
+    private String getCacheKey(String cacheName, String cacheKey) {
+        return cacheName + ":" + cacheKey;
     }
 
-    private String getCacheKey(String cacheName, Object key) {
-        return cacheName + ":" + JsonUtils.toJsonString(key);
-    }
 
     @Override
     public void batchDelete(BatchDeleteParam batchDeleteParam) {
@@ -103,7 +101,7 @@ public class RedissonValueCacheOperate implements CacheOperate {
         String[] cacheKeys = new String[keys.size()];
         int i = 0;
         for (Object key : keys) {
-            String cacheKey = batchDeleteParam.getCacheName() + Symbol.COLON +
+            String cacheKey = batchDeleteParam.getWrapperCacheName() + Symbol.COLON +
                     JsonUtils.toJsonString(key);
             cacheKeys[i] = cacheKey;
             i++;
@@ -118,7 +116,7 @@ public class RedissonValueCacheOperate implements CacheOperate {
     @Override
     public void batchPut(BatchPutParam batchPutParam) {
 
-        Map<String, Object> cacheMap = BatchValueUtils.parseValue2Map(batchPutParam.getCacheName(),
+        Map<String, Object> cacheMap = BatchValueUtils.parseValue2Map(batchPutParam.getWrapperCacheName(),
                 Symbol.COLON,
                 batchPutParam.getBatchCacheValue());
         long expireTime = CacheUtils.getExpireTime(batchPutParam.getExpireTime(),

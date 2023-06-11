@@ -15,10 +15,6 @@ public @interface DeleteAllCache {
     String[] cacheName() default "";
 
     /**
-     * key的生成器
-     */
-    String cacheNameWrapper() default "";
-    /**
      * 是否异步删除
      */
     boolean async() default false;
@@ -33,10 +29,4 @@ public @interface DeleteAllCache {
      */
     String unless() default "";
 
-    /**
-     * /**
-     *
-     * @see Cacheable#cacheOperate()
-     */
-    Class<? extends CacheOperate> cacheOperate() default DefaultCacheOperate .class;
 }

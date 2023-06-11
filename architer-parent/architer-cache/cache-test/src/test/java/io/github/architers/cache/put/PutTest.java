@@ -1,6 +1,6 @@
 package io.github.architers.cache.put;
 
-import io.github.architers.cache.UserInfo;
+import io.github.architers.cache.entity.UserInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,8 +50,9 @@ public class PutTest {
      * 测试过期时间
      */
     @Test
-    public void testExpireTime() {
+    public void testExpireTime() throws InterruptedException {
         putService.expireTime(UserInfo.getRandomUserInfo());
+        Thread.sleep(10000_000);
     }
 
     /**

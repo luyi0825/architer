@@ -6,6 +6,7 @@ import io.github.architers.context.cache.utils.BatchValueUtils;
 import io.github.architers.context.cache.model.BatchDeleteParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.util.Collection;
@@ -15,7 +16,7 @@ import java.util.Collection;
  *
  * @author luyi
  */
-public class BatchDeleteOperationHandler extends CacheOperationHandler {
+public class BatchDeleteOperationHandler extends BaseCacheOperationHandler {
 
 
     @Override
@@ -23,8 +24,10 @@ public class BatchDeleteOperationHandler extends CacheOperationHandler {
         return operationAnnotation instanceof BatchDeleteCache;
     }
 
+
+
     @Override
-    protected void execute(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
+    protected void executeCacheOperate(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         BatchDeleteCache batchDeleteCache = (BatchDeleteCache) operationAnnotation;
         //执行方法
         methodReturnValueFunction.proceed();
@@ -36,14 +39,19 @@ public class BatchDeleteOperationHandler extends CacheOperationHandler {
         Object keyValues = expressionParser.parserExpression(expressionMetadata, batchDeleteCache.keys());
         Collection<?> keys = BatchValueUtils.parseKeys(keyValues, Symbol.COLON);
         //得到缓存名称
-        CacheNameWrapper cacheNameWrapper = cacheNameWrapperFactory.getCacheNameWrapper(batchDeleteCache.cacheNameWrapper());
-        String cacheName = cacheNameWrapper.getCacheName(expressionMetadata, batchDeleteCache.cacheName());
+        String wrapperCacheName = super.getWrapperCacheName(batchDeleteCache.cacheName(),expressionMetadata);
         BatchDeleteParam batchDeleteParam = new BatchDeleteParam();
-        batchDeleteParam.setCacheName(cacheName);
+        batchDeleteParam.setWrapperCacheName(wrapperCacheName);
+        batchDeleteParam.setOriginCacheName(batchDeleteCache.cacheName());
         batchDeleteParam.setAsync(batchDeleteCache.async());
         batchDeleteParam.setKeys(keys);
         //批量删除
-        CacheOperate cacheOperate = super.cacheOperateFactory.getCacheOperate(batchDeleteCache.cacheOperate());
+        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(batchDeleteCache.cacheName());
         cacheOperate.batchDelete(batchDeleteParam);
+        if (!CollectionUtils.isEmpty(cacheOperateEndHooks)) {
+            for (CacheOperateEndHook cacheOperateEndHook : cacheOperateEndHooks) {
+                cacheOperateEndHook.end(batchDeleteParam, cacheOperate);
+            }
+        }
     }
 }

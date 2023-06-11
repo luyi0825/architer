@@ -1,6 +1,6 @@
 package io.github.architers.cache.service;
 
-import io.github.architers.cache.UserInfo;
+import io.github.architers.cache.entity.UserInfo;
 import org.springframework.stereotype.Service;
 
 @Service

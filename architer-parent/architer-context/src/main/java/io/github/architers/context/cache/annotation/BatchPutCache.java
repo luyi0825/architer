@@ -31,10 +31,6 @@ public @interface BatchPutCache {
      */
     String cacheValue() default "";
 
-    /**
-     * 缓存名称包装器
-     */
-    String cacheNameWrapper() default "";
 
     /**
      * @see Cacheable#randomTime()
@@ -66,16 +62,5 @@ public @interface BatchPutCache {
      * @see Cacheable#unless()
      */
     String unless() default "";
-
-    /**
-     * 缓存管理器类型
-     *
-     * @see Cacheable#cacheOperate()
-     */
-    /**
-     * 缓存操作器(对应的类执行缓存操作,类名)
-     */
-
-    Class<? extends CacheOperate> cacheOperate() default DefaultCacheOperate.class;
 
 }

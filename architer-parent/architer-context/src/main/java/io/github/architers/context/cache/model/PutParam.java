@@ -14,7 +14,12 @@ import java.util.concurrent.TimeUnit;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class PutParam extends BaseCacheOperationParam {
+public class PutParam extends CacheChangeParam   {
+
+    /**
+     * 缓存的key
+     */
+    private String key;
 
     /**
      * 缓存的过期时间
@@ -29,9 +34,6 @@ public class PutParam extends BaseCacheOperationParam {
      * 缓存值
      */
     private Object cacheValue;
-
-
-
 
 
 }

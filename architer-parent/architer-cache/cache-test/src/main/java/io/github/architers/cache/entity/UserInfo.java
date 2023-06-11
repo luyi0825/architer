@@ -1,20 +1,23 @@
-package io.github.architers.cache;
+package io.github.architers.cache.entity;
 
 import io.github.architers.context.cache.annotation.CacheKey;
 import io.github.architers.context.cache.annotation.CacheValue;
+import jodd.util.StringUtil;
+import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
 
 @CacheValue
 public class UserInfo implements Serializable {
-    @CacheKey(order = 2)
+    @CacheKey(order = 1)
     private String username;
     @CacheValue
     private String password;
 
-    @CacheKey(order = 1)
+    @CacheKey(order = 2)
     private String phone;
 
     public static UserInfo getRandomUserInfo() {
@@ -33,6 +36,19 @@ public class UserInfo implements Serializable {
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserInfo userInfo = (UserInfo) o;
+        return Objects.equals(username, userInfo.username) && Objects.equals(password, userInfo.password) && Objects.equals(phone, userInfo.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password, phone);
     }
 
     public String getPhone() {

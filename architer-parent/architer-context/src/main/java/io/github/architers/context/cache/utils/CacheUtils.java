@@ -2,6 +2,7 @@ package io.github.architers.context.cache.utils;
 
 
 import io.github.architers.context.cache.CacheConstants;
+import io.github.architers.context.cache.model.InvalidCacheValue;
 
 
 /**
@@ -31,8 +32,18 @@ public class CacheUtils {
         return expireTime;
     }
 
-
-
+    /**
+     * 是否存在缓存值
+     *
+     * @param value
+     * @return
+     */
+    public static boolean isExistCacheValue(Object value) {
+        if (value == null) {
+            return false;
+        }
+        return !(value instanceof InvalidCacheValue);
+    }
 
 
 }

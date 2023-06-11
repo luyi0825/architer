@@ -1,23 +1,33 @@
 package io.github.architers.context.cache.operate;
 
+import io.github.architers.context.cache.CacheProperties;
 import io.github.architers.context.cache.model.*;
+import io.github.architers.context.cache.utils.CacheUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
+
+import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * 两级缓存操作
+ * final不可继承，是可以二级缓存操作的标识类，并管理二级缓存的本地缓存操作和远程操作类
  *
  * @author luyi
  */
-public class TwoLevelCacheOperate implements CacheOperate {
+public final class TwoLevelCacheOperate implements CacheOperate {
+
 
     private LocalCacheOperate localCacheOperate;
 
     private RemoteCacheOperate remoteCacheOperate;
 
     public TwoLevelCacheOperate(LocalCacheOperate localCacheOperate, RemoteCacheOperate remoteCacheOperate) {
+        Assert.notNull(localCacheOperate, "localCacheOperate is null");
+        Assert.notNull(remoteCacheOperate, "remoteCacheOperate is null");
         this.localCacheOperate = localCacheOperate;
         this.remoteCacheOperate = remoteCacheOperate;
     }
-
 
     @Override
     public void put(PutParam putParam) {
@@ -34,7 +44,7 @@ public class TwoLevelCacheOperate implements CacheOperate {
     @Override
     public Object get(GetParam getParam) {
         Object cacheValue = localCacheOperate.get(getParam);
-        if (cacheValue != null) {
+        if (CacheUtils.isExistCacheValue(cacheValue)) {
             return cacheValue;
         }
         return remoteCacheOperate.get(getParam);
@@ -71,6 +81,7 @@ public class TwoLevelCacheOperate implements CacheOperate {
     public RemoteCacheOperate getRemoteCacheOperate() {
         return remoteCacheOperate;
     }
+
 
     public TwoLevelCacheOperate setRemoteCacheOperate(RemoteCacheOperate remoteCacheOperate) {
         this.remoteCacheOperate = remoteCacheOperate;

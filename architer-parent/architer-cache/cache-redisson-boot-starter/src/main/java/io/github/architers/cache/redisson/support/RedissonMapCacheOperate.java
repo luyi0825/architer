@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author luyi
  */
-public class RedissonMapCacheOperate implements CacheOperate {
+public class RedissonMapCacheOperate implements RemoteCacheOperate {
 
     private final RedissonClient redissonClient;
 
@@ -27,9 +27,9 @@ public class RedissonMapCacheOperate implements CacheOperate {
 
     @Override
     public void put(PutParam putParam) {
-        RMapCache<Object, Object> rMap = redissonClient.getMapCache(putParam.getCacheName());
+        RMapCache<Object, Object> rMap = redissonClient.getMapCache(putParam.getWrapperCacheName());
         Object cacheValue = putParam.getCacheValue();
-        if (cacheValue instanceof NullValue) {
+        if (cacheValue instanceof InvalidCacheValue) {
             //空值就防止一个空值，防止缓存穿透
             rMap.putIfAbsent(putParam.getKey(), cacheValue, 5, TimeUnit.MINUTES);
             return;
@@ -53,25 +53,25 @@ public class RedissonMapCacheOperate implements CacheOperate {
     @Override
     public void delete(DeleteParam deleteParam) {
         if (deleteParam.isAsync()) {
-            redissonClient.getMapCache(deleteParam.getCacheName()).removeAsync(deleteParam.getKey());
+            redissonClient.getMapCache(deleteParam.getWrapperCacheName()).removeAsync(deleteParam.getKey());
         } else {
-            redissonClient.getMapCache(deleteParam.getCacheName()).removeAsync(deleteParam.getKey());
+            redissonClient.getMapCache(deleteParam.getWrapperCacheName()).removeAsync(deleteParam.getKey());
         }
     }
 
     @Override
     public Object get(GetParam getParam) {
-        RMapCache<String, Object> rMapCache = redissonClient.getMapCache(getParam.getCacheName());
+        RMapCache<String, Object> rMapCache = redissonClient.getMapCache(getParam.getWrapperCacheName());
         return rMapCache.get(getParam.getKey());
     }
 
     @Override
     public void deleteAll(DeleteAllParam deleteAllParam) {
         if (deleteAllParam.isAsync()) {
-            redissonClient.getMapCache(deleteAllParam.getCacheName()).delete();
+            redissonClient.getMapCache(deleteAllParam.getWrapperCacheName()).delete();
         }
 
-        if (redissonClient.getMapCache(deleteAllParam.getCacheName()).delete()) {
+        if (redissonClient.getMapCache(deleteAllParam.getWrapperCacheName()).delete()) {
             throw new RuntimeException("删除缓存失败");
         }
     }
@@ -82,7 +82,7 @@ public class RedissonMapCacheOperate implements CacheOperate {
         if (CollectionUtils.isEmpty(keys)) {
             return;
         }
-        RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchDeleteParam.getCacheName());
+        RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchDeleteParam.getWrapperCacheName());
         rMapCache.keySet(keys.size()).clear();
     }
 
@@ -92,7 +92,7 @@ public class RedissonMapCacheOperate implements CacheOperate {
                 BatchValueUtils.parseValue2Map(batchPutParam.getBatchCacheValue(),
                         Symbol.COLON);
         if (batchPutParam.isAsync()) {
-            RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getCacheName());
+            RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getWrapperCacheName());
             if (batchPutParam.getExpireTime() > 0) {
                 rMapCache.putAllAsync(cacheMap, batchPutParam.getExpireTime(), batchPutParam.getTimeUnit());
             } else {
@@ -100,7 +100,7 @@ public class RedissonMapCacheOperate implements CacheOperate {
             }
             return;
         }
-        RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getCacheName());
+        RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getWrapperCacheName());
         if (batchPutParam.getExpireTime() > 0) {
             rMapCache.putAll(cacheMap, batchPutParam.getExpireTime(), batchPutParam.getTimeUnit());
         } else {

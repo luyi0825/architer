@@ -1,7 +1,7 @@
 //package io.github.architers.cache.batch;
 //
 //import io.github.architers.context.cache.CacheConstants;
-//import io.github.architers.cache.UserInfo;
+//import io.github.architers.cache.entity.UserInfo;
 //import io.github.architers.context.cache.annotation.DeleteCache;
 //import io.github.architers.context.cache.annotation.PutCache;
 //import org.slf4j.Logger;

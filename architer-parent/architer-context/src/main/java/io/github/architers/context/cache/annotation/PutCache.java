@@ -1,9 +1,6 @@
 package io.github.architers.context.cache.annotation;
 
 
-import io.github.architers.context.cache.operate.CacheOperate;
-import io.github.architers.context.cache.operate.DefaultCacheOperate;
-
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
@@ -29,7 +26,6 @@ public @interface PutCache {
      */
     String key();
 
-    String cacheNameWrapper() default "";
 
     /**
      * 缓存值，支持EL表达式
@@ -68,14 +64,5 @@ public @interface PutCache {
      */
     String unless() default "";
 
-    /**
-     * 缓存操作器
-     *
-     * @see Cacheable#cacheOperate()
-     */
-    /**
-     * 缓存操作器
-     */
-    Class<? extends CacheOperate> cacheOperate() default DefaultCacheOperate.class;
 
 }

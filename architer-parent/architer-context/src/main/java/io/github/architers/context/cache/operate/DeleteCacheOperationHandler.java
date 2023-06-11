@@ -6,6 +6,7 @@ import io.github.architers.context.cache.model.DeleteParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.utils.JsonUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
 
@@ -19,7 +20,7 @@ import java.lang.annotation.Annotation;
  *
  * @author luyi
  */
-public class DeleteCacheOperationHandler extends CacheOperationHandler {
+public class DeleteCacheOperationHandler extends BaseCacheOperationHandler {
 
     private static final int END_ORDER = 3;
 
@@ -29,7 +30,7 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
     }
 
     @Override
-    protected void execute(Annotation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
+    protected void executeCacheOperate(Annotation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
 
         //调用方法（没有cacheable就是真的调用）
         methodReturnValueFunction.proceed();
@@ -37,12 +38,10 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
         if (!canDoCacheOperate(deleteCache.condition(), deleteCache.unless(), expressionMetadata)) {
             return;
         }
-        CacheOperate cacheOperate = cacheOperateFactory.getCacheOperate(deleteCache.cacheOperate());
+        CacheOperate cacheOperate = cacheOperateSupport.getCacheOperate(deleteCache.cacheName());
         DeleteParam deleteParam = new DeleteParam();
-        CacheNameWrapper cacheNameWrapper = cacheNameWrapperFactory.getCacheNameWrapper(deleteCache.cacheNameWrapper());
-        String cacheName = cacheNameWrapper.getCacheName(expressionMetadata, deleteCache.cacheName());
-
-        deleteParam.setCacheName(cacheName);
+        deleteParam.setWrapperCacheName(getWrapperCacheName(deleteCache.cacheName(), expressionMetadata));
+        deleteParam.setOriginCacheName(deleteCache.cacheName());
         Object key = super.parseCacheKey(expressionMetadata, deleteCache.key());
 
         deleteParam.setKey(JsonUtils.toJsonString(key));
@@ -51,6 +50,11 @@ public class DeleteCacheOperationHandler extends CacheOperationHandler {
        // deleteCacheParam.setCacheOperate(super.cacheCacheOperateFactory.getCacheOperate(deleteCache.cacheOperate()));
         //删除缓存
         cacheOperate.delete(deleteParam);
+        if(!CollectionUtils.isEmpty(cacheOperateEndHooks)){
+            for (CacheOperateEndHook cacheOperateEndHook : cacheOperateEndHooks) {
+                cacheOperateEndHook.end(deleteParam, cacheOperate);
+            }
+        }
     }
 
 

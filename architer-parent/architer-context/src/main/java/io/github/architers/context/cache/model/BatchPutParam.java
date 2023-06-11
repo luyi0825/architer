@@ -4,6 +4,7 @@ package io.github.architers.context.cache.model;
 import io.github.architers.context.cache.annotation.Cacheable;
 import io.github.architers.context.cache.annotation.PutCache;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.concurrent.TimeUnit;
 
@@ -11,19 +12,9 @@ import java.util.concurrent.TimeUnit;
  * @author luyi
  * @see PutCache
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class BatchPutParam implements CacheOperationParam {
-
-
-    /**
-     * 缓存名称
-     */
-    private String cacheName;
-
-    /**
-     * 是否异步
-     */
-    private boolean async = false;
+public class BatchPutParam extends CacheChangeParam {
 
     /**
      * 缓存值

@@ -2,7 +2,7 @@
 //
 //
 //import io.github.architers.context.cache.Cache;
-//import io.github.architers.cache.UserInfo;
+//import io.github.architers.cache.entity.UserInfo;
 //import io.github.architers.context.cache.operation.CacheOperate;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;

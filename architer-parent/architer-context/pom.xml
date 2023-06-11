@@ -101,15 +101,9 @@
         </dependency>
         <dependency>
             <groupId>org.apache.rocketmq</groupId>
-            <artifactId>rocketmq-client</artifactId>
-            <version>5.1.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.rocketmq</groupId>
             <artifactId>rocketmq-spring-boot</artifactId>
             <version>2.2.3</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>

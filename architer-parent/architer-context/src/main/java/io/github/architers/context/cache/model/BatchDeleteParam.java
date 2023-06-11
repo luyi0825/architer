@@ -3,6 +3,7 @@ package io.github.architers.context.cache.model;
 
 import io.github.architers.context.cache.annotation.PutCache;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Collection;
 
@@ -10,14 +11,9 @@ import java.util.Collection;
  * @author luyi
  * @see PutCache
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class BatchDeleteParam implements CacheOperationParam {
-
-
-    /**
-     * 缓存名称
-     */
-    private String cacheName;
+public class BatchDeleteParam extends CacheChangeParam {
 
     /**
      * 缓存的key

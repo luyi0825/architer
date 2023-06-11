@@ -2,14 +2,13 @@ package io.github.architers.context.cache.operate;
 
 
 import io.github.architers.context.cache.utils.CacheUtils;
-import io.github.architers.context.cache.model.NullValue;
+import io.github.architers.context.cache.model.InvalidCacheValue;
 import io.github.architers.context.cache.annotation.Cacheable;
 import io.github.architers.context.cache.model.GetParam;
 import io.github.architers.context.cache.model.PutParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.utils.JsonUtils;
-import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
 
@@ -21,7 +20,7 @@ import java.lang.annotation.Annotation;
  * @author luyi
  * @version 1.0.0
  */
-public class CacheableOperationHandler extends CacheOperationHandler {
+public class CacheableOperationHandler extends BaseCacheOperationHandler {
 
 
     @Override
@@ -30,7 +29,7 @@ public class CacheableOperationHandler extends CacheOperationHandler {
     }
 
     @Override
-    protected void execute(Annotation operationAnnotation, ExpressionMetadata expressionMetadata,
+    protected void executeCacheOperate(Annotation operationAnnotation, ExpressionMetadata expressionMetadata,
                            MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         Cacheable cacheable = (Cacheable) operationAnnotation;
 
@@ -39,33 +38,28 @@ public class CacheableOperationHandler extends CacheOperationHandler {
         if (!canDoCacheOperate(cacheable.condition(), cacheable.unless(), expressionMetadata)) {
             return;
         }
-        CacheOperate cacheOperate = super.cacheOperateFactory.getCacheOperate(cacheable.cacheOperate());
+        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cacheable.cacheName());
 
         Object key = super.parseCacheKey(expressionMetadata, cacheable.key());
-        String cacheName;
-        if (StringUtils.hasText(cacheable.cacheNameWrapper())) {
-            CacheNameWrapper cacheNameWrapper = cacheNameWrapperFactory.getCacheNameWrapper(cacheable.cacheNameWrapper());
-            cacheName = cacheNameWrapper.getCacheName(expressionMetadata, cacheable.cacheName());
-        } else {
-            cacheName = cacheable.cacheName();
-        }
 
         GetParam getParam = new GetParam();
-        getParam.setCacheOperate(cacheOperate);
+        //getParam.setCacheOperate(cacheOperate);
         //同步：没有值才查询数据库
         getParam.setAsync(false);
-        getParam.setCacheName(cacheable.cacheName());
+        getParam.setOriginCacheName(cacheable.cacheName());
+        getParam.setWrapperCacheName(getWrapperCacheName(cacheable.cacheName(), expressionMetadata));
         getParam.setKey(JsonUtils.toJsonString(key));
         Object value = cacheOperate.get(getParam);
         if (!isNullValue(value)) {
             cacheValue = value;
         }
         if (cacheValue == null) {
-            //调用方法，只要第一次调用是真的调用
+            //调用方法，只有第一次调用是真的调用
             Object returnValue = methodReturnValueFunction.proceed();
             long expireTime = CacheUtils.getExpireTime(cacheable.expireTime(), cacheable.randomTime());
             PutParam putParam = new PutParam();
-            putParam.setCacheName(cacheName);
+            putParam.setWrapperCacheName(getParam.getWrapperCacheName());
+            putParam.setOriginCacheName(getParam.getOriginCacheName());
             putParam.setCacheValue(returnValue);
             putParam.setKey(JsonUtils.toJsonString(key));
             putParam.setTimeUnit(cacheable.timeUnit());
@@ -84,7 +78,7 @@ public class CacheableOperationHandler extends CacheOperationHandler {
      * @return true表示为空值
      */
     private boolean isNullValue(Object value) {
-        return value == null || value instanceof NullValue;
+        return value == null || value instanceof InvalidCacheValue;
     }
 
 }

@@ -14,13 +14,13 @@ public class CaffeineCacheAutoConfiguration {
 
     @Bean
     public ExpireAfter expireAfter(CaffeineProperties caffeineProperties){
-        return new ExpireAfter(caffeineProperties);
+        return new ExpireAfter();
     }
 
 
     @Bean
-    public CaffeineCacheFactory caffeineCacheFactory(ExpireAfter expireAfter) {
-        return new CaffeineCacheFactory(expireAfter);
+    public CaffeineCacheFactory caffeineCacheFactory(ExpireAfter expireAfter,CaffeineProperties caffeineProperties) {
+        return new CaffeineCacheFactory(expireAfter,caffeineProperties);
     }
 
     @Bean

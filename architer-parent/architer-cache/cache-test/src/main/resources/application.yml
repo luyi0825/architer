@@ -16,9 +16,37 @@
 #    default-cache-operate-class: io.github.architers.cache.redisson.support.ValueCacheOperate
 architers:
   cache:
-    default-cache-operate-class: io.github.architers.cache.redisson.support.RedissonMapCacheOperate
+    default-cache-name-wrapper-class: io.github.architers.cache.cachenamewarpper.MyCacheNameWrapper
+    ##默认使用redis的map作为缓存
+    default-operate-class: io.github.architers.cache.redisson.support.RedissonMapCacheOperate
+    default-local-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
+    default-remote-operate-class: io.github.architers.cache.redisson.support.RedissonMapCacheOperate
+    value-change-route-key: cache_change
+    enable-two-level-cache: true
+    custom-configs:
+      local:
+        #缓存操作类
+        operateClass: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
+        #改变延迟删
+        change-delay-delete: false
+      twoLevel:
+        #缓存操作类
+        operateClass: io.github.architers.context.cache.operate.TwoLevelCacheOperate
+        #改变延迟删
+        change-delay-delete: false
+
 
   #default-cache-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
 rocketmq:
-  name-server: rocketmq:8848
+  name-server: rocketmq:9876
+  producer:
+    group: test
+
+spring:
+  application:
+    name: test
+
+
+
+
 

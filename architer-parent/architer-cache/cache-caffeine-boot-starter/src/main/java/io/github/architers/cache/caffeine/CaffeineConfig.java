@@ -9,6 +9,11 @@ import lombok.Data;
 public class CaffeineConfig {
 
     /**
+     *
+     */
+    private int initialCapacity = 64;
+
+    /**
      * 最大数量
      */
     private long maximumSize = -1L;

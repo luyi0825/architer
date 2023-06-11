@@ -27,7 +27,6 @@ public @interface DeleteCache {
 
     String key() default "";
 
-    String cacheNameWrapper() default "";
     /**
      * 是否异步删除
      */
@@ -49,10 +48,4 @@ public @interface DeleteCache {
      */
     String unless() default "";
 
-    /**
-     *
-     * @see Cacheable#cacheOperate()
-     */
-
-    Class<? extends CacheOperate> cacheOperate() default DefaultCacheOperate.class;
 }

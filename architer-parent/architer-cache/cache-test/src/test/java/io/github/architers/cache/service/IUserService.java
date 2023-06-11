@@ -1,6 +1,6 @@
 package io.github.architers.cache.service;
 
-import io.github.architers.cache.UserInfo;
+import io.github.architers.cache.entity.UserInfo;
 import io.github.architers.context.cache.annotation.Cacheable;
 import io.github.architers.context.cache.annotation.PutCache;
 

@@ -10,23 +10,11 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DeleteParam extends BaseCacheOperationParam {
+public class DeleteParam extends CacheChangeParam {
 
     /**
-     * 是否异步
+     * 缓存key
      */
-    private boolean async;
+    private String key;
 
-    /**
-     * 缓存值
-     */
-    private String cacheValue;
-
-    public String getCacheValue() {
-        return cacheValue;
-    }
-
-    public void setCacheValue(String cacheValue) {
-        this.cacheValue = cacheValue;
-    }
 }

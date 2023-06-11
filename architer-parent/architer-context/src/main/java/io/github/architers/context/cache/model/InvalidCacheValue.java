@@ -10,9 +10,9 @@ import java.io.Serializable;
  * @author luyi
  * @version 1.0.0
  */
-public class NullValue implements Serializable {
-    public static final NullValue INVALID_CACHE = new NullValue();
-    private String value = "NULL";
+public class InvalidCacheValue implements Serializable {
+    public static final InvalidCacheValue INVALID_CACHE = new InvalidCacheValue();
+    private String value = "INVALID_CACHE";
 
     public String getValue() {
         return value;

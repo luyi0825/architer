@@ -1,6 +1,6 @@
 package io.github.architers.cache.service;
 
-import io.github.architers.cache.UserInfo;
+import io.github.architers.cache.entity.UserInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;

@@ -2,8 +2,8 @@ package io.github.architers.context.cache.proxy;
 
 
 import io.github.architers.context.cache.CacheAnnotationsParser;
-import io.github.architers.context.cache.model.NullValue;
-import io.github.architers.context.cache.operate.CacheOperationHandler;
+import io.github.architers.context.cache.model.InvalidCacheValue;
+import io.github.architers.context.cache.operate.BaseCacheOperationHandler;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.expression.ExpressionParser;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -28,7 +28,7 @@ public class CacheInterceptor implements MethodInterceptor {
 
     private CacheAnnotationsParser cacheAnnotationsParser;
 
-    private List<CacheOperationHandler> cacheOperationHandlers;
+    private List<BaseCacheOperationHandler> baseCacheOperationHandlers;
 
     @Override
     @Nullable
@@ -44,7 +44,7 @@ public class CacheInterceptor implements MethodInterceptor {
         if (!CollectionUtils.isEmpty(operationAnnotations)) {
             Object returnValue = execute(invocation, operationAnnotations, expressionMetadata);
             //已经调用了方法，缓存中放的空值
-            if (returnValue instanceof NullValue) {
+            if (returnValue instanceof InvalidCacheValue) {
                 return null;
             }
             //获取到返回值
@@ -72,7 +72,7 @@ public class CacheInterceptor implements MethodInterceptor {
                     //执行方法
                     Object value = invocation.proceed();
                     if (value == null) {
-                        value = NullValue.INVALID_CACHE;
+                        value = InvalidCacheValue.INVALID_CACHE;
                     }
                     //设置特定值，防止重复调用方法
                     setValue(value);
@@ -84,7 +84,7 @@ public class CacheInterceptor implements MethodInterceptor {
             @Override
             public void setValue(Object value) {
                 // synchronized (this) {
-                if (value != null && !(value instanceof NullValue)) {
+                if (value != null && !(value instanceof InvalidCacheValue)) {
                     //支持#result表达式
                     expressionMetadata.getEvaluationContext().setVariable("result", value);
                 }
@@ -95,9 +95,9 @@ public class CacheInterceptor implements MethodInterceptor {
             }
         };
         for (Annotation operationAnnotation : operationAnnotations) {
-            for (CacheOperationHandler cacheOperationHandler : cacheOperationHandlers) {
-                if (cacheOperationHandler.match(operationAnnotation)) {
-                    cacheOperationHandler.handler(operationAnnotation, methodReturnValueFunction, expressionMetadata);
+            for (BaseCacheOperationHandler baseCacheOperationHandler : baseCacheOperationHandlers) {
+                if (baseCacheOperationHandler.match(operationAnnotation)) {
+                    baseCacheOperationHandler.handler(operationAnnotation, methodReturnValueFunction, expressionMetadata);
                     return returnValue.get();
                 }
             }
@@ -125,8 +125,8 @@ public class CacheInterceptor implements MethodInterceptor {
     }
 
 
-    public void setCacheOperationHandlers(List<CacheOperationHandler> cacheOperationHandlers) {
-        this.cacheOperationHandlers = cacheOperationHandlers;
+    public void setCacheOperationHandlers(List<BaseCacheOperationHandler> baseCacheOperationHandlers) {
+        this.baseCacheOperationHandlers = baseCacheOperationHandlers;
     }
 
 }

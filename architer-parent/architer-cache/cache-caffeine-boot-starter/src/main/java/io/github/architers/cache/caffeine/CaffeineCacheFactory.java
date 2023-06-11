@@ -2,12 +2,14 @@ package io.github.architers.cache.caffeine;
 
 import com.github.benmanes.caffeine.cache.*;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.util.CollectionUtils;
 
 
 import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -22,13 +24,13 @@ public class CaffeineCacheFactory {
 
     private final CaffeineProperties cacheProperties;
 
-    public CaffeineCacheFactory( ExpireAfter expireAfter) {
-        this.cacheProperties = expireAfter.getCaffeineProperties();
+    public CaffeineCacheFactory(ExpireAfter expireAfter,CaffeineProperties cacheProperties) {
         this.expireAfter = expireAfter;
+        this.cacheProperties = cacheProperties;
     }
 
 
-    Map<String, Cache<String, Object>> caches = new ConcurrentHashMap<>(2);
+    Map<String, Cache<String, Object>> caches = new ConcurrentHashMap<>(32);
 
     public Cache<String, Object> getCache(String cacheName) {
         Cache<String, Object> cache = caches.get(cacheName);
@@ -53,6 +55,10 @@ public class CaffeineCacheFactory {
         if (caffeineConfig.getMaximumWeight() > 0) {
             caffeine.maximumWeight(caffeineConfig.getMaximumWeight());
         }
+        caffeine.scheduler(Scheduler.systemScheduler());
+        caffeine.initialCapacity(caffeineConfig.getInitialCapacity());
+
+        //caffeine.recordStats().refreshAfterWrite(1, TimeUnit.MICROSECONDS);
         return caffeine.expireAfter(expireAfter).build();
     }
 

@@ -5,26 +5,23 @@ import io.github.architers.cache.caffeine.CaffeineCacheFactory;
 import io.github.architers.cache.caffeine.ExpireTimeLocal;
 import io.github.architers.context.Symbol;
 import io.github.architers.context.cache.model.*;
-import io.github.architers.context.cache.operate.CacheOperate;
+import io.github.architers.context.cache.operate.LocalCacheOperate;
 import io.github.architers.context.cache.utils.BatchValueUtils;
 import io.github.architers.context.utils.JsonUtils;
 
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * hash缓存操作
  *
  * @author luyi
  */
-public class CaffeineMapCacheOperate implements CacheOperate {
+public class CaffeineMapCacheOperate implements LocalCacheOperate {
 
 
     private final CaffeineCacheFactory caffeineCacheFactory;
@@ -36,22 +33,26 @@ public class CaffeineMapCacheOperate implements CacheOperate {
 
     @Override
     public void put(PutParam putParam) {
-        Cache<String, Object> cache = caffeineCacheFactory.getCache(putParam.getCacheName());
+        Cache<String, Object> cache = caffeineCacheFactory.getCache(putParam.getWrapperCacheName());
 
         Object cacheValue = putParam.getCacheValue();
-        if (cacheValue instanceof NullValue) {
-            //空值就防止一个空值，防止缓存穿透
-            ExpireTimeLocal.set(SECONDS.convert(5, TimeUnit.MINUTES));
-            return;
-        }
+
         try {
-            //存在过期时间
-            if (putParam.getExpireTime() > 0) {
-                ExpireTimeLocal.set(SECONDS.convert(putParam.getExpireTime(), putParam.getTimeUnit()));
-                cache.put(putParam.getKey(), cacheValue);
+            if (cacheValue instanceof InvalidCacheValue) {
+                //空值就防止一个空值，防止缓存穿透
+//                ExpireTimeLocal.set(MILLISECONDS.convert(5, TimeUnit.MINUTES));
+//                cache.put(putParam.getKey(), cacheValue);
             } else {
-                cache.put(putParam.getKey(), cacheValue);
+                //存在过期时间
+                if (putParam.getExpireTime() > 0) {
+                    ExpireTimeLocal.set(MILLISECONDS.convert(putParam.getExpireTime(), putParam.getTimeUnit()));
+                    cache.put(putParam.getKey(), cacheValue);
+                } else {
+                    ExpireTimeLocal.set(-1L);
+                    cache.put(putParam.getKey(), cacheValue);
+                }
             }
+
         } finally {
             ExpireTimeLocal.remove();
         }
@@ -61,31 +62,34 @@ public class CaffeineMapCacheOperate implements CacheOperate {
 
     @Override
     public void delete(DeleteParam deleteParam) {
-        Cache<String, Object> cache = caffeineCacheFactory.getCache(deleteParam.getCacheName());
+        Cache<String, Object> cache = caffeineCacheFactory.getCache(deleteParam.getWrapperCacheName());
         cache.invalidate(deleteParam.getKey());
     }
 
     @Override
     public Object get(GetParam getParam) {
-        Cache<String, Object> cache = caffeineCacheFactory.getCache(getParam.getCacheName());
+        Cache<String, Object> cache = caffeineCacheFactory.getCache(getParam.getWrapperCacheName());
+//        System.out.println(cache.getIfPresent(getParam.getKey()));
+//        System.out.println(cache.getIfPresent(getParam.getKey()));
+//        System.out.println(cache.getIfPresent(getParam.getKey()));
         return cache.getIfPresent(getParam.getKey());
     }
 
     @Override
     public void deleteAll(DeleteAllParam deleteAllParam) {
-        Cache<String, Object> cache = caffeineCacheFactory.getCache(deleteAllParam.getCacheName());
+        Cache<String, Object> cache = caffeineCacheFactory.getCache(deleteAllParam.getWrapperCacheName());
         cache.cleanUp();
     }
 
     @Override
     public void batchDelete(BatchDeleteParam batchDeleteParam) {
-        Cache<String, Object> cache = caffeineCacheFactory.getCache(batchDeleteParam.getCacheName());
+        Cache<String, Object> cache = caffeineCacheFactory.getCache(batchDeleteParam.getWrapperCacheName());
         cache.invalidateAll(new HashSet<String>((Collection<? extends String>) batchDeleteParam.getKeys()));
     }
 
     @Override
     public void batchPut(BatchPutParam batchPutParam) {
-        Cache<String, Object> cache = caffeineCacheFactory.getCache(batchPutParam.getCacheName());
+        Cache<String, Object> cache = caffeineCacheFactory.getCache(batchPutParam.getWrapperCacheName());
         Map<Object, Object> cacheMap = BatchValueUtils.parseValue2Map(batchPutParam.getBatchCacheValue(), Symbol.COLON);
         cacheMap.forEach((key, value) -> cache.put(JsonUtils.toJsonString(key), value));
     }

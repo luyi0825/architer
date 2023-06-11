@@ -1,7 +1,8 @@
 package io.github.architers.cache;
 
 import io.github.architers.context.cache.annotation.EnableArchiterCaching;
-import io.github.architers.context.cache.operate.support.RocketmqCacheChangeNotify;
+import io.github.architers.context.cache.consistency.rocketmq.RocketmqCacheOperateEndHook;
+import io.github.architers.context.cache.consistency.rocketmq.RocketmqCacheDelayDeleteConsumer;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,8 +15,14 @@ public class CacheConfigTest {
         SpringApplication.run(CacheConfigTest.class, args);
     }
 
+
     @Bean("rocketmqCacheChangeNotify_test")
-    public RocketmqCacheChangeNotify rocketmqCacheChangeNotify(RocketMQTemplate rocketMQTemplate) {
-        return new RocketmqCacheChangeNotify(rocketMQTemplate.getProducer());
+    public RocketmqCacheOperateEndHook rocketmqCacheChangeNotify(RocketMQTemplate rocketMQTemplate) {
+        return new RocketmqCacheOperateEndHook(rocketMQTemplate.getProducer());
+    }
+
+    @Bean
+    public RocketmqCacheDelayDeleteConsumer rocketmqCacheChangeNotifyConsumer(){
+        return new RocketmqCacheDelayDeleteConsumer();
     }
 }
