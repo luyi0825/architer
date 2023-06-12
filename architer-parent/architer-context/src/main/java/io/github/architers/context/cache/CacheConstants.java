@@ -13,13 +13,6 @@ public class CacheConstants {
      */
     public static final long NEVER_EXPIRE = -1;
 
-    /**
-     * 批量缓存key的标识
-     */
-    public static final String BATCH_CACHE_KEY = "batch_cache_key";
-    /**
-     * 批量缓存值-清理所有
-     */
-    public static final String CLEAR_ALL = "clear_all";
+
 
 }

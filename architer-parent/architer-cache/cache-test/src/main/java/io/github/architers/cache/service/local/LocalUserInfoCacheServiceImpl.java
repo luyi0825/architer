@@ -1,11 +1,10 @@
 package io.github.architers.cache.service.local;
 
 import io.github.architers.cache.entity.UserInfo;
-import io.github.architers.cache.service.UserInfoService;
-import io.github.architers.context.cache.annotation.BatchPutCache;
+import io.github.architers.context.cache.annotation.CacheBatchPut;
 import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.context.cache.annotation.DeleteCache;
-import io.github.architers.context.cache.annotation.PutCache;
+import io.github.architers.context.cache.annotation.CacheEvict;
+import io.github.architers.context.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class LocalUserInfoCacheServiceImpl implements ILocalUserInfoCache {
      * 放置本地缓存永远不过期
      */
     @Override
-    @PutCache(cacheName = "local", key = "#userInfo.username", cacheValue = "#userInfo")
+    @CachePut(cacheName = "local", key = "#userInfo.username", cacheValue = "#userInfo")
     public void putCacheNeverExpire(UserInfo userInfo) {
 
     }
@@ -27,7 +26,7 @@ public class LocalUserInfoCacheServiceImpl implements ILocalUserInfoCache {
      * 测试本地缓存过期五秒
      */
     @Override
-    @PutCache(cacheName = "local", key = "#userInfo.username", cacheValue = "#userInfo", expireTime = 5, timeUnit = TimeUnit.SECONDS)
+    @CachePut(cacheName = "local", key = "#userInfo.username", cacheValue = "#userInfo", expireTime = 5, timeUnit = TimeUnit.SECONDS)
     public void putCacheExpireWithFiveSecond(UserInfo userInfo) {
 
     }
@@ -57,7 +56,7 @@ public class LocalUserInfoCacheServiceImpl implements ILocalUserInfoCache {
      * 删除缓存
      */
     @Override
-    @DeleteCache(cacheName = "local", key = "#username")
+    @CacheEvict(cacheName = "local", key = "#username")
     public void delete(String username) {
 
     }
@@ -66,7 +65,7 @@ public class LocalUserInfoCacheServiceImpl implements ILocalUserInfoCache {
      * 集合批量put不过期
      */
     @Override
-    @BatchPutCache(cacheName = "local", cacheValue = "#userInfos")
+    @CacheBatchPut(cacheName = "local", cacheValue = "#userInfos")
     public void collectionBatchPutNeverExpire(List<UserInfo> userInfos) {
 
     }
@@ -75,7 +74,7 @@ public class LocalUserInfoCacheServiceImpl implements ILocalUserInfoCache {
      * map批量put不过期
      */
     @Override
-    @BatchPutCache(cacheName = "local", cacheValue = "#userMap")
+    @CacheBatchPut(cacheName = "local", cacheValue = "#userMap")
     public void mapBatchPutNeverExpire(Map<String, UserInfo> userMap) {
 
     }

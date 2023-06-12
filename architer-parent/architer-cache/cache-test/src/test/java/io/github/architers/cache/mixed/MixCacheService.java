@@ -3,7 +3,7 @@ package io.github.architers.cache.mixed;
 
 import io.github.architers.cache.entity.UserInfo;
 import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.context.cache.annotation.PutCache;
+import io.github.architers.context.cache.annotation.CachePut;
 
 public interface MixCacheService {
     /**
@@ -14,7 +14,7 @@ public interface MixCacheService {
      * @param userName 用户名
      */
     @Cacheable(cacheName = "userInfo_findByUserName", key = "#userName")
-    @PutCache(cacheName = "phone", key = "#userName", cacheValue = "#result.phone")
+    @CachePut(cacheName = "phone", key = "#userName", cacheValue = "#result.phone")
     UserInfo findByUserName(String userName);
 
 }

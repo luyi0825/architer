@@ -1,11 +1,13 @@
 package io.github.architers.context.cache.annotation;
 
 
+
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
 /**
  * 向缓存中放数据
+ * list放入map
  *
  * @author luyi
  */
@@ -13,8 +15,7 @@ import java.util.concurrent.TimeUnit;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Repeatable(PutCaches.class)
-public @interface PutCache {
+public @interface CacheBatchPut {
 
     /**
      * @see Cacheable#cacheName()
@@ -22,15 +23,11 @@ public @interface PutCache {
     String cacheName() default "";
 
     /**
-     * @see Cacheable#key()
+     * 缓存值，支持EL表达
+     * <li>当为map的时候，key|value就刚好对应</li>
+     * <li>当为集合的时候，用CacheKey和CacheValue指定key|value</li>
      */
-    String key();
-
-
-    /**
-     * 缓存值，支持EL表达式
-     */
-    String cacheValue();
+    String cacheValue() default "";
 
 
     /**
@@ -63,6 +60,5 @@ public @interface PutCache {
      * @see Cacheable#unless()
      */
     String unless() default "";
-
 
 }

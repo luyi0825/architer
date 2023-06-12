@@ -2,7 +2,7 @@ package io.github.architers.context.cache.model;
 
 
 import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.context.cache.annotation.PutCache;
+import io.github.architers.context.cache.annotation.CachePut;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author luyi
- * @see PutCache
+ * @see CachePut
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

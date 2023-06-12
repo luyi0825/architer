@@ -1,10 +1,10 @@
 package io.github.architers.cache.service;
 
 import io.github.architers.cache.entity.UserInfo;
-import io.github.architers.context.cache.annotation.BatchPutCache;
+import io.github.architers.context.cache.annotation.CacheBatchPut;
 import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.context.cache.annotation.DeleteCache;
-import io.github.architers.context.cache.annotation.PutCache;
+import io.github.architers.context.cache.annotation.CacheEvict;
+import io.github.architers.context.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class TwoLevelUserInfoCacheServiceImpl implements ITwoLevelUserInfoCacheS
      *  放置本地缓存永远不过期
      */
     @Override
-    @PutCache(cacheName = "twoLevel", key = "#userInfo.username", cacheValue = "#userInfo")
+    @CachePut(cacheName = "twoLevel", key = "#userInfo.username", cacheValue = "#userInfo")
     public void putCacheNeverExpire(UserInfo userInfo) {
 
     }
@@ -26,7 +26,7 @@ public class TwoLevelUserInfoCacheServiceImpl implements ITwoLevelUserInfoCacheS
      * 测试本地缓存过期五秒
      */
     @Override
-    @PutCache(cacheName = "twoLevel", key = "#userInfo.username", cacheValue = "#userInfo", expireTime = 5, timeUnit = TimeUnit.SECONDS)
+    @CachePut(cacheName = "twoLevel", key = "#userInfo.username", cacheValue = "#userInfo", expireTime = 5, timeUnit = TimeUnit.SECONDS)
     public void putCacheExpireWithFiveSecond(UserInfo userInfo) {
 
     }
@@ -58,7 +58,7 @@ public class TwoLevelUserInfoCacheServiceImpl implements ITwoLevelUserInfoCacheS
      * 删除缓存
      */
     @Override
-    @DeleteCache(cacheName = "twoLevel", key = "#username")
+    @CacheEvict(cacheName = "twoLevel", key = "#username")
     public void delete(String username) {
 
     }
@@ -67,7 +67,7 @@ public class TwoLevelUserInfoCacheServiceImpl implements ITwoLevelUserInfoCacheS
      * 集合批量put不过期
      */
     @Override
-    @BatchPutCache(cacheName = "twoLevel", cacheValue = "#userInfos")
+    @CacheBatchPut(cacheName = "twoLevel", cacheValue = "#userInfos")
     public void collectionBatchPutNeverExpire(List<UserInfo> userInfos) {
 
     }
@@ -76,7 +76,7 @@ public class TwoLevelUserInfoCacheServiceImpl implements ITwoLevelUserInfoCacheS
      * map批量put不过期
      */
     @Override
-    @BatchPutCache(cacheName = "twoLevel", cacheValue = "#userMap")
+    @CacheBatchPut(cacheName = "twoLevel", cacheValue = "#userMap")
     public void mapBatchPutNeverExpire(Map<String, UserInfo> userMap) {
 
     }

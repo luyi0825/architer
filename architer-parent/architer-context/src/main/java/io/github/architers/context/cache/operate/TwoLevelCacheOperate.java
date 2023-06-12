@@ -53,9 +53,9 @@ public final class TwoLevelCacheOperate implements CacheOperate {
     }
 
     @Override
-    public void batchDelete(BatchDeleteParam batchDeleteParam) {
-        localCacheOperate.batchDelete(batchDeleteParam);
-        remoteCacheOperate.batchDelete(batchDeleteParam);
+    public void batchDelete(BatchEvictParam batchEvictParam) {
+        localCacheOperate.batchDelete(batchEvictParam);
+        remoteCacheOperate.batchDelete(batchEvictParam);
     }
 
     @Override

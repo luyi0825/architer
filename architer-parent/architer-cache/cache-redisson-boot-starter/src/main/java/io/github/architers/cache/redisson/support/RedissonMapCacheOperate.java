@@ -77,12 +77,12 @@ public class RedissonMapCacheOperate implements RemoteCacheOperate {
     }
 
     @Override
-    public void batchDelete(BatchDeleteParam batchDeleteParam) {
-        Collection<?> keys = batchDeleteParam.getKeys();
+    public void batchDelete(BatchEvictParam batchEvictParam) {
+        Collection<?> keys = batchEvictParam.getKeys();
         if (CollectionUtils.isEmpty(keys)) {
             return;
         }
-        RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchDeleteParam.getWrapperCacheName());
+        RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchEvictParam.getWrapperCacheName());
         rMapCache.keySet(keys.size()).clear();
     }
 

@@ -28,6 +28,11 @@ public class CacheOperateSupport implements ApplicationContextAware {
 
     private CacheOperate defaultTowLevelCacheOperate;
 
+    private CacheNameWrapper defaultCacheNameWrapper;
+
+
+    private Map<String/*缓存名称*/, CacheNameWrapper> cacheNameWrapperMap;
+
 
     public CacheOperateSupport() {
 
@@ -50,10 +55,6 @@ public class CacheOperateSupport implements ApplicationContextAware {
         return cacheOperate;
     }
 
-    private CacheNameWrapper defaultCacheNameWrapper;
-
-
-    private Map<String/*缓存名称*/, CacheNameWrapper> cacheNameWrapperMap;
 
     public CacheNameWrapper getCacheNameWrapper(String cacheName) {
         CacheNameWrapper cacheNameWrapper = cacheNameWrapperMap.get(cacheName);
@@ -156,6 +157,4 @@ public class CacheOperateSupport implements ApplicationContextAware {
         });
 
     }
-
-
 }

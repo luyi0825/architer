@@ -1,7 +1,6 @@
 package io.github.architers.context.cache.operate;
 
 
-import io.github.architers.context.cache.*;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.expression.ExpressionParser;
@@ -30,7 +29,7 @@ public abstract class BaseCacheOperationHandler {
     protected ExpressionParser expressionParser;
 
     @Autowired(required = false)
-    protected List<CacheOperateHook> cacheOperateHooks;
+    protected List<CacheOperateInvocationHook> cacheOperateInvocationHooks;
 
 
     public Object value(String valueExpression, ExpressionMetadata expressionMetadata) {
@@ -49,9 +48,6 @@ public abstract class BaseCacheOperationHandler {
     protected Object parseCacheKey(ExpressionMetadata expressionMetadata, String key) {
         if (!StringUtils.hasText(key)) {
             throw new IllegalArgumentException("key is empty");
-        }
-        if (CacheConstants.BATCH_CACHE_KEY.equals(key)) {
-            return key;
         }
         Object realKey = expressionParser.parserExpression(expressionMetadata, key);
         if (realKey == null) {
@@ -75,13 +71,14 @@ public abstract class BaseCacheOperationHandler {
     }
 
 
+
     /**
      * 是否能够执行缓存操作
      *
      * @return true表示可以进行缓存操作
      */
     public boolean canDoCacheOperate(String condition, String unless, ExpressionMetadata expressionMetadata) {
-        return isCondition(condition, expressionMetadata) && !isUnless(unless, expressionMetadata);
+        return !isCondition(condition, expressionMetadata) || isUnless(unless, expressionMetadata);
     }
 
     /**

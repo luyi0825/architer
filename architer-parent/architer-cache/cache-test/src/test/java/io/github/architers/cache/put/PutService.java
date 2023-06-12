@@ -2,33 +2,33 @@ package io.github.architers.cache.put;
 
 import io.github.architers.cache.entity.UserInfo;
 import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.context.cache.annotation.PutCache;
+import io.github.architers.context.cache.annotation.CachePut;
 
 public interface PutService {
-    @PutCache(cacheName = "onePut", key = "#userInfo.username", cacheValue = "#userInfo")
+    @CachePut(cacheName = "onePut", key = "#userInfo.username", cacheValue = "#userInfo")
     void onePut(UserInfo userInfo);
 
     @Cacheable(cacheName = "onePut", key = "#username")
     UserInfo getUserInfo(String username);
 
-    @PutCache(cacheName = "twoPut", key = "#userInfo.username+'_1'", cacheValue = "#userInfo")
-    @PutCache(cacheName = "twoPut", key = "#userInfo.username+'_2'", cacheValue = "#userInfo")
+    @CachePut(cacheName = "twoPut", key = "#userInfo.username+'_1'", cacheValue = "#userInfo")
+    @CachePut(cacheName = "twoPut", key = "#userInfo.username+'_2'", cacheValue = "#userInfo")
     void twoPut(UserInfo userInfo);
 
-    @PutCache(cacheName = "returnValue", key = "#userInfo.username", cacheValue = "#result")
+    @CachePut(cacheName = "returnValue", key = "#userInfo.username", cacheValue = "#result")
     UserInfo returnValue(UserInfo userInfo);
 
-    @PutCache(cacheName = "putCache_expireTime", key = "#userInfo.username", cacheValue = "#userInfo.username",
+    @CachePut(cacheName = "putCache_expireTime", key = "#userInfo.username", cacheValue = "#userInfo.username",
             expireTime = 2)
     void expireTime(UserInfo userInfo);
 
-    @PutCache(cacheName = "putCache_randomTime", key = "#userInfo.username", cacheValue = "#userInfo",
+    @CachePut(cacheName = "putCache_randomTime", key = "#userInfo.username", cacheValue = "#userInfo",
             expireTime = 2, randomTime = 2)
     void randomTime(UserInfo userInfo);
 
-    @PutCache(cacheName = "putCache_condition", key = "#userInfo.username+'_1'", cacheValue = "#result", condition = "#result.username.startsWith('666')")
+    @CachePut(cacheName = "putCache_condition", key = "#userInfo.username+'_1'", cacheValue = "#result", condition = "#result.username.startsWith('666')")
     UserInfo condition(UserInfo userInfo);
 
-    @PutCache(cacheName = "'putCache_unless'", key = "#userInfo.username+'_1'", cacheValue = "#result", unless = "#result.username.startsWith('666')")
+    @CachePut(cacheName = "'putCache_unless'", key = "#userInfo.username+'_1'", cacheValue = "#result", unless = "#result.username.startsWith('666')")
     UserInfo unless(UserInfo userInfo);
 }

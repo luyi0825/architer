@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface PutCaches {
+public @interface CachePuts {
 
-    PutCache[] value();
+    CachePut[] value();
 }

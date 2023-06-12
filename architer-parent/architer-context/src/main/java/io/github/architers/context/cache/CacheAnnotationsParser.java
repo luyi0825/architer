@@ -3,7 +3,6 @@ package io.github.architers.context.cache;
 
 import io.github.architers.context.cache.annotation.*;
 import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
@@ -22,13 +21,12 @@ public class CacheAnnotationsParser {
 
     static {
         CACHE_OPERATION_ANNOTATIONS.add(Cacheable.class);
-        CACHE_OPERATION_ANNOTATIONS.add(Cacheables.class);
-        CACHE_OPERATION_ANNOTATIONS.add(DeleteCache.class);
-        CACHE_OPERATION_ANNOTATIONS.add(DeleteCaches.class);
-        CACHE_OPERATION_ANNOTATIONS.add(PutCache.class);
-        CACHE_OPERATION_ANNOTATIONS.add(PutCaches.class);
-        CACHE_OPERATION_ANNOTATIONS.add(BatchDeleteCache.class);
-        CACHE_OPERATION_ANNOTATIONS.add(BatchPutCache.class);
+        CACHE_OPERATION_ANNOTATIONS.add(Caching.class);
+        CACHE_OPERATION_ANNOTATIONS.add(CachingBatch.class);
+        CACHE_OPERATION_ANNOTATIONS.add(CacheEvict.class);
+        CACHE_OPERATION_ANNOTATIONS.add(CachePut.class);
+        CACHE_OPERATION_ANNOTATIONS.add(CacheBatchEvict.class);
+        CACHE_OPERATION_ANNOTATIONS.add(CacheBatchPut.class);
     }
 
     /**
@@ -86,17 +84,20 @@ public class CacheAnnotationsParser {
                 AnnotatedElementUtils.getAllMergedAnnotations(annotatedElement, CACHE_OPERATION_ANNOTATIONS) :
                 AnnotatedElementUtils.findAllMergedAnnotations(annotatedElement, CACHE_OPERATION_ANNOTATIONS));
         final Collection<Annotation> ops = new ArrayList<>(anns.size());
-        anns.forEach(annotation -> {
-            if (annotation instanceof Cacheables) {
-                ops.addAll(Arrays.asList(((Cacheables) annotation).value()));
-            } else if (annotation instanceof PutCaches) {
-                ops.addAll(Arrays.asList(((PutCaches) annotation).value()));
-            } else if (annotation instanceof DeleteCaches) {
-                ops.addAll(Arrays.asList(((DeleteCaches) annotation).value()));
+        for (Annotation ann : anns) {
+            if (ann instanceof Caching) {
+                Caching caching = (Caching) ann;
+                ops.addAll(List.of(caching.cacheables()));
+                ops.addAll(List.of(caching.evicts()));
+                ops.addAll(List.of(caching.puts()));
+            } else if (ann instanceof CachingBatch) {
+                CachingBatch cachingBatch = (CachingBatch) ann;
+                ops.addAll(List.of(cachingBatch.batchEvicts()));
+                ops.addAll(List.of(cachingBatch.batchPuts()));
             } else {
-                ops.add(annotation);
+                ops.add(ann);
             }
-        });
+        }
         return ops;
     }
 

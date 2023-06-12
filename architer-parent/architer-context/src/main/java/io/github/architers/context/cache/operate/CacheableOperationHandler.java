@@ -35,7 +35,7 @@ public class CacheableOperationHandler extends BaseCacheOperationHandler {
 
         Object cacheValue = null;
         //判断是或能够进行缓存操作
-        if (!canDoCacheOperate(cacheable.condition(), cacheable.unless(), expressionMetadata)) {
+        if (canDoCacheOperate(cacheable.condition(), cacheable.unless(), expressionMetadata)) {
             return;
         }
         CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cacheable.cacheName());

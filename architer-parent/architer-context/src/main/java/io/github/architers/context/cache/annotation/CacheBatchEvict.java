@@ -1,8 +1,5 @@
 package io.github.architers.context.cache.annotation;
 
-import io.github.architers.context.cache.operate.CacheOperate;
-import io.github.architers.context.cache.operate.DefaultCacheOperate;
-
 import java.lang.annotation.*;
 
 /**
@@ -14,7 +11,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface BatchDeleteCache {
+public @interface CacheBatchEvict {
     /**
      * 缓存名称(不支持EL表达式)
      */
@@ -24,6 +21,12 @@ public @interface BatchDeleteCache {
      * 批量删除的key,当key为空，就删除所有的
      */
     String keys();
+
+    /**
+     * true表示在方法调用删除缓存
+     * false 表示在方法执行之后删除
+     */
+    boolean beforeInvocation() default true;
 
     /**
      * 是否异步删除
@@ -40,13 +43,6 @@ public @interface BatchDeleteCache {
      */
     String unless() default "";
 
-    /**
-     *
-     * @see Cacheable#cacheOperate()
-     */
-    /**
-     * 缓存操作器
-     */
-    Class<? extends CacheOperate> cacheOperate() default DefaultCacheOperate.class;
+
 
 }

@@ -1,9 +1,6 @@
 package io.github.architers.context.cache.annotation;
 
 
-import io.github.architers.context.cache.operate.CacheOperate;
-import io.github.architers.context.cache.operate.DefaultCacheOperate;
-
 import java.lang.annotation.*;
 
 /**
@@ -16,8 +13,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Repeatable(DeleteCaches.class)
-public @interface DeleteCache {
+public @interface CacheEvict {
 
     /**
      * @see Cacheable#cacheName()
@@ -28,15 +24,17 @@ public @interface DeleteCache {
     String key() default "";
 
     /**
+     * true表示在方法调用删除缓存
+     * false 表示在方法执行之后删除
+     */
+    boolean beforeInvocation() default true;
+
+    /**
      * 是否异步删除
      */
     boolean async() default false;
 
-    /**
-     * true表示在方法直接删除缓存
-     * false 表示在方法执行之后删除
-     */
-    boolean before() default true;
+
 
     /**
      * @see Cacheable#condition()

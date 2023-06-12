@@ -2,8 +2,13 @@ package io.github.architers.context.cache.proxy;
 
 
 import io.github.architers.context.cache.CacheAnnotationsParser;
+import io.github.architers.context.cache.annotation.CacheBatchEvict;
+import io.github.architers.context.cache.annotation.CacheEvict;
+import io.github.architers.context.cache.annotation.CacheEvictAll;
+import io.github.architers.context.cache.annotation.Cacheable;
 import io.github.architers.context.cache.model.InvalidCacheValue;
 import io.github.architers.context.cache.operate.BaseCacheOperationHandler;
+import io.github.architers.context.cache.operate.MethodCacheAnnotationContext;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.expression.ExpressionParser;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -14,9 +19,12 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -30,37 +38,22 @@ public class CacheInterceptor implements MethodInterceptor {
 
     private List<BaseCacheOperationHandler> baseCacheOperationHandlers;
 
+    private Map<Method, MethodCacheAnnotationContext> methodMethodCacheContextCache = new ConcurrentHashMap<>(32);
+
     @Override
     @Nullable
     public Object invoke(@NonNull final MethodInvocation invocation) throws Throwable {
         /*
          *构建表达式的元数据:expressionMetadata
-         *1.由于对于同一个线程的ExpressionEvaluationContext一样，可能存在多个注解，再次构建，减少对象的创建
+         *1.由于对于同一个线程的ExpressionEvaluationContext一样，可能存在多个注解，减少对象的创建
          *2.方便不同注解拓展变量值传递
          */
         ExpressionMetadata expressionMetadata = this.buildExpressionMeta(invocation);
 
-        Collection<? extends Annotation> operationAnnotations = cacheAnnotationsParser.parse(invocation.getMethod());
-        if (!CollectionUtils.isEmpty(operationAnnotations)) {
-            Object returnValue = execute(invocation, operationAnnotations, expressionMetadata);
-            //已经调用了方法，缓存中放的空值
-            if (returnValue instanceof InvalidCacheValue) {
-                return null;
-            }
-            //获取到返回值
-            if (returnValue != null) {
-                return returnValue;
-            }
-            //没有调用过方法，调用一次(
-            return invocation.proceed();
+        MethodCacheAnnotationContext methodCacheAnnotationContext = methodMethodCacheContextCache.get(invocation.getMethod());
+        if (methodCacheAnnotationContext == null) {
+            methodCacheAnnotationContext = this.buildMethodCacheAnnotationContext(invocation.getMethod());
         }
-        return invocation.proceed();
-    }
-
-    /**
-     * 执行拦截的操作
-     */
-    private Object execute(MethodInvocation invocation, Collection<? extends Annotation> operationAnnotations, ExpressionMetadata expressionMetadata) throws Throwable {
         //返回值构建，也方便多个注解的时候，重复调用方法
         AtomicReference<Object> returnValue = new AtomicReference<>();
         MethodReturnValueFunction methodReturnValueFunction = new MethodReturnValueFunction() {
@@ -92,17 +85,74 @@ public class CacheInterceptor implements MethodInterceptor {
                 }
             }
         };
+
+        //执行调用方法之前的注解操作
+        this.executeCacheOperates(methodCacheAnnotationContext.getBeforeInvocations(), expressionMetadata, methodReturnValueFunction);
+        //执行cacheable注解
+        this.executeCacheOperates(methodCacheAnnotationContext.getCacheables(), expressionMetadata, methodReturnValueFunction);
+        //调用方法（如果有cacheable就不会真的调用）
+        methodReturnValueFunction.proceed();
+        //执行调用方法后的注解操作
+        this.executeCacheOperates(methodCacheAnnotationContext.getAfterInvocations(), expressionMetadata, methodReturnValueFunction);
+
+        Object value = returnValue.get();
+
+        //已经调用了方法，缓存中放的空值
+        if (value instanceof InvalidCacheValue) {
+            return null;
+        }
+        //获取到返回值
+        return value;
+    }
+
+    private void executeCacheOperates(Collection<Annotation> operationAnnotations, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
+        if (CollectionUtils.isEmpty(operationAnnotations)) {
+            return;
+        }
         for (Annotation operationAnnotation : operationAnnotations) {
             for (BaseCacheOperationHandler baseCacheOperationHandler : baseCacheOperationHandlers) {
                 if (baseCacheOperationHandler.match(operationAnnotation)) {
                     baseCacheOperationHandler.handler(operationAnnotation, methodReturnValueFunction, expressionMetadata);
-                    return returnValue.get();
                 }
             }
         }
         throw new RuntimeException("没有匹配到CacheOperationHandler");
 
     }
+
+    private MethodCacheAnnotationContext buildMethodCacheAnnotationContext(Method method) {
+        Collection<? extends Annotation> operationAnnotations = cacheAnnotationsParser.parse(method);
+
+        MethodCacheAnnotationContext methodCacheAnnotationContext = new MethodCacheAnnotationContext();
+
+        for (Annotation operationAnnotation : operationAnnotations) {
+            if (operationAnnotation instanceof CacheEvict) {
+                if (((CacheEvict) operationAnnotation).beforeInvocation()) {
+                    methodCacheAnnotationContext.addBeforeInvocations(operationAnnotation);
+                } else {
+                    methodCacheAnnotationContext.addAfterInvocations(operationAnnotation);
+                }
+            } else if (operationAnnotation instanceof CacheBatchEvict) {
+                if (((CacheBatchEvict) operationAnnotation).beforeInvocation()) {
+                    methodCacheAnnotationContext.addBeforeInvocations(operationAnnotation);
+                } else {
+                    methodCacheAnnotationContext.addAfterInvocations(operationAnnotation);
+                }
+            } else if (operationAnnotation instanceof CacheEvictAll) {
+                if (((CacheEvictAll) operationAnnotation).beforeInvocation()) {
+                    methodCacheAnnotationContext.addBeforeInvocations(operationAnnotation);
+                } else {
+                    methodCacheAnnotationContext.addAfterInvocations(operationAnnotation);
+                }
+            } else if (operationAnnotation instanceof Cacheable) {
+                methodCacheAnnotationContext.addCacheables(operationAnnotation);
+            } else {
+                methodCacheAnnotationContext.addAfterInvocations(operationAnnotation);
+            }
+        }
+        return methodMethodCacheContextCache.putIfAbsent(method, methodCacheAnnotationContext);
+    }
+
 
     /**
      * 构建缓存的表达式元数据

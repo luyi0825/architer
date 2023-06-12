@@ -1,10 +1,10 @@
 package io.github.architers.cache.service.remote;
 
 import io.github.architers.cache.entity.UserInfo;
-import io.github.architers.context.cache.annotation.BatchPutCache;
+import io.github.architers.context.cache.annotation.CacheBatchPut;
 import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.context.cache.annotation.DeleteCache;
-import io.github.architers.context.cache.annotation.PutCache;
+import io.github.architers.context.cache.annotation.CacheEvict;
+import io.github.architers.context.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class RemoteUserInfoCacheServiceImpl implements IRemoteUserInfoCache {
      * 放置本地缓存永远不过期
      */
     @Override
-    @PutCache(cacheName = "remote", key = "#userInfo.username", cacheValue = "#userInfo")
+    @CachePut(cacheName = "remote", key = "#userInfo.username", cacheValue = "#userInfo")
     public void putCacheNeverExpire(UserInfo userInfo) {
 
     }
@@ -26,7 +26,7 @@ public class RemoteUserInfoCacheServiceImpl implements IRemoteUserInfoCache {
      * 测试本地缓存过期五秒
      */
     @Override
-    @PutCache(cacheName = "remote", key = "#userInfo.username", cacheValue = "#userInfo", expireTime = 5, timeUnit = TimeUnit.SECONDS)
+    @CachePut(cacheName = "remote", key = "#userInfo.username", cacheValue = "#userInfo", expireTime = 5, timeUnit = TimeUnit.SECONDS)
     public void putCacheExpireWithFiveSecond(UserInfo userInfo) {
 
     }
@@ -56,7 +56,7 @@ public class RemoteUserInfoCacheServiceImpl implements IRemoteUserInfoCache {
      * 删除缓存
      */
     @Override
-    @DeleteCache(cacheName = "remote", key = "#username")
+    @CacheEvict(cacheName = "remote", key = "#username")
     public void delete(String username) {
 
     }
@@ -65,7 +65,7 @@ public class RemoteUserInfoCacheServiceImpl implements IRemoteUserInfoCache {
      * 集合批量put不过期
      */
     @Override
-    @BatchPutCache(cacheName = "remote", cacheValue = "#userInfos")
+    @CacheBatchPut(cacheName = "remote", cacheValue = "#userInfos")
     public void collectionBatchPutNeverExpire(List<UserInfo> userInfos) {
 
     }
@@ -74,7 +74,7 @@ public class RemoteUserInfoCacheServiceImpl implements IRemoteUserInfoCache {
      * map批量put不过期
      */
     @Override
-    @BatchPutCache(cacheName = "remote", cacheValue = "#userMap")
+    @CacheBatchPut(cacheName = "remote", cacheValue = "#userMap")
     public void mapBatchPutNeverExpire(Map<String, UserInfo> userMap) {
 
     }

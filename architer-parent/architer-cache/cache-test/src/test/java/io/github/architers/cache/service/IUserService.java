@@ -2,7 +2,7 @@ package io.github.architers.cache.service;
 
 import io.github.architers.cache.entity.UserInfo;
 import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.context.cache.annotation.PutCache;
+import io.github.architers.context.cache.annotation.CachePut;
 
 import java.util.concurrent.TimeUnit;
 
@@ -11,16 +11,16 @@ public interface IUserService {
     /**
      * 保存不过期
      */
-    @PutCache(cacheName = "user", key = "#userInfo.username", cacheValue = "#userInfo")
+    @CachePut(cacheName = "user", key = "#userInfo.username", cacheValue = "#userInfo")
     void saveNotExpired(UserInfo userInfo);
 
     /**
      * 保存五秒过期
      */
-    @PutCache(cacheName = "user", key = "#userInfo.username", cacheValue = "#userInfo", expireTime = 5, timeUnit = TimeUnit.SECONDS)
+    @CachePut(cacheName = "user", key = "#userInfo.username", cacheValue = "#userInfo", expireTime = 5, timeUnit = TimeUnit.SECONDS)
     void saveExpiredWithFiveSecond(UserInfo userInfo);
 
-    @PutCache(cacheName = "user", key = "#userInfo.username", cacheValue = "#userInfo", expireTime = 5)
+    @CachePut(cacheName = "user", key = "#userInfo.username", cacheValue = "#userInfo", expireTime = 5)
     void saveExpiredWithFiveMinute(UserInfo userInfo);
 
     /**

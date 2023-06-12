@@ -1,14 +1,11 @@
 package io.github.architers.context.cache.annotation;
 
-import io.github.architers.context.cache.operate.CacheOperate;
-import io.github.architers.context.cache.operate.DefaultCacheOperate;
-
 /**
  * 删除整个缓存
  *
  * @author luyi
  */
-public @interface DeleteAllCache {
+public @interface CacheEvictAll {
     /**
      * 缓存名称(不支持EL表达式)
      */
@@ -28,5 +25,11 @@ public @interface DeleteAllCache {
      * @see Cacheable#unless()
      */
     String unless() default "";
+
+    /**
+     * true表示在方法调用删除缓存
+     * false 表示在方法执行之后删除
+     */
+    boolean beforeInvocation() default true;
 
 }

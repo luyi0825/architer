@@ -24,7 +24,7 @@ import javax.annotation.Resource;
  *
  * @author luyi
  */
-public class RocketmqCacheOperateHook implements CacheOperateHook {
+public class RocketmqCacheOperateInvocationHook implements CacheOperateInvocationHook {
 
     @Value("${spring.application.name}")
     private String applicationName;
@@ -35,7 +35,7 @@ public class RocketmqCacheOperateHook implements CacheOperateHook {
 
     private final DefaultMQProducer producer;
 
-    public RocketmqCacheOperateHook(DefaultMQProducer producer) {
+    public RocketmqCacheOperateInvocationHook(DefaultMQProducer producer) {
         this.producer = producer;
     }
 
@@ -106,8 +106,9 @@ public class RocketmqCacheOperateHook implements CacheOperateHook {
         return true;
     }
 
+
     @Override
-    public void end(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
+    public void after(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
         if (cacheOperate instanceof LocalCacheOperate) {
             if (!(cacheParam instanceof CacheChangeParam)) {
                 return ;

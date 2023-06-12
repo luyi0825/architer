@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Repeatable(Cacheables.class)
 public @interface Cacheable {
 
     /**
@@ -37,8 +36,6 @@ public @interface Cacheable {
      * 缓存key,支持SpEL
      */
     String key();
-
-
 
     /**
      * 缓存随机时间,时间单位跟expireTime一致

@@ -3,7 +3,7 @@ package io.github.architers.cache.service;
 
 import io.github.architers.cache.entity.UserInfo;
 import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.context.cache.annotation.DeleteCache;
+import io.github.architers.context.cache.annotation.CacheEvict;
 
 public interface ITwoLevelUserInfoClusterCacheService {
 
@@ -13,6 +13,6 @@ public interface ITwoLevelUserInfoClusterCacheService {
     @Cacheable(cacheName = "twoLevelCluster", key = "#username")
     UserInfo getUserInfoWithCache(String username);
 
-    @DeleteCache(cacheName = "twoLevelCluster",key = "#username")
+    @CacheEvict(cacheName = "twoLevelCluster",key = "#username")
     void delete(String username);
 }

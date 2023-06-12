@@ -82,9 +82,9 @@ public class CaffeineMapCacheOperate implements LocalCacheOperate {
     }
 
     @Override
-    public void batchDelete(BatchDeleteParam batchDeleteParam) {
-        Cache<String, Object> cache = caffeineCacheFactory.getCache(batchDeleteParam.getWrapperCacheName());
-        cache.invalidateAll(new HashSet<String>((Collection<? extends String>) batchDeleteParam.getKeys()));
+    public void batchDelete(BatchEvictParam batchEvictParam) {
+        Cache<String, Object> cache = caffeineCacheFactory.getCache(batchEvictParam.getWrapperCacheName());
+        cache.invalidateAll(new HashSet<String>((Collection<? extends String>) batchEvictParam.getKeys()));
     }
 
     @Override

@@ -93,20 +93,20 @@ public class RedissonValueCacheOperate implements RemoteCacheOperate {
 
 
     @Override
-    public void batchDelete(BatchDeleteParam batchDeleteParam) {
-        Collection<?> keys = batchDeleteParam.getKeys();
+    public void batchDelete(BatchEvictParam batchEvictParam) {
+        Collection<?> keys = batchEvictParam.getKeys();
         if (CollectionUtils.isEmpty(keys)) {
             return;
         }
         String[] cacheKeys = new String[keys.size()];
         int i = 0;
         for (Object key : keys) {
-            String cacheKey = batchDeleteParam.getWrapperCacheName() + Symbol.COLON +
+            String cacheKey = batchEvictParam.getWrapperCacheName() + Symbol.COLON +
                     JsonUtils.toJsonString(key);
             cacheKeys[i] = cacheKey;
             i++;
         }
-        if (batchDeleteParam.isAsync()) {
+        if (batchEvictParam.isAsync()) {
             redissonClient.getKeys().deleteAsync(cacheKeys);
         } else {
             redissonClient.getKeys().delete(cacheKeys);

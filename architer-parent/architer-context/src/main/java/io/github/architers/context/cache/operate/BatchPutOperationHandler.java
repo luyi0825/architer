@@ -1,7 +1,7 @@
 package io.github.architers.context.cache.operate;
 
 
-import io.github.architers.context.cache.annotation.BatchPutCache;
+import io.github.architers.context.cache.annotation.CacheBatchPut;
 import io.github.architers.context.cache.model.BatchPutParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
@@ -19,34 +19,35 @@ public class BatchPutOperationHandler extends BaseCacheOperationHandler {
 
     @Override
     public boolean match(Annotation operationAnnotation) {
-        return operationAnnotation instanceof BatchPutCache;
+        return operationAnnotation instanceof CacheBatchPut;
     }
 
     @Override
     protected void executeCacheOperate(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
-        BatchPutCache batchPutCache = (BatchPutCache) operationAnnotation;
-        //执行方法
-        methodReturnValueFunction.proceed();
+        CacheBatchPut cacheBatchPut = (CacheBatchPut) operationAnnotation;
+
         //判断是否能够执行
-        if (!super.canDoCacheOperate(batchPutCache.condition(), batchPutCache.unless(), expressionMetadata)) {
+        if (super.canDoCacheOperate(cacheBatchPut.condition(), cacheBatchPut.unless(), expressionMetadata)) {
+            //执行方法
+            methodReturnValueFunction.proceed();
             return;
         }
-        String wrapperCacheName = super.getWrapperCacheName(batchPutCache.cacheName(),expressionMetadata);
+        String wrapperCacheName = super.getWrapperCacheName(cacheBatchPut.cacheName(),expressionMetadata);
         BatchPutParam batchPutParam = new BatchPutParam();
-        batchPutParam.setOriginCacheName(batchPutCache.cacheName());
+        batchPutParam.setOriginCacheName(cacheBatchPut.cacheName());
         batchPutParam.setWrapperCacheName(wrapperCacheName);
-        batchPutParam.setAsync(batchPutCache.async());
-        batchPutParam.setTimeUnit(batchPutCache.timeUnit());
-        batchPutParam.setExpireTime(batchPutCache.expireTime());
-        batchPutParam.setExpireTime(batchPutCache.randomTime());
-        Object batchCacheValue = super.expressionParser.parserExpression(expressionMetadata, batchPutCache.cacheValue());
+        batchPutParam.setAsync(cacheBatchPut.async());
+        batchPutParam.setTimeUnit(cacheBatchPut.timeUnit());
+        batchPutParam.setExpireTime(cacheBatchPut.expireTime());
+        batchPutParam.setExpireTime(cacheBatchPut.randomTime());
+        Object batchCacheValue = super.expressionParser.parserExpression(expressionMetadata, cacheBatchPut.cacheValue());
         batchPutParam.setBatchCacheValue(batchCacheValue);
         //批量删除
-        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(batchPutCache.cacheName());
+        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cacheBatchPut.cacheName());
         cacheOperate.batchPut(batchPutParam);
-        if (!CollectionUtils.isEmpty(cacheOperateHooks)) {
-            for (CacheOperateHook cacheOperateHook : cacheOperateHooks) {
-                cacheOperateHook.end(batchPutParam, cacheOperate);
+        if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
+            for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
+                cacheOperateInvocationHook.after(batchPutParam, cacheOperate);
             }
         }
 

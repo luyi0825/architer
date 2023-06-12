@@ -47,7 +47,7 @@ public interface CacheOperate {
     /**
      * 批量删除
      */
-    default void batchDelete(BatchDeleteParam batchDeleteParam) {
+    default void batchDelete(BatchEvictParam batchEvictParam) {
         noSupport();
     }
 

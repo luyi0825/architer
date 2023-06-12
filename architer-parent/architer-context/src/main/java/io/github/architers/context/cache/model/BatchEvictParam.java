@@ -1,7 +1,7 @@
 package io.github.architers.context.cache.model;
 
 
-import io.github.architers.context.cache.annotation.PutCache;
+import io.github.architers.context.cache.annotation.CachePut;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -9,11 +9,11 @@ import java.util.Collection;
 
 /**
  * @author luyi
- * @see PutCache
+ * @see CachePut
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class BatchDeleteParam extends CacheChangeParam {
+public class BatchEvictParam extends CacheChangeParam {
 
     /**
      * 缓存的key
