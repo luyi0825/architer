@@ -13,7 +13,6 @@ import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
-import org.apache.rocketmq.client.producer.TransactionSendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +24,7 @@ import javax.annotation.Resource;
  *
  * @author luyi
  */
-public class RocketmqCacheOperateHook implements CacheOperateEndHook {
+public class RocketmqCacheOperateHook implements CacheOperateHook {
 
     @Value("${spring.application.name}")
     private String applicationName;
@@ -66,7 +65,7 @@ public class RocketmqCacheOperateHook implements CacheOperateEndHook {
     }
 
     @Override
-    public boolean start(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
+    public boolean before(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
         if (!(cacheParam instanceof CacheChangeParam)) {
             return true;
         }

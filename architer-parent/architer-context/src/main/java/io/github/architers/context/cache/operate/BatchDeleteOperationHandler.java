@@ -48,9 +48,9 @@ public class BatchDeleteOperationHandler extends BaseCacheOperationHandler {
         //批量删除
         CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(batchDeleteCache.cacheName());
         cacheOperate.batchDelete(batchDeleteParam);
-        if (!CollectionUtils.isEmpty(cacheOperateEndHooks)) {
-            for (CacheOperateEndHook cacheOperateEndHook : cacheOperateEndHooks) {
-                cacheOperateEndHook.end(batchDeleteParam, cacheOperate);
+        if (!CollectionUtils.isEmpty(cacheOperateHooks)) {
+            for (CacheOperateHook cacheOperateHook : cacheOperateHooks) {
+                cacheOperateHook.end(batchDeleteParam, cacheOperate);
             }
         }
     }

@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 public @interface CacheKey {
 
     /**
-     * 排序
+     * 排序,越小越在前边
      */
     int order() default 0;
 

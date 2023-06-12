@@ -56,7 +56,7 @@ public class CacheProperties {
     private boolean changeDelayDelete = false;
 
     /**
-     * 默认的缓存名称名称包装器
+     * 默认的缓存名称包装器
      */
     private Class<? extends CacheNameWrapper> defaultCacheNameWrapperClass;
 

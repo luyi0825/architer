@@ -8,7 +8,6 @@ import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.utils.JsonUtils;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
 
@@ -21,7 +20,7 @@ import java.lang.annotation.Annotation;
  * @author luyi
  * @version 1.0.0
  */
-public class PutBaseCacheOperationHandler extends BaseCacheOperationHandler {
+public class PutCacheOperationHandler extends BaseCacheOperationHandler {
 
     private static final int SECOND_ORDER = 2;
 
@@ -33,34 +32,45 @@ public class PutBaseCacheOperationHandler extends BaseCacheOperationHandler {
     @Override
     protected void executeCacheOperate(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         PutCache putCache = (PutCache) operationAnnotation;
-        //获取调用的方法的返回值
-        Object value = methodReturnValueFunction.proceed();
+
         if (!this.canDoCacheOperate(putCache.condition(), putCache.unless(), expressionMetadata)) {
+            //调用方法
+            methodReturnValueFunction.proceed();
             return;
         }
         //默认为方法的返回值，当设置了缓存值就用指定的缓存值
-        if (StringUtils.hasText(putCache.cacheValue())) {
-            value = expressionParser.parserExpression(expressionMetadata, putCache.cacheValue());
-        }
         //得到过期时间
         long expireTime = CacheUtils.getExpireTime(putCache.expireTime(), putCache.randomTime());
 
         Object key = parseCacheKey(expressionMetadata, putCache.key());
-        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(putCache.cacheName());
         PutParam putParam = new PutParam();
         putParam.setWrapperCacheName(super.getWrapperCacheName(putCache.cacheName(), expressionMetadata));
         putParam.setOriginCacheName(putCache.cacheName());
         putParam.setKey(JsonUtils.toJsonString(key));
-        putParam.setCacheValue(value);
+
         putParam.setExpireTime(expireTime);
         putParam.setTimeUnit(putCache.timeUnit());
-        cacheOperate.put(putParam);
-        if (!CollectionUtils.isEmpty(cacheOperateEndHooks)) {
-            for (CacheOperateEndHook cacheOperateEndHook : cacheOperateEndHooks) {
-                cacheOperateEndHook.end(putParam, cacheOperate);
+        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(putCache.cacheName());
+        if (!CollectionUtils.isEmpty(cacheOperateHooks)) {
+            for (CacheOperateHook cacheOperateHook : cacheOperateHooks) {
+                if (!cacheOperateHook.before(putParam, cacheOperate)) {
+                    //终止操作也调用方法
+                    methodReturnValueFunction.proceed();
+                    return;
+                }
             }
         }
+        //调用方法
+        methodReturnValueFunction.proceed();
+        Object cacheValue = expressionParser.parserExpression(expressionMetadata, putCache.cacheValue());
+        putParam.setCacheValue(cacheValue);
 
+        cacheOperate.put(putParam);
+        if (!CollectionUtils.isEmpty(cacheOperateHooks)) {
+            for (CacheOperateHook cacheOperateHook : cacheOperateHooks) {
+                cacheOperateHook.end(putParam, cacheOperate);
+            }
+        }
 
 
     }

@@ -1,13 +1,9 @@
 package io.github.architers.context.cache.operate;
 
-import io.github.architers.context.cache.CacheProperties;
 import io.github.architers.context.cache.model.*;
 import io.github.architers.context.cache.utils.CacheUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
-import javax.annotation.Resource;
-import java.util.Map;
 
 /**
  * 两级缓存操作
@@ -60,7 +56,6 @@ public final class TwoLevelCacheOperate implements CacheOperate {
     public void batchDelete(BatchDeleteParam batchDeleteParam) {
         localCacheOperate.batchDelete(batchDeleteParam);
         remoteCacheOperate.batchDelete(batchDeleteParam);
-        CacheOperate.super.batchDelete(batchDeleteParam);
     }
 
     @Override

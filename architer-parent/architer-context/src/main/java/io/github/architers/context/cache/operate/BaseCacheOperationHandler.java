@@ -30,7 +30,7 @@ public abstract class BaseCacheOperationHandler {
     protected ExpressionParser expressionParser;
 
     @Autowired(required = false)
-    protected List<CacheOperateEndHook> cacheOperateEndHooks;
+    protected List<CacheOperateHook> cacheOperateHooks;
 
 
     public Object value(String valueExpression, ExpressionMetadata expressionMetadata) {

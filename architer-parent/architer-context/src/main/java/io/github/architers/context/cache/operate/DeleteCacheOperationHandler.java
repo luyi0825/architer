@@ -35,6 +35,7 @@ public class DeleteCacheOperationHandler extends BaseCacheOperationHandler {
 
         DeleteCache deleteCache = (DeleteCache) operation;
         if (!canDoCacheOperate(deleteCache.condition(), deleteCache.unless(), expressionMetadata)) {
+            methodReturnValueFunction.proceed();
             return;
         }
 
@@ -46,23 +47,17 @@ public class DeleteCacheOperationHandler extends BaseCacheOperationHandler {
 
         deleteParam.setKey(JsonUtils.toJsonString(key));
         deleteParam.setAsync(deleteCache.async());
-        if(!CollectionUtils.isEmpty(cacheOperateEndHooks)){
-            for (CacheOperateEndHook cacheOperateEndHook : cacheOperateEndHooks) {
-                cacheOperateEndHook.start(deleteParam,cacheOperate);
+        if (!CollectionUtils.isEmpty(cacheOperateHooks)) {
+            for (CacheOperateHook cacheOperateHook : cacheOperateHooks) {
+                cacheOperateHook.before(deleteParam, cacheOperate);
             }
         }
-        //删除缓存
+        //删除缓存后，再调用方法
         cacheOperate.delete(deleteParam);
-        if(!CollectionUtils.isEmpty(cacheOperateEndHooks)){
-            for (CacheOperateEndHook cacheOperateEndHook : cacheOperateEndHooks) {
-                cacheOperateEndHook.end(deleteParam, cacheOperate);
-            }
-        }
-        //调用方法（没有cacheable就是真的调用）->删除缓存后，再操作数据库
         methodReturnValueFunction.proceed();
-        if(!CollectionUtils.isEmpty(cacheOperateEndHooks)){
-            for (CacheOperateEndHook cacheOperateEndHook : cacheOperateEndHooks) {
-                cacheOperateEndHook.end(deleteParam,cacheOperate);
+        if (!CollectionUtils.isEmpty(cacheOperateHooks)) {
+            for (CacheOperateHook cacheOperateHook : cacheOperateHooks) {
+                cacheOperateHook.end(deleteParam, cacheOperate);
             }
         }
     }

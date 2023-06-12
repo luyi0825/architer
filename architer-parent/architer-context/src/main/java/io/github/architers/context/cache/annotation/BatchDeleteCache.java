@@ -25,9 +25,6 @@ public @interface BatchDeleteCache {
      */
     String keys();
 
-
-    String cacheNameWrapper() default "";
-
     /**
      * 是否异步删除
      */

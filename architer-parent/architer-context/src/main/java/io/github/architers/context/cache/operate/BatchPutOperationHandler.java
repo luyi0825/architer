@@ -44,9 +44,9 @@ public class BatchPutOperationHandler extends BaseCacheOperationHandler {
         //批量删除
         CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(batchPutCache.cacheName());
         cacheOperate.batchPut(batchPutParam);
-        if (!CollectionUtils.isEmpty(cacheOperateEndHooks)) {
-            for (CacheOperateEndHook cacheOperateEndHook : cacheOperateEndHooks) {
-                cacheOperateEndHook.end(batchPutParam, cacheOperate);
+        if (!CollectionUtils.isEmpty(cacheOperateHooks)) {
+            for (CacheOperateHook cacheOperateHook : cacheOperateHooks) {
+                cacheOperateHook.end(batchPutParam, cacheOperate);
             }
         }
 

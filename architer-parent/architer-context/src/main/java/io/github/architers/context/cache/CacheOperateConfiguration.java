@@ -3,7 +3,7 @@ package io.github.architers.context.cache;
 import io.github.architers.context.cache.operate.BatchPutOperationHandler;
 import io.github.architers.context.cache.operate.CacheableOperationHandler;
 import io.github.architers.context.cache.operate.DeleteCacheOperationHandler;
-import io.github.architers.context.cache.operate.PutBaseCacheOperationHandler;
+import io.github.architers.context.cache.operate.PutCacheOperationHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Configuration;
 public class CacheOperateConfiguration {
 
     @Bean
-    public PutBaseCacheOperationHandler publicPutCacheOperationHandler() {
-        return new PutBaseCacheOperationHandler();
+    public PutCacheOperationHandler publicPutCacheOperationHandler() {
+        return new PutCacheOperationHandler();
     }
 
 
