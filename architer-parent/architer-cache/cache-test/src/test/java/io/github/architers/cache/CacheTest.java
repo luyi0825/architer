@@ -177,6 +177,10 @@ public class CacheTest implements ApplicationContextAware {
 
     @Test
     public void batchDeleteByCollectionString() {
+        UserInfo userInfo1 = UserInfo.getRandomUserInfo();
+        UserInfo userInfo2 = UserInfo.getRandomUserInfo();
+        Map<String, UserInfo> userMap = Stream.of(userInfo1, userInfo2).collect(Collectors.toMap(UserInfo::getUsername, e -> e));
+        userInfoService.mapBatchPutNeverExpire(userMap);
 
     }
 
