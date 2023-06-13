@@ -29,10 +29,9 @@ public class BatchPutOperationHandler extends BaseCacheOperationHandler {
         //判断是否能够执行
         if (super.canDoCacheOperate(cacheBatchPut.condition(), cacheBatchPut.unless(), expressionMetadata)) {
             //执行方法
-            methodReturnValueFunction.proceed();
             return;
         }
-        String wrapperCacheName = super.getWrapperCacheName(cacheBatchPut.cacheName(),expressionMetadata);
+        String wrapperCacheName = super.getWrapperCacheName(cacheBatchPut.cacheName(), expressionMetadata);
         BatchPutParam batchPutParam = new BatchPutParam();
         batchPutParam.setOriginCacheName(cacheBatchPut.cacheName());
         batchPutParam.setWrapperCacheName(wrapperCacheName);
@@ -45,11 +44,8 @@ public class BatchPutOperationHandler extends BaseCacheOperationHandler {
         //批量删除
         CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cacheBatchPut.cacheName());
         cacheOperate.batchPut(batchPutParam);
-        if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
-            for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
-                cacheOperateInvocationHook.after(batchPutParam, cacheOperate);
-            }
-        }
+
+        afterInvocation(batchPutParam, cacheOperate);
 
     }
 }

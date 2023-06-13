@@ -8,7 +8,6 @@ import io.github.architers.context.cache.annotation.CacheEvictAll;
 import io.github.architers.context.cache.annotation.Cacheable;
 import io.github.architers.context.cache.model.InvalidCacheValue;
 import io.github.architers.context.cache.operate.BaseCacheOperationHandler;
-import io.github.architers.context.cache.operate.MethodCacheAnnotationContext;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.expression.ExpressionParser;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -38,7 +37,7 @@ public class CacheInterceptor implements MethodInterceptor {
 
     private List<BaseCacheOperationHandler> baseCacheOperationHandlers;
 
-    private Map<Method, MethodCacheAnnotationContext> methodMethodCacheContextCache = new ConcurrentHashMap<>(32);
+    private final Map<Method, MethodCacheAnnotationContext> methodMethodCacheContextCache = new ConcurrentHashMap<>(32);
 
     @Override
     @Nullable

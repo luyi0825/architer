@@ -3,7 +3,6 @@ package io.github.architers.context.cache;
 
 
 import io.github.architers.context.cache.annotation.EnableArchiterCaching;
-import io.github.architers.context.cache.proxy.CacheProxyConfiguration;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.AdviceModeImportSelector;
 import org.springframework.context.annotation.AutoProxyRegistrar;
@@ -35,7 +34,7 @@ public class CacheAdviceImportSelector extends AdviceModeImportSelector<EnableAr
     }
 
     private String[] getProxyImports() {
-        return new String[]{CacheProxyConfiguration.class.getName(), AutoProxyRegistrar.class.getName()};
+        return new String[]{ AutoProxyRegistrar.class.getName()};
     }
 
 //    /**

@@ -20,7 +20,7 @@ import java.lang.annotation.Annotation;
  * @author luyi
  * @version 1.0.0
  */
-public class PutCacheOperationHandler extends BaseCacheOperationHandler {
+public class CachePutOperationHandler extends BaseCacheOperationHandler {
 
     private static final int SECOND_ORDER = 2;
 
@@ -35,7 +35,6 @@ public class PutCacheOperationHandler extends BaseCacheOperationHandler {
 
         if (this.canDoCacheOperate(cachePut.condition(), cachePut.unless(), expressionMetadata)) {
             //调用方法
-            methodReturnValueFunction.proceed();
             return;
         }
         //默认为方法的返回值，当设置了缓存值就用指定的缓存值
@@ -51,27 +50,15 @@ public class PutCacheOperationHandler extends BaseCacheOperationHandler {
         putParam.setExpireTime(expireTime);
         putParam.setTimeUnit(cachePut.timeUnit());
         CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cachePut.cacheName());
-        if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
-            for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
-                if (!cacheOperateInvocationHook.before(putParam, cacheOperate)) {
-                    //终止操作也调用方法
-                    methodReturnValueFunction.proceed();
-                    return;
-                }
-            }
-        }
+
         //调用方法
         methodReturnValueFunction.proceed();
         Object cacheValue = expressionParser.parserExpression(expressionMetadata, cachePut.cacheValue());
         putParam.setCacheValue(cacheValue);
 
         cacheOperate.put(putParam);
-        if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
-            for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
-                cacheOperateInvocationHook.after(putParam, cacheOperate);
-            }
-        }
 
+        super.afterInvocation(putParam,cacheOperate);
 
     }
 

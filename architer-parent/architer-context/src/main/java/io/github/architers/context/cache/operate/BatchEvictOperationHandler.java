@@ -2,6 +2,7 @@ package io.github.architers.context.cache.operate;
 
 import io.github.architers.context.Symbol;
 import io.github.architers.context.cache.annotation.CacheBatchEvict;
+import io.github.architers.context.cache.operate.hook.CacheOperateInvocationHook;
 import io.github.architers.context.cache.utils.BatchValueUtils;
 import io.github.architers.context.cache.model.BatchEvictParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
@@ -50,12 +51,11 @@ public class BatchEvictOperationHandler extends BaseCacheOperationHandler {
                 cacheOperateInvocationHook.before(batchEvictParam, cacheOperate);
             }
         }
-        //批量删除,先删除缓存，再操作数据库
         cacheOperate.batchDelete(batchEvictParam);
-        if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
-            for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
-                cacheOperateInvocationHook.after(batchEvictParam, cacheOperate);
-            }
+        if (cacheBatchEvict.beforeInvocation()) {
+            super.beforeInvocation(batchEvictParam, cacheOperate);
+        } else {
+            super.afterInvocation(batchEvictParam, cacheOperate);
         }
     }
 }

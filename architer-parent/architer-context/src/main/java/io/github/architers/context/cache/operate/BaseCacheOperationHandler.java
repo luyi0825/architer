@@ -1,10 +1,13 @@
 package io.github.architers.context.cache.operate;
 
 
+import io.github.architers.context.cache.model.BaseCacheParam;
+import io.github.architers.context.cache.operate.hook.CacheOperateInvocationHook;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.expression.ExpressionParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -70,6 +73,26 @@ public abstract class BaseCacheOperationHandler {
 
     }
 
+    protected boolean beforeInvocation(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
+        if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
+            //调用方法之前的钩子函数
+            for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
+                if (!cacheOperateInvocationHook.before(cacheParam, cacheOperate)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    protected void afterInvocation(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
+        if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
+            //调用方法之前的钩子函数
+            for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
+                cacheOperateInvocationHook.after(cacheParam, cacheOperate);
+            }
+        }
+    }
 
 
     /**

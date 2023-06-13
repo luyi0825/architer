@@ -6,7 +6,6 @@ import io.github.architers.context.cache.model.DeleteParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.utils.JsonUtils;
-import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
 
@@ -20,9 +19,8 @@ import java.lang.annotation.Annotation;
  *
  * @author luyi
  */
-public class EvictCacheOperationHandler extends BaseCacheOperationHandler {
+public class CacheEvictOperationHandler extends BaseCacheOperationHandler {
 
-    private static final int END_ORDER = 3;
 
     @Override
     public boolean match(Annotation operationAnnotation) {
@@ -47,19 +45,11 @@ public class EvictCacheOperationHandler extends BaseCacheOperationHandler {
         //删除缓存后，再调用方法
         cacheOperate.delete(deleteParam);
 
-        if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
-            if (cacheEvict.beforeInvocation()) {
-                //调用方法之前的钩子函数
-                for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
-                    cacheOperateInvocationHook.before(deleteParam, cacheOperate);
-                }
-            } else {
-                for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
-                    cacheOperateInvocationHook.after(deleteParam, cacheOperate);
-                }
-            }
+        if (cacheEvict.beforeInvocation()) {
+            super.beforeInvocation(deleteParam, cacheOperate);
+        } else {
+            super.afterInvocation(deleteParam, cacheOperate);
         }
     }
-
 
 }

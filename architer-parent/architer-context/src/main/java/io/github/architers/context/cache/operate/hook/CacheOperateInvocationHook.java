@@ -1,6 +1,7 @@
-package io.github.architers.context.cache.operate;
+package io.github.architers.context.cache.operate.hook;
 
 import io.github.architers.context.cache.model.BaseCacheParam;
+import io.github.architers.context.cache.operate.CacheOperate;
 
 /**
  * @author luyi

@@ -21,6 +21,8 @@ import java.lang.annotation.*;
 
 /**
  * 多个批量操作注解支持
+ *
+ * @author luyi
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
