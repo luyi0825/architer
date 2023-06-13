@@ -9,17 +9,21 @@ import io.github.architers.context.cache.model.PutParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.utils.JsonUtils;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 
 import java.lang.annotation.Annotation;
 
 
 /**
- * CacheableOperation 对应的处理类
+ * Cacheable 注解 对应的处理类
  * 当缓存中没有值的时候，查询数据库，并将返回值放入缓存
+ * <li>这个使用的频率最好，用HIGHEST_PRECEDENCE排在最前边</li>
  *
  * @author luyi
  * @version 1.0.0
  */
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class CacheableOperationHandler extends BaseCacheOperationHandler {
 
 

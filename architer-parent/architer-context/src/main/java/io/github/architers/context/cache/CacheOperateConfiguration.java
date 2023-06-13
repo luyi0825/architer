@@ -27,13 +27,28 @@ public class CacheOperateConfiguration {
     }
 
     @Bean
-    public BatchPutOperationHandler batchPutOperationHandler() {
-        return new BatchPutOperationHandler();
+    public CacheBatchPutOperationHandler batchPutOperationHandler() {
+        return new CacheBatchPutOperationHandler();
     }
 
     @Bean
-    public BatchEvictOperationHandler batchEvictOperationHandler() {
-        return new BatchEvictOperationHandler();
+    public CacheBatchEvictOperationHandler batchEvictOperationHandler() {
+        return new CacheBatchEvictOperationHandler();
     }
 
+
+    @Bean
+    public CacheEvictAllOperationHandler cacheEvictAllOperationHandler() {
+        return new CacheEvictAllOperationHandler();
+    }
+
+    @Bean
+    public CacheBatchEvictOperationHandler cacheBatchEvictOperationHandler() {
+        return new CacheBatchEvictOperationHandler();
+    }
+
+    @Bean
+    public CacheOperateManager cacheOperateManager() {
+        return new CacheOperateManager();
+    }
 }

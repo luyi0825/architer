@@ -1,10 +1,7 @@
 package io.github.architers.cache.service.remote;
 
 import io.github.architers.cache.entity.UserInfo;
-import io.github.architers.context.cache.annotation.CacheBatchPut;
-import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.context.cache.annotation.CacheEvict;
-import io.github.architers.context.cache.annotation.CachePut;
+import io.github.architers.context.cache.annotation.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,12 +36,14 @@ public class RemoteUserInfoCacheServiceImpl implements IRemoteUserInfoCache {
     public UserInfo getOnlyInCache(String username) {
         return null;
     }
+
     @Override
     @Cacheable(cacheName = "remote", key = "#username")
     public UserInfo getNeverExpire(String username) {
         System.out.println("getNeverExpire查询");
         return UserInfo.getRandomUserInfo().setUsername(username);
     }
+
     @Override
     @Cacheable(cacheName = "remote", key = "#username", expireTime = 5, timeUnit = TimeUnit.SECONDS)
     public UserInfo getExpireWithFiveSecond(String username) {
@@ -76,6 +75,18 @@ public class RemoteUserInfoCacheServiceImpl implements IRemoteUserInfoCache {
     @Override
     @CacheBatchPut(cacheName = "remote", cacheValue = "#userMap")
     public void mapBatchPutNeverExpire(Map<String, UserInfo> userMap) {
+
+    }
+
+    @Override
+    @CacheEvictAll(cacheName = "remote")
+    public void deleteAll() {
+
+    }
+
+    @Override
+    @CacheBatchEvict(cacheName = "remote", keys = "#userMap")
+    public void batchDelete(Map<String, UserInfo> userMap) {
 
     }
 }

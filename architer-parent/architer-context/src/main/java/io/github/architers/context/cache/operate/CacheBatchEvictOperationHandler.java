@@ -17,7 +17,7 @@ import java.util.Collection;
  *
  * @author luyi
  */
-public class BatchEvictOperationHandler extends BaseCacheOperationHandler {
+public class CacheBatchEvictOperationHandler extends BaseCacheOperationHandler {
 
 
     @Override

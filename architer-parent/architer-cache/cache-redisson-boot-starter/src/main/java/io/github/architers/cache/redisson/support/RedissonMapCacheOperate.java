@@ -68,10 +68,10 @@ public class RedissonMapCacheOperate implements RemoteCacheOperate {
     @Override
     public void deleteAll(DeleteAllParam deleteAllParam) {
         if (deleteAllParam.isAsync()) {
-            redissonClient.getMapCache(deleteAllParam.getWrapperCacheName()).delete();
+            redissonClient.getMapCache(deleteAllParam.getWrapperCacheName()).deleteAsync();
         }
 
-        if (redissonClient.getMapCache(deleteAllParam.getWrapperCacheName()).delete()) {
+        if (!redissonClient.getMapCache(deleteAllParam.getWrapperCacheName()).delete()) {
             throw new RuntimeException("删除缓存失败");
         }
     }

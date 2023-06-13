@@ -4,6 +4,7 @@ import io.github.architers.context.cache.operate.CacheOperateSupport;
 import io.github.architers.context.cache.operate.BaseCacheOperationHandler;
 import io.github.architers.context.cache.proxy.AnnotationCacheOperationSource;
 import io.github.architers.context.cache.proxy.BeanFactoryCacheSourceAdvisor;
+import io.github.architers.context.cache.proxy.CacheAnnotationsParser;
 import io.github.architers.context.cache.proxy.CacheInterceptor;
 import io.github.architers.context.expression.ExpressionParser;
 import org.springframework.beans.factory.config.BeanDefinition;

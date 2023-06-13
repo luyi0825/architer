@@ -18,10 +18,10 @@ public @interface CacheEvict {
     /**
      * @see Cacheable#cacheName()
      */
-    String cacheName() default "";
+    String cacheName();
 
 
-    String key() default "";
+    String key();
 
     /**
      * true表示在方法调用删除缓存

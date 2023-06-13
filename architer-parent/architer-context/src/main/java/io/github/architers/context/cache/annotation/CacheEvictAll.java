@@ -1,15 +1,21 @@
 package io.github.architers.context.cache.annotation;
 
+import java.lang.annotation.*;
+
 /**
  * 删除整个缓存
  *
  * @author luyi
  */
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
 public @interface CacheEvictAll {
     /**
      * 缓存名称(不支持EL表达式)
      */
-    String[] cacheName() default "";
+    String cacheName();
 
     /**
      * 是否异步删除
