@@ -78,4 +78,14 @@ public class LocalUserInfoCacheServiceImpl implements ILocalUserInfoCache {
     public void mapBatchPutNeverExpire(Map<String, UserInfo> userMap) {
 
     }
+
+    @Override
+    public void deleteAll() {
+
+    }
+
+    @Override
+    public void batchDelete(Map<String, UserInfo> userMap) {
+
+    }
 }

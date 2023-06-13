@@ -5,7 +5,6 @@ import io.github.architers.context.cache.annotation.CacheBatchPut;
 import io.github.architers.context.cache.model.BatchPutParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
-import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
 
@@ -14,7 +13,7 @@ import java.lang.annotation.Annotation;
  *
  * @author luyi
  */
-public class BatchPutOperationHandler extends BaseCacheOperationHandler {
+public class CacheBatchPutOperationHandler extends BaseCacheOperationHandler {
 
 
     @Override

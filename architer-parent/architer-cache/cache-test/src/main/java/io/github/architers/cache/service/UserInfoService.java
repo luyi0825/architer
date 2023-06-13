@@ -34,8 +34,16 @@ public interface UserInfoService {
      * 集合批量put不过期
      */
     void collectionBatchPutNeverExpire(List<UserInfo> userInfos);
+
     /**
      * map批量put不过期
      */
     void mapBatchPutNeverExpire(Map<String, UserInfo> userMap);
+
+    /**
+     * 删除所有的缓存
+     */
+    void deleteAll();
+
+    void batchDelete(Map<String, UserInfo> userMap);
 }

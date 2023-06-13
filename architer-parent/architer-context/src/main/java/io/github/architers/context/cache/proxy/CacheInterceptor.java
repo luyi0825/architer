@@ -1,7 +1,6 @@
 package io.github.architers.context.cache.proxy;
 
 
-import io.github.architers.context.cache.CacheAnnotationsParser;
 import io.github.architers.context.cache.annotation.CacheBatchEvict;
 import io.github.architers.context.cache.annotation.CacheEvict;
 import io.github.architers.context.cache.annotation.CacheEvictAll;
@@ -112,6 +111,7 @@ public class CacheInterceptor implements MethodInterceptor {
             for (BaseCacheOperationHandler baseCacheOperationHandler : baseCacheOperationHandlers) {
                 if (baseCacheOperationHandler.match(operationAnnotation)) {
                     baseCacheOperationHandler.handler(operationAnnotation, methodReturnValueFunction, expressionMetadata);
+                    return;
                 }
             }
         }
@@ -149,7 +149,8 @@ public class CacheInterceptor implements MethodInterceptor {
                 methodCacheAnnotationContext.addAfterInvocations(operationAnnotation);
             }
         }
-        return methodMethodCacheContextCache.putIfAbsent(method, methodCacheAnnotationContext);
+        methodMethodCacheContextCache.putIfAbsent(method, methodCacheAnnotationContext);
+        return methodCacheAnnotationContext;
     }
 
 

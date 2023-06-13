@@ -1,4 +1,4 @@
-package io.github.architers.context.cache;
+package io.github.architers.context.cache.proxy;
 
 
 import io.github.architers.context.cache.annotation.*;
@@ -24,6 +24,7 @@ public class CacheAnnotationsParser {
         CACHE_OPERATION_ANNOTATIONS.add(Caching.class);
         CACHE_OPERATION_ANNOTATIONS.add(CachingBatch.class);
         CACHE_OPERATION_ANNOTATIONS.add(CacheEvict.class);
+        CACHE_OPERATION_ANNOTATIONS.add(CacheEvictAll.class);
         CACHE_OPERATION_ANNOTATIONS.add(CachePut.class);
         CACHE_OPERATION_ANNOTATIONS.add(CacheBatchEvict.class);
         CACHE_OPERATION_ANNOTATIONS.add(CacheBatchPut.class);
@@ -55,17 +56,7 @@ public class CacheAnnotationsParser {
         }
         if (!CollectionUtils.isEmpty(ops)) {
             Collection<Annotation> annotations = new ArrayList<>(ops.size());
-            Collection<Annotation> temp = new ArrayList<>(ops.size());
-            //排序：主要让Cacheable先执行，其他的缓存操作可能需要他的结果
-            for (Annotation op : ops) {
-                if (op instanceof Cacheable) {
-                    annotations.add(op);
-                } else {
-                    temp.add(op);
-                }
-            }
-            //最后将非Cacheable放后端
-            annotations.addAll(temp);
+            annotations.addAll(ops);
             this.annotationCache.put(annotatedElement, annotations);
         }
         return ops;

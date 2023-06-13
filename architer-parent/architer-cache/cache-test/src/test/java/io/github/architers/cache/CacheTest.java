@@ -32,11 +32,12 @@ public class CacheTest implements ApplicationContextAware {
     @Resource(name = "remoteUserInfoCache")
     private UserInfoService remoteUserInfoCache;
 
-    @Resource(name="twoLevelCacheUserInfoCache")
+    @Resource(name = "twoLevelCacheUserInfoCache")
     private UserInfoService twoLevelCacheUserInfoCache;
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        userInfoService = twoLevelCacheUserInfoCache;
+        userInfoService = remoteUserInfoCache;
     }
 
 
@@ -151,6 +152,33 @@ public class CacheTest implements ApplicationContextAware {
         Assert.isTrue(cacheUserInfo == null, "缓存应该不存在");
     }
 
+    @Test
+    public void deleteAll() {
+        UserInfo userInfo = UserInfo.getRandomUserInfo();
+        userInfoService.putCacheNeverExpire(userInfo);
+        userInfoService.deleteAll();
+        UserInfo cacheUserInfo = userInfoService.getOnlyInCache(userInfo.getUsername());
+        Assert.isTrue(cacheUserInfo == null, "用户信息应该为空");
+    }
+
+    @Test
+    public void batchDelete() {
+        UserInfo userInfo1 = UserInfo.getRandomUserInfo();
+        UserInfo userInfo2 = UserInfo.getRandomUserInfo();
+        Map<String, UserInfo> userMap = Stream.of(userInfo1, userInfo2).collect(Collectors.toMap(UserInfo::getUsername, e -> e));
+        userInfoService.mapBatchPutNeverExpire(userMap);
+        UserInfo cacheUserInfo = userInfoService.getOnlyInCache(userInfo1.getUsername());
+        Assert.isTrue(cacheUserInfo != null, "缓存不能为空");
+
+        userInfoService.batchDelete(userMap);
+        cacheUserInfo = userInfoService.getOnlyInCache(userInfo1.toString());
+        Assert.isTrue(cacheUserInfo == null, "缓存应该不存在");
+    }
+
+    @Test
+    public void batchDeleteByCollectionString() {
+
+    }
 
 
 }
