@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Service("remoteUserInfoCache")
@@ -87,6 +88,12 @@ public class RemoteUserInfoCacheServiceImpl implements IRemoteUserInfoCache {
     @Override
     @CacheBatchEvict(cacheName = "remote", keys = "#userMap")
     public void batchDelete(Map<String, UserInfo> userMap) {
+
+    }
+
+    @Override
+    @CacheBatchEvict(cacheName = "remote", keys = "#usernames", parseKeys = false)
+    public void batchDeleteByCollectionString(Set<String> usernames) {
 
     }
 }

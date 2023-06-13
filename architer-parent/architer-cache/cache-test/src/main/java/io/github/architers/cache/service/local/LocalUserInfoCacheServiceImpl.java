@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Service("localUserInfoCache")
@@ -86,6 +87,11 @@ public class LocalUserInfoCacheServiceImpl implements ILocalUserInfoCache {
 
     @Override
     public void batchDelete(Map<String, UserInfo> userMap) {
+
+    }
+
+    @Override
+    public void batchDeleteByCollectionString(Set<String> usernames) {
 
     }
 }

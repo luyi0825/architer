@@ -171,7 +171,7 @@ public class CacheTest implements ApplicationContextAware {
         Assert.isTrue(cacheUserInfo != null, "缓存不能为空");
 
         userInfoService.batchDelete(userMap);
-        cacheUserInfo = userInfoService.getOnlyInCache(userInfo1.toString());
+        cacheUserInfo = userInfoService.getOnlyInCache(userInfo1.getUsername());
         Assert.isTrue(cacheUserInfo == null, "缓存应该不存在");
     }
 
@@ -181,6 +181,10 @@ public class CacheTest implements ApplicationContextAware {
         UserInfo userInfo2 = UserInfo.getRandomUserInfo();
         Map<String, UserInfo> userMap = Stream.of(userInfo1, userInfo2).collect(Collectors.toMap(UserInfo::getUsername, e -> e));
         userInfoService.mapBatchPutNeverExpire(userMap);
+
+        userInfoService.batchDeleteByCollectionString(userMap.keySet());
+        UserInfo cacheUserInfo = userInfoService.getOnlyInCache(userInfo1.getUsername());
+        Assert.isTrue(cacheUserInfo == null, "缓存应该不存在");
 
     }
 

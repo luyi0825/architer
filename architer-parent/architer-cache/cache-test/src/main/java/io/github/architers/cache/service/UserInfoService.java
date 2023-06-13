@@ -4,6 +4,7 @@ import io.github.architers.cache.entity.UserInfo;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface UserInfoService {
     /**
@@ -46,4 +47,6 @@ public interface UserInfoService {
     void deleteAll();
 
     void batchDelete(Map<String, UserInfo> userMap);
+
+    void batchDeleteByCollectionString(Set<String> usernames);
 }

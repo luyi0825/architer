@@ -23,6 +23,13 @@ public @interface CacheBatchEvict {
     String keys();
 
     /**
+     * key是否需要解析:
+     * false就代表keys为集合，集合中值就为缓存key<br>
+     * true 当keys为map的时候,map#keySet就是还存key，当为集合的时候，标准@CacheKey的字段就是缓存key
+     */
+    boolean parseKeys() default true;
+
+    /**
      * true表示在方法调用删除缓存
      * false 表示在方法执行之后删除
      */
@@ -42,7 +49,6 @@ public @interface CacheBatchEvict {
      * @see Cacheable#unless()
      */
     String unless() default "";
-
 
 
 }

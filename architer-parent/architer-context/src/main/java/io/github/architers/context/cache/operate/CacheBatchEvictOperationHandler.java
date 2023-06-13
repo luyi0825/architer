@@ -34,15 +34,18 @@ public class CacheBatchEvictOperationHandler extends BaseCacheOperationHandler {
             return;
         }
         //解析key
-        Object keyValues = expressionParser.parserExpression(expressionMetadata, cacheBatchEvict.keys());
-        Collection<?> keys = BatchValueUtils.parseKeys(keyValues, Symbol.COLON);
+        Object keys = expressionParser.parserExpression(expressionMetadata, cacheBatchEvict.keys());
+
+        if (cacheBatchEvict.parseKeys()) {
+            keys = BatchValueUtils.parseBatchEvictKeys(keys, Symbol.COLON);
+        }
         //得到缓存名称
         String wrapperCacheName = super.getWrapperCacheName(cacheBatchEvict.cacheName(), expressionMetadata);
         BatchEvictParam batchEvictParam = new BatchEvictParam();
         batchEvictParam.setWrapperCacheName(wrapperCacheName);
         batchEvictParam.setOriginCacheName(cacheBatchEvict.cacheName());
         batchEvictParam.setAsync(cacheBatchEvict.async());
-        batchEvictParam.setKeys(keys);
+        batchEvictParam.setKeys((Collection<?>) keys);
 
         CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cacheBatchEvict.cacheName());
 

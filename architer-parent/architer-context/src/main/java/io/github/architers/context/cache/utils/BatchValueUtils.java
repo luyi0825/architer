@@ -228,16 +228,14 @@ public class BatchValueUtils {
     }
 
 
-
-
     /**
-     * 解析key
+     * 解析批量驱逐的key
      *
      * @param value
      * @param split 缓存分隔符号
      * @return value对应的key
      */
-    public static Collection<?> parseKeys(Object value, String split) {
+    public static Collection<?> parseBatchEvictKeys(Object value, String split) {
         if (value instanceof Map) {
             Map<?, ?> map = (Map<?, ?>) value;
             return map.keySet();
