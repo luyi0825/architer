@@ -13,7 +13,7 @@ import java.util.*;
  * @author luyi
  * 缓存注解解析,解析方法有哪些缓存操作的注解
  */
-public class CacheAnnotationsParser {
+public class  CacheAnnotationsParser {
 
     Map<AnnotatedElement, Collection<Annotation>> annotationCache = new HashMap<>(32);
 

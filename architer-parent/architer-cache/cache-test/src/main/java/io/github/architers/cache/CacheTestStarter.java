@@ -7,10 +7,11 @@ import io.github.architers.context.cache.consistency.rocketmq.TwoLevelLocalCache
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-@EnableArchiterCaching(proxyTargetClass = true)
+@EnableArchiterCaching(proxyTargetClass = true,mode = AdviceMode.ASPECTJ)
 public class CacheTestStarter {
     public static void main(String[] args) {
         SpringApplication.run(CacheTestStarter.class, args);

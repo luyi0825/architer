@@ -8,6 +8,7 @@ public class TwoLevelUserInfoClusterCacheServiceImpl implements ITwoLevelUserInf
 
     @Override
     public UserInfo getUserInfoWithCache(String username) {
+        System.out.println("查询数据库");
         return new UserInfo().setUsername(username);
     }
 

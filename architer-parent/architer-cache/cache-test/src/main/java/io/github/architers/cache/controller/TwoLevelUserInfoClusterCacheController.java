@@ -2,6 +2,7 @@ package io.github.architers.cache.controller;
 
 import io.github.architers.cache.entity.UserInfo;
 import io.github.architers.cache.service.ITwoLevelUserInfoClusterCacheService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ public class TwoLevelUserInfoClusterCacheController {
     @Resource
     private ITwoLevelUserInfoClusterCacheService twoLevelUserInfoClusterCacheService;
 
-    @RequestMapping("/getUserInfoWithCache")
+    @GetMapping ("/getUserInfoWithCache")
     public UserInfo getUserInfoWithCache(@RequestParam("username") String username) {
         return twoLevelUserInfoClusterCacheService.getUserInfoWithCache(username);
     }

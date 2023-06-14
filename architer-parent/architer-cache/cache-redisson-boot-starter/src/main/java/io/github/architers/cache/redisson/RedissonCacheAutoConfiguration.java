@@ -27,7 +27,6 @@ import java.io.InputStream;
  * @author luyi
  */
 @Configuration
-@EnableArchiterCaching
 @EnableConfigurationProperties(RedissonProperties.class)
 public class RedissonCacheAutoConfiguration {
 

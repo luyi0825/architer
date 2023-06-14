@@ -1,4 +1,4 @@
-package io.github.architers.context.cache;
+package io.github.architers.context.cache.operate;
 
 import io.github.architers.context.cache.operate.*;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +9,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration(proxyBeanMethods = false)
 public class CacheOperateConfiguration {
+
+    @Bean
+    public CacheOperateSupport cacheOperateFactory() {
+        return new CacheOperateSupport();
+    }
 
     @Bean
     public CachePutOperationHandler putCacheOperationHandler() {
