@@ -3,7 +3,7 @@ package io.github.architers.cache;
 
 import io.github.architers.cache.entity.UserInfo;
 import io.github.architers.cache.service.UserInfoService;
-import io.github.architers.context.Symbol;
+import io.github.architers.context.cache.CacheConstants;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -132,7 +132,7 @@ public class CacheTest implements ApplicationContextAware {
         UserInfo userInfo2 = UserInfo.getRandomUserInfo();
 
         userInfoService.collectionBatchPutNeverExpire(Arrays.asList(userInfo1, userInfo2));
-        UserInfo cacheUserInfo = userInfoService.getOnlyInCache(userInfo1.getUsername() + Symbol.COLON + userInfo1.getPhone());
+        UserInfo cacheUserInfo = userInfoService.getOnlyInCache(userInfo1.getUsername() + CacheConstants.CACHE_SPLIT + userInfo1.getPhone());
         Assert.isTrue(cacheUserInfo != null, "缓存不能为空");
 
         cacheUserInfo = userInfoService.getOnlyInCache(UUID.randomUUID().toString());

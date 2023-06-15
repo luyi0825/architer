@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>architer-cloud-openfeign-starter</artifactId>
-    <name>architer-cloud-openfeign-starter</name>
+    <name>cloud-openfeign-starter</name>
     <description>cloud-open-feign-starter远程调用</description>
     <packaging>jar</packaging>
 

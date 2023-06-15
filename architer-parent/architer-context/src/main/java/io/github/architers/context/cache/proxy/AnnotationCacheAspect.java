@@ -48,7 +48,7 @@ public class AnnotationCacheAspect {
 
     private Object executeCacheProxy(ProceedingJoinPoint pjp) throws Throwable {
         ExpressionMetadata metadata = this.buildExpressionMeta(pjp);
-        return cacheProxySupport.excuteProxy(metadata, () -> {
+        return cacheProxySupport.executeProxy(metadata, () -> {
             try {
                 return pjp.proceed();
             } catch (Throwable e) {

@@ -1,6 +1,6 @@
 package io.github.architers.context.cache.operate;
 
-import io.github.architers.context.Symbol;
+import io.github.architers.context.cache.CacheConstants;
 import io.github.architers.context.cache.annotation.CacheBatchEvict;
 import io.github.architers.context.cache.operate.hook.CacheOperateInvocationHook;
 import io.github.architers.context.cache.utils.BatchValueUtils;
@@ -37,7 +37,7 @@ public class CacheBatchEvictOperationHandler extends BaseCacheOperationHandler {
         Object keys = expressionParser.parserExpression(expressionMetadata, cacheBatchEvict.keys());
 
         if (cacheBatchEvict.parseKeys()) {
-            keys = BatchValueUtils.parseBatchEvictKeys(keys, Symbol.COLON);
+            keys = BatchValueUtils.parseBatchEvictKeys(keys, CacheConstants.CACHE_SPLIT);
         }
         //得到缓存名称
         String wrapperCacheName = super.getWrapperCacheName(cacheBatchEvict.cacheName(), expressionMetadata);

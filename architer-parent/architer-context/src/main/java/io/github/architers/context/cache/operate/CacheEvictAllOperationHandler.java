@@ -1,7 +1,7 @@
 package io.github.architers.context.cache.operate;
 
 import io.github.architers.context.cache.annotation.CacheEvictAll;
-import io.github.architers.context.cache.model.DeleteAllParam;
+import io.github.architers.context.cache.model.EvictAllParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 
@@ -24,15 +24,15 @@ public class CacheEvictAllOperationHandler extends BaseCacheOperationHandler {
         CacheEvictAll cacheEvictAll = (CacheEvictAll) operationAnnotation;
         String wrapperCacheName = this.getWrapperCacheName(cacheEvictAll.cacheName(), expressionMetadata);
         CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cacheEvictAll.cacheName());
-        DeleteAllParam deleteAllParam = new DeleteAllParam();
-        deleteAllParam.setAsync(cacheEvictAll.async());
-        deleteAllParam.setOriginCacheName(cacheEvictAll.cacheName());
-        deleteAllParam.setWrapperCacheName(wrapperCacheName);
-        cacheOperate.deleteAll(deleteAllParam);
+        EvictAllParam evictAllParam = new EvictAllParam();
+        evictAllParam.setAsync(cacheEvictAll.async());
+        evictAllParam.setOriginCacheName(cacheEvictAll.cacheName());
+        evictAllParam.setWrapperCacheName(wrapperCacheName);
+        cacheOperate.deleteAll(evictAllParam);
         if (cacheEvictAll.beforeInvocation()) {
-            super.beforeInvocation(deleteAllParam, cacheOperate);
+            super.beforeInvocation(evictAllParam, cacheOperate);
         } else {
-            super.afterInvocation(deleteAllParam, cacheOperate);
+            super.afterInvocation(evictAllParam, cacheOperate);
         }
     }
 }

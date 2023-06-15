@@ -1,6 +1,6 @@
 package io.github.architers.context.cache.consistency.rocketmq;
 
-import io.github.architers.context.Symbol;
+import io.github.architers.context.cache.CacheConstants;
 import io.github.architers.context.cache.model.*;
 import io.github.architers.context.cache.operate.CacheOperate;
 import io.github.architers.context.cache.operate.LocalCacheOperate;
@@ -11,6 +11,11 @@ import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
+/**
+ * 删除缓存工具类
+ *
+ * @author luyi
+ */
 public class DeleteCacheUtils {
 
     public static CacheChangeParam delete(MessageExt message, CacheOperate cacheOperate) {
@@ -22,16 +27,16 @@ public class DeleteCacheUtils {
         CacheChangeParam changeParam;
         if (PutParam.class.getSimpleName().equals(cacheParamName)) {
             PutParam putParam = JsonUtils.readValue(message.getBody(), PutParam.class);
-            DeleteParam deleteParam = new DeleteParam();
-            deleteParam.setOriginCacheName(putParam.getOriginCacheName());
-            deleteParam.setWrapperCacheName(putParam.getWrapperCacheName());
-            deleteParam.setKey(putParam.getKey());
-            changeParam = deleteParam;
-            cacheOperate.delete(deleteParam);
-        } else if (DeleteParam.class.getSimpleName().equals(cacheParamName)) {
-            DeleteParam deleteParam = JsonUtils.readValue(message.getBody(), DeleteParam.class);
-            cacheOperate.delete(deleteParam);
-            changeParam = deleteParam;
+            EvictParam evictParam = new EvictParam();
+            evictParam.setOriginCacheName(putParam.getOriginCacheName());
+            evictParam.setWrapperCacheName(putParam.getWrapperCacheName());
+            evictParam.setKey(putParam.getKey());
+            changeParam = evictParam;
+            cacheOperate.delete(evictParam);
+        } else if (EvictParam.class.getSimpleName().equals(cacheParamName)) {
+            EvictParam evictParam = JsonUtils.readValue(message.getBody(), EvictParam.class);
+            cacheOperate.delete(evictParam);
+            changeParam = evictParam;
         } else if (BatchEvictParam.class.getSimpleName().equals(cacheParamName)) {
             BatchEvictParam batchEvictParam = JsonUtils.readValue(message.getBody(), BatchEvictParam.class);
             cacheOperate.batchDelete(batchEvictParam);
@@ -41,14 +46,14 @@ public class DeleteCacheUtils {
             BatchEvictParam batchEvictParam = new BatchEvictParam();
             batchEvictParam.setOriginCacheName(batchPutParam.getOriginCacheName());
             batchEvictParam.setWrapperCacheName(batchEvictParam.getWrapperCacheName());
-            Map<Object, Object> cacheMap = BatchValueUtils.parseValue2Map(batchPutParam.getBatchCacheValue(), Symbol.COLON);
+            Map<Object, Object> cacheMap = BatchValueUtils.parseValue2Map(batchPutParam.getBatchCacheValue(), CacheConstants.CACHE_SPLIT);
             batchEvictParam.setKeys(cacheMap.keySet());
             cacheOperate.batchDelete(batchEvictParam);
             changeParam = batchEvictParam;
-        } else if (DeleteAllParam.class.getSimpleName().equals(cacheParamName)) {
-            DeleteAllParam deleteAllParam = JsonUtils.readValue(message.getBody(), DeleteAllParam.class);
-            cacheOperate.deleteAll(deleteAllParam);
-            changeParam = deleteAllParam;
+        } else if (EvictAllParam.class.getSimpleName().equals(cacheParamName)) {
+            EvictAllParam evictAllParam = JsonUtils.readValue(message.getBody(), EvictAllParam.class);
+            cacheOperate.deleteAll(evictAllParam);
+            changeParam = evictAllParam;
         } else {
             throw new RuntimeException("删除本地缓存失败");
         }
@@ -59,16 +64,16 @@ public class DeleteCacheUtils {
     public static void deleteLocal(LocalCacheOperate localCacheOperate, CacheChangeParam param) {
         if (param instanceof PutParam) {
             PutParam putParam = (PutParam) param;
-            DeleteParam deleteParam = new DeleteParam();
-            deleteParam.setOriginCacheName(putParam.getOriginCacheName());
-            deleteParam.setWrapperCacheName(putParam.getWrapperCacheName());
-            deleteParam.setKey(putParam.getKey());
-            localCacheOperate.delete(deleteParam);
+            EvictParam evictParam = new EvictParam();
+            evictParam.setOriginCacheName(putParam.getOriginCacheName());
+            evictParam.setWrapperCacheName(putParam.getWrapperCacheName());
+            evictParam.setKey(putParam.getKey());
+            localCacheOperate.delete(evictParam);
             return;
         }
-        if (param instanceof DeleteParam) {
-            DeleteParam deleteParam = (DeleteParam) param;
-            localCacheOperate.delete(deleteParam);
+        if (param instanceof EvictParam) {
+            EvictParam evictParam = (EvictParam) param;
+            localCacheOperate.delete(evictParam);
             return;
         }
 //        if (BatchDeleteParam.class.getSimpleName().equals(cacheParamName)) {

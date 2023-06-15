@@ -3,7 +3,7 @@ package io.github.architers.cache.yali;
 
 import io.github.architers.cache.TestModel;
 import io.github.architers.cache.entity.UserInfo;
-import io.github.architers.context.Symbol;
+import io.github.architers.context.cache.CacheConstants;
 import io.github.architers.context.utils.JsonUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ public class StressTest {
     @Test
     public void findByDirect() {
         String uuid = UUID.randomUUID().toString();
-        String key = "findByName" + Symbol.COLON + uuid;
+        String key = "findByName" + CacheConstants.CACHE_SPLIT + uuid;
         addData(key, UserInfo.getRandomUserInfo().setUsername(uuid));
         TestModel testModel = TestModel.build().setStartTime(System.currentTimeMillis())
                 .setCount(count).setRemark("直接调用方法从缓存查询数据");
@@ -53,7 +53,7 @@ public class StressTest {
     @Test
     public void findByAnnotation() {
         String uuid = UUID.randomUUID().toString();
-        String key = "findByName" + Symbol.COLON + uuid;
+        String key = "findByName" + CacheConstants.CACHE_SPLIT + uuid;
         // addData(key, UserInfo.getRandomUserInfo().setUsername(uuid));
         TestModel testModel = TestModel.build().setStartTime(System.currentTimeMillis())
                 .setCount(count).setRemark("通过注解缓存查询数据");

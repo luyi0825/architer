@@ -17,8 +17,6 @@
         <module>cloud-nacos-discovery-starter</module>
         <module>cloud-open-feign-starter</module>
         <module>cloud-rest-template-starter</module>
-        <module>cloud-zookeeper-discovery-starter</module>
-        <module>cloud-dubbo</module>
         <module>cloud-sentinel</module>
         <module>cloud-common</module>
         <module>cloud-gateway-starter</module>

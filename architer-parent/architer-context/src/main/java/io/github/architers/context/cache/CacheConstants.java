@@ -2,10 +2,11 @@ package io.github.architers.context.cache;
 
 
 /**
- * 描述:缓存的常量
+ * 缓存的常量
  *
  * @author luyi
- * @date 2020/12/24 下午11:20
+ * @version 1.0.0
+ * @since 2023/06/15
  */
 public class CacheConstants {
     /**
@@ -13,6 +14,10 @@ public class CacheConstants {
      */
     public static final long NEVER_EXPIRE = -1;
 
+    /**
+     * 分割符号
+     */
+    public static String CACHE_SPLIT = ":";
 
 
 }

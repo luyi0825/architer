@@ -9,7 +9,7 @@
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>architer-cloud-config-nacos-starter</artifactId>
+    <artifactId>cloud-config-nacos-starter</artifactId>
     <name>cloud-config-nacos-starter</name>
     <description>cloud-nacos-config-starter配置</description>
     <packaging>jar</packaging>

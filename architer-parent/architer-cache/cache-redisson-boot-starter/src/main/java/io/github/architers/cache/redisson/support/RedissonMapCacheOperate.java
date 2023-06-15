@@ -1,6 +1,6 @@
 package io.github.architers.cache.redisson.support;
 
-import io.github.architers.context.Symbol;
+import io.github.architers.context.cache.CacheConstants;
 import io.github.architers.context.cache.utils.BatchValueUtils;
 import io.github.architers.context.cache.model.*;
 import io.github.architers.context.cache.operate.*;
@@ -51,11 +51,11 @@ public class RedissonMapCacheOperate implements RemoteCacheOperate {
     }
 
     @Override
-    public void delete(DeleteParam deleteParam) {
-        if (deleteParam.isAsync()) {
-            redissonClient.getMapCache(deleteParam.getWrapperCacheName()).removeAsync(deleteParam.getKey());
+    public void delete(EvictParam evictParam) {
+        if (evictParam.isAsync()) {
+            redissonClient.getMapCache(evictParam.getWrapperCacheName()).removeAsync(evictParam.getKey());
         } else {
-            redissonClient.getMapCache(deleteParam.getWrapperCacheName()).removeAsync(deleteParam.getKey());
+            redissonClient.getMapCache(evictParam.getWrapperCacheName()).removeAsync(evictParam.getKey());
         }
     }
 
@@ -66,12 +66,12 @@ public class RedissonMapCacheOperate implements RemoteCacheOperate {
     }
 
     @Override
-    public void deleteAll(DeleteAllParam deleteAllParam) {
-        if (deleteAllParam.isAsync()) {
-            redissonClient.getMapCache(deleteAllParam.getWrapperCacheName()).deleteAsync();
+    public void deleteAll(EvictAllParam evictAllParam) {
+        if (evictAllParam.isAsync()) {
+            redissonClient.getMapCache(evictAllParam.getWrapperCacheName()).deleteAsync();
         }
 
-        if (!redissonClient.getMapCache(deleteAllParam.getWrapperCacheName()).delete()) {
+        if (!redissonClient.getMapCache(evictAllParam.getWrapperCacheName()).delete()) {
             throw new RuntimeException("删除缓存失败");
         }
     }
@@ -90,7 +90,7 @@ public class RedissonMapCacheOperate implements RemoteCacheOperate {
     public void batchPut(BatchPutParam batchPutParam) {
         Map<Object, Object> cacheMap =
                 BatchValueUtils.parseValue2Map(batchPutParam.getBatchCacheValue(),
-                        Symbol.COLON);
+                        CacheConstants.CACHE_SPLIT);
         if (batchPutParam.isAsync()) {
             RMapCache<Object, Object> rMapCache = redissonClient.getMapCache(batchPutParam.getWrapperCacheName());
             if (batchPutParam.getExpireTime() > 0) {

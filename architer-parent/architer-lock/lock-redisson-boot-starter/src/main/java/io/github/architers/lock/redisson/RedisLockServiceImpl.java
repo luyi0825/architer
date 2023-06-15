@@ -1,6 +1,6 @@
 package io.github.architers.lock.redisson;
 
-import io.github.architers.context.Symbol;
+import io.github.architers.context.cache.CacheConstants;
 import io.github.architers.context.lock.LockService;
 import org.redisson.api.RedissonClient;
 
@@ -30,7 +30,7 @@ public class RedisLockServiceImpl implements LockService {
 
     @Override
     public String getLockSplit() {
-        return Symbol.COLON;
+        return CacheConstants.CACHE_SPLIT;
     }
 
     @Override

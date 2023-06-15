@@ -2,7 +2,7 @@ package io.github.architers.context.cache.operate;
 
 
 import io.github.architers.context.cache.annotation.CacheEvict;
-import io.github.architers.context.cache.model.DeleteParam;
+import io.github.architers.context.cache.model.EvictParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.utils.JsonUtils;
@@ -35,20 +35,20 @@ public class CacheEvictOperationHandler extends BaseCacheOperationHandler {
         if (canDoCacheOperate(cacheEvict.condition(), cacheEvict.unless(), expressionMetadata)) {
             return;
         }
-        DeleteParam deleteParam = new DeleteParam();
-        deleteParam.setWrapperCacheName(getWrapperCacheName(cacheEvict.cacheName(), expressionMetadata));
-        deleteParam.setOriginCacheName(cacheEvict.cacheName());
+        EvictParam evictParam = new EvictParam();
+        evictParam.setWrapperCacheName(getWrapperCacheName(cacheEvict.cacheName(), expressionMetadata));
+        evictParam.setOriginCacheName(cacheEvict.cacheName());
         Object key = super.parseCacheKey(expressionMetadata, cacheEvict.key());
         CacheOperate cacheOperate = cacheOperateSupport.getCacheOperate(cacheEvict.cacheName());
-        deleteParam.setKey(JsonUtils.toJsonString(key));
-        deleteParam.setAsync(cacheEvict.async());
+        evictParam.setKey(JsonUtils.toJsonString(key));
+        evictParam.setAsync(cacheEvict.async());
         //删除缓存后，再调用方法
-        cacheOperate.delete(deleteParam);
+        cacheOperate.delete(evictParam);
 
         if (cacheEvict.beforeInvocation()) {
-            super.beforeInvocation(deleteParam, cacheOperate);
+            super.beforeInvocation(evictParam, cacheOperate);
         } else {
-            super.afterInvocation(deleteParam, cacheOperate);
+            super.afterInvocation(evictParam, cacheOperate);
         }
     }
 

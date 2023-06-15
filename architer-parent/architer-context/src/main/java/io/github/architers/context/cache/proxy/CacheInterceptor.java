@@ -1,12 +1,6 @@
 package io.github.architers.context.cache.proxy;
 
 
-import io.github.architers.context.cache.annotation.CacheBatchEvict;
-import io.github.architers.context.cache.annotation.CacheEvict;
-import io.github.architers.context.cache.annotation.CacheEvictAll;
-import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.context.cache.model.InvalidCacheValue;
-import io.github.architers.context.cache.operate.BaseCacheOperationHandler;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.expression.ExpressionParser;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -14,17 +8,8 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
-import org.springframework.util.CollectionUtils;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
 
 /**
  * @author luyi
@@ -44,7 +29,7 @@ public class CacheInterceptor implements MethodInterceptor {
     @Nullable
     public Object invoke(@NonNull final MethodInvocation invocation) throws Throwable {
         ExpressionMetadata expressionMetadata = this.buildExpressionMeta(invocation);
-        return cacheProxySupport.excuteProxy(expressionMetadata, () -> {
+        return cacheProxySupport.executeProxy(expressionMetadata, () -> {
             try {
                 return invocation.proceed();
             } catch (Throwable e) {

@@ -27,7 +27,7 @@ public interface CacheOperate {
     /**
      * 删除缓存
      */
-    default void delete(DeleteParam deleteParam) {
+    default void delete(EvictParam evictParam) {
         noSupport();
     }
 
@@ -40,7 +40,7 @@ public interface CacheOperate {
     /**
      * 清理所有
      */
-    default void deleteAll(DeleteAllParam deleteParam) {
+    default void deleteAll(EvictAllParam evictAllParam) {
         noSupport();
     }
 

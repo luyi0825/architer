@@ -2,8 +2,10 @@ package io.github.architers.context.cache.operate;
 
 import io.github.architers.context.cache.CacheConfig;
 import io.github.architers.context.cache.CacheProperties;
+import io.github.architers.context.expression.ExpressionParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -27,6 +29,9 @@ public class CacheOperateSupport implements ApplicationContextAware {
 
     @Resource
     private CacheOperateManager cacheOperateManager;
+
+    @Autowired(required = false)
+    protected ExpressionParser expressionParser;
 
 
     public CacheOperateSupport() {
@@ -84,4 +89,7 @@ public class CacheOperateSupport implements ApplicationContextAware {
     }
 
 
+    public ExpressionParser getExpressionParser() {
+        return expressionParser;
+    }
 }

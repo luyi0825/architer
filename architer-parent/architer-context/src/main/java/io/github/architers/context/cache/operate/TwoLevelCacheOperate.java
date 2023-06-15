@@ -32,9 +32,9 @@ public final class TwoLevelCacheOperate implements CacheOperate {
     }
 
     @Override
-    public void delete(DeleteParam deleteParam) {
-        localCacheOperate.delete(deleteParam);
-        remoteCacheOperate.delete(deleteParam);
+    public void delete(EvictParam evictParam) {
+        localCacheOperate.delete(evictParam);
+        remoteCacheOperate.delete(evictParam);
     }
 
     @Override
@@ -47,9 +47,9 @@ public final class TwoLevelCacheOperate implements CacheOperate {
     }
 
     @Override
-    public void deleteAll(DeleteAllParam deleteAllParam) {
-        localCacheOperate.deleteAll(deleteAllParam);
-        remoteCacheOperate.deleteAll(deleteAllParam);
+    public void deleteAll(EvictAllParam evictAllParam) {
+        localCacheOperate.deleteAll(evictAllParam);
+        remoteCacheOperate.deleteAll(evictAllParam);
     }
 
     @Override

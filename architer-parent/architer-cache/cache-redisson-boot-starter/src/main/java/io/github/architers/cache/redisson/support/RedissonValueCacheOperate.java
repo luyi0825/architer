@@ -1,6 +1,6 @@
 package io.github.architers.cache.redisson.support;
 
-import io.github.architers.context.Symbol;
+import io.github.architers.context.cache.CacheConstants;
 import io.github.architers.context.cache.utils.BatchValueUtils;
 import io.github.architers.context.cache.utils.CacheUtils;
 import io.github.architers.context.cache.model.*;
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * String类型缓存操作
+ * redisson对应key-value的缓存操作
  *
  * @author luyi
  */
@@ -30,7 +30,7 @@ public class RedissonValueCacheOperate implements RemoteCacheOperate {
 
     @Override
     public void put(PutParam put) {
-        String cacheKey = getCacheKey(put.getWrapperCacheName(),put.getKey());
+        String cacheKey = getCacheKey(put.getWrapperCacheName(), put.getKey());
         RBucket<Object> rBucket = redissonClient.getBucket(cacheKey);
         if (put.isAsync()) {
             this.putAsync(rBucket, put.getCacheValue(), put.getExpireTime(), put.getTimeUnit());
@@ -72,7 +72,7 @@ public class RedissonValueCacheOperate implements RemoteCacheOperate {
 
 
     @Override
-    public void delete(DeleteParam delete) {
+    public void delete(EvictParam delete) {
         String bucketName = getCacheKey(delete.getWrapperCacheName(), delete.getKey());
         if (delete.isAsync()) {
             redissonClient.getBucket(bucketName).deleteAsync();
@@ -101,7 +101,7 @@ public class RedissonValueCacheOperate implements RemoteCacheOperate {
         String[] cacheKeys = new String[keys.size()];
         int i = 0;
         for (Object key : keys) {
-            String cacheKey = batchEvictParam.getWrapperCacheName() + Symbol.COLON +
+            String cacheKey = batchEvictParam.getWrapperCacheName() + CacheConstants.CACHE_SPLIT +
                     JsonUtils.toJsonString(key);
             cacheKeys[i] = cacheKey;
             i++;
@@ -117,7 +117,7 @@ public class RedissonValueCacheOperate implements RemoteCacheOperate {
     public void batchPut(BatchPutParam batchPutParam) {
 
         Map<String, Object> cacheMap = BatchValueUtils.parseValue2Map(batchPutParam.getWrapperCacheName(),
-                Symbol.COLON,
+                CacheConstants.CACHE_SPLIT,
                 batchPutParam.getBatchCacheValue());
         long expireTime = CacheUtils.getExpireTime(batchPutParam.getExpireTime(),
                 batchPutParam.getRandomTime());

@@ -27,7 +27,7 @@ public class CacheProxySupport {
 
     private final Map<Method, MethodCacheAnnotationContext> methodMethodCacheContextCache = new ConcurrentHashMap<>(32);
 
-    public Object excuteProxy(ExpressionMetadata expressionMetadata, Supplier<Object> methodResultSupplier) throws Throwable {
+    public Object executeProxy(ExpressionMetadata expressionMetadata, Supplier<Object> methodResultSupplier) throws Throwable {
         MethodCacheAnnotationContext methodCacheAnnotationContext = methodMethodCacheContextCache.get(expressionMetadata.getTargetMethod());
         if (methodCacheAnnotationContext == null) {
             methodCacheAnnotationContext = this.buildMethodCacheAnnotationContext(expressionMetadata.getTargetMethod());
@@ -133,13 +133,13 @@ public class CacheProxySupport {
         return methodCacheAnnotationContext;
     }
 
-    @Autowired
+    @Autowired(required = false)
     public void setCacheAnnotationsParser(CacheAnnotationsParser cacheAnnotationsParser) {
         this.cacheAnnotationsParser = cacheAnnotationsParser;
     }
 
 
-    @Autowired
+    @Autowired(required = false)
     public void setCacheOperationHandlers(List<BaseCacheOperationHandler> baseCacheOperationHandlers) {
         this.baseCacheOperationHandlers = baseCacheOperationHandlers;
     }

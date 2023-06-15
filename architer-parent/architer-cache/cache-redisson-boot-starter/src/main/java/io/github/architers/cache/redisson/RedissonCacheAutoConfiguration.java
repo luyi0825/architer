@@ -4,7 +4,6 @@ package io.github.architers.cache.redisson;
 
 import io.github.architers.cache.redisson.support.RedissonMapCacheOperate;
 import io.github.architers.cache.redisson.support.RedissonValueCacheOperate;
-import io.github.architers.context.cache.annotation.EnableArchiterCaching;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;

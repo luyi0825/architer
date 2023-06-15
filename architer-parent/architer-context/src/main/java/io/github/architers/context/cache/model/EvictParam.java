@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DeleteParam extends CacheChangeParam {
+public class EvictParam extends CacheChangeParam {
 
     /**
      * 缓存key
