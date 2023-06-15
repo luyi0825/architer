@@ -1,13 +1,12 @@
 package io.github.architers.context.cache.proxy;
 
-import io.github.architers.context.cache.annotation.CacheBatchEvict;
-import io.github.architers.context.cache.annotation.CacheEvict;
-import io.github.architers.context.cache.annotation.CacheEvictAll;
+
 import io.github.architers.context.cache.annotation.Cacheable;
 import io.github.architers.context.cache.model.InvalidCacheValue;
 import io.github.architers.context.cache.operate.BaseCacheOperationHandler;
 import io.github.architers.context.expression.ExpressionMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
@@ -19,6 +18,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
+/**
+ * 缓存代理支持
+ * <li>负责aspectJ和proxy的代理执行</li>
+ * <li>管理缓存操作处理器的执行</li>
+ */
 public class CacheProxySupport {
 
     private CacheAnnotationsParser cacheAnnotationsParser;
@@ -105,28 +109,16 @@ public class CacheProxySupport {
         MethodCacheAnnotationContext methodCacheAnnotationContext = new MethodCacheAnnotationContext();
 
         for (Annotation operationAnnotation : operationAnnotations) {
-            if (operationAnnotation instanceof CacheEvict) {
-                if (((CacheEvict) operationAnnotation).beforeInvocation()) {
-                    methodCacheAnnotationContext.addBeforeInvocations(operationAnnotation);
-                } else {
-                    methodCacheAnnotationContext.addAfterInvocations(operationAnnotation);
-                }
-            } else if (operationAnnotation instanceof CacheBatchEvict) {
-                if (((CacheBatchEvict) operationAnnotation).beforeInvocation()) {
-                    methodCacheAnnotationContext.addBeforeInvocations(operationAnnotation);
-                } else {
-                    methodCacheAnnotationContext.addAfterInvocations(operationAnnotation);
-                }
-            } else if (operationAnnotation instanceof CacheEvictAll) {
-                if (((CacheEvictAll) operationAnnotation).beforeInvocation()) {
-                    methodCacheAnnotationContext.addBeforeInvocations(operationAnnotation);
-                } else {
-                    methodCacheAnnotationContext.addAfterInvocations(operationAnnotation);
-                }
-            } else if (operationAnnotation instanceof Cacheable) {
+            if (operationAnnotation instanceof Cacheable) {
                 methodCacheAnnotationContext.addCacheables(operationAnnotation);
             } else {
-                methodCacheAnnotationContext.addAfterInvocations(operationAnnotation);
+                Boolean beforeInvocation = (Boolean) AnnotationUtils.getValue(operationAnnotation, "beforeInvocation");
+                if (Boolean.TRUE.equals(beforeInvocation)) {
+                    methodCacheAnnotationContext.addBeforeInvocations(operationAnnotation);
+                } else {
+                    methodCacheAnnotationContext.addAfterInvocations(operationAnnotation);
+                }
+
             }
         }
         methodMethodCacheContextCache.putIfAbsent(method, methodCacheAnnotationContext);

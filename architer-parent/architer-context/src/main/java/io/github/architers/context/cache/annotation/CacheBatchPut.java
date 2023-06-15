@@ -61,4 +61,10 @@ public @interface CacheBatchPut {
      */
     String unless() default "";
 
+    /**
+     * true表示在方法调用删除缓存
+     * false 表示在方法执行之后删除
+     */
+    boolean beforeInvocation() default false;
+
 }

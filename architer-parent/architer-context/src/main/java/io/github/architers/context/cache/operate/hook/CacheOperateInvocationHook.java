@@ -4,6 +4,8 @@ import io.github.architers.context.cache.model.BaseCacheParam;
 import io.github.architers.context.cache.operate.CacheOperate;
 
 /**
+ * 缓存操作调用钩子函数
+ *
  * @author luyi
  */
 public interface CacheOperateInvocationHook {

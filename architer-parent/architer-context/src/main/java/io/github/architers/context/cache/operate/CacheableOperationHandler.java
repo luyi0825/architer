@@ -16,7 +16,7 @@ import java.lang.annotation.Annotation;
 
 
 /**
- * Cacheable 注解 对应的处理类
+ * Cacheable注解对应的处理类
  * 当缓存中没有值的时候，查询数据库，并将返回值放入缓存
  * <li>这个使用的频率最好，用HIGHEST_PRECEDENCE排在最前边</li>
  *

@@ -64,5 +64,11 @@ public @interface CachePut {
      */
     String unless() default "";
 
+    /**
+     * true表示在方法调用更新缓存
+     * false 表示在方法执行之后更新缓存
+     */
+    boolean beforeInvocation() default false;
+
 
 }

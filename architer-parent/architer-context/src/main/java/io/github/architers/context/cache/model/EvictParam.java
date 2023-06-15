@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 删除：对应@DeleteOperation
+ * 缓存驱逐的参数
  *
  * @author luyi
  */
