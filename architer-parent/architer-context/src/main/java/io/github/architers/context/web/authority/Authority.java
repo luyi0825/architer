@@ -13,8 +13,6 @@ import java.lang.annotation.*;
 public @interface Authority {
     /**
      * 权限名称
-     *
-     * @see 1.0.0
      */
     String[] value();
 

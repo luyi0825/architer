@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * <p>@RestControllerAdvice=@ControllerAdvice+@ResponseBody</p>
  *
  * @author luyi
- * @date 2020/12/9
+ * @since  2020/12/9
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {

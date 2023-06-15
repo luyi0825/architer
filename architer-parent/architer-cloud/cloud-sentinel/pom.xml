@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>architer-cloud-sentinel</artifactId>
-    <name>architer-cloud-sentinel</name>
+    <name>cloud-sentinel</name>
     <description>spring-cloud-alibaba-sentinel</description>
     <packaging>jar</packaging>
 
