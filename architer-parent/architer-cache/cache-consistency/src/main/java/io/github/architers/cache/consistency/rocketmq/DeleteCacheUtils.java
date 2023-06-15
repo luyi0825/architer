@@ -1,4 +1,4 @@
-package io.github.architers.context.cache.consistency.rocketmq;
+package io.github.architers.cache.consistency.rocketmq;
 
 import io.github.architers.context.cache.CacheConstants;
 import io.github.architers.context.cache.model.*;
@@ -61,40 +61,5 @@ public class DeleteCacheUtils {
 
     }
 
-    public static void deleteLocal(LocalCacheOperate localCacheOperate, CacheChangeParam param) {
-        if (param instanceof PutParam) {
-            PutParam putParam = (PutParam) param;
-            EvictParam evictParam = new EvictParam();
-            evictParam.setOriginCacheName(putParam.getOriginCacheName());
-            evictParam.setWrapperCacheName(putParam.getWrapperCacheName());
-            evictParam.setKey(putParam.getKey());
-            localCacheOperate.delete(evictParam);
-            return;
-        }
-        if (param instanceof EvictParam) {
-            EvictParam evictParam = (EvictParam) param;
-            localCacheOperate.delete(evictParam);
-            return;
-        }
-//        if (BatchDeleteParam.class.getSimpleName().equals(cacheParamName)) {
-//            BatchDeleteParam batchDeleteParam = JsonUtils.readValue(message.getBody(), BatchDeleteParam.class);
-//            cacheOperate.batchDelete(batchDeleteParam);
-//            return;
-//        }
-//        if (BatchPutParam.class.getSimpleName().equals(cacheParamName)) {
-//            BatchPutParam batchPutParam = JsonUtils.readValue(message.getBody(), BatchPutParam.class);
-//            BatchDeleteParam batchDeleteParam = new BatchDeleteParam();
-//            batchDeleteParam.setOriginCacheName(batchPutParam.getOriginCacheName());
-//            batchDeleteParam.setWrapperCacheName(batchDeleteParam.getWrapperCacheName());
-//            Map<Object, Object> cacheMap = BatchValueUtils.parseValue2Map(batchPutParam.getBatchCacheValue(), Symbol.COLON);
-//            batchDeleteParam.setKeys(cacheMap.keySet());
-//            cacheOperate.batchDelete(batchDeleteParam);
-//            return;
-//        }
-//        if (DeleteAllParam.class.getSimpleName().equals(cacheParamName)) {
-//            DeleteAllParam deleteAllParam = JsonUtils.readValue(message.getBody(), DeleteAllParam.class);
-//            cacheOperate.deleteAll(deleteAllParam);
-//        }
-        throw new RuntimeException("删除本地缓存失败");
-    }
+
 }

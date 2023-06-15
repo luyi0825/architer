@@ -15,6 +15,7 @@
     <modules>
         <module>cache-redisson-boot-starter</module>
         <module>cache-caffeine-boot-starter</module>
+        <module>cache-consistency</module>
         <module>cache-test</module>
     </modules>
 
@@ -28,7 +29,6 @@
         <jackson.version>2.12.2</jackson.version>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
         <jacoco.version>0.8.6</jacoco.version>
-        <architer.version>1.0.0-SNAPSHOT</architer.version>
     </properties>
 
 

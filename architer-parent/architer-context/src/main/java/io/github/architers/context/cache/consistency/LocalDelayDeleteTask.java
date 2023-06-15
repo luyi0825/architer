@@ -8,7 +8,7 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
 @Data
-public class LocalCacheDelay implements Delayed {
+public class LocalDelayDeleteTask implements Delayed {
 
     private long time;
 
@@ -17,7 +17,7 @@ public class LocalCacheDelay implements Delayed {
     private LocalCacheOperate localCacheOperate;
 
 
-    public LocalCacheDelay(long time, CacheChangeParam changeParam, LocalCacheOperate localCacheOperate) {
+    public LocalDelayDeleteTask(long time, CacheChangeParam changeParam, LocalCacheOperate localCacheOperate) {
         this.time = System.currentTimeMillis() + time;
         this.changeParam = changeParam;
         this.localCacheOperate = localCacheOperate;

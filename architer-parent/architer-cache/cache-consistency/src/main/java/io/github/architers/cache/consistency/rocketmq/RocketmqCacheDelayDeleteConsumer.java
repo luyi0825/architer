@@ -1,4 +1,4 @@
-package io.github.architers.context.cache.consistency.rocketmq;
+package io.github.architers.cache.consistency.rocketmq;
 
 
 import io.github.architers.context.cache.operate.CacheOperate;

@@ -1,9 +1,9 @@
-package io.github.architers.context.cache.consistency.rocketmq;
+package io.github.architers.cache.consistency.rocketmq;
 
 import io.github.architers.context.cache.CacheConfig;
 import io.github.architers.context.cache.CacheProperties;
-import io.github.architers.context.cache.consistency.LocalCacheDelay;
-import io.github.architers.context.cache.consistency.LocalCacheDelayDelete;
+import io.github.architers.context.cache.consistency.CacheDeleteUtils;
+import io.github.architers.context.cache.consistency.LocalDelayDeleteTask;
 import io.github.architers.context.cache.model.BaseCacheParam;
 import io.github.architers.context.cache.model.CacheChangeParam;
 import io.github.architers.context.cache.operate.*;
@@ -21,11 +21,12 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.annotation.Resource;
 
 /**
- * rocketmq延迟删除通知
+ * rocketmq延迟删除
  *
  * @author luyi
+ * @since 1.0.1
  */
-public class RocketmqCacheOperateInvocationHook implements CacheOperateInvocationHook {
+public class RocketmqDelayDoubleDeleteHook implements CacheOperateInvocationHook {
 
     @Value("${spring.application.name}")
     private String applicationName;
@@ -33,10 +34,9 @@ public class RocketmqCacheOperateInvocationHook implements CacheOperateInvocatio
     @Resource
     private CacheProperties cacheProperties;
 
-
     private final DefaultMQProducer producer;
 
-    public RocketmqCacheOperateInvocationHook(DefaultMQProducer producer) {
+    public RocketmqDelayDoubleDeleteHook(DefaultMQProducer producer) {
         this.producer = producer;
     }
 
@@ -112,10 +112,9 @@ public class RocketmqCacheOperateInvocationHook implements CacheOperateInvocatio
     public void after(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
         if (cacheOperate instanceof LocalCacheOperate) {
             if (!(cacheParam instanceof CacheChangeParam)) {
-                return ;
+                return;
             }
-            LocalCacheDelay localCacheDelay = new LocalCacheDelay(5000, (CacheChangeParam) cacheParam, (LocalCacheOperate) cacheOperate);
-            LocalCacheDelayDelete.addDeleteTask(localCacheDelay);
+            CacheDeleteUtils.delayDelete(5000,(CacheChangeParam) cacheParam,(LocalCacheOperate) cacheOperate);
         }
     }
 }

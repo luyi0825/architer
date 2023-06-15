@@ -27,7 +27,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>cache-caffeine-boot-starter</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -53,7 +53,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>spring-boot-starter-web-mvc</artifactId>
-            <version>${architer.version}</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-aspects -->
