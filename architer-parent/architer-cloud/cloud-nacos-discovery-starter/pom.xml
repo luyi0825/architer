@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>cloud-starter-alibaba-nacos-discovery</artifactId>
-    <name>cloud-alibaba-nacos-discovery--starter-</name>
+    <name>cloud-starter-alibaba-nacos-discovery</name>
     <description>spring-cloud-starter-alibaba-nacos-discovery</description>
     <packaging>jar</packaging>
 

@@ -14,7 +14,7 @@
     <description>测试service上游服务</description>
     <packaging>jar</packaging>
     <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
+        <revision>1.0.2</revision>
         <core.version>1.0.0</core.version>
         <jackson.version>2.11.4</jackson.version>
     </properties>

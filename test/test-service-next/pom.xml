@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.github.architers</groupId>
         <artifactId>architer-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>test-service-next</artifactId>
@@ -12,7 +12,7 @@
     <description>测试服务-下游服务</description>
     <packaging>jar</packaging>
     <properties>
-        <architer-version>1.0.0-SNAPSHOT</architer-version>
+        <architer-version>1.0.2</architer-version>
     </properties>
     <dependencies>
 
@@ -25,31 +25,31 @@
             <artifactId>architer-context</artifactId>
             <version>${architer-version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>architer-cloud-discovery-nacos-starter</artifactId>
-            <version>${architer-version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.github.architers</groupId>-->
+<!--            <artifactId>cloud-discovery-nacos-starter</artifactId>-->
+<!--            <version>${architer-version}</version>-->
+<!--        </dependency>-->
 
 
     </dependencies>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <!-- 如果没有该配置，devtools不会生效 -->
-                    <fork>true</fork>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; 如果没有该配置，devtools不会生效 &ndash;&gt;-->
+<!--                    <fork>true</fork>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>repackage</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
