@@ -27,8 +27,9 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * @author luyi
      * 处理系统异常
+
+     *
      */
     @ExceptionHandler(value = Throwable.class)
     public ResponseResult<?> exceptionHandler(Throwable e) {

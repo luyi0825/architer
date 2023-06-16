@@ -86,7 +86,7 @@
 
         <dependency>
             <groupId>io.github.architers</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <artifactId>cloud-starter-alibaba-nacos-discovery</artifactId>
             <version>${architer.revision}</version>
         </dependency>
 

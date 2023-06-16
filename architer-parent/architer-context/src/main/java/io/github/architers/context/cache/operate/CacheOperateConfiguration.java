@@ -1,10 +1,11 @@
 package io.github.architers.context.cache.operate;
 
-import io.github.architers.context.cache.operate.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * 缓存操作配置类
+ *
  * @author luyi
  */
 @Configuration(proxyBeanMethods = false)
@@ -52,8 +53,4 @@ public class CacheOperateConfiguration {
         return new CacheBatchEvictOperationHandler();
     }
 
-    @Bean
-    public CacheOperateManager cacheOperateManager() {
-        return new CacheOperateManager();
-    }
 }

@@ -23,9 +23,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author luyi
+ *
  * 构建项目的moule->扫描包，得到每个模块的模块配置类
  * 可以通过set方法修改默认的scanPackages和resourcePattern
+ *  @author luyi
  */
 public class ModulesBuilder {
 
