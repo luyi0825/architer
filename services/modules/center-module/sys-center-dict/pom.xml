@@ -30,7 +30,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>mybatis-plus</artifactId>
-            <version>${architer.revision}</version>
+            <version>${revision}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

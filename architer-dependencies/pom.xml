@@ -21,11 +21,11 @@
         <commons-lang3.version>3.11</commons-lang3.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <lombok.version>1.18.26</lombok.version>
-        <easyexcel.verion>2.2.8</easyexcel.verion>
+        <easyexcel.verion>3.3.2</easyexcel.verion>
         <jsoup.verion>1.14.2</jsoup.verion>
         <zookeeper.version>3.7.0</zookeeper.version>
         <redisson.version>3.20.0</redisson.version>
-        <jackson.version>2.12.2</jackson.version>
+        <jackson.version>2.13.5</jackson.version>
         <spring.version>5.3.27</spring.version>
         <spring-boot.version>2.7.12</spring-boot.version>
         <!--spring-cloud-alibaba的版本-->
@@ -45,6 +45,8 @@
         <commons-io.verision>2.11.0</commons-io.verision>
         <slf4j-version>2.0.6</slf4j-version>
         <caffeine.version>3.1.6</caffeine.version>
+        <aspectj.version>1.9.19</aspectj.version>
+        <rocketmq-boot.version>2.2.3</rocketmq-boot.version>
     </properties>
     <developers>
         <developer>
@@ -106,20 +108,21 @@
                 <version>${easyexcel.verion}</version>
             </dependency>
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid</artifactId>
-                <version>${alibaba-druid.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
 
             <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.github.ben-manes.caffeine</groupId>
                 <artifactId>caffeine</artifactId>
-                <version>3.1.6</version>
+                <version>${caffeine.version}</version>
             </dependency>
 
             <dependency>
@@ -128,28 +131,12 @@
                 <version>${hibernate-validator.version}</version>
             </dependency>
 
-            <!--            <dependency>-->
-            <!--                <groupId>org.jsoup</groupId>-->
-            <!--                <artifactId>jsoup</artifactId>-->
-            <!--                <version>${jsoup.verion}</version>-->
-            <!--            </dependency>-->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq-boot.version}</version>
+            </dependency>
 
-<!--            <dependency>-->
-<!--                <groupId>org.springframework</groupId>-->
-<!--                <artifactId>spring-context</artifactId>-->
-<!--                <version>${spring.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework</groupId>-->
-<!--                <artifactId>spring-web</artifactId>-->
-<!--                <version>${spring.version}</version>-->
-<!--            </dependency>-->
-
-<!--            <dependency>-->
-<!--                <groupId>com.fasterxml.jackson.core</groupId>-->
-<!--                <artifactId>jackson-databind</artifactId>-->
-<!--                <version>${jackson.version}</version>-->
-<!--            </dependency>-->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
@@ -158,6 +145,11 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
             <dependency>
@@ -195,11 +187,7 @@
             <!--                <artifactId>elasticsearch</artifactId>-->
             <!--                <version>${elasticsearch.version}</version>-->
             <!--            </dependency>-->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j-version}</version>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>

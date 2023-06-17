@@ -4,10 +4,6 @@ import lombok.Data;
 
 @Data
 public class CacheOperateContext {
-    /**
-     * 缓存名称
-     */
-    private String cacheName;
 
     /**
      * 缓存名称包装器

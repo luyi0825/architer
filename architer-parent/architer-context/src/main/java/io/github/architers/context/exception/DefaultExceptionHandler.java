@@ -2,11 +2,11 @@ package io.github.architers.context.exception;
 
 import io.github.architers.context.web.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -106,12 +106,12 @@ public class DefaultExceptionHandler implements RequestExceptionHandler {
             Map<String, String> errors = new HashMap<>(sets.size());
             ResponseResult<Map<String, String>> responseResult = new ResponseResult<>();
             sets.forEach(error -> {
-                if (error.getPropertyPath() instanceof PathImpl) {
-                    PathImpl path = (PathImpl) error.getPropertyPath();
-                    errors.put(path.getLeafNode().getName(), error.getMessage());
-                }
+//                if (error.getPropertyPath() instanceof PathImpl) {
+//                    PathImpl path = (PathImpl) error.getPropertyPath();
+//                    errors.put(path.getLeafNode().getName(), error.getMessage());
+//                }
                 //取第一个做message
-                if (StringUtils.isEmpty(responseResult.getMessage())) {
+                if (!StringUtils.hasText(responseResult.getMessage())) {
                     responseResult.setMessage(error.getMessage());
                 }
             });

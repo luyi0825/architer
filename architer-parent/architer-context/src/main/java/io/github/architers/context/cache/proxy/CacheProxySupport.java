@@ -22,6 +22,9 @@ import java.util.function.Supplier;
  * 缓存代理支持
  * <li>负责aspectJ和proxy的代理执行</li>
  * <li>管理缓存操作处理器的执行</li>
+ *
+ * @author luyi
+ * @since 1.0.1
  */
 public class CacheProxySupport {
 
@@ -43,7 +46,7 @@ public class CacheProxySupport {
              *  调用方法，只有第一次调用是真的调用
              */
             @Override
-            public Object proceed() throws Throwable {
+            public Object proceed() {
                 if (returnValue.get() == null) {
                     //执行方法
                     Object value = methodResultSupplier.get();

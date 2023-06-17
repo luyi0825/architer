@@ -73,11 +73,11 @@ public abstract class BaseCacheOperationHandler {
 
     }
 
-    protected boolean beforeInvocation(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
+    protected boolean beforeInvocation(BaseCacheParam cacheParam, CacheOperateContext cacheOperateContext) {
         if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
             //调用方法之前的钩子函数
             for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
-                if (!cacheOperateInvocationHook.before(cacheParam, cacheOperate)) {
+                if (!cacheOperateInvocationHook.before(cacheParam, cacheOperateContext)) {
                     return false;
                 }
             }
@@ -85,11 +85,11 @@ public abstract class BaseCacheOperationHandler {
         return true;
     }
 
-    protected void afterInvocation(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
+    protected void afterInvocation(BaseCacheParam cacheParam, CacheOperateContext cacheOperateContext) {
         if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
             //调用方法之前的钩子函数
             for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
-                cacheOperateInvocationHook.after(cacheParam, cacheOperate);
+                cacheOperateInvocationHook.after(cacheParam, cacheOperateContext);
             }
         }
     }
@@ -119,9 +119,9 @@ public abstract class BaseCacheOperationHandler {
         return true;
     }
 
-    protected String getWrapperCacheName(String originCacheName, ExpressionMetadata expressionMetadata) {
 
-        CacheNameWrapper cacheNameWrapper = cacheOperateSupport.getCacheNameWrapper(originCacheName);
+    protected String getWrapperCacheName(CacheOperateContext cacheOperateContext, ExpressionMetadata expressionMetadata, String originCacheName) {
+        CacheNameWrapper cacheNameWrapper = cacheOperateContext.getCacheNameWrapper();
         if (cacheNameWrapper == null) {
             return originCacheName;
         }

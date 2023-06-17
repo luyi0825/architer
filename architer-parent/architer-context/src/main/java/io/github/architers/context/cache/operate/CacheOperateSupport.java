@@ -4,6 +4,7 @@ import io.github.architers.context.cache.CacheConfig;
 import io.github.architers.context.cache.CacheProperties;
 import io.github.architers.context.expression.ExpressionParser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 缓存操作工厂类
+ * 缓存操作辅助类，获取缓存操作相关的插件
  *
  * @author luyi
  */
@@ -23,7 +24,10 @@ public class CacheOperateSupport implements ApplicationContextAware {
 
 
     private Map<String, CacheOperateContext> cacheOperateContextMap;
-    private CacheNameWrapper defaultCacheNameWrapper;
+
+    private CacheOperateContext defaultCacheOperateContext;
+
+    private CacheOperate defaultTowLevelCacheOperate;
 
 
     @Autowired(required = false)
@@ -50,7 +54,11 @@ public class CacheOperateSupport implements ApplicationContextAware {
     }
 
     public CacheOperateContext getCacheOperateContext(String originCacheName) {
-        return cacheOperateContextMap.get(originCacheName);
+        CacheOperateContext cacheOperateContext = cacheOperateContextMap.get(originCacheName);
+        if (cacheOperateContext == null) {
+            return defaultCacheOperateContext;
+        }
+        return cacheOperateContext;
     }
 
 
@@ -59,9 +67,6 @@ public class CacheOperateSupport implements ApplicationContextAware {
         return cacheOperateContext.getCacheNameWrapper();
     }
 
-    private CacheOperate defaultCacheOperate;
-
-    private CacheOperate defaultTowLevelCacheOperate;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -72,6 +77,9 @@ public class CacheOperateSupport implements ApplicationContextAware {
         Map<String, CacheOperate> beanNameMap = applicationContext.getBeansOfType(CacheOperate.class);
         Map<Class<?>, CacheOperate> classCacheOperateMap = new HashMap<>(beanNameMap.size(), 1);
         beanNameMap.forEach((beanName, cacheOperate) -> classCacheOperateMap.putIfAbsent(cacheOperate.getClass(), cacheOperate));
+        //默认的缓存操作class不能为空
+        Class<?> defaultCacheOperateClass = cacheProperties.getDefaultOperateClass();
+        Assert.notNull(defaultCacheOperateClass, "defaultCacheOperateClass不能为空");
 
         //校验两级缓存配置:本地缓存和远程缓存不能为空
         if (cacheProperties.isEnableTwoLevelCache()) {
@@ -80,16 +88,28 @@ public class CacheOperateSupport implements ApplicationContextAware {
             defaultTowLevelCacheOperate = new TwoLevelCacheOperate((LocalCacheOperate) classCacheOperateMap.get(cacheProperties.getDefaultLocalOperateClass())
                     , (RemoteCacheOperate) classCacheOperateMap.get(cacheProperties.getDefaultRemoteOperateClass()));
         }
+        if (classCacheOperateMap.get(defaultCacheOperateClass) == null) {
+            throw new IllegalArgumentException("默认cacheOperate不能为空");
+        }
 
-        //默认的缓存操作不能为空
-        Class<?> defaultCacheOperateClass = cacheProperties.getDefaultOperateClass();
-        defaultCacheOperate = classCacheOperateMap.get(defaultCacheOperateClass);
-        Assert.notNull(defaultCacheOperate, "默认cacheOperate不能为空");
+        //构建默认的缓存操作上下文
+        {
+            String defaultCacheName = "default";
+            if (cacheProperties.getCustomConfigs().containsKey(defaultCacheName)) {
+                throw new RuntimeException("缓存名称不能为default");
+            }
+            CacheConfig defaultCacheConfig = getCacheConfig(defaultCacheName);
 
-        for (String cacheName : cacheProperties.getCustomConfigs().keySet()) {
-            CacheConfig cacheConfig = getCacheConfig(cacheName);
-            CacheOperateContext cacheOperateContext = this.buildCacheOperateContext(cacheConfig, cacheName, applicationContext, classCacheOperateMap);
-            cacheOperateContextMap.put(cacheName, cacheOperateContext);
+            defaultCacheOperateContext = this.buildCacheOperateContext(defaultCacheConfig, defaultCacheName, applicationContext, classCacheOperateMap);
+            cacheOperateContextMap.put(defaultCacheName, defaultCacheOperateContext);
+        }
+        //构建配置的缓存操作上下文
+        {
+            for (String cacheName : cacheProperties.getCustomConfigs().keySet()) {
+                CacheConfig cacheConfig = getCacheConfig(cacheName);
+                CacheOperateContext cacheOperateContext = this.buildCacheOperateContext(cacheConfig, cacheName, applicationContext, classCacheOperateMap);
+                cacheOperateContextMap.put(cacheName, cacheOperateContext);
+            }
         }
 
 
@@ -109,16 +129,18 @@ public class CacheOperateSupport implements ApplicationContextAware {
             if (!cacheProperties.isEnableTwoLevelCache()) {
                 throw new IllegalArgumentException("未开启两级缓存");
             }
+            if (config.getLocalOperateClass().equals(cacheProperties.getDefaultOperateClass())
+                    && config.getRemoteOperateClass().equals(cacheProperties.getDefaultRemoteOperateClass())) {
+                //默认配置
+                cacheOperate = defaultTowLevelCacheOperate;
+            } else {
+                LocalCacheOperate localCacheOperate = (LocalCacheOperate) classCacheOperateMap.get(config.getLocalOperateClass());
+                RemoteCacheOperate remoteCacheOperate = (RemoteCacheOperate) classCacheOperateMap.get(config.getRemoteOperateClass());
+                cacheOperate = new TwoLevelCacheOperate(localCacheOperate, remoteCacheOperate);
+            }
 
-            Class<? extends LocalCacheOperate> localCacheOperateClass = config.getLocalOperateClass();
-
-            Class<? extends RemoteCacheOperate> remoteCacheOperateClass = config.getRemoteOperateClass();
-
-            cacheOperate = new TwoLevelCacheOperate((LocalCacheOperate) classCacheOperateMap.get(localCacheOperateClass)
-                    , (RemoteCacheOperate) classCacheOperateMap.get(remoteCacheOperateClass));
 
         } else { //非两级缓存
-            //非两级缓存不能配置对应参数（严格限制配置的准确性）
             cacheOperate = classCacheOperateMap.get(config.getOperateClass());
         }
         Assert.notNull(cacheOperate, cacheName + "对应的cacheOperate不能为空");
@@ -135,6 +157,11 @@ public class CacheOperateSupport implements ApplicationContextAware {
         CacheConfig cacheConfig = cacheProperties.getCustomConfigs().get(cacheName);
         if (cacheConfig == null) {
             cacheConfig = new CacheConfig();
+        } else {
+            //不要影响原来的的属性配置
+            CacheConfig copyCacheConfig = new CacheConfig();
+            BeanUtils.copyProperties(cacheConfig, copyCacheConfig);
+            cacheConfig = copyCacheConfig;
         }
         if (cacheConfig.getCacheNameWrapperClass() == null) {
             cacheConfig.setCacheNameWrapperClass(cacheProperties.getDefaultCacheNameWrapperClass());
@@ -152,8 +179,6 @@ public class CacheOperateSupport implements ApplicationContextAware {
             cacheConfig.setChangeDelayDelete(cacheProperties.isChangeDelayDelete());
         }
         return cacheConfig;
-
-
     }
 
     public ExpressionParser getExpressionParser() {

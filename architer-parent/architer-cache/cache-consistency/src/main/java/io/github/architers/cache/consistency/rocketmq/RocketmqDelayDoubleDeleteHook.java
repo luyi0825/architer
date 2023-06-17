@@ -3,7 +3,6 @@ package io.github.architers.cache.consistency.rocketmq;
 import io.github.architers.context.cache.CacheConfig;
 import io.github.architers.context.cache.CacheProperties;
 import io.github.architers.context.cache.consistency.CacheDeleteUtils;
-import io.github.architers.context.cache.consistency.LocalDelayDeleteTask;
 import io.github.architers.context.cache.model.BaseCacheParam;
 import io.github.architers.context.cache.model.CacheChangeParam;
 import io.github.architers.context.cache.operate.*;
@@ -66,10 +65,11 @@ public class RocketmqDelayDoubleDeleteHook implements CacheOperateInvocationHook
     }
 
     @Override
-    public boolean before(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
+    public boolean before(BaseCacheParam cacheParam, CacheOperateContext cacheOperateContext) {
         if (!(cacheParam instanceof CacheChangeParam)) {
             return true;
         }
+        CacheOperate cacheOperate = cacheOperateContext.getCacheOperate();
         if (cacheOperate instanceof TwoLevelCacheOperate) {
             //两级缓存，发送广播消息删除所有的本地缓存
             this.sendDeleteLocalBroadcastMessage(cacheParam, 0);
@@ -109,12 +109,12 @@ public class RocketmqDelayDoubleDeleteHook implements CacheOperateInvocationHook
 
 
     @Override
-    public void after(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
-        if (cacheOperate instanceof LocalCacheOperate) {
+    public void after(BaseCacheParam cacheParam, CacheOperateContext cacheOperateContext) {
+        if (cacheOperateContext.getCacheOperate() instanceof LocalCacheOperate) {
             if (!(cacheParam instanceof CacheChangeParam)) {
                 return;
             }
-            CacheDeleteUtils.delayDelete(5000,(CacheChangeParam) cacheParam,(LocalCacheOperate) cacheOperate);
+            CacheDeleteUtils.delayDelete(5000, (CacheChangeParam) cacheParam, (LocalCacheOperate) cacheOperateContext.getCacheOperate());
         }
     }
 }

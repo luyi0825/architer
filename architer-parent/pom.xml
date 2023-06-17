@@ -16,33 +16,9 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <java.version>11</java.version>
-
-        <alibaba-druid.version>1.1.20</alibaba-druid.version>
-        <commons-lang3.version>3.11</commons-lang3.version>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <lombok.version>1.18.26</lombok.version>
-        <easyexcel.verion>2.2.8</easyexcel.verion>
-        <jsoup.verion>1.14.2</jsoup.verion>
-        <zookeeper.version>3.7.0</zookeeper.version>
-        <redisson.version>3.20.0</redisson.version>
-        <jackson.version>2.12.2</jackson.version>
-        <spring.version>5.3.27</spring.version>
-        <spring-boot.version>2.7.12</spring-boot.version>
-        <!--spring-cloud-alibaba的版本-->
-        <alibaba-cloud.version>2021.0.5.0</alibaba-cloud.version>
-        <!--spring-cloud的版本-->
-        <spring-cloud.version>2021.0.6</spring-cloud.version>
-        <!-- log4j2的版本-->
-        <okHttp.version>4.9.1</okHttp.version>
-        <hibernate-validator.version>6.1.2.Final</hibernate-validator.version>
-        <zookeeper.version>3.8.0</zookeeper.version>
-        <hutool.version>5.6.5</hutool.version>
-        <mysql.version>8.0.25</mysql.version>
-        <elasticsearch.version>7.9.3</elasticsearch.version>
-        <elasticjob.verion>3.0.0</elasticjob.verion>
         <jacoco.version>0.8.3</jacoco.version>
         <maven-flatten-version>1.1.0</maven-flatten-version>
-        <commons-io.verision>2.11.0</commons-io.verision>
+<!--        <commons-io.verision>2.11.0</commons-io.verision>-->
         <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
     </properties>
@@ -70,7 +46,7 @@
         <module>architer-cache</module>
         <module>architer-lock</module>
         <module>architer-cloud</module>
-        <module>web-starter</module>
+        <module>architer-test</module>
         <module>others</module>
         <module>three-party-component</module>
     </modules>
@@ -79,12 +55,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.26</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.36</version>
         </dependency>
     </dependencies>
     <distributionManagement>

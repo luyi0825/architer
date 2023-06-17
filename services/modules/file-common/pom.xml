@@ -21,7 +21,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>architer-context</artifactId>
-            <version>${architer.revision}</version>
+            <version>${revision}</version>
         </dependency>
 
         <dependency>

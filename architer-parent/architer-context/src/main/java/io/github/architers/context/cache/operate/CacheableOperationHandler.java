@@ -42,7 +42,8 @@ public class CacheableOperationHandler extends BaseCacheOperationHandler {
         if (canDoCacheOperate(cacheable.condition(), cacheable.unless(), expressionMetadata)) {
             return;
         }
-        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cacheable.cacheName());
+        CacheOperateContext cacheOperateContext = cacheOperateSupport.getCacheOperateContext(cacheable.cacheName());
+        CacheOperate cacheOperate = cacheOperateContext.getCacheOperate();
 
         Object key = super.parseCacheKey(expressionMetadata, cacheable.key());
 
@@ -50,7 +51,7 @@ public class CacheableOperationHandler extends BaseCacheOperationHandler {
         //同步：没有值才查询数据库
         getParam.setAsync(false);
         getParam.setOriginCacheName(cacheable.cacheName());
-        getParam.setWrapperCacheName(getWrapperCacheName(cacheable.cacheName(), expressionMetadata));
+        getParam.setWrapperCacheName(getWrapperCacheName(cacheOperateContext, expressionMetadata,cacheable.cacheName()));
         getParam.setKey(JsonUtils.toJsonString(key));
         Object value = cacheOperate.get(getParam);
         if (!isNullValue(value)) {
@@ -63,7 +64,7 @@ public class CacheableOperationHandler extends BaseCacheOperationHandler {
                 //先判断缓存有没有，缓存有值就返回
                 getParam.setAsync(false);
                 getParam.setOriginCacheName(cacheable.cacheName());
-                getParam.setWrapperCacheName(getWrapperCacheName(cacheable.cacheName(), expressionMetadata));
+                getParam.setWrapperCacheName(getWrapperCacheName(cacheOperateContext, expressionMetadata,cacheable.cacheName()));
                 getParam.setKey(JsonUtils.toJsonString(key));
                 value = cacheOperate.get(getParam);
 

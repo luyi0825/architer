@@ -12,8 +12,8 @@ public interface CacheNameWrapper {
     /**
      * 获取缓存名称
      *
-     * @param oldCacheName 原来的缓存名称
+     * @param originCacheName 原来的缓存名称
      * @return 装饰后缓存名称
      */
-    String getCacheName(ExpressionMetadata expressionMetadata, String oldCacheName);
+    String getCacheName(ExpressionMetadata expressionMetadata, String originCacheName);
 }

@@ -35,21 +35,24 @@ public class CacheEvictOperationHandler extends BaseCacheOperationHandler {
         if (canDoCacheOperate(cacheEvict.condition(), cacheEvict.unless(), expressionMetadata)) {
             return;
         }
+        CacheOperateContext cacheOperateContext = cacheOperateSupport.getCacheOperateContext(cacheEvict.cacheName());
+
         EvictParam evictParam = new EvictParam();
-        evictParam.setWrapperCacheName(getWrapperCacheName(cacheEvict.cacheName(), expressionMetadata));
+        evictParam.setWrapperCacheName(getWrapperCacheName(cacheOperateContext, expressionMetadata,cacheEvict.cacheName()));
         evictParam.setOriginCacheName(cacheEvict.cacheName());
         Object key = super.parseCacheKey(expressionMetadata, cacheEvict.key());
-        CacheOperate cacheOperate = cacheOperateSupport.getCacheOperate(cacheEvict.cacheName());
+        CacheOperate cacheOperate = cacheOperateContext.getCacheOperate();
         evictParam.setKey(JsonUtils.toJsonString(key));
         evictParam.setAsync(cacheEvict.async());
         //删除缓存后，再调用方法
         cacheOperate.delete(evictParam);
 
         if (cacheEvict.beforeInvocation()) {
-            super.beforeInvocation(evictParam, cacheOperate);
+            super.beforeInvocation(evictParam, cacheOperateContext);
         } else {
-            super.afterInvocation(evictParam, cacheOperate);
+            super.afterInvocation(evictParam, cacheOperateContext);
         }
     }
+
 
 }

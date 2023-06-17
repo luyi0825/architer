@@ -10,7 +10,7 @@
     </parent>
     <artifactId>cache-redisson-boot-starter</artifactId>
     <name>cache-redisson-boot-starter</name>
-    <description>redis-redisson-starter</description>
+    <description>cache redisson boot starter</description>
     <packaging>jar</packaging>
     <dependencies>
 
@@ -36,14 +36,14 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>architer-context</artifactId>
             <version>${revision}</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

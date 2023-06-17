@@ -53,7 +53,6 @@ public class CaffeineMapCacheOperate implements LocalCacheOperate {
                     cache.put(putParam.getKey(), cacheValue);
                 }
             }
-
         } finally {
             ExpireTimeLocal.remove();
         }
@@ -70,16 +69,13 @@ public class CaffeineMapCacheOperate implements LocalCacheOperate {
     @Override
     public Object get(GetParam getParam) {
         Cache<String, Object> cache = caffeineCacheFactory.getCache(getParam.getWrapperCacheName());
-//        System.out.println(cache.getIfPresent(getParam.getKey()));
-//        System.out.println(cache.getIfPresent(getParam.getKey()));
-//        System.out.println(cache.getIfPresent(getParam.getKey()));
         return cache.getIfPresent(getParam.getKey());
     }
 
     @Override
     public void deleteAll(EvictAllParam evictAllParam) {
         Cache<String, Object> cache = caffeineCacheFactory.getCache(evictAllParam.getWrapperCacheName());
-        cache.cleanUp();
+        cache.invalidateAll();
     }
 
     @Override

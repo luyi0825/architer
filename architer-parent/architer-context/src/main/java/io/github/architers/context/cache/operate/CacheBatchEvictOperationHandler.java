@@ -35,30 +35,27 @@ public class CacheBatchEvictOperationHandler extends BaseCacheOperationHandler {
         }
         //解析key
         Object keys = expressionParser.parserExpression(expressionMetadata, cacheBatchEvict.keys());
-
+        CacheOperateContext cacheOperateContext = super.cacheOperateSupport.getCacheOperateContext(cacheBatchEvict.cacheName());
         if (cacheBatchEvict.parseKeys()) {
             keys = BatchValueUtils.parseBatchEvictKeys(keys, CacheConstants.CACHE_SPLIT);
         }
         //得到缓存名称
-        String wrapperCacheName = super.getWrapperCacheName(cacheBatchEvict.cacheName(), expressionMetadata);
+        String wrapperCacheName = super.getWrapperCacheName(cacheOperateContext, expressionMetadata, cacheBatchEvict.cacheName());
         BatchEvictParam batchEvictParam = new BatchEvictParam();
         batchEvictParam.setWrapperCacheName(wrapperCacheName);
         batchEvictParam.setOriginCacheName(cacheBatchEvict.cacheName());
         batchEvictParam.setAsync(cacheBatchEvict.async());
         batchEvictParam.setKeys((Collection<?>) keys);
-
-        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cacheBatchEvict.cacheName());
-
-        if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
-            for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
-                cacheOperateInvocationHook.before(batchEvictParam, cacheOperate);
+        if(cacheBatchEvict.beforeInvocation()){
+            if(!super.beforeInvocation(batchEvictParam, cacheOperateContext)){
+                return;
             }
         }
-        cacheOperate.batchDelete(batchEvictParam);
-        if (cacheBatchEvict.beforeInvocation()) {
-            super.beforeInvocation(batchEvictParam, cacheOperate);
-        } else {
-            super.afterInvocation(batchEvictParam, cacheOperate);
+        cacheOperateContext.getCacheOperate().batchDelete(batchEvictParam);
+        if(!cacheBatchEvict.beforeInvocation()){
+            super.afterInvocation(batchEvictParam, cacheOperateContext);
         }
+
+
     }
 }

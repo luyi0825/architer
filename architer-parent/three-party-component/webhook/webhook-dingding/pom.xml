@@ -10,7 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>three-party-component-webhook-dingDing</artifactId>
-    <name>three-party-component</name>
+    <name>three-party-component-webhook-dingDing</name>
     <description>three-party-component</description>
     <packaging>jar</packaging>
     <version>${revision}</version>
@@ -23,11 +23,7 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>spring-boot-starter-web-mvc</artifactId>
-            <version>${revision}</version>
-        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,17 +36,6 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>architer-cloud-openfeign-starter</artifactId>
-            <version>${revision}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>lombok</artifactId>
-                    <groupId>org.projectlombok</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

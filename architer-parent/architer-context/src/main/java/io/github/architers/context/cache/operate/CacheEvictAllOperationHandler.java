@@ -22,17 +22,19 @@ public class CacheEvictAllOperationHandler extends BaseCacheOperationHandler {
     @Override
     protected void executeCacheOperate(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         CacheEvictAll cacheEvictAll = (CacheEvictAll) operationAnnotation;
-        String wrapperCacheName = this.getWrapperCacheName(cacheEvictAll.cacheName(), expressionMetadata);
-        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cacheEvictAll.cacheName());
+
+        CacheOperateContext cacheOperateContext = super.cacheOperateSupport.getCacheOperateContext(cacheEvictAll.cacheName());
+        String wrapperCacheName = this.getWrapperCacheName(cacheOperateContext, expressionMetadata,cacheEvictAll.cacheName());
+
         EvictAllParam evictAllParam = new EvictAllParam();
         evictAllParam.setAsync(cacheEvictAll.async());
         evictAllParam.setOriginCacheName(cacheEvictAll.cacheName());
         evictAllParam.setWrapperCacheName(wrapperCacheName);
-        cacheOperate.deleteAll(evictAllParam);
+        cacheOperateContext.getCacheOperate().deleteAll(evictAllParam);
         if (cacheEvictAll.beforeInvocation()) {
-            super.beforeInvocation(evictAllParam, cacheOperate);
+            super.beforeInvocation(evictAllParam, cacheOperateContext);
         } else {
-            super.afterInvocation(evictAllParam, cacheOperate);
+            super.afterInvocation(evictAllParam, cacheOperateContext);
         }
     }
 }

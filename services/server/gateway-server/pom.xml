@@ -20,12 +20,12 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>architer-context</artifactId>
-            <version>${architer.revision}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>${architer.revision}</version>
+            <version>${revision}</version>
         </dependency>
 
 <!--        <dependency>-->

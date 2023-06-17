@@ -17,7 +17,6 @@
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
-            <version>${redisson.version}</version>
         </dependency>
 
         <dependency>

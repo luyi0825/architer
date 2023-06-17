@@ -1,8 +1,7 @@
 package io.github.architers.context.valid;
 
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.util.ObjectUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -28,7 +27,7 @@ public abstract class AbstractListValueValidator<T> implements ConstraintValidat
     public void initialize(ListValue constraintAnnotation) {
         //判断value不能为空
         String[] values = constraintAnnotation.value();
-        if (ArrayUtils.isEmpty(values)) {
+        if (values == null || values.length == 0) {
             throw new IllegalArgumentException("value of ListValue is null");
         }
         //将所有的value的数据都放到set中，方便实现类使用

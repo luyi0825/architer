@@ -30,7 +30,9 @@ public class CacheBatchPutOperationHandler extends BaseCacheOperationHandler {
             //执行方法
             return;
         }
-        String wrapperCacheName = super.getWrapperCacheName(cacheBatchPut.cacheName(), expressionMetadata);
+        CacheOperateContext cacheOperateContext = super.cacheOperateSupport.getCacheOperateContext(cacheBatchPut.cacheName());
+
+        String wrapperCacheName = super.getWrapperCacheName(cacheOperateContext, expressionMetadata,cacheBatchPut.cacheName());
         BatchPutParam batchPutParam = new BatchPutParam();
         batchPutParam.setOriginCacheName(cacheBatchPut.cacheName());
         batchPutParam.setWrapperCacheName(wrapperCacheName);
@@ -38,13 +40,21 @@ public class CacheBatchPutOperationHandler extends BaseCacheOperationHandler {
         batchPutParam.setTimeUnit(cacheBatchPut.timeUnit());
         batchPutParam.setExpireTime(cacheBatchPut.expireTime());
         batchPutParam.setExpireTime(cacheBatchPut.randomTime());
+        if (cacheBatchPut.beforeInvocation()) {
+            if (!super.beforeInvocation(batchPutParam, cacheOperateContext)) {
+                //说明中断执行
+                return;
+            }
+        }
+
         Object batchCacheValue = super.expressionParser.parserExpression(expressionMetadata, cacheBatchPut.cacheValue());
+
         batchPutParam.setBatchCacheValue(batchCacheValue);
         //批量删除
-        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cacheBatchPut.cacheName());
+        CacheOperate cacheOperate = cacheOperateContext.getCacheOperate();
         cacheOperate.batchPut(batchPutParam);
 
-        afterInvocation(batchPutParam, cacheOperate);
+        afterInvocation(batchPutParam, cacheOperateContext);
 
     }
 }

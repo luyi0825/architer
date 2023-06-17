@@ -16,56 +16,6 @@
         <module>cache-redisson-boot-starter</module>
         <module>cache-caffeine-boot-starter</module>
         <module>cache-consistency</module>
-        <module>cache-test</module>
     </modules>
-
-
-    <properties>
-
-        <!--        <spring.version>5.3.9</spring.version>-->
-        <!--        <spring-boot.version>2.4.9</spring-boot.version>-->
-        <!--        <zookeeper.version>3.7.0</zookeeper.version>-->
-        <!--        <redisson.version>3.16.2</redisson.version>-->
-        <jackson.version>2.12.2</jackson.version>
-        <spring-cloud.version>2020.0.3</spring-cloud.version>
-        <jacoco.version>0.8.6</jacoco.version>
-    </properties>
-
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.18.26</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.7.30</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-core</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.redisson</groupId>
-                <artifactId>redisson</artifactId>
-                <version>${redisson.version}</version>
-            </dependency>
-        </dependencies>
-
-    </dependencyManagement>
 
 </project>
