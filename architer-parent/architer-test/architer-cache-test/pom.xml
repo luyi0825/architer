@@ -78,20 +78,6 @@
             <artifactId>jackson-core</artifactId>
         </dependency>
 
-
-
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.github.architers</groupId>
-                <artifactId>architer-dependencies</artifactId>
-                <version>${revision}</version>
-            </dependency>
-        </dependencies>
-
-    </dependencyManagement>
-
 
 </project>

@@ -5,7 +5,7 @@ import feign.RequestTemplate;
 import io.github.architers.context.exception.BusErrorException;
 import io.github.architers.webhook.WebhookProperties;
 import lombok.SneakyThrows;
-import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.CollectionUtils;
 
@@ -39,7 +39,7 @@ public class DingDingRemoteConfiguration implements RequestInterceptor {
         byte[] signData = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));
         String sign = URLEncoder.encode(new String(Base64.encodeBase64(signData)), StandardCharsets.UTF_8);
         System.out.println(sign);
-        requestTemplate.query("timestamp", List.of(timestamp + ""));
+        requestTemplate.query("timestamp", List.of(String.valueOf(timestamp)));
         requestTemplate.query("sign", Collections.singleton(sign));
     }
 }

@@ -15,20 +15,22 @@
     <packaging>pom</packaging>
     <modules>
         <module>architer-cache-test</module>
+        <module>architer-webservlet-test</module>
+        <module>architer-webflux-test</module>
     </modules>
 <!--    <properties>-->
 <!--        <revision>1.0.2</revision>-->
 <!--    </properties>-->
 
-    <!--    <dependencyManagement>-->
-    <!--        <dependencies>-->
-    <!--            <dependency>-->
-    <!--                <groupId>io.github.architers</groupId>-->
-    <!--                <artifactId>architer-dependencies</artifactId>-->
-    <!--                <version>${revision}</version>-->
-    <!--            </dependency>-->
-    <!--        </dependencies>-->
-    <!--    </dependencyManagement>-->
+        <dependencyManagement>
+            <dependencies>
+                <dependency>
+                    <groupId>io.github.architers</groupId>
+                    <artifactId>architer-dependencies</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+            </dependencies>
+        </dependencyManagement>
     <build>
         <plugins>
             <plugin>
