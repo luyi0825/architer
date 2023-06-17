@@ -1,12 +1,11 @@
 package io.github.architers.server.file.utils;
 
-import io.github.architers.context.exception.BusLogException;
+import io.github.architers.context.exception.BusErrorException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ooxml.POIXMLProperties;
 import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openxmlformats.schemas.officeDocument.x2006.customProperties.CTProperty;
 import org.springframework.util.Assert;
 
@@ -51,7 +50,7 @@ public class ExcelVersionUtils {
             }
             return ctProperty.getLpwstr();
         } catch (Exception e) {
-            throw new BusLogException("检查模板异常", e);
+            throw new BusErrorException("检查模板异常", e);
         }
     }
 

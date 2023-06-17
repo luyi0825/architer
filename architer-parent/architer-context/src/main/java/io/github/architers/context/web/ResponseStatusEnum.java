@@ -9,19 +9,16 @@ package io.github.architers.context.web;
 public enum ResponseStatusEnum {
 
 
-
+    /**
+     * 系统错误
+     */
+    SYS_ERROR(500, ""),
     /**
      * 业务异常
      */
-    BUS_EXCEPTION(500, ""),
-    /**
-     * 参数与控制器层所需要的参数不符合
-     * <li>请求参数校验异常(不记录异常栈信息)</li>
-     */
-    REQUEST_PARAMS_VALID_FAIL(400, "参数校验失败"),
-    SUCCESS(200, "操作成功"), NO_LOGIN(401, "请登录"),
-
-
+    BusException(400, "参数校验失败"),
+    SUCCESS(200, "操作成功"),
+    NO_LOGIN(401, "请登录"),
     /**
      * 没有权限
      */

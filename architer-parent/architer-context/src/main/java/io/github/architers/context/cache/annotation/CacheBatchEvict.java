@@ -6,6 +6,7 @@ import java.lang.annotation.*;
  * 批量删除缓存
  *
  * @author luyi
+ * @since 1.0.1
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

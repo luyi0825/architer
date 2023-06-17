@@ -1,7 +1,7 @@
 package io.github.architers.webhook.service.impl;
 
 
-import io.github.architers.context.exception.BusLogException;
+import io.github.architers.context.exception.BusErrorException;
 import io.github.architers.context.utils.JsonUtils;
 import io.github.architers.context.web.ResponseResult;
 import io.github.architers.webhook.WebHookMessage;
@@ -37,7 +37,7 @@ public class WebHookServiceImpl implements IWebHookService {
     public ResponseResult<?> sendMessage(String robotKey, WebHookMessage webHookMessage) {
         WebhookProperties.RobotConfig robotConfig = webhookProperties.getRobotConfigs().get(robotKey);
         if (robotConfig == null) {
-            throw new BusLogException("机器人配置为空");
+            throw new BusErrorException("机器人配置为空");
         }
         if (!webhookLimit.prepareSend(robotKey)) {
             throw new WebHookLimitException();

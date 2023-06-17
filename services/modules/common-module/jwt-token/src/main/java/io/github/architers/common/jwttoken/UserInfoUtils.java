@@ -1,7 +1,7 @@
 package io.github.architers.common.jwttoken;
 
 import io.github.architers.context.utils.JsonUtils;
-import io.github.architers.context.web.ServletUtils;
+import io.github.architers.context.web.servlet.ServletUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**

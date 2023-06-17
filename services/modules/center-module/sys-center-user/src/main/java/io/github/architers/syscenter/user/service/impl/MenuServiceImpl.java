@@ -10,7 +10,7 @@ import io.github.architers.common.jwttoken.RoleInfo;
 import io.github.architers.common.jwttoken.UserInfo;
 import io.github.architers.common.jwttoken.UserInfoUtils;
 import io.github.architers.common.module.tenant.TenantUtils;
-import io.github.architers.context.exception.BusLogException;
+import io.github.architers.context.exception.BusErrorException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -91,7 +91,7 @@ public class MenuServiceImpl implements MenuService {
         edit.fillCreateAndUpdateField(new Date());
         int count = menuDao.updateById(edit);
         if (count != 1) {
-            throw new BusLogException("更新菜单失败");
+            throw new BusErrorException("更新菜单失败");
         }
     }
 

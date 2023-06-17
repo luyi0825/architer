@@ -19,7 +19,7 @@ import io.github.architers.syscenter.user.service.SysTenantUserService;
 import io.github.architers.syscenter.user.service.SysUserService;
 import io.github.architers.common.module.tenant.TenantUtils;
 import io.github.architers.component.mybatisplus.MybatisPageUtils;
-import io.github.architers.context.exception.BusLogException;
+import io.github.architers.context.exception.BusErrorException;
 import io.github.architers.context.query.PageRequest;
 import io.github.architers.context.query.PageResult;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -108,7 +108,7 @@ public class SysUserServiceImpl implements SysUserService {
         //判断该租户下是否已经存在用户
         long count = sysTenantUserService.countByUserId(sysUserVO.getId());
         if (count > 0) {
-            throw new BusLogException("系统用户已经存在");
+            throw new BusErrorException("系统用户已经存在");
         }
         //插入租户用户数据
         SysTenantUser sysTenantUser = new SysTenantUser();
@@ -124,7 +124,7 @@ public class SysUserServiceImpl implements SysUserService {
         edit.fillCreateAndUpdateField(new Date());
         int count = sysUserDao.updateById(edit);
         if (count != 1) {
-            throw new BusLogException("更新用户失败");
+            throw new BusErrorException("更新用户失败");
         }
     }
 

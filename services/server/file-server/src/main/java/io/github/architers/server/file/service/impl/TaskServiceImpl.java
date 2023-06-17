@@ -3,7 +3,7 @@ package io.github.architers.server.file.service.impl;
 import cn.hutool.core.lang.UUID;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import io.github.architers.context.exception.BusException;
-import io.github.architers.context.exception.BusLogException;
+import io.github.architers.context.exception.BusErrorException;
 import io.github.architers.context.utils.UserUtils;
 import io.github.architers.objectstorage.ObjectStorage;
 import io.github.architers.objectstorage.PutFileResponse;
@@ -52,7 +52,7 @@ public class TaskServiceImpl implements TaskService {
             for (ITaskLimit limit : taskLimits) {
                 if (!limit.canExecute(executeTaskParam, config)) {
                     //拒绝处理
-                    throw new BusLogException("任务拒绝");
+                    throw new BusErrorException("任务拒绝");
                 }
             }
         }

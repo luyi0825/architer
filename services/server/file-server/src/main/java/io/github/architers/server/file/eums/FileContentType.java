@@ -1,6 +1,6 @@
 package io.github.architers.server.file.eums;
 
-import io.github.architers.context.exception.BusLogException;
+import io.github.architers.context.exception.BusErrorException;
 import lombok.Getter;
 
 @Getter
@@ -29,6 +29,6 @@ public enum FileContentType {
                 return value.getFileSuffix();
             }
         }
-        throw new BusLogException("文件类型暂时不支持");
+        throw new BusErrorException("文件类型暂时不支持");
     }
 }

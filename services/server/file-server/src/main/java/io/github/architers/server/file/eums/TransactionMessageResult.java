@@ -1,7 +1,6 @@
 package io.github.architers.server.file.eums;
 
-import io.github.architers.context.exception.BusLogException;
-import lombok.Data;
+import io.github.architers.context.exception.BusErrorException;
 import lombok.Getter;
 import org.apache.rocketmq.client.producer.LocalTransactionState;
 
@@ -21,7 +20,7 @@ public enum TransactionMessageResult {
                 return value;
             }
         }
-        throw new BusLogException("localTransactionState有误");
+        throw new BusErrorException("localTransactionState有误");
     }
 
 

@@ -1,4 +1,4 @@
-package io.github.architers.context.web.webservlet.authority;
+package io.github.architers.context.web.servlet.authority;
 
 import org.springframework.http.HttpRequest;
 

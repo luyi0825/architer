@@ -1,4 +1,4 @@
-package io.github.architers.gateway;
+package io.github.architers.context.web.flux;
 
 import io.github.architers.context.utils.JsonUtils;
 import io.github.architers.context.web.ResponseResult;

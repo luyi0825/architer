@@ -1,11 +1,11 @@
-package io.github.architers.context.exception;
+package io.github.architers.context.web;
 
-import io.github.architers.context.web.ResponseResult;
 
 /**
  * 请求异处理器
  *
  * @author luyi
+ * @since 1.0.0
  */
 public interface RequestExceptionHandler {
 

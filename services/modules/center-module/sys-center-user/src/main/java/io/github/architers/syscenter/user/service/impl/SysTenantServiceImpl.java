@@ -10,7 +10,7 @@ import io.github.architers.syscenter.user.StatusEnum;
 import io.github.architers.syscenter.user.dao.SysTenantDao;
 import io.github.architers.syscenter.user.domain.entity.SysTenant;
 import io.github.architers.syscenter.user.service.SysTenantService;
-import io.github.architers.context.exception.BusLogException;
+import io.github.architers.context.exception.BusErrorException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,10 +38,10 @@ public class SysTenantServiceImpl implements SysTenantService {
     public void isValid(Integer tenantId) {
         SysTenant sysTenant = sysTenantDao.selectById(tenantId);
         if (sysTenant == null) {
-            throw new BusLogException("租户不存在");
+            throw new BusErrorException("租户不存在");
         }
         if (StatusEnum.DISABLED.getStatus().equals(sysTenant.getStatus())) {
-            throw new BusLogException("租户已经被禁用");
+            throw new BusErrorException("租户已经被禁用");
         }
     }
 
@@ -64,7 +64,7 @@ public class SysTenantServiceImpl implements SysTenantService {
                 sysTenant.getTenantCode());
         long count = sysTenantDao.selectCount(sysTenantWrapper);
         if (count > 0) {
-            throw new BusLogException("租户编辑已经存在");
+            throw new BusErrorException("租户编辑已经存在");
         }
         sysTenant.fillCreateAndUpdateField(new Date());
         sysTenantDao.insert(sysTenant);
@@ -78,7 +78,7 @@ public class SysTenantServiceImpl implements SysTenantService {
         sysTenant.fillCreateAndUpdateField(new Date());
         int count = sysTenantDao.updateById(sysTenant);
         if (count != 1) {
-            throw new BusLogException("更新租户失败");
+            throw new BusErrorException("更新租户失败");
         }
     }
 
@@ -88,7 +88,7 @@ public class SysTenantServiceImpl implements SysTenantService {
         //TODO 判断租户是否能删除
         int count = sysTenantDao.deleteById(id);
         if (count != 1) {
-            throw new BusLogException("删除租户失败");
+            throw new BusErrorException("删除租户失败");
         }
     }
 

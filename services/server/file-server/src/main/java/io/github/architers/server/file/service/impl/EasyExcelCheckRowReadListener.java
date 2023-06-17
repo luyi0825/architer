@@ -6,7 +6,7 @@ import com.alibaba.excel.metadata.CellExtra;
 import com.alibaba.excel.metadata.data.ReadCellData;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.read.metadata.holder.ReadRowHolder;
-import io.github.architers.context.exception.BusLogException;
+import io.github.architers.context.exception.BusErrorException;
 import io.github.architers.context.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,7 +45,7 @@ public class EasyExcelCheckRowReadListener implements  ReadListener<Map<String,O
     @Override
     public void invoke(Map<String,Object> data, AnalysisContext context) {
         if (context.readRowHolder().getRowIndex() > 100) {
-            throw new BusLogException("没有读取到头数据");
+            throw new BusErrorException("没有读取到头数据");
         }
         addCheckHeads(context);
     }

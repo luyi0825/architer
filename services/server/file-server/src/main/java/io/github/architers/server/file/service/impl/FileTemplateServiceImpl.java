@@ -4,7 +4,7 @@ import com.alibaba.excel.EasyExcel;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.architers.context.exception.BusException;
-import io.github.architers.context.exception.BusLogException;
+import io.github.architers.context.exception.BusErrorException;
 import io.github.architers.context.model.TreeNode;
 import io.github.architers.context.utils.JsonUtils;
 import io.github.architers.context.utils.NodeTreeUtils;
@@ -101,7 +101,7 @@ public class FileTemplateServiceImpl extends ServiceImpl<FileTemplateMapper, Fil
 
         TemplateCatalog templateCatalog = fileTemplateCatalogMapper.selectById(fileTemplate.getCatalogId());
         if (templateCatalog == null) {
-            throw new BusLogException("模板目录不存在");
+            throw new BusErrorException("模板目录不存在");
         }
         Tika tika = new Tika();
         String type = tika.detect(file);
@@ -121,7 +121,7 @@ public class FileTemplateServiceImpl extends ServiceImpl<FileTemplateMapper, Fil
 
         TemplateCatalog templateCatalog = fileTemplateCatalogMapper.selectById(addParams.getCatalogId());
         if (templateCatalog == null) {
-            throw new BusLogException("模板目录不存在");
+            throw new BusErrorException("模板目录不存在");
         }
         FileTemplate existTemplate = this.getFileTemplateByTemplateCode(addParams.getTemplateCode());
         if (existTemplate != null) {
@@ -158,7 +158,7 @@ public class FileTemplateServiceImpl extends ServiceImpl<FileTemplateMapper, Fil
     public void editFileTemplate(FileTemplateParams editParam) throws Exception {
         TemplateCatalog templateCatalog = fileTemplateCatalogMapper.selectById(editParam.getCatalogId());
         if (templateCatalog == null) {
-            throw new BusLogException("模板目录不存在");
+            throw new BusErrorException("模板目录不存在");
         }
         FileTemplate fileTemplate = fileTemplateMapper.selectByTemplateCode(editParam.getTemplateCode());
         fileTemplate.setTemplateCaption(editParam.getTemplateCaption());
