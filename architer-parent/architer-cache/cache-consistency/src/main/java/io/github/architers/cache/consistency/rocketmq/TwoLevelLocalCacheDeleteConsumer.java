@@ -2,6 +2,7 @@ package io.github.architers.cache.consistency.rocketmq;
 
 import io.github.architers.context.cache.consistency.CacheDeleteUtils;
 import io.github.architers.context.cache.model.*;
+import io.github.architers.context.cache.operate.CacheOperateContext;
 import io.github.architers.context.cache.operate.CacheOperateSupport;
 import io.github.architers.context.cache.operate.TwoLevelCacheOperate;
 import org.apache.rocketmq.common.message.MessageExt;
@@ -31,10 +32,11 @@ public class TwoLevelLocalCacheDeleteConsumer implements RocketMQListener<Messag
         if (!StringUtils.hasText(originCacheName)) {
             return;
         }
-        TwoLevelCacheOperate cacheOperate = (TwoLevelCacheOperate) cacheOperateSupport.getCacheOperate(originCacheName);
+        CacheOperateContext cacheOperateContext = cacheOperateSupport.getCacheOperateContext(originCacheName);
+        TwoLevelCacheOperate cacheOperate = (TwoLevelCacheOperate) cacheOperateContext.getCacheOperate();
         CacheChangeParam cacheChangeParam = DeleteCacheUtils.delete(message, cacheOperate.getLocalCacheOperate());
-        if (cacheChangeParam != null) {
-            CacheDeleteUtils.delayDelete(5000,cacheChangeParam,cacheOperate.getLocalCacheOperate());
+        if (cacheChangeParam != null && cacheOperateContext.isDelayEvictAgain()) {
+            CacheDeleteUtils.delayDelete(cacheOperateContext.getDelayEvictMills(), cacheChangeParam, cacheOperate.getLocalCacheOperate());
         }
 
 

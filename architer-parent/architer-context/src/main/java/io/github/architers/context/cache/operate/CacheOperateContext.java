@@ -17,9 +17,9 @@ public class CacheOperateContext {
 
 
     /**
-     * 是否延迟双删
+     * 是否延迟删
      */
-    private boolean delayEvict;
+    private boolean delayEvictAgain;
 
     /**
      * 延迟删除时间(毫秒）

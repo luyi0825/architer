@@ -18,25 +18,30 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "architers.cache")
 @Data
 public class CacheProperties {
+
+    /**
+     * 是否开启两级缓存
+     */
+    private boolean enableTwoLevelCache = false;
+
+    /**
+     * 是否延迟删(解决缓存一致性,默认没有开启）
+     */
+    private boolean defaultDelayEvictAgain = false;
+
+    /**
+     * 默认的延迟删的时间(默认5秒）
+     */
+    private long defaultDelayEvictMills = 5000L;
     /**
      * 缓存值改变路由标识
      */
     private String valueChangeRouteKey;
 
     /**
-     * 缓存定制配置
-     */
-    private Map<String/*缓存名称*/, CacheConfig> customConfigs = new HashMap<>();
-
-    /**
      * 默认的缓存操作处理器
      */
     private Class<? extends CacheOperate> defaultOperateClass;
-
-    /**
-     * 是否开启两级缓存
-     */
-    private boolean enableTwoLevelCache = false;
 
     /**
      * 默认的本地缓存操作处理器
@@ -51,14 +56,17 @@ public class CacheProperties {
 
 
     /**
-     * 是否延迟删(解决缓存一致性）
-     */
-    private boolean changeDelayDelete = false;
-
-    /**
      * 默认的缓存名称包装器
      */
     private Class<? extends CacheNameWrapper> defaultCacheNameWrapperClass;
+
+    /**
+     * 缓存定制配置
+     */
+    private Map<String/*缓存名称*/, CacheConfig> customConfigs = new HashMap<>();
+
+
+
 
 
 }

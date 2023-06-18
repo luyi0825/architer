@@ -19,7 +19,12 @@ public class CacheConfig {
     /**
      * 是否延迟删(解决缓存一致性）
      */
-    private Boolean changeDelayDelete;
+    private Boolean delayEvictAgain;
+
+    /**
+     * 延迟删的时间(默认5秒）
+     */
+    private Long delayEvictMills;
 
     /**
      * 定制的缓存操作处理器

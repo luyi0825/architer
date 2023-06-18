@@ -22,21 +22,24 @@ architers:
     default-local-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
     default-remote-operate-class: io.github.architers.cache.redisson.support.RedissonMapCacheOperate
     value-change-route-key: cache_change
-    enable-two-level-cache: true
+    delay-evict-again: false
+    ##开启两级缓存
+    enable-twoLevel-cache: true
     custom-configs:
       local:
         #缓存操作类
         operateClass: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
         #改变延迟删
-        change-delay-delete: false
+        delay-evict-again: false
       twoLevel:
         #缓存操作类
         operateClass: io.github.architers.context.cache.operate.TwoLevelCacheOperate
         #改变延迟删
-        change-delay-delete: false
-      #两级缓存-集群
-      twoLevelCluster:
+        delay-evict-again: false
+      #两级缓存-集群(延迟删）
+      twoLevelDelayEvictAgain:
         #缓存操作类
+        delay-evict-again: true
         operateClass: io.github.architers.context.cache.operate.TwoLevelCacheOperate
 
 

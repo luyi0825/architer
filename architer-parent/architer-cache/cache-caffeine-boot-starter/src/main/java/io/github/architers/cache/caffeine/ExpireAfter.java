@@ -24,7 +24,6 @@ public class ExpireAfter implements Expiry<String, Object> {
         //有就用指定的时间
         Long expireTime = ExpireTimeLocal.get();
         if (expireTime != null && expireTime > 0) {
-            System.out.println("过期时间:" + TimeUnit.NANOSECONDS.convert(expireTime, TimeUnit.MILLISECONDS));
             return TimeUnit.NANOSECONDS.convert(expireTime, TimeUnit.MILLISECONDS);
         }
 

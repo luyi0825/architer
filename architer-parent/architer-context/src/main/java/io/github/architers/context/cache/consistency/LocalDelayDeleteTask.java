@@ -1,6 +1,7 @@
 package io.github.architers.context.cache.consistency;
 
 import io.github.architers.context.cache.model.CacheChangeParam;
+import io.github.architers.context.cache.operate.CacheOperate;
 import io.github.architers.context.cache.operate.LocalCacheOperate;
 import lombok.Data;
 

@@ -145,8 +145,8 @@ public class CacheOperateSupport implements ApplicationContextAware {
         }
         Assert.notNull(cacheOperate, cacheName + "对应的cacheOperate不能为空");
         cacheOperateContext.setCacheOperate(cacheOperate);
-        cacheOperateContext.setDelayEvict(config.getChangeDelayDelete());
-
+        cacheOperateContext.setDelayEvictAgain(config.getDelayEvictAgain());
+        cacheOperateContext.setDelayEvictMills(config.getDelayEvictMills());
         return cacheOperateContext;
     }
 
@@ -175,8 +175,11 @@ public class CacheOperateSupport implements ApplicationContextAware {
         if (cacheConfig.getRemoteOperateClass() == null) {
             cacheConfig.setRemoteOperateClass(cacheProperties.getDefaultRemoteOperateClass());
         }
-        if (cacheConfig.getChangeDelayDelete() == null) {
-            cacheConfig.setChangeDelayDelete(cacheProperties.isChangeDelayDelete());
+        if (cacheConfig.getDelayEvictAgain() == null) {
+            cacheConfig.setDelayEvictAgain(cacheProperties.isDefaultDelayEvictAgain());
+        }
+        if(cacheConfig.getDelayEvictMills()==null){
+            cacheConfig.setDelayEvictMills(cacheProperties.getDefaultDelayEvictMills());
         }
         return cacheConfig;
     }
