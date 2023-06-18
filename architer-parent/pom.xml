@@ -48,7 +48,7 @@
         <module>architer-cloud</module>
         <module>architer-test</module>
         <module>others</module>
-        <module>three-party-component</module>
+        <module>architer-integration</module>
     </modules>
 
     <dependencies>
