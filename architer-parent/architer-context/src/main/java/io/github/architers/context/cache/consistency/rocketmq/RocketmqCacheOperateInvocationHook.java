@@ -70,7 +70,7 @@ public class RocketmqCacheOperateInvocationHook implements CacheOperateInvocatio
         if (!(cacheParam instanceof CacheChangeParam)) {
             return true;
         }
-        if (cacheOperate instanceof TwoLevelCacheOperate) {
+        if (cacheOperate instanceof LocalAndRemoteCacheOperate) {
             //两级缓存，发送广播消息删除所有的本地缓存
             this.sendDeleteLocalBroadcastMessage(cacheParam, 0);
             return true;

@@ -1,18 +1,15 @@
 package io.github.architers.context.cache;
 
 import io.github.architers.context.cache.enums.CacheLevel;
-import io.github.architers.context.cache.operate.*;
-import lombok.Data;
+import io.github.architers.context.cache.operate.LocalCacheOperate;
+import io.github.architers.context.cache.operate.RemoteCacheOperate;
 
-import java.io.Serializable;
+public class CacheOperateConfigContext {
 
-/**
- * 缓存配置
- *
- * @author luyi
- */
-@Data
-public class CacheConfig implements Serializable {
+    /**
+     * 缓存名称
+     */
+    private String cacheName;
 
     /**
      * 缓存级别

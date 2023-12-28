@@ -1,10 +1,6 @@
 package io.github.architers.context.cache.operate;
 
 import io.github.architers.context.cache.CacheProperties;
-import io.github.architers.context.cache.operate.CacheOperate;
-import io.github.architers.context.cache.operate.LocalCacheOperate;
-import io.github.architers.context.cache.operate.RemoteCacheOperate;
-import io.github.architers.context.cache.operate.TwoLevelCacheOperate;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -62,7 +58,7 @@ public class CacheOperateManager implements ApplicationContextAware {
         if (cacheProperties.isEnableTwoLevelCache()) {
             Assert.notNull(cacheProperties.getDefaultLocalOperateClass(), "当开启两级缓存,defaultLocalOperateClass配置不能为空");
             Assert.notNull(cacheProperties.getDefaultRemoteOperateClass(), "当开启两级缓存,defaultRemoteOperateClass配置不能为空");
-            defaultTowLevelCacheOperate = new TwoLevelCacheOperate((LocalCacheOperate) classCacheOperateMap.get(cacheProperties.getDefaultLocalOperateClass())
+            defaultTowLevelCacheOperate = new LocalAndRemoteCacheOperate((LocalCacheOperate) classCacheOperateMap.get(cacheProperties.getDefaultLocalOperateClass())
                     , (RemoteCacheOperate) classCacheOperateMap.get(cacheProperties.getDefaultRemoteOperateClass()));
         }
 
@@ -81,7 +77,7 @@ public class CacheOperateManager implements ApplicationContextAware {
             if (cacheOperateClass == null) {
                 cacheOperateClass = defaultCacheOperateClass;
             }
-            if (cacheOperateClass.equals(TwoLevelCacheOperate.class)) {//两级缓存
+            if (cacheOperateClass.equals(LocalAndRemoteCacheOperate.class)) {//两级缓存
                 if (!cacheProperties.isEnableTwoLevelCache()) {
                     throw new IllegalArgumentException("未开启两级缓存");
                 }
@@ -97,9 +93,9 @@ public class CacheOperateManager implements ApplicationContextAware {
                     if (remoteCacheOperateClass == null) {
                         remoteCacheOperateClass = cacheProperties.getDefaultRemoteOperateClass();
                     }
-                    TwoLevelCacheOperate twoLevelCacheOperate = new TwoLevelCacheOperate((LocalCacheOperate) classCacheOperateMap.get(localCacheOperateClass)
+                    LocalAndRemoteCacheOperate localAndRemoteCacheOperate = new LocalAndRemoteCacheOperate((LocalCacheOperate) classCacheOperateMap.get(localCacheOperateClass)
                             , (RemoteCacheOperate) classCacheOperateMap.get(remoteCacheOperateClass));
-                    cacheOperateMap.putIfAbsent(cacheName, twoLevelCacheOperate);
+                    cacheOperateMap.putIfAbsent(cacheName, localAndRemoteCacheOperate);
                 }
             } else { //非两级缓存
                 //非两级缓存不能配置对应参数（严格限制配置的准确性）

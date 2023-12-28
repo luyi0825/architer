@@ -20,7 +20,7 @@ public interface CacheOperate {
     }
 
     default void noSupport() {
-        throw new RuntimeException("该方法暂时不支持");
+        throw new IllegalStateException("该方法暂时不支持");
     }
 
 

@@ -30,7 +30,6 @@ public class CacheEvictOperationHandler extends BaseCacheOperationHandler {
     @Override
     protected void executeCacheOperate(Annotation operation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
 
-
         CacheEvict cacheEvict = (CacheEvict) operation;
         if (canDoCacheOperate(cacheEvict.condition(), cacheEvict.unless(), expressionMetadata)) {
             return;

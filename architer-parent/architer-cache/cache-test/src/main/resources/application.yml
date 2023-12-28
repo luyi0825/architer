@@ -31,13 +31,13 @@ architers:
         change-delay-delete: false
       twoLevel:
         #缓存操作类
-        operateClass: io.github.architers.context.cache.operate.TwoLevelCacheOperate
+        operateClass: io.github.architers.context.cache.operate.LocalAndRemoteCacheOperate
         #改变延迟删
         change-delay-delete: false
       #两级缓存-集群
       twoLevelCluster:
         #缓存操作类
-        operateClass: io.github.architers.context.cache.operate.TwoLevelCacheOperate
+        operateClass: io.github.architers.context.cache.operate.LocalAndRemoteCacheOperate
 
 
   #default-cache-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate

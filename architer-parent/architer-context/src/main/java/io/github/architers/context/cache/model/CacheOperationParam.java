@@ -10,6 +10,13 @@ import java.io.Serializable;
 public interface CacheOperationParam extends Serializable {
 
     /**
+     * 获取命名空间
+     */
+    default String getNameSpace() {
+        return null;
+    }
+
+    /**
      * 得到原始的缓存名称
      */
     String getOriginCacheName();

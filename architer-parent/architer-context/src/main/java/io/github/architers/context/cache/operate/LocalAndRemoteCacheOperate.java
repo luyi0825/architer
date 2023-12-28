@@ -11,14 +11,14 @@ import org.springframework.util.Assert;
  *
  * @author luyi
  */
-public final class TwoLevelCacheOperate implements CacheOperate {
+public class LocalAndRemoteCacheOperate implements CacheOperate {
 
 
     private LocalCacheOperate localCacheOperate;
 
     private RemoteCacheOperate remoteCacheOperate;
 
-    public TwoLevelCacheOperate(LocalCacheOperate localCacheOperate, RemoteCacheOperate remoteCacheOperate) {
+    public LocalAndRemoteCacheOperate(LocalCacheOperate localCacheOperate, RemoteCacheOperate remoteCacheOperate) {
         Assert.notNull(localCacheOperate, "localCacheOperate is null");
         Assert.notNull(remoteCacheOperate, "remoteCacheOperate is null");
         this.localCacheOperate = localCacheOperate;
@@ -68,7 +68,7 @@ public final class TwoLevelCacheOperate implements CacheOperate {
         return localCacheOperate;
     }
 
-    public TwoLevelCacheOperate setLocalCacheOperate(LocalCacheOperate localCacheOperate) {
+    public LocalAndRemoteCacheOperate setLocalCacheOperate(LocalCacheOperate localCacheOperate) {
         this.localCacheOperate = localCacheOperate;
         return this;
     }
@@ -78,7 +78,7 @@ public final class TwoLevelCacheOperate implements CacheOperate {
     }
 
 
-    public TwoLevelCacheOperate setRemoteCacheOperate(RemoteCacheOperate remoteCacheOperate) {
+    public LocalAndRemoteCacheOperate setRemoteCacheOperate(RemoteCacheOperate remoteCacheOperate) {
         this.remoteCacheOperate = remoteCacheOperate;
         return this;
     }
