@@ -39,10 +39,6 @@ public class CacheProperties extends CacheConfig implements InitializingBean, Se
 
     @Override
     public void afterPropertiesSet() {
-        CacheProperties cacheProperties = this;
-        new Thread(() -> {
-            CacheConfigManager.setDefaultCacheConfig(cacheProperties);
-            cacheProperties.customConfigs.forEach(CacheConfigManager::propertyOverDefault);
-        }).start();
+
     }
 }

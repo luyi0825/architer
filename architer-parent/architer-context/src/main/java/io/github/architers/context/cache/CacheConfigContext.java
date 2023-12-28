@@ -3,8 +3,10 @@ package io.github.architers.context.cache;
 import io.github.architers.context.cache.enums.CacheLevel;
 import io.github.architers.context.cache.operate.LocalCacheOperate;
 import io.github.architers.context.cache.operate.RemoteCacheOperate;
+import lombok.Data;
 
-public class CacheOperateConfigContext {
+@Data
+public class CacheConfigContext {
 
     /**
      * 缓存名称
@@ -24,12 +26,12 @@ public class CacheOperateConfigContext {
     /**
      * 定制的本地缓存操作处理器
      */
-    private Class<? extends LocalCacheOperate> localOperateClass;
+    private LocalCacheOperate localOperateClass;
 
     /**
      * 定制的远程操作处理器
      */
-    private Class<? extends RemoteCacheOperate> remoteOperateClass;
+    private RemoteCacheOperate remoteOperateClass;
 
 
 }

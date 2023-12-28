@@ -3,6 +3,7 @@ package io.github.architers.context.cache;
 import io.github.architers.context.cache.enums.CacheLevel;
 import io.github.architers.context.cache.operate.CacheOperate;
 import io.github.architers.context.cache.operate.LocalCacheOperate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 
 import java.util.Map;
@@ -13,12 +14,17 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author luyi
  */
+@Slf4j
 public class CacheConfigManager {
 
 
     private static final Map<String, CacheConfig> cacheConfigMap = new ConcurrentHashMap<>();
 
+
+
     private static volatile CacheConfig defalutCacheConfig;
+
+
 
     /**
      * 设置默认的缓存配置
@@ -27,6 +33,8 @@ public class CacheConfigManager {
         checkCacheConfig("default", cacheConfig);
         defalutCacheConfig = cacheConfig;
     }
+
+
 
 
     public static CacheConfig getConfig(String cacheName) {
@@ -73,6 +81,10 @@ public class CacheConfigManager {
 
     public static void updateConfig(String cacheName, CacheConfig cacheConfig) {
         checkCacheConfig(cacheName, cacheConfig);
+        CacheConfig oldCacheConfig = cacheConfigMap.get(cacheName);
+        if (!cacheConfig.equals(oldCacheConfig)) {
+            log.info("cacheConfig change:{}-{}", cacheName, cacheConfig);
+        }
         cacheConfigMap.put(cacheName, cacheConfig);
     }
 
