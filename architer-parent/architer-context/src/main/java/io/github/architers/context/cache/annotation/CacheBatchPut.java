@@ -2,6 +2,8 @@ package io.github.architers.context.cache.annotation;
 
 
 
+import io.github.architers.context.cache.enums.CacheLevel;
+
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
@@ -61,4 +63,8 @@ public @interface CacheBatchPut {
      */
     String unless() default "";
 
+    /**
+     * 缓存级别
+     */
+    CacheLevel cacheLevel();
 }

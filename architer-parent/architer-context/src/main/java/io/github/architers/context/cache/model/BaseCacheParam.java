@@ -15,17 +15,17 @@ public abstract class BaseCacheParam implements CacheOperationParam {
     /**
      * 是否异步的
      */
-    private boolean async = false;
+    protected boolean async = false;
 
     /**
      * 原始的缓存名称
      */
-    private String originCacheName;
+    protected String originCacheName;
 
     /**
      * 包装后的缓存名称
      */
-    private String wrapperCacheName;
+    protected String wrapperCacheName;
 
 
 }

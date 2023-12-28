@@ -14,10 +14,7 @@ import java.io.Serializable;
 @Data
 public class CacheConfig implements Serializable {
 
-    /**
-     * 缓存级别
-     */
-    private CacheLevel cacheLevel;
+
 
     /**
      * 缓存值改变，延迟再删一次(解决缓存一致性）-->修改|删除都会再删一次
@@ -33,6 +30,11 @@ public class CacheConfig implements Serializable {
      * 定制的远程操作处理器
      */
     private Class<? extends RemoteCacheOperate> remoteOperateClass;
+
+
+    /**
+     *
+     */
 
 
 }

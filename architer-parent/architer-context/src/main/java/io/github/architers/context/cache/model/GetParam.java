@@ -10,6 +10,9 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+
 public class GetParam extends BaseCacheParam {
     private String key;
+
+
 }

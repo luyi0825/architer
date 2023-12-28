@@ -24,7 +24,7 @@ public @interface CacheEvict {
     String key();
 
     /**
-     * true表示在方法调用删除缓存
+     * true 表示在方法调用删除缓存
      * false 表示在方法执行之后删除
      */
     boolean beforeInvocation() default true;
@@ -33,8 +33,6 @@ public @interface CacheEvict {
      * 是否异步删除
      */
     boolean async() default false;
-
-
 
     /**
      * @see Cacheable#condition()

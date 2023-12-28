@@ -2,6 +2,7 @@
 package io.github.architers.context.cache.annotation;
 
 
+import io.github.architers.context.cache.enums.CacheLevel;
 import io.github.architers.context.cache.operate.*;
 
 import java.lang.annotation.*;
@@ -33,7 +34,7 @@ public @interface Cacheable {
     String cacheName() default "";
 
     /**
-     * 缓存key,支持SpEL
+     * 缓存key,支持SpEL表达式
      */
     String key();
 
@@ -62,6 +63,8 @@ public @interface Cacheable {
      * 条件满足的时候，不进行缓存操作
      */
     String unless() default "";
+
+    CacheLevel cacheLevel();
 
 
 }
