@@ -1,7 +1,7 @@
 package io.github.architers.context.cache;
 
-import io.github.architers.context.cache.operate.CacheEvictMetaData;
-import io.github.architers.context.cache.operate.CachePutMetaData;
+import io.github.architers.context.cache.operate.meta.CacheEvictMetaData;
+import io.github.architers.context.cache.operate.meta.CachePutMetaData;
 import lombok.Data;
 
 import java.util.Map;

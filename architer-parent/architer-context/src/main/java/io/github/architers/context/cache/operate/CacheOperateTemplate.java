@@ -3,6 +3,8 @@ package io.github.architers.context.cache.operate;
 import io.github.architers.context.cache.CacheOperateFactory;
 import io.github.architers.context.cache.CacheProperties;
 import io.github.architers.context.cache.model.GetParam;
+import io.github.architers.context.cache.model.PutParam;
+import io.github.architers.context.cache.operate.meta.CachePutMetaData;
 
 import java.util.function.Supplier;
 
@@ -34,17 +36,22 @@ public class CacheOperateTemplate {
         return cacheOperate.get(getParam);
     }
 
-    public Object cacheable(String cacheName, String key, Supplier<Object> getSupper) {
+    public Object cacheable(String cacheName, String key, CachePutMetaData metaData, Supplier<Object> getSupper) {
         Object returnValue = get(cacheName, key);
         if (returnValue != null) {
             return returnValue;
         }
         //调用方法
         returnValue = getSupper.get();
+        put(cacheName, key, returnValue, metaData);
+        return returnValue;
     }
 
-    public void put(String cacheName, Object cacheValue, CachePutMetaData metaData) {
+    public void put(String cacheName, String key, Object cacheValue, CachePutMetaData metaData) {
+        CacheOperate cacheOperate = cacheOperateFactory.getByCacheName(cacheName);
+        PutParam putParam = new PutParam();
 
+        cacheOperate.put();
     }
 
     private String wrapperCacheName(String cacheName) {

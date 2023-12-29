@@ -25,6 +25,7 @@ public class CacheBatchPutOperationHandler extends BaseCacheOperationHandler {
     protected void executeCacheOperate(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         CacheBatchPut cacheBatchPut = (CacheBatchPut) operationAnnotation;
 
+        expressionMetadata
         //判断是否能够执行
         if (super.canDoCacheOperate(cacheBatchPut.condition(), cacheBatchPut.unless(), expressionMetadata)) {
             //执行方法
