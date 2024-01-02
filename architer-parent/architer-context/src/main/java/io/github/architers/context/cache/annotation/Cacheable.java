@@ -2,8 +2,7 @@
 package io.github.architers.context.cache.annotation;
 
 
-import io.github.architers.context.cache.enums.CacheLevel;
-import io.github.architers.context.cache.operate.*;
+
 
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
@@ -63,8 +62,5 @@ public @interface Cacheable {
      * 条件满足的时候，不进行缓存操作
      */
     String unless() default "";
-
-    CacheLevel cacheLevel();
-
 
 }

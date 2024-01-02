@@ -63,8 +63,4 @@ public @interface CacheBatchPut {
      */
     String unless() default "";
 
-    /**
-     * 缓存级别
-     */
-    CacheLevel cacheLevel();
 }

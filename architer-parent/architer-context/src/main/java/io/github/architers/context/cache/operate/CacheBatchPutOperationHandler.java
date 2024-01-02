@@ -24,8 +24,6 @@ public class CacheBatchPutOperationHandler extends BaseCacheOperationHandler {
     @Override
     protected void executeCacheOperate(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         CacheBatchPut cacheBatchPut = (CacheBatchPut) operationAnnotation;
-
-        expressionMetadata
         //判断是否能够执行
         if (super.canDoCacheOperate(cacheBatchPut.condition(), cacheBatchPut.unless(), expressionMetadata)) {
             //执行方法
@@ -42,7 +40,7 @@ public class CacheBatchPutOperationHandler extends BaseCacheOperationHandler {
         Object batchCacheValue = super.expressionParser.parserExpression(expressionMetadata, cacheBatchPut.cacheValue());
         batchPutParam.setBatchCacheValue(batchCacheValue);
         //批量删除
-        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cacheBatchPut.cacheName());
+        CacheOperate cacheOperate = super.cacheOperateManager.getCacheOperate(cacheBatchPut.cacheName());
         cacheOperate.batchPut(batchPutParam);
 
         afterInvocation(batchPutParam, cacheOperate);

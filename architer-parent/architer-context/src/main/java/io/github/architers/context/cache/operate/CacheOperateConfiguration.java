@@ -10,10 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration(proxyBeanMethods = false)
 public class CacheOperateConfiguration {
 
-    @Bean
-    public CacheOperateSupport cacheOperateFactory() {
-        return new CacheOperateSupport();
-    }
 
     @Bean
     public CachePutOperationHandler putCacheOperationHandler() {

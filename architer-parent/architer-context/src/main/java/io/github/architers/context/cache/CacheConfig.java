@@ -14,13 +14,6 @@ import java.io.Serializable;
 @Data
 public class CacheConfig implements Serializable {
 
-
-
-    /**
-     * 缓存值改变，延迟再删一次(解决缓存一致性）-->修改|删除都会再删一次
-     */
-    private Boolean changeDelayDeleteAgain;
-
     /**
      * 定制的本地缓存操作处理器
      */
@@ -32,9 +25,6 @@ public class CacheConfig implements Serializable {
     private Class<? extends RemoteCacheOperate> remoteOperateClass;
 
 
-    /**
-     *
-     */
 
 
 }

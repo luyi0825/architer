@@ -11,7 +11,7 @@ import org.springframework.util.Assert;
  *
  * @author luyi
  */
-public class LocalAndRemoteCacheOperate implements CacheOperate {
+public final class LocalAndRemoteCacheOperate implements CacheOperate {
 
 
     private LocalCacheOperate localCacheOperate;
@@ -36,6 +36,7 @@ public class LocalAndRemoteCacheOperate implements CacheOperate {
         localCacheOperate.delete(evictParam);
         remoteCacheOperate.delete(evictParam);
     }
+
 
     @Override
     public Object get(GetParam getParam) {

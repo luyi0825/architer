@@ -42,7 +42,7 @@ public class CacheableOperationHandler extends BaseCacheOperationHandler {
         if (canDoCacheOperate(cacheable.condition(), cacheable.unless(), expressionMetadata)) {
             return;
         }
-        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cacheable.cacheName());
+        CacheOperate cacheOperate = super.cacheOperateManager.getCacheOperate(cacheable.cacheName());
 
         Object key = super.parseCacheKey(expressionMetadata, cacheable.key());
 

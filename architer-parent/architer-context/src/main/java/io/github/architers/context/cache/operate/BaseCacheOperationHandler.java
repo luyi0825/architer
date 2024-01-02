@@ -25,11 +25,13 @@ public abstract class BaseCacheOperationHandler {
 
 
     @Resource
-    protected CacheOperateSupport cacheOperateSupport;
+    protected CacheOperateManager cacheOperateManager;
 
 
     @Autowired(required = false)
     protected ExpressionParser expressionParser;
+    @Autowired(required = false)
+   private CacheNameWrapper cacheNameWrapper;
 
     @Autowired(required = false)
     protected List<CacheOperateInvocationHook> cacheOperateInvocationHooks;
@@ -61,10 +63,6 @@ public abstract class BaseCacheOperationHandler {
 
     /**
      * 处理缓存operation
-     *
-     * @param methodReturnValueFunction
-     * @param expressionMetadata
-     * @throws Throwable
      */
     public void handler(Annotation operationAnnotation,
                         MethodReturnValueFunction methodReturnValueFunction,
@@ -120,8 +118,6 @@ public abstract class BaseCacheOperationHandler {
     }
 
     protected String getWrapperCacheName(String originCacheName, ExpressionMetadata expressionMetadata) {
-
-        CacheNameWrapper cacheNameWrapper = cacheOperateSupport.getCacheNameWrapper(originCacheName);
         if (cacheNameWrapper == null) {
             return originCacheName;
         }
@@ -150,7 +146,6 @@ public abstract class BaseCacheOperationHandler {
      * @param operationAnnotation       缓存注解
      * @param expressionMetadata        表达式元数据
      * @param methodReturnValueFunction 返回值功能函数
-     * @throws Throwable
      */
     protected abstract void executeCacheOperate(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable;
 

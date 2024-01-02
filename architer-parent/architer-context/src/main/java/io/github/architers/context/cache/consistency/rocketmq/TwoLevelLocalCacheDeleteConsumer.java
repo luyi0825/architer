@@ -3,7 +3,7 @@ package io.github.architers.context.cache.consistency.rocketmq;
 import io.github.architers.context.cache.consistency.LocalCacheDelay;
 import io.github.architers.context.cache.consistency.LocalCacheDelayDelete;
 import io.github.architers.context.cache.model.*;
-import io.github.architers.context.cache.operate.CacheOperateSupport;
+import io.github.architers.context.cache.operate.CacheOperateManager;
 import io.github.architers.context.cache.operate.LocalAndRemoteCacheOperate;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.MessageModel;
@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 public class TwoLevelLocalCacheDeleteConsumer implements RocketMQListener<MessageExt> {
 
     @Resource
-    private CacheOperateSupport cacheOperateSupport;
+    private CacheOperateManager cacheOperateManager;
 
     @Override
     public void onMessage(MessageExt message) {
@@ -31,7 +31,7 @@ public class TwoLevelLocalCacheDeleteConsumer implements RocketMQListener<Messag
         if (!StringUtils.hasText(originCacheName)) {
             return;
         }
-        LocalAndRemoteCacheOperate cacheOperate = (LocalAndRemoteCacheOperate) cacheOperateSupport.getCacheOperate(originCacheName);
+        LocalAndRemoteCacheOperate cacheOperate = (LocalAndRemoteCacheOperate) cacheOperateManager.getCacheOperate(originCacheName);
         CacheChangeParam cacheChangeParam = DeleteCacheUtils.delete(message, cacheOperate.getLocalCacheOperate());
         if (cacheChangeParam != null) {
             LocalCacheDelay localCacheDelay = new LocalCacheDelay(5000, cacheChangeParam, cacheOperate.getLocalCacheOperate());

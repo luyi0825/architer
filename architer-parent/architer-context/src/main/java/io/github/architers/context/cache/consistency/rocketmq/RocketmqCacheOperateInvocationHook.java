@@ -33,6 +33,9 @@ public class RocketmqCacheOperateInvocationHook implements CacheOperateInvocatio
     @Resource
     private CacheProperties cacheProperties;
 
+    @Resource
+    private CacheRocketMqProperties cacheRocketMqProperties;
+
 
     private final DefaultMQProducer producer;
 
@@ -50,7 +53,7 @@ public class RocketmqCacheOperateInvocationHook implements CacheOperateInvocatio
                 message.setDelayTimeMs(delayTimeMs);
             }
             //一级远程缓存
-            message.setTopic(cacheProperties.getValueChangeRouteKey() + "_broadcast");
+            message.setTopic(cacheRocketMqProperties.getTopic());
             message.setTags(applicationName);
             message.putUserProperty("origin_cache_name", cacheParam.getOriginCacheName());
             //缓存参数名称
@@ -77,13 +80,8 @@ public class RocketmqCacheOperateInvocationHook implements CacheOperateInvocatio
         }
         if (cacheOperate instanceof RemoteCacheOperate) {
             CacheConfig cacheConfig = cacheProperties.getCustomConfigs().get(cacheParam.getOriginCacheName());
-            Boolean changeDelayDelete;
+            Boolean changeDelayDelete = cacheProperties.getChangeDelayDeleteAgain();
 
-            if (cacheConfig != null) {
-                changeDelayDelete = cacheConfig.getChangeDelayDelete();
-            } else {
-                changeDelayDelete = cacheProperties.isChangeDelayDelete();
-            }
             if (Boolean.TRUE.equals(changeDelayDelete)) {
                 //发送延迟删消息
                 SendResult sendResult;
@@ -91,7 +89,7 @@ public class RocketmqCacheOperateInvocationHook implements CacheOperateInvocatio
                     Message message = new Message();
                     //一级远程缓存
                     message.setDelayTimeMs(3000);
-                    message.setTopic(cacheProperties.getValueChangeRouteKey());
+                    message.setTopic(cacheRocketMqProperties.getTopic());
                     message.setTags(applicationName);
                     message.putUserProperty("origin_cache_name", cacheParam.getOriginCacheName());
                     //缓存参数名称

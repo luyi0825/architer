@@ -4,7 +4,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Role;
 
-public class ProxyCacheConfiguration {
+public class ProxyCacheAutoConfiguration {
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     public AnnotationCacheOperationSource annotationCacheOperationSource(CacheAnnotationsParser cacheAnnotationsParser) {

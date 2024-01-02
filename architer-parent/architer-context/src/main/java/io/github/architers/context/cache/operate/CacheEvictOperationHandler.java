@@ -38,7 +38,7 @@ public class CacheEvictOperationHandler extends BaseCacheOperationHandler {
         evictParam.setWrapperCacheName(getWrapperCacheName(cacheEvict.cacheName(), expressionMetadata));
         evictParam.setOriginCacheName(cacheEvict.cacheName());
         Object key = super.parseCacheKey(expressionMetadata, cacheEvict.key());
-        CacheOperate cacheOperate = cacheOperateSupport.getCacheOperate(cacheEvict.cacheName());
+        CacheOperate cacheOperate = cacheOperateManager.getCacheOperate(cacheEvict.cacheName());
         evictParam.setKey(JsonUtils.toJsonString(key));
         evictParam.setAsync(cacheEvict.async());
         //删除缓存后，再调用方法

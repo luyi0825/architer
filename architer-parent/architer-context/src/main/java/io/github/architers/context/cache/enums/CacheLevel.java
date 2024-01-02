@@ -27,4 +27,12 @@ public enum CacheLevel {
      */
     localAndRemote;
 
+
+    public static boolean isContainLocal(CacheLevel cacheLevel) {
+        if (cacheLevel == null) {
+            return false;
+        }
+        return CacheLevel.local.equals(cacheLevel) || CacheLevel.localAndRemote.equals(cacheLevel);
+    }
+
 }

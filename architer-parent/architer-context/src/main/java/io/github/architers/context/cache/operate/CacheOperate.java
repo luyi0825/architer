@@ -3,6 +3,9 @@ package io.github.architers.context.cache.operate;
 
 import io.github.architers.context.cache.model.*;
 
+import java.io.Serializable;
+import java.util.Map;
+
 /**
  * @author luyi
  * @version 1.0.0
@@ -33,6 +36,11 @@ public interface CacheOperate {
 
 
     default Object get(GetParam getParam) {
+        noSupport();
+        return null;
+    }
+
+    default Map<String, Serializable> batchGet(BatchGetParam batchGetParam) {
         noSupport();
         return null;
     }

@@ -7,7 +7,6 @@ import io.github.architers.context.cache.model.PutParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import io.github.architers.context.expression.ExpressionMetadata;
 import io.github.architers.context.utils.JsonUtils;
-import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
 
@@ -49,7 +48,7 @@ public class CachePutOperationHandler extends BaseCacheOperationHandler {
 
         putParam.setExpireTime(expireTime);
         putParam.setTimeUnit(cachePut.timeUnit());
-        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cachePut.cacheName());
+        CacheOperate cacheOperate = cacheOperateManager.getCacheOperate(cachePut.cacheName());
 
         //调用方法
         methodReturnValueFunction.proceed();

@@ -47,7 +47,7 @@ public class CacheBatchEvictOperationHandler extends BaseCacheOperationHandler {
         batchEvictParam.setAsync(cacheBatchEvict.async());
         batchEvictParam.setKeys((Collection<?>) keys);
 
-        CacheOperate cacheOperate = super.cacheOperateSupport.getCacheOperate(cacheBatchEvict.cacheName());
+        CacheOperate cacheOperate = super.cacheOperateManager.getCacheOperate(cacheBatchEvict.cacheName());
 
         if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
             for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {

@@ -2,7 +2,7 @@ package io.github.architers.context.cache.consistency.rocketmq;
 
 
 import io.github.architers.context.cache.operate.CacheOperate;
-import io.github.architers.context.cache.operate.CacheOperateSupport;
+import io.github.architers.context.cache.operate.CacheOperateManager;
 import io.github.architers.context.cache.operate.LocalAndRemoteCacheOperate;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.MessageModel;
@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 public class RocketmqCacheDelayDeleteConsumer implements RocketMQListener<MessageExt> {
 
     @Resource
-    private CacheOperateSupport cacheOperateSupport;
+    private CacheOperateManager cacheOperateManager;
 
     @Override
     public void onMessage(MessageExt message) {
@@ -29,15 +29,15 @@ public class RocketmqCacheDelayDeleteConsumer implements RocketMQListener<Messag
         if (!StringUtils.hasText(originCacheName)) {
             return;
         }
-        CacheOperate cacheOperate = cacheOperateSupport.getCacheOperate(originCacheName);
-        if (cacheOperate instanceof LocalAndRemoteCacheOperate) {
-            //两级缓存删除远程分布式缓存
-            DeleteCacheUtils.delete(message, ((LocalAndRemoteCacheOperate) cacheOperate).getRemoteCacheOperate());
-        } else {
-            //不是两级缓存，直接删除
-            DeleteCacheUtils.delete(message, cacheOperate);
+        LocalAndRemoteCacheOperate localAndRemoteCacheOperate = cacheOperateManager.getCacheOperate(originCacheName);
+        //TODO remote缓存重复删除
+        if (localAndRemoteCacheOperate.getRemoteCacheOperate() != null) {
+            DeleteCacheUtils.delete(message, localAndRemoteCacheOperate.getRemoteCacheOperate());
         }
-
+        if (localAndRemoteCacheOperate.getLocalCacheOperate() != null) {
+            //不是两级缓存，直接删除
+            DeleteCacheUtils.delete(message, localAndRemoteCacheOperate.getLocalCacheOperate());
+        }
     }
 
 

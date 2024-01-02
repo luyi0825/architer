@@ -4,7 +4,7 @@ package io.github.architers.context.cache;
 
 import io.github.architers.context.cache.annotation.EnableCaching;
 import io.github.architers.context.cache.proxy.AnnotationCacheAspect;
-import io.github.architers.context.cache.proxy.ProxyCacheConfiguration;
+import io.github.architers.context.cache.proxy.ProxyCacheAutoConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.AdviceModeImportSelector;
@@ -41,7 +41,7 @@ public class CacheAdviceImportSelector extends AdviceModeImportSelector<EnableCa
 
     private String[] getProxyImports() {
         return new String[]{ AutoProxyRegistrar.class.getName(),
-                ProxyCacheConfiguration.class.getName()};
+                ProxyCacheAutoConfiguration.class.getName()};
     }
 
     /**

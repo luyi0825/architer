@@ -2,15 +2,13 @@ package io.github.architers.context.cache.fieldconvert.utils;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import io.github.architers.context.cache.fieldconvert.DataConvertDispatcher;
-import io.github.architers.context.cache.fieldconvert.TempCache;
+import io.github.architers.context.cache.fieldconvert.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.CollectionUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
-import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 数据转换工具类
@@ -18,35 +16,34 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author luyi
  */
 @Slf4j
-public class DataConvertUtils {
+public class DataConvertUtils implements ApplicationContextAware {
 
-    private static volatile DataConvertDispatcher dataConvertDispatcher;
+    private static volatile FieldConvertSupport fieldConvertSupport;
 
 
-    /**
-     * 最大的深度
-     */
-    private static final int MAX_DEPTH = 5;
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        fieldConvertSupport = applicationContext.getBean(FieldConvertSupport.class);
+    }
+
 
     /**
      * 两级缓存转换简单的数据（本地缓存->远程缓存->DB）
      */
-    public static void convertSimpleData(Object data) {
-        long startTime = System.currentTimeMillis();
-        int depth = 1;
-        AtomicLong cost = new AtomicLong();
-        if (data instanceof Collection) {
-            //集合处理
-            ((Collection<?>) data).forEach(e -> convertCollectionData(e, depth, cost, null));
-        } else {
-            convertData(data, depth, cost, null, false);
-        }
-        long time = System.currentTimeMillis() - startTime;
-        if (time > 1000) {
-            log.error("转换数据耗时:" + time);
-        } else {
-            log.info("转换数据耗时:{}", time);
-        }
+    public static void convertData(Object data) {
+        getDataConvertDispatcher().convertData(data, null, true);
+    }
+
+    /**
+     * 通过临时缓存转换数据（临时缓存-远程缓存->数据库）
+     * <li>临时缓存是通过本地缓存->远程缓存->数据库依次构建</li>
+     */
+    public static void convertDataWithTempCache(Object data, TempCache tempCache) {
+        getDataConvertDispatcher().convertData(data, tempCache, true);
+    }
+
+    public static void convertDataWithTempCache(Object data, TempCache tempCache, boolean cacheQueryValue) {
+        getDataConvertDispatcher().convertData(data, tempCache, cacheQueryValue);
     }
 
     /**
@@ -77,203 +74,62 @@ public class DataConvertUtils {
             public void batchPut(Map<String, Object> value) {
                 cache.putAll(value);
             }
-
-
         };
     }
 
 
-    public static void convertManyDataWithTempCache(Object data, TempCache tempCache) {
-        long startTime = System.currentTimeMillis();
-        int depth = 1;
-        AtomicLong cost = new AtomicLong();
-        convertData(data, depth, cost, tempCache, false);
-        long time = System.currentTimeMillis() - startTime;
-        if (time > 2000) {
-            log.error("转换数据耗时:" + time);
-        } else {
-            log.info("转换数据耗时:{}", time);
-        }
+//    public static void convertManyDataWithTempCacheExpire(Object data) {
+//        long startTime = System.currentTimeMillis();
+//        int depth = 1;
+//
+//        AtomicLong cost = new AtomicLong();
+//        TempCache tempCache = getMaximumSizeExpireTempCache(2000, 1000);
+//        convertData(data, depth, cost, tempCache, false, true);
+//        long time = System.currentTimeMillis() - startTime;
+//        if (time > 2000) {
+//            log.error("转换数据耗时:" + time);
+//        } else {
+//            log.info("转换数据耗时:{}", time);
+//        }
+//    }
 
-    }
-
-    public static void convertManyDataWithTempCacheExpire(Object data) {
-        long startTime = System.currentTimeMillis();
-        int depth = 1;
-
-        AtomicLong cost = new AtomicLong();
-        TempCache tempCache = getMaximumSizeExpireTempCache(2000, 1000);
-        convertData(data, depth, cost, tempCache, false);
-        long time = System.currentTimeMillis() - startTime;
-        if (time > 2000) {
-            log.error("转换数据耗时:" + time);
-        } else {
-            log.info("转换数据耗时:{}", time);
-        }
-    }
-
-    public static void convertManyDataWithTempCacheNotExpire(Object data) {
-        long startTime = System.currentTimeMillis();
-        int depth = 1;
-        Map<String, Object> tempCache = new HashMap<>(128);
-        AtomicLong cost = new AtomicLong();
-        TempCache tempCacheFunction = new TempCache() {
-            @Override
-            public boolean isCanExpire() {
-                return false;
-            }
-
-            @Override
-            public Object get(String key) {
-                return tempCache.get(key);
-            }
-
-            @Override
-            public void put(String key, Object value) {
-                tempCache.put(key, value);
-            }
-
-            @Override
-            public void batchPut(Map<String, Object> value) {
-                tempCache.putAll(value);
-            }
-        };
-        convertData(data, depth, cost, tempCacheFunction, false);
-        long time = System.currentTimeMillis() - startTime;
-        if (time > 2000) {
-            log.error("转换数据耗时:" + time);
-        } else {
-            log.info("转换数据耗时:{}", time);
-        }
-    }
+//    public static void convertManyDataWithTempCacheNotExpire(Object data) {
+//        long startTime = System.currentTimeMillis();
+//        int depth = 1;
+//        Map<String, Object> tempCache = new HashMap<>(128);
+//        AtomicLong cost = new AtomicLong();
+//        TempCache tempCacheFunction = new TempCache() {
+//            @Override
+//            public boolean isCanExpire() {
+//                return false;
+//            }
+//
+//            @Override
+//            public Object get(String key) {
+//                return tempCache.get(key);
+//            }
+//
+//            @Override
+//            public void put(String key, Object value) {
+//                tempCache.put(key, value);
+//            }
+//
+//            @Override
+//            public void batchPut(Map<String, Object> value) {
+//                tempCache.putAll(value);
+//            }
+//        };
+//        convertData(data, depth, cost, tempCacheFunction, false);
+//        long time = System.currentTimeMillis() - startTime;
+//        if (time > 2000) {
+//            log.error("转换数据耗时:" + time);
+//        } else {
+//            log.info("转换数据耗时:{}", time);
+//        }
+//    }
 
 
-    private static void convertCollectionData(Object data, int depth, AtomicLong cost, TempCache tempCache) {
-        if (CollectionUtils.isEmpty((Collection<?>) data)) {
-            //数据为空
-            return;
-        }
-        ++depth;
-        parseTempCacheManyCacheValue(data, tempCache);
-        int finalDepth = depth;
-        ((Collection<?>) data).forEach(e -> convertData(e, finalDepth, cost, tempCache, true));
-
-    }
-
-
-    /**
-     * @param tempCacheParsed 临时缓存已经解析
-     */
-    private static void convertData(Object data, int depth, AtomicLong cost, TempCache tempCache, boolean tempCacheParsed) {
-        if (data == null) {
-            return;
-        }
-        if (++depth > MAX_DEPTH) {
-            throw new IllegalStateException("超过最大深度:" + MAX_DEPTH);
-        }
-        if (data instanceof Collection) {
-            convertCollectionData(data, depth, cost, tempCache);
-        } else {
-            //不是集合的就进行字段转换
-            for (Field declaredField : data.getClass().getDeclaredFields()) {
-                if (declaredField.getAnnotation(NeedFieldConvert.class) != null) {
-                    try {
-                        declaredField.setAccessible(true);
-                        Object fieldData = declaredField.get(data);
-                        if (fieldData != null) {
-                            convertData(fieldData, depth, cost, tempCache, false);
-                        }
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-            dataConvertDispatcher = getDataConvertDispatcher();
-            if (tempCache == null) {
-                dataConvertDispatcher.convertData(data);
-            } else {
-                if (!tempCacheParsed) {
-                    parseTempCacheManyCacheValue(data, tempCache);
-                }
-                dataConvertDispatcher.convertManyDataWithCache(data, tempCache);
-            }
-
-        }
-    }
-
-    private static void parseTempCacheManyCacheValue(Object data, TempCache tempCache) {
-        if (tempCache == null) {
-            return;
-        }
-        long startTime = System.currentTimeMillis();
-        Map<String/*converter*/, Map<CacheLevel, Set<String>>> keyValueMap = new HashMap<>();
-        if (data instanceof Collection) {
-            ((Collection<?>) data).forEach(e -> parseTempCacheKeyInfo(e, keyValueMap));
-        } else {
-            parseTempCacheKeyInfo(data, keyValueMap);
-        }
-        log.info("解析临时缓存key耗时:" + (System.currentTimeMillis() - startTime));
-        startTime = System.currentTimeMillis();
-        OriginValueObtainSupport originValueObtainSupport = getDataConvertDispatcher().getOriginValueObtainSupport();
-        keyValueMap.forEach((converter, cacheLevelMap) -> cacheLevelMap.forEach((cacheLevel, keys) -> {
-            Map<String, Serializable> valueMap;
-            Collection<String> notMatchKeys = null;
-            if (CacheLevel.none.equals(cacheLevel)) {
-                valueMap = originValueObtainSupport.getConvertOriginValueObtain(converter).getConvertOriginDatas(keys);
-            } else if (CacheLevel.remote.equals(cacheLevel)) {
-                Map<String, Serializable> remoteValueMap = originValueObtainSupport.getMapFromRemote(converter, keys);
-                notMatchKeys = org.apache.commons.collections4.CollectionUtils.disjunction(keys, remoteValueMap.keySet());
-                valueMap = remoteValueMap;
-            } else if (CacheLevel.local.equals(cacheLevel)) {
-                Map<String, Serializable> localValueMap = originValueObtainSupport.getMapFromLocal(converter, keys);
-                notMatchKeys = org.apache.commons.collections4.CollectionUtils.disjunction(keys, localValueMap.keySet());
-                valueMap = localValueMap;
-            } else {
-                throw new RuntimeException("cacheLevel错误");
-            }
-            if (notMatchKeys != null && !CollectionUtils.isEmpty(notMatchKeys)) {
-                //本地缓存或者remote缓存都没，从数据库中查询
-                Map<String, Serializable> dbMap = originValueObtainSupport.getConvertOriginValueObtain(converter).getConvertOriginDatas(notMatchKeys);
-                if (!CollectionUtils.isEmpty(dbMap)) {
-                    //将db中查询的数据，放到缓存中
-                    valueMap.putAll(dbMap);
-                }
-                //异步放到缓存
-                getDataConvertDispatcher().asyncPutCache(converter, dbMap, cacheLevel);
-            }
-            valueMap.forEach((key, value) -> {
-                String tempCacheKey = getDataConvertDispatcher().getTempCacheKey(cacheLevel, converter, key);
-                tempCache.put(tempCacheKey, value);
-            });
-
-        }));
-        log.info("准备临时缓存数据耗时:" + (System.currentTimeMillis() - startTime));
-    }
-
-    private static void parseTempCacheKeyInfo(Object data, Map<String, Map<CacheLevel, Set<String>>> keyValueMap) {
-        ClassFieldsCache.groupByOriginValueIndexAndCacheLevel(data.getClass()).forEach((index, cacheLevelListMap) -> {
-            cacheLevelListMap.forEach((cacheLevel, fieldContexts) -> {
-                for (FieldConvertContext fieldContext : fieldContexts) {
-                    Map<CacheLevel, Set<String>> cacheLevelKeysMap = keyValueMap.computeIfAbsent(fieldContext.getOriginValueConverter(), k -> new HashMap<>());
-                    String value = fieldContext.getSourceFieldStrValue(data);
-                    CacheLevel cacheLevelKey = getDataConvertDispatcher().getTempCacheLevelKey(cacheLevel);
-                    Set<String> converterKeys = cacheLevelKeysMap.computeIfAbsent(cacheLevelKey, k -> new HashSet<>());
-                    if (value != null) {
-                        converterKeys.add(value);
-                    }
-                }
-            });
-        });
-    }
-
-    private static DataConvertDispatcher getDataConvertDispatcher() {
-        if (dataConvertDispatcher == null) {
-            synchronized (DataConvertUtils.class) {
-                if (dataConvertDispatcher == null) {
-                    dataConvertDispatcher = SpringUtils.getBean(DataConvertDispatcher.class);
-                }
-            }
-        }
-        return dataConvertDispatcher;
+    private static FieldConvertSupport getDataConvertDispatcher() {
+        return fieldConvertSupport;
     }
 }
