@@ -2,14 +2,17 @@ package io.github.architers.cache.entity;
 
 import io.github.architers.context.cache.annotation.CacheKey;
 import io.github.architers.context.cache.annotation.CacheValue;
+import io.github.architers.context.cache.fieldconvert.anantion.FieldConvert;
 import jodd.util.StringUtil;
 import lombok.Data;
+import lombok.Getter;
 
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 
+@Getter
 @CacheValue
 public class UserInfo implements Serializable {
     @CacheKey(order = 1)
@@ -51,26 +54,14 @@ public class UserInfo implements Serializable {
         return Objects.hash(username, password, phone);
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
     public UserInfo setPhone(String phone) {
         this.phone = phone;
         return this;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public UserInfo setUsername(String username) {
         this.username = username;
         return this;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public UserInfo setPassword(String password) {

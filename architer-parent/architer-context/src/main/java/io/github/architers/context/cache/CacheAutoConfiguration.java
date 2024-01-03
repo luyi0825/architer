@@ -1,5 +1,8 @@
 package io.github.architers.context.cache;
 
+import io.github.architers.context.cache.fieldconvert.CacheFieldConvertProperties;
+import io.github.architers.context.cache.fieldconvert.FieldConvertSupport;
+import io.github.architers.context.cache.fieldconvert.utils.FieldConvertUtils;
 import io.github.architers.context.cache.operate.CacheOperateConfiguration;
 import io.github.architers.context.cache.proxy.CacheAnnotationsParser;
 import io.github.architers.context.cache.proxy.CacheProxySupport;
@@ -18,7 +21,7 @@ import org.springframework.context.annotation.Role;
  * @author luyi
  */
 @Configuration(proxyBeanMethods = true)
-@EnableConfigurationProperties(CacheProperties.class)
+@EnableConfigurationProperties({CacheProperties.class, CacheFieldConvertProperties.class})
 @Import(CacheOperateConfiguration.class)
 public class CacheAutoConfiguration {
     @Bean
@@ -34,9 +37,25 @@ public class CacheAutoConfiguration {
         return new CacheProxySupport();
     }
 
+    @Bean
+    public FieldConvertSupport fieldConvertSupport() {
+        return new FieldConvertSupport();
+    }
+
+    @Bean
+    public FieldConvertUtils fieldConvertUtils() {
+        return new FieldConvertUtils();
+    }
 
     @Bean
     public ExpressionParser expressionParser() {
         return new ExpressionParser();
     }
+
+    @Bean
+    public CacheNameManager cacheNameManager() {
+        return new CacheNameManager();
+    }
+
+
 }

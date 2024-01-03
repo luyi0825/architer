@@ -19,50 +19,76 @@ public final class LocalAndRemoteCacheOperate implements CacheOperate {
     private RemoteCacheOperate remoteCacheOperate;
 
     public LocalAndRemoteCacheOperate(LocalCacheOperate localCacheOperate, RemoteCacheOperate remoteCacheOperate) {
-        Assert.notNull(localCacheOperate, "localCacheOperate is null");
-        Assert.notNull(remoteCacheOperate, "remoteCacheOperate is null");
+        if (localCacheOperate == null && remoteCacheOperate == null) {
+            throw new IllegalArgumentException("localCacheOperate和remoteCacheOperate不能同时为空");
+        }
         this.localCacheOperate = localCacheOperate;
         this.remoteCacheOperate = remoteCacheOperate;
     }
 
     @Override
     public void put(PutParam putParam) {
-        localCacheOperate.put(putParam);
-        remoteCacheOperate.put(putParam);
+        if (localCacheOperate != null) {
+            localCacheOperate.put(putParam);
+        }
+        if (remoteCacheOperate != null) {
+            remoteCacheOperate.put(putParam);
+        }
     }
 
     @Override
     public void delete(EvictParam evictParam) {
-        localCacheOperate.delete(evictParam);
-        remoteCacheOperate.delete(evictParam);
+        if (localCacheOperate != null) {
+            localCacheOperate.delete(evictParam);
+        }
+        if (remoteCacheOperate != null) {
+            remoteCacheOperate.delete(evictParam);
+        }
     }
 
 
     @Override
     public Object get(GetParam getParam) {
-        Object cacheValue = localCacheOperate.get(getParam);
-        if (CacheUtils.isExistCacheValue(cacheValue)) {
-            return cacheValue;
+        if (localCacheOperate != null) {
+            Object cacheValue = localCacheOperate.get(getParam);
+            if (CacheUtils.isExistCacheValue(cacheValue)) {
+                return cacheValue;
+            }
         }
-        return remoteCacheOperate.get(getParam);
+        if (remoteCacheOperate != null) {
+            return remoteCacheOperate.get(getParam);
+        }
+        return null;
     }
 
     @Override
     public void deleteAll(EvictAllParam evictAllParam) {
-        localCacheOperate.deleteAll(evictAllParam);
-        remoteCacheOperate.deleteAll(evictAllParam);
+        if (localCacheOperate != null) {
+            localCacheOperate.deleteAll(evictAllParam);
+        }
+        if (remoteCacheOperate != null) {
+            remoteCacheOperate.deleteAll(evictAllParam);
+        }
     }
 
     @Override
     public void batchDelete(BatchEvictParam batchEvictParam) {
-        localCacheOperate.batchDelete(batchEvictParam);
-        remoteCacheOperate.batchDelete(batchEvictParam);
+        if (localCacheOperate != null) {
+            localCacheOperate.batchDelete(batchEvictParam);
+        }
+        if (remoteCacheOperate != null) {
+            remoteCacheOperate.batchDelete(batchEvictParam);
+        }
     }
 
     @Override
     public void batchPut(BatchPutParam batchPutParam) {
-        localCacheOperate.batchPut(batchPutParam);
-        remoteCacheOperate.batchPut(batchPutParam);
+        if (localCacheOperate != null) {
+            localCacheOperate.batchPut(batchPutParam);
+        }
+        if (remoteCacheOperate != null) {
+            remoteCacheOperate.batchPut(batchPutParam);
+        }
     }
 
     public LocalCacheOperate getLocalCacheOperate() {

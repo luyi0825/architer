@@ -44,9 +44,9 @@ public @interface Cacheable {
     long randomTime() default 0;
 
     /**
-     * 缓存失效时间
+     * 缓存失效时间(默认30分钟）
      */
-    long expireTime() default -1;
+    long expireTime() default 30L;
 
     /**
      * 过期时间单位

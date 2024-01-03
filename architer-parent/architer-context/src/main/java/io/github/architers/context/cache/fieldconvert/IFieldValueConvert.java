@@ -6,9 +6,14 @@ package io.github.architers.context.cache.fieldconvert;
  *
  * @param <T>
  */
-public interface IFieldValueConvert<T> extends IFieldConvert {
+public interface IFieldValueConvert<T>  {
 
 
     Object getConvertValue(T originData);
+
+    /**
+     * 得到转换器的名称
+     */
+    String getConverter();
 
 }

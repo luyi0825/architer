@@ -1,5 +1,6 @@
 package io.github.architers.context.cache.operate;
 
+import io.github.architers.context.cache.CacheConfig;
 import io.github.architers.context.cache.CacheProperties;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -57,43 +58,34 @@ public class CacheOperateManager implements ApplicationContextAware {
         }
         return cacheOperate;
     }
-
+    /*
+     * 1.没有配置，就采用默认的
+     * 2.配置了，就用配置的
+     */
     private void buildCacheOperateInfo(Map<Class<?>, CacheOperate> classCacheOperateMap, CacheProperties cacheProperties) {
-
-        //校验两级缓存配置:本地缓存和远程缓存不能为空
-        LocalCacheOperate defaltLocalCacheOperate = null;
-        RemoteCacheOperate defaultRemoteCacheOperate = null;
-        if (cacheProperties.getDefalutLocalOperateClass() != null) {
-            defaltLocalCacheOperate = (LocalCacheOperate) getNotNullCacheOperate(classCacheOperateMap, cacheProperties.getDefalutLocalOperateClass());
-        }
-        if (cacheProperties.getDefalutRemoteOperateClass() != null) {
-            defaultRemoteCacheOperate = (RemoteCacheOperate) getNotNullCacheOperate(classCacheOperateMap, cacheProperties.getDefalutRemoteOperateClass());
-        }
-
-        if (defaltLocalCacheOperate != null || defaultRemoteCacheOperate != null) {
-            defaultCacheOperate = new LocalAndRemoteCacheOperate(defaltLocalCacheOperate, defaultRemoteCacheOperate);
-        }
-
-
-        /*
-         * 1.没有配置，就采用默认的
-         * 2.配置了，就用配置的
-         */
+        defaultCacheOperate = getCacheOperate(cacheProperties, classCacheOperateMap);
         cacheProperties.getCustomConfigs().forEach((cacheName, config) -> {
-            LocalCacheOperate localCacheOperate = null;
-            RemoteCacheOperate remoteCacheOperate = null;
-            if (cacheProperties.getDefalutLocalOperateClass() != null) {
-                localCacheOperate = (LocalCacheOperate) getNotNullCacheOperate(classCacheOperateMap, config.getLocalOperateClass());
-            }
-            if (cacheProperties.getDefalutRemoteOperateClass() != null) {
-                remoteCacheOperate = (RemoteCacheOperate) getNotNullCacheOperate(classCacheOperateMap, config.getRemoteOperateClass());
-            }
-            if (localCacheOperate == null && remoteCacheOperate == null) {
+            LocalAndRemoteCacheOperate cacheOperate = getCacheOperate(config, classCacheOperateMap);
+            if (cacheOperate == null) {
                 throw new IllegalArgumentException("localCacheOperate和remoteCacheOperate不能都为空");
             }
-            LocalAndRemoteCacheOperate cacheOperate = new LocalAndRemoteCacheOperate(localCacheOperate, remoteCacheOperate);
             cacheOperateMap.put(cacheName, cacheOperate);
         });
+    }
+
+    private LocalAndRemoteCacheOperate getCacheOperate(CacheConfig cacheConfig, Map<Class<?>, CacheOperate> classCacheOperateMap) {
+        LocalCacheOperate localCacheOperate = null;
+        RemoteCacheOperate remoteCacheOperate = null;
+        if (cacheConfig.getLocalOperateClass() != null) {
+            localCacheOperate = (LocalCacheOperate) getNotNullCacheOperate(classCacheOperateMap, cacheConfig.getLocalOperateClass());
+        }
+        if (cacheConfig.getRemoteOperateClass() != null) {
+            remoteCacheOperate = (RemoteCacheOperate) getNotNullCacheOperate(classCacheOperateMap, cacheConfig.getRemoteOperateClass());
+        }
+        if (localCacheOperate == null && remoteCacheOperate == null) {
+            return null;
+        }
+        return new LocalAndRemoteCacheOperate(localCacheOperate, remoteCacheOperate);
     }
 
 }

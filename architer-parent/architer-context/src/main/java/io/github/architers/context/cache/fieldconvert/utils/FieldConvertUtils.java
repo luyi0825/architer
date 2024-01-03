@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -16,7 +17,8 @@ import java.util.*;
  * @author luyi
  */
 @Slf4j
-public class DataConvertUtils implements ApplicationContextAware {
+@Component
+public class FieldConvertUtils implements ApplicationContextAware {
 
     private static volatile FieldConvertSupport fieldConvertSupport;
 

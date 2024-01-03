@@ -79,7 +79,7 @@ public class CaffeineMapCacheOperate implements LocalCacheOperate {
     @Override
     public void deleteAll(EvictAllParam evictAllParam) {
         Cache<String, Object> cache = caffeineCacheFactory.getCache(evictAllParam.getWrapperCacheName());
-        cache.cleanUp();
+        cache.invalidateAll();
     }
 
     @Override

@@ -41,12 +41,14 @@ public class CacheEvictOperationHandler extends BaseCacheOperationHandler {
         CacheOperate cacheOperate = cacheOperateManager.getCacheOperate(cacheEvict.cacheName());
         evictParam.setKey(JsonUtils.toJsonString(key));
         evictParam.setAsync(cacheEvict.async());
-        //删除缓存后，再调用方法
-        cacheOperate.delete(evictParam);
 
         if (cacheEvict.beforeInvocation()) {
             super.beforeInvocation(evictParam, cacheOperate);
+            cacheOperate.delete(evictParam);
+            methodReturnValueFunction.proceed();
         } else {
+            methodReturnValueFunction.proceed();
+            cacheOperate.delete(evictParam);
             super.afterInvocation(evictParam, cacheOperate);
         }
     }

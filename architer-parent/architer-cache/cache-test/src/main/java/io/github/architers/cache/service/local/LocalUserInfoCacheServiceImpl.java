@@ -1,10 +1,7 @@
 package io.github.architers.cache.service.local;
 
 import io.github.architers.cache.entity.UserInfo;
-import io.github.architers.context.cache.annotation.CacheBatchPut;
-import io.github.architers.context.cache.annotation.Cacheable;
-import io.github.architers.context.cache.annotation.CacheEvict;
-import io.github.architers.context.cache.annotation.CachePut;
+import io.github.architers.context.cache.annotation.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,12 +37,14 @@ public class LocalUserInfoCacheServiceImpl implements ILocalUserInfoCache {
     public UserInfo getOnlyInCache(String username) {
         return null;
     }
+
     @Override
     @Cacheable(cacheName = "local", key = "#username")
     public UserInfo getNeverExpire(String username) {
         System.out.println("getNeverExpire查询");
         return UserInfo.getRandomUserInfo().setUsername(username);
     }
+
     @Override
     @Cacheable(cacheName = "local", key = "#username", expireTime = 5, timeUnit = TimeUnit.SECONDS)
     public UserInfo getExpireWithFiveSecond(String username) {
@@ -81,16 +80,19 @@ public class LocalUserInfoCacheServiceImpl implements ILocalUserInfoCache {
     }
 
     @Override
+    @CacheEvictAll(cacheName = "local")
     public void deleteAll() {
 
     }
 
     @Override
+    @CacheBatchEvict(cacheName = "local", keys = "#userMap")
     public void batchDelete(Map<String, UserInfo> userMap) {
 
     }
 
     @Override
+    @CacheBatchEvict(cacheName = "local", keys = "#usernames")
     public void batchDeleteByCollectionString(Set<String> usernames) {
 
     }

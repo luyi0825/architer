@@ -3,13 +3,17 @@ package io.github.architers.context.cache.fieldconvert;
 import io.github.architers.context.cache.operate.LocalCacheOperate;
 import io.github.architers.context.cache.operate.RemoteCacheOperate;
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 缓存字段转换
  */
 @Data
+@ConfigurationProperties(prefix = "architers.cache.field-convert")
 public class CacheFieldConvertProperties implements Serializable {
 
     /**
@@ -27,6 +31,7 @@ public class CacheFieldConvertProperties implements Serializable {
      */
     private boolean logTotalCost = true;
 
+
     /**
      * 耗时多少打印warn日志（单位毫秒）
      */
@@ -37,6 +42,8 @@ public class CacheFieldConvertProperties implements Serializable {
      */
     private long errorTotalCost = 10_1000;
 
+
+    private Map<String/*converter*/, String/*缓存名称*/> cacheNames = new HashMap<>();
 
 
 }

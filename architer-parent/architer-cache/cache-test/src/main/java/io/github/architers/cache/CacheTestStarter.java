@@ -17,19 +17,4 @@ public class CacheTestStarter {
         SpringApplication.run(CacheTestStarter.class, args);
     }
 
-
-    @Bean("rocketmqCacheChangeNotify_test")
-    public RocketmqCacheOperateInvocationHook rocketmqCacheChangeNotify(RocketMQTemplate rocketMQTemplate) {
-        return new RocketmqCacheOperateInvocationHook(rocketMQTemplate.getProducer());
-    }
-
-    @Bean
-    public RocketmqCacheDelayDeleteConsumer rocketmqCacheChangeNotifyConsumer(){
-        return new RocketmqCacheDelayDeleteConsumer();
-    }
-
-    @Bean
-    public TwoLevelLocalCacheDeleteConsumer rocketmqDeleteLocalCacheConsumer() {
-        return new TwoLevelLocalCacheDeleteConsumer();
-    }
 }

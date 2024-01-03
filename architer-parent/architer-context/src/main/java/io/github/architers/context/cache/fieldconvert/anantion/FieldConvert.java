@@ -41,9 +41,8 @@ public @interface FieldConvert {
     String originValueConverter() default "";
 
     /**
-     * originValue缓存级别,默认先使用本地，后使用远程
-     * * <li>整体缓存</li>
+     * 缓存级别(默认不使用缓存)
      */
-    CacheLevel cacheLevel() default CacheLevel.localAndRemote;
+    CacheLevel cacheLevel() default CacheLevel.none;
 
 }

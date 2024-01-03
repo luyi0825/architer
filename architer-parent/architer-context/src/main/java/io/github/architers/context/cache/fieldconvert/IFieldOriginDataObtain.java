@@ -11,7 +11,12 @@ import java.util.Map;
  * @param <T>
  * @author luyi
  */
-public interface IFieldOriginDataObtain<T extends Serializable> extends IFieldConvert {
+public interface IFieldOriginDataObtain<T extends Serializable> {
+
+    /**
+     * 得到转换器的名称
+     */
+    String getConverter();
 
     /**
      * 获取单个原始数据值

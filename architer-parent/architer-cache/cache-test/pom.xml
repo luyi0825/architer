@@ -67,7 +67,12 @@
             <artifactId>aspectjrt</artifactId>
             <version>1.9.7</version>
         </dependency>
-
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>cache-caffeine-boot-starter</artifactId>
+            <version>1.0.1</version>
+            <scope>compile</scope>
+        </dependency>
 
 
     </dependencies>

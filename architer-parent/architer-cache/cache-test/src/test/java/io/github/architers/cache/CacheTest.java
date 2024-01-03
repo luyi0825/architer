@@ -24,10 +24,12 @@ import java.util.stream.Stream;
 @SpringBootTest
 public class CacheTest implements ApplicationContextAware {
 
+    private UserInfoService userInfoService;
+
     @Resource(name = "localUserInfoCache")
     private UserInfoService localUserInfoCache;
 
-    private UserInfoService userInfoService;
+
 
     @Resource(name = "remoteUserInfoCache")
     private UserInfoService remoteUserInfoCache;

@@ -28,10 +28,12 @@ public class CacheEvictAllOperationHandler extends BaseCacheOperationHandler {
         evictAllParam.setAsync(cacheEvictAll.async());
         evictAllParam.setOriginCacheName(cacheEvictAll.cacheName());
         evictAllParam.setWrapperCacheName(wrapperCacheName);
-        cacheOperate.deleteAll(evictAllParam);
+
         if (cacheEvictAll.beforeInvocation()) {
             super.beforeInvocation(evictAllParam, cacheOperate);
+            cacheOperate.deleteAll(evictAllParam);
         } else {
+            cacheOperate.deleteAll(evictAllParam);
             super.afterInvocation(evictAllParam, cacheOperate);
         }
     }
