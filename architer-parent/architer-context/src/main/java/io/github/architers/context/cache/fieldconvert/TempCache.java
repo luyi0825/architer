@@ -31,4 +31,6 @@ public interface TempCache {
      * 批量放置缓存
      */
     void batchPut(Map<String, Object> value);
+
+    boolean containsKey(String key);
 }

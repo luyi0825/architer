@@ -15,12 +15,12 @@ public class FieldConvertServiceTest {
     private FieldConvertService fieldConvertService;
 
     @Test
-    public void getByCodes() {
+    public void convertNoCache() {
         List<String> codes = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             codes.add(i + "");
         }
-        fieldConvertService.getByCodes(codes);
-        fieldConvertService.getByCodes(codes);
+        fieldConvertService.convertNoCacheList(codes);
+        fieldConvertService.convertNoCacheList(codes);
     }
 }

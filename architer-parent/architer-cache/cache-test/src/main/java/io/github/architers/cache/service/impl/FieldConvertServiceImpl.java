@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FieldConvertServiceImpl implements FieldConvertService, IFieldConvert<FieldConvertCacheDTO> {
     @Override
-    public List<FieldConvertNoCache> getByCodes(List<String> codes) {
+    public List<FieldConvertNoCache> convertNoCacheList(List<String> codes) {
         List<FieldConvertNoCache> list = findByCodes(codes);
-        FieldConvertUtils.convertData(list);
+        FieldConvertUtils.convert(list);
         return list;
     }
 

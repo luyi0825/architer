@@ -13,6 +13,7 @@ import java.util.*;
 
 /**
  * 数据转换工具类
+ * <li>为了引入依赖，所以用工具类进行转换调用</li>
  *
  * @author luyi
  */
@@ -32,7 +33,7 @@ public class FieldConvertUtils implements ApplicationContextAware {
     /**
      * 两级缓存转换简单的数据（本地缓存->远程缓存->DB）
      */
-    public static void convertData(Object data) {
+    public static void convert(Object data) {
         getDataConvertDispatcher().convertData(data, null, true);
     }
 
@@ -40,11 +41,11 @@ public class FieldConvertUtils implements ApplicationContextAware {
      * 通过临时缓存转换数据（临时缓存-远程缓存->数据库）
      * <li>临时缓存是通过本地缓存->远程缓存->数据库依次构建</li>
      */
-    public static void convertDataWithTempCache(Object data, TempCache tempCache) {
+    public static void convert(Object data, TempCache tempCache) {
         getDataConvertDispatcher().convertData(data, tempCache, true);
     }
 
-    public static void convertDataWithTempCache(Object data, TempCache tempCache, boolean cacheQueryValue) {
+    public static void convert(Object data, TempCache tempCache, boolean cacheQueryValue) {
         getDataConvertDispatcher().convertData(data, tempCache, cacheQueryValue);
     }
 
@@ -76,60 +77,13 @@ public class FieldConvertUtils implements ApplicationContextAware {
             public void batchPut(Map<String, Object> value) {
                 cache.putAll(value);
             }
+
+            @Override
+            public boolean containsKey(String key) {
+                return false;
+            }
         };
     }
-
-
-//    public static void convertManyDataWithTempCacheExpire(Object data) {
-//        long startTime = System.currentTimeMillis();
-//        int depth = 1;
-//
-//        AtomicLong cost = new AtomicLong();
-//        TempCache tempCache = getMaximumSizeExpireTempCache(2000, 1000);
-//        convertData(data, depth, cost, tempCache, false, true);
-//        long time = System.currentTimeMillis() - startTime;
-//        if (time > 2000) {
-//            log.error("转换数据耗时:" + time);
-//        } else {
-//            log.info("转换数据耗时:{}", time);
-//        }
-//    }
-
-//    public static void convertManyDataWithTempCacheNotExpire(Object data) {
-//        long startTime = System.currentTimeMillis();
-//        int depth = 1;
-//        Map<String, Object> tempCache = new HashMap<>(128);
-//        AtomicLong cost = new AtomicLong();
-//        TempCache tempCacheFunction = new TempCache() {
-//            @Override
-//            public boolean isCanExpire() {
-//                return false;
-//            }
-//
-//            @Override
-//            public Object get(String key) {
-//                return tempCache.get(key);
-//            }
-//
-//            @Override
-//            public void put(String key, Object value) {
-//                tempCache.put(key, value);
-//            }
-//
-//            @Override
-//            public void batchPut(Map<String, Object> value) {
-//                tempCache.putAll(value);
-//            }
-//        };
-//        convertData(data, depth, cost, tempCacheFunction, false);
-//        long time = System.currentTimeMillis() - startTime;
-//        if (time > 2000) {
-//            log.error("转换数据耗时:" + time);
-//        } else {
-//            log.info("转换数据耗时:{}", time);
-//        }
-//    }
-
 
     private static FieldConvertSupport getDataConvertDispatcher() {
         return fieldConvertSupport;

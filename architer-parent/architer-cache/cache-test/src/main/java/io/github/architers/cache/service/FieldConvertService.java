@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface FieldConvertService {
 
-    List<FieldConvertNoCache> getByCodes(List<String> codes);
+    List<FieldConvertNoCache> convertNoCacheList(List<String> codes);
 
 }
