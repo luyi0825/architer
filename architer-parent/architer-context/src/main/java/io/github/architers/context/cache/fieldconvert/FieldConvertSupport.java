@@ -349,7 +349,9 @@ public class FieldConvertSupport implements ApplicationContextAware {
                 originValue = tempCache.get(tempCacheKey);
             }
 
-            if (originValue == null && CacheLevel.isContainLocal(fieldConvert.cacheLevel())) {
+            if (originValue == null
+                    && Boolean.FALSE.equals(context.getLocalCacheTemp())
+                    && CacheLevel.isContainLocal(fieldConvert.cacheLevel())) {
                 //本地缓存的不放入临时缓存中
                 String originValueConverter = fieldConvertContext.getOriginValueConverter();
                 GetParam getParam = new GetParam();

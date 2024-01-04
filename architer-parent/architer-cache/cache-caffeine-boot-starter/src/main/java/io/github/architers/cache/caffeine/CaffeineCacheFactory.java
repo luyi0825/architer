@@ -34,12 +34,12 @@ public class CaffeineCacheFactory {
     }
 
 
-    public Cache<String, Serializable> getCache(String cacheName) {
-        Cache<String, Serializable> cache = caches.get(cacheName);
+    public Cache<String, Serializable> getCache(String wrapperCacheName, String cacheName) {
+        Cache<String, Serializable> cache = caches.get(wrapperCacheName);
         if (cache == null) {
-            return caches.computeIfAbsent(cacheName, this::buildCache);
+            caches.putIfAbsent(wrapperCacheName, buildCache(cacheName));
         }
-        return cache;
+        return caches.get(wrapperCacheName);
 
     }
 
@@ -73,7 +73,7 @@ public class CaffeineCacheFactory {
             @Override
             public void onRemoval(@Nullable String key, @Nullable Serializable serializable, RemovalCause removalCause) {
                 if (finalCaffeineConfig.isPrintEvictLog()) {
-                    log.warn("caffeine缓存驱逐:{}-{}", cacheName, key);
+                    log.warn("caffeine缓存移除:{}-{}", cacheName, key);
                 }
             }
         });

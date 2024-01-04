@@ -10,6 +10,7 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 删除缓存工具类
@@ -47,7 +48,8 @@ public class DeleteCacheUtils {
             batchEvictParam.setOriginCacheName(batchPutParam.getOriginCacheName());
             batchEvictParam.setWrapperCacheName(batchEvictParam.getWrapperCacheName());
             Map<Object, Object> cacheMap = BatchValueUtils.parseValue2Map(batchPutParam.getBatchCacheValue(), CacheConstants.CACHE_SPLIT);
-            batchEvictParam.setKeys(cacheMap.keySet());
+           //TODO
+             // batchEvictParam.setKeys((Set<String>)cacheMap.keySet());
             cacheOperate.batchDelete(batchEvictParam);
             changeParam = batchEvictParam;
         } else if (EvictAllParam.class.getSimpleName().equals(cacheParamName)) {

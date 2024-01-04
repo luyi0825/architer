@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * @author luyi
@@ -18,7 +19,7 @@ public class BatchEvictParam extends CacheChangeParam {
     /**
      * 缓存的key
      */
-    private Collection<?> keys;
+    private Set<String> keys;
 
     /**
      * 是否异步

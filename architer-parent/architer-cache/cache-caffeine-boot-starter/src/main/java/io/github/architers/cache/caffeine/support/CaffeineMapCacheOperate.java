@@ -35,7 +35,7 @@ public class CaffeineMapCacheOperate implements LocalCacheOperate {
 
     @Override
     public void put(PutParam putParam) {
-        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(putParam.getWrapperCacheName());
+        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(putParam.getWrapperCacheName(), putParam.getOriginCacheName());
 
         Object cacheValue = putParam.getCacheValue();
 
@@ -61,37 +61,37 @@ public class CaffeineMapCacheOperate implements LocalCacheOperate {
 
     @Override
     public void delete(EvictParam evictParam) {
-        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(evictParam.getWrapperCacheName());
+        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(evictParam.getWrapperCacheName(), evictParam.getOriginCacheName());
         cache.invalidate(evictParam.getKey());
     }
 
     @Override
     public Object get(GetParam getParam) {
-        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(getParam.getWrapperCacheName());
+        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(getParam.getWrapperCacheName(), getParam.getOriginCacheName());
         return cache.getIfPresent(getParam.getKey());
     }
 
     @Override
     public void deleteAll(EvictAllParam evictAllParam) {
-        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(evictAllParam.getWrapperCacheName());
+        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(evictAllParam.getWrapperCacheName(), evictAllParam.getOriginCacheName());
         cache.invalidateAll();
     }
 
     @Override
     public Map<String, Serializable> batchGet(BatchGetParam batchGetParam) {
-        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(batchGetParam.getWrapperCacheName());
+        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(batchGetParam.getWrapperCacheName(), batchGetParam.getOriginCacheName());
         return cache.getAllPresent(batchGetParam.getKeys());
     }
 
     @Override
     public void batchDelete(BatchEvictParam batchEvictParam) {
-        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(batchEvictParam.getWrapperCacheName());
-        cache.invalidateAll(new HashSet<String>((Collection<? extends String>) batchEvictParam.getKeys()));
+        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(batchEvictParam.getWrapperCacheName(), batchEvictParam.getOriginCacheName());
+        cache.invalidateAll(batchEvictParam.getKeys());
     }
 
     @Override
     public void batchPut(BatchPutParam batchPutParam) {
-        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(batchPutParam.getWrapperCacheName());
+        Cache<String, Serializable> cache = caffeineCacheFactory.getCache(batchPutParam.getWrapperCacheName(), batchPutParam.getOriginCacheName());
         Map<Object, Object> cacheMap = BatchValueUtils.parseValue2Map(batchPutParam.getBatchCacheValue(), CacheConstants.CACHE_SPLIT);
         cacheMap.forEach((key, value) -> cache.put(JsonUtils.toJsonString(key), (Serializable) value));
     }

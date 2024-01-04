@@ -11,6 +11,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * 批量删除操作处理
@@ -45,7 +46,7 @@ public class CacheBatchEvictOperationHandler extends BaseCacheOperationHandler {
         batchEvictParam.setWrapperCacheName(wrapperCacheName);
         batchEvictParam.setOriginCacheName(cacheBatchEvict.cacheName());
         batchEvictParam.setAsync(cacheBatchEvict.async());
-        batchEvictParam.setKeys((Collection<?>) keys);
+        batchEvictParam.setKeys((Set<String>) keys);
 
         CacheOperate cacheOperate = super.cacheOperateManager.getCacheOperate(cacheBatchEvict.cacheName());
 
