@@ -17,6 +17,11 @@ import java.util.concurrent.TimeUnit;
 public class BatchPutParam extends CacheChangeParam {
 
     /**
+     * 是否异步的
+     */
+    protected boolean async = false;
+
+    /**
      * 缓存值
      */
     private Object batchCacheValue;

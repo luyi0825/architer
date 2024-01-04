@@ -15,7 +15,10 @@ import java.util.concurrent.TimeUnit;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class PutParam extends CacheChangeParam   {
-
+    /**
+     * 是否异步的
+     */
+    protected boolean async = false;
     /**
      * 缓存的key
      */

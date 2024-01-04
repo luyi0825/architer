@@ -4,10 +4,8 @@ import io.github.architers.context.cache.CacheNameManager;
 import io.github.architers.context.cache.enums.CacheLevel;
 import io.github.architers.context.cache.fieldconvert.anantion.FieldConvert;
 import io.github.architers.context.cache.fieldconvert.anantion.NeedFieldConvert;
-import io.github.architers.context.cache.model.BatchGetParam;
-import io.github.architers.context.cache.model.GetParam;
-import io.github.architers.context.cache.model.InvalidCacheValue;
-import io.github.architers.context.cache.model.PutParam;
+import io.github.architers.context.cache.model.*;
+import io.github.architers.context.cache.operate.CacheOperate;
 import io.github.architers.context.cache.operate.CacheOperateManager;
 import io.github.architers.context.cache.operate.LocalAndRemoteCacheOperate;
 import lombok.extern.slf4j.Slf4j;
@@ -26,18 +24,14 @@ import java.util.*;
 
 /**
  * TODO 一个数据为空一直查询数据库没解决
- * 数据转码转发器
+ * 数据字段支持
  *
  * @author luyi
+ * @since 1.0.1
  */
 @Component
 @Slf4j
 public class FieldConvertSupport implements ApplicationContextAware {
-
-    /**
-     * 最大的深度
-     */
-    private static final int MAX_DEPTH = 5;
 
     @Resource
     private CacheOperateManager cacheOperateManager;
@@ -49,23 +43,23 @@ public class FieldConvertSupport implements ApplicationContextAware {
     private CacheNameManager cacheNameManager;
 
 
-    private final Map<String/*转换器名称*/, IFieldValueConvert<Object>> fieldValueConvertMap = new HashMap<>();
+    private final Map<String/*转换器名称*/, IFieldValueConvert<Serializable>> fieldValueConvertMap = new HashMap<>();
 
-    private final Map<String, IFieldOriginDataObtain<?>> fieldOriginDataObtainMap = new HashMap<>();
+    private final Map<String, IFieldOriginDataObtain<Serializable>> fieldOriginDataObtainMap = new HashMap<>();
 
 
-    public void convertData(Object data, TempCache tempCache, boolean cacheQueryValue) {
+    public void convertData(Object data, ConvertFieldParam context) {
         long startTime = System.currentTimeMillis();
         int depth = 1;
-        if (tempCache == null && data instanceof Collection) {
+        if (context.getTempCache() == null && data instanceof Collection) {
             if (((Collection<?>) data).size() > 1) {
                 //集合默认使用HashMap的临时缓存
-                tempCache = new HashMapTempCache(((Collection<?>) data).size());
+                context.setTempCache(new HashMapTempCache(((Collection<?>) data).size()));
             }
         }
-        convertData(data, depth, tempCache, false, cacheQueryValue);
+        convertData(data, depth, false, context);
         long time = System.currentTimeMillis() - startTime;
-        if (time > 2000) {
+        if (time > cacheFieldConvertProperties.getErrorTotalCost()) {
             log.error("转换数据耗时:" + time);
         } else {
             log.info("转换数据耗时:{}", time);
@@ -74,21 +68,21 @@ public class FieldConvertSupport implements ApplicationContextAware {
 
     /**
      * @param tempCacheParsed 临时缓存已经解析
-     * @param cacheQueryValue 缓存查询数据库的值
+     * @param data            转换的数据
+     * @param context         字段转换上下文
      */
     private void convertData(Object data,
                              int depth,
-                             TempCache tempCache,
                              boolean tempCacheParsed,
-                             boolean cacheQueryValue) {
+                             ConvertFieldParam context) {
         if (data == null) {
             return;
         }
-        if (++depth > MAX_DEPTH) {
-            throw new IllegalStateException("超过最大深度:" + MAX_DEPTH);
+        if (++depth > cacheFieldConvertProperties.getMaxDepth()) {
+            throw new IllegalStateException("超过最大深度:" + cacheFieldConvertProperties.getMaxDepth());
         }
         if (data instanceof Collection) {
-            convertCollectionData(data, depth, tempCache, cacheQueryValue);
+            convertCollectionData(data, depth, context);
         } else {
             //不是集合的就进行字段转换
             for (Field declaredField : data.getClass().getDeclaredFields()) {
@@ -97,22 +91,23 @@ public class FieldConvertSupport implements ApplicationContextAware {
                         declaredField.setAccessible(true);
                         Object fieldData = declaredField.get(data);
                         if (fieldData != null) {
-                            convertData(fieldData, depth, tempCache, false, cacheQueryValue);
+                            //递归转换
+                            convertData(fieldData, depth, false, context);
                         }
                     } catch (IllegalAccessException e) {
                         throw new RuntimeException(e);
                     }
                 }
             }
-            if (tempCache == null) {
+            if (context.getTempCache() == null) {
                 //转换单个数据
-                convertSingleData(data, cacheQueryValue);
+                convertSingleData(data, context);
             } else {
                 if (!tempCacheParsed) {
-                    parseTempCacheManyCacheValue(data, tempCache);
+                    parseTempCacheManyCacheValue(data, context);
                 }
                 //通过临时缓存转换单个数据
-                convertSingeDataWithTempCache(data, tempCache, cacheQueryValue);
+                convertSingeDataWithTempCache(data, context.getTempCache(), context);
             }
 
         }
@@ -120,28 +115,126 @@ public class FieldConvertSupport implements ApplicationContextAware {
 
     private void convertCollectionData(Object data,
                                        int depth,
-                                       TempCache tempCache, boolean cacheQueryValue) {
+                                       ConvertFieldParam context) {
         if (CollectionUtils.isEmpty((Collection<?>) data)) {
             //数据为空
             return;
         }
         ++depth;
-        parseTempCacheManyCacheValue(data, tempCache);
+        parseTempCacheManyCacheValue(data, context);
         int finalDepth = depth;
-        ((Collection<?>) data).forEach(e -> convertData(e, finalDepth, tempCache, true, cacheQueryValue));
+        ((Collection<?>) data).forEach(e -> convertData(e, finalDepth, true, context));
 
     }
 
 
-    private void parseTempCacheManyCacheValue(Object data, TempCache tempCache) {
-        if (tempCache == null) {
+    private void parseTempCacheManyCacheValue(Object data, ConvertFieldParam context) {
+        if (context.getTempCache() == null) {
             return;
         }
-        long startTime = System.currentTimeMillis();
         Map<String/*converter*/, Map<CacheLevel, Set<String>>> converterCacheLevelKeyMap = this.parseConverterCacheLevelKeys(data);
+        if (Boolean.FALSE.equals(context.getLocalCacheTemp())) {
+            //临时缓存不缓存本地缓存的数据
+            this.loadTempCacheDataWithExcludeLocalCache(context, converterCacheLevelKeyMap);
+        } else {
+            this.loadTempCacheDataWithIncludeLocalCache(context, converterCacheLevelKeyMap);
+        }
 
-        log.info("解析临时缓存key耗时:" + (System.currentTimeMillis() - startTime));
-        startTime = System.currentTimeMillis();
+    }
+
+    private void loadTempCacheDataWithIncludeLocalCache(ConvertFieldParam context,
+                                                        Map<String/*converter*/, Map<CacheLevel, Set<String>>> converterCacheLevelKeyMap) {
+        TempCache tempCache = context.getTempCache();
+        converterCacheLevelKeyMap.forEach((converter, cacheLevelMap) -> cacheLevelMap.forEach((cacheLevel, keys) -> {
+            Map<String, Serializable> valueMap = null;
+            Collection<String> notMatchKeys = null;
+            LocalAndRemoteCacheOperate cacheOperate = this.getCacheOperate(converter);
+            Set<String> notInTempCacheKeys = this.notInTempCacheKeys(keys, cacheLevel, converter, tempCache);
+            if (CacheLevel.remote.equals(cacheLevel) || CacheLevel.none.equals(cacheLevel)) {
+                //从db和remote获取之前，先判断本地有没有
+                if (!CollectionUtils.isEmpty(notInTempCacheKeys)) {
+                    if (CacheLevel.none.equals(cacheLevel)) {
+                        //直接从DB
+                        valueMap = getFieldOriginDataObtain(converter).getConvertOriginDatas(notInTempCacheKeys);
+                    } else {
+                        //从remote
+                        BatchGetParam batchGetParam = new BatchGetParam();
+                        batchGetParam.setKeys(notInTempCacheKeys);
+                        batchGetParam.setWrapperCacheName(getWrapperCacheName(converter));
+                        batchGetParam.setOriginCacheName(getCacheName(converter));
+                        Map<String, Serializable> remoteValueMap = cacheOperate.getRemoteCacheOperate().batchGet(batchGetParam);
+                        //取差集
+                        notMatchKeys = org.apache.commons.collections4.CollectionUtils.disjunction(notInTempCacheKeys, remoteValueMap.keySet());
+                        valueMap = remoteValueMap;
+                    }
+                }
+            } else if (CacheLevel.localAndRemote.equals(cacheLevel)) {
+                //从local
+                BatchGetParam batchGetParam = new BatchGetParam();
+                batchGetParam.setKeys(notInTempCacheKeys);
+                batchGetParam.setWrapperCacheName(getWrapperCacheName(converter));
+                batchGetParam.setOriginCacheName(getCacheName(converter));
+                valueMap = cacheOperate.getLocalCacheOperate().batchGet(batchGetParam);
+                //取差集
+                if (notInTempCacheKeys.size() != valueMap.size()) {
+                    //取差集
+                    notMatchKeys = org.apache.commons.collections4.CollectionUtils.disjunction(notInTempCacheKeys, valueMap.keySet());
+                    //本地缓存获取部分值
+                    batchGetParam = new BatchGetParam();
+                    batchGetParam.setKeys(new HashSet<>(notMatchKeys));
+                    Map<String, Serializable> remoteValueMap = cacheOperate.getRemoteCacheOperate().batchGet(batchGetParam);
+                    if (!CollectionUtils.isEmpty(remoteValueMap)) {
+                        if (Collections.EMPTY_MAP.equals(valueMap)) {
+                            //本地缓存没数据
+                            valueMap = remoteValueMap;
+                        } else {
+                            //本地、远程都存在一定数据，合并一起
+                            valueMap.putAll(remoteValueMap);
+                        }
+                    }
+                    if (remoteValueMap.size() != notMatchKeys.size()) {
+                        //remote中也没
+                        notMatchKeys = org.apache.commons.collections4.CollectionUtils.disjunction(notInTempCacheKeys, valueMap.keySet());
+                    }
+                }
+            } else if (CacheLevel.local.equals(cacheLevel)) {
+                //从local
+                BatchGetParam batchGetParam = new BatchGetParam();
+                batchGetParam.setKeys(notInTempCacheKeys);
+                batchGetParam.setWrapperCacheName(getWrapperCacheName(converter));
+                batchGetParam.setOriginCacheName(getCacheName(converter));
+                valueMap = cacheOperate.getLocalCacheOperate().batchGet(batchGetParam);
+                //取差集
+                if (notInTempCacheKeys.size() != valueMap.size()) {
+                    //取差集
+                    notMatchKeys = org.apache.commons.collections4.CollectionUtils.disjunction(notInTempCacheKeys, valueMap.keySet());
+                }
+            }
+            if (valueMap != null) {
+                valueMap.forEach((key, value) -> {
+                    String tempCacheKey = getTempCacheKey(cacheLevel, converter, key);
+                    tempCache.put(tempCacheKey, value);
+                });
+            }
+            if (notMatchKeys != null && !CollectionUtils.isEmpty(notMatchKeys)) {
+                //本地缓存或者remote缓存都没，从数据库中查询
+                Map<String, Serializable> dbMap = this.getFieldOriginDataObtain(converter).getConvertOriginDatas(notMatchKeys);
+                if (!CollectionUtils.isEmpty(dbMap)) {
+                    dbMap.forEach((key, value) -> {
+                        String tempCacheKey = getTempCacheKey(cacheLevel, converter, key);
+                        tempCache.put(tempCacheKey, value);
+                    });
+                }
+                if (!Boolean.FALSE.equals(context.getCacheNotHitValue())) {
+                    //异步放到缓存
+                    asyncPutCache(converter, dbMap);
+                }
+            }
+        }));
+    }
+
+    private void loadTempCacheDataWithExcludeLocalCache(ConvertFieldParam context, Map<String/*converter*/, Map<CacheLevel, Set<String>>> converterCacheLevelKeyMap) {
+        TempCache tempCache = context.getTempCache();
         converterCacheLevelKeyMap.forEach((converter, cacheLevelMap) -> cacheLevelMap.forEach((cacheLevel, keys) -> {
             Map<String, Serializable> valueMap = null;
             Collection<String> notMatchKeys = null;
@@ -157,6 +250,8 @@ public class FieldConvertSupport implements ApplicationContextAware {
                         //从remote
                         BatchGetParam batchGetParam = new BatchGetParam();
                         batchGetParam.setKeys(notInTempCacheKeys);
+                        batchGetParam.setWrapperCacheName(getWrapperCacheName(converter));
+                        batchGetParam.setOriginCacheName(getCacheName(converter));
                         Map<String, Serializable> remoteValueMap = cacheOperate.getRemoteCacheOperate().batchGet(batchGetParam);
                         //取差集
                         notMatchKeys = org.apache.commons.collections4.CollectionUtils.disjunction(notInTempCacheKeys, remoteValueMap.keySet());
@@ -180,10 +275,9 @@ public class FieldConvertSupport implements ApplicationContextAware {
                     });
                 }
                 //异步放到缓存
-                asyncPutCache(converter, dbMap, cacheLevel);
+                asyncPutCache(converter, dbMap);
             }
         }));
-        log.info("准备临时缓存数据耗时:" + (System.currentTimeMillis() - startTime));
     }
 
     private Set<String> notInTempCacheKeys(Set<String> keys, CacheLevel cacheLevel, String originDataConverter, TempCache tempCache) {
@@ -214,13 +308,15 @@ public class FieldConvertSupport implements ApplicationContextAware {
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         Set<String> converters = new HashSet<>();
         applicationContext.getBeansOfType(IFieldConvert.class).forEach((key, value) -> {
+            //获取转换的值
             if (value instanceof IFieldValueConvert) {
-                if (fieldValueConvertMap.putIfAbsent(value.getConverter(), (IFieldValueConvert<Object>) value) != null) {
+                if (fieldValueConvertMap.putIfAbsent(value.getConverter(), (IFieldValueConvert<Serializable>) value) != null) {
                     throw new RuntimeException(value.getConverter() + "重复");
                 }
             }
-            if (value instanceof IFieldValueConvert) {
-                fieldOriginDataObtainMap.put(value.getConverter(), (IFieldOriginDataObtain<?>) value);
+            //原始值获取
+            if (value instanceof IFieldOriginDataObtain) {
+                fieldOriginDataObtainMap.put(value.getConverter(), (IFieldOriginDataObtain<Serializable>) value);
             }
             //converter不能重复
             if (converters.contains(value.getConverter())) {
@@ -230,14 +326,14 @@ public class FieldConvertSupport implements ApplicationContextAware {
         });
     }
 
-    public IFieldOriginDataObtain getFieldOriginDataObtain(String converter) {
+    public IFieldOriginDataObtain<Serializable> getFieldOriginDataObtain(String converter) {
         return fieldOriginDataObtainMap.get(converter);
     }
 
     /**
      * 转换(数据会临时缓存）
      */
-    public void convertSingeDataWithTempCache(Object data, TempCache tempCache, Boolean cacheQueryValue) {
+    public void convertSingeDataWithTempCache(Object data, TempCache tempCache, ConvertFieldParam context) {
         for (FieldConvertContext fieldConvertContext : ClassFieldsCache.getFieldConvertContexts(data.getClass())) {
             FieldConvert fieldConvert = fieldConvertContext.getFieldConvert();
             String sourceFieldStrValue = getSourceFieldStrValue(fieldConvertContext, data);
@@ -246,25 +342,28 @@ public class FieldConvertSupport implements ApplicationContextAware {
                 setConvertFieldValue(null, null, data, fieldConvertContext.getConvertField());
                 continue;
             }
-            Object originValue;
-            String tempCacheKey = getTempCacheKey(fieldConvert.cacheLevel(), fieldConvertContext.getOriginValueConverter(), sourceFieldStrValue);
-            originValue = tempCache.get(tempCacheKey);
+            Object originValue = null;
+            if (!CacheLevel.local.equals(fieldConvert.cacheLevel())) {
+                //不是本地缓存从临时缓存获取
+                String tempCacheKey = getTempCacheKey(fieldConvert.cacheLevel(), fieldConvertContext.getOriginValueConverter(), sourceFieldStrValue);
+                originValue = tempCache.get(tempCacheKey);
+            }
+
             if (originValue == null && CacheLevel.isContainLocal(fieldConvert.cacheLevel())) {
                 //本地缓存的不放入临时缓存中
                 String originValueConverter = fieldConvertContext.getOriginValueConverter();
                 GetParam getParam = new GetParam();
                 getParam.setKey(sourceFieldStrValue);
                 getParam.setOriginCacheName(getCacheName(originValueConverter));
-                getParam.setAsync(false);
                 getParam.setWrapperCacheName(getWrapperCacheName(originValueConverter));
                 originValue = getCacheOperate(originValueConverter).getLocalCacheOperate().get(getParam);
-                if (originValue == null && tempCache.isCanExpire()) {
+                if (originValue == null) {
                     //临时缓存能够过期，就重新走一次查询
-                    originValue = this.getOriginDataByOrderly(fieldConvertContext, sourceFieldStrValue, true, cacheQueryValue);
+                    originValue = this.getOriginDataByOrderly(fieldConvertContext, sourceFieldStrValue, true, context);
                 }
-            } else if (originValue == null && tempCache.isCanExpire()) {
+            } else if (originValue == null && tempCache.isCanEvict()) {
                 //临时缓存能够过期，就重新走一次查询
-                originValue = this.getOriginDataByOrderly(fieldConvertContext, sourceFieldStrValue, false, cacheQueryValue);
+                originValue = this.getOriginDataByOrderly(fieldConvertContext, sourceFieldStrValue, false, context);
             }
             //设置转换值
             this.setConvertFieldValue(originValue, fieldConvert.converter(), data, fieldConvertContext.getConvertField());
@@ -289,12 +388,12 @@ public class FieldConvertSupport implements ApplicationContextAware {
     }
 
 
-    public void convertSingleData(Object data, boolean cacheQueryValue) {
+    public void convertSingleData(Object data, ConvertFieldParam context) {
         try {
             for (FieldConvertContext fieldConvertContext : ClassFieldsCache.getFieldConvertContexts(data.getClass())) {
                 //临时缓存查询不到，再从全局缓存和数据库查询
                 String sourceFieldStrValue = getSourceFieldStrValue(fieldConvertContext, data);
-                Object originData = this.getOriginDataByOrderly(fieldConvertContext, sourceFieldStrValue, false, cacheQueryValue);
+                Object originData = this.getOriginDataByOrderly(fieldConvertContext, sourceFieldStrValue, false, context);
                 //设置转换值
                 this.setConvertFieldValue(originData, fieldConvertContext.getFieldConvert().converter(), data, fieldConvertContext.getConvertField());
             }
@@ -307,11 +406,11 @@ public class FieldConvertSupport implements ApplicationContextAware {
     private void setConvertFieldValue(Object originData, String converter, Object data, Field convertField) {
         try {
             if (originData != null && !(originData instanceof InvalidCacheValue)) {
-                IFieldValueConvert<Object> originValueConvert = fieldValueConvertMap.get(converter);
+                IFieldValueConvert<Serializable> originValueConvert = fieldValueConvertMap.get(converter);
                 if (originValueConvert == null) {
                     throw new RuntimeException("数据转换器为空:" + converter);
                 }
-                Object convertValue = originValueConvert.getConvertValue(originData);
+                Object convertValue = originValueConvert.getConvertValue((Serializable) originData);
                 convertField.setAccessible(true);
                 convertField.set(data, convertValue);
                 return;
@@ -351,7 +450,7 @@ public class FieldConvertSupport implements ApplicationContextAware {
                                           CacheLevel cacheLevel,
                                           String originValueConverter,
                                           boolean excludeLocal,
-                                          boolean cacheQueryValue) {
+                                          ConvertFieldParam context) {
         Object originData = null;
         LocalAndRemoteCacheOperate localAndRemoteCacheOperate = this.getCacheOperate(originValueConverter);
         if (CacheLevel.localAndRemote.equals(cacheLevel)) {
@@ -376,7 +475,7 @@ public class FieldConvertSupport implements ApplicationContextAware {
             originData = originValueObtain.getConvertOriginData(getParam.getKey());
             return originData;
         } finally {
-            if (originData != null && cacheQueryValue) {
+            if (originData != null && !Boolean.FALSE.equals(context.getCacheNotHitValue())) {
                 PutParam putParam = new PutParam();
                 putParam.setKey(getParam.getKey());
                 putParam.setAsync(true);
@@ -391,7 +490,7 @@ public class FieldConvertSupport implements ApplicationContextAware {
     private Object getOriginDataByOrderly(FieldConvertContext fieldConvertContext,
                                           String sourceFieldStrValue,
                                           boolean excludeLocal,
-                                          boolean cacheQueryValue) {
+                                          ConvertFieldParam context) {
         if (sourceFieldStrValue == null) {
             return null;
         }
@@ -401,24 +500,28 @@ public class FieldConvertSupport implements ApplicationContextAware {
         GetParam getParam = new GetParam();
         getParam.setKey(sourceFieldStrValue);
         getParam.setOriginCacheName(getCacheName(originValueConverter));
-        getParam.setAsync(false);
         getParam.setWrapperCacheName(getWrapperCacheName(originValueConverter));
-        return getOriginDataByOrderly(getParam,
-                cacheLevel, fieldConvertContext.getOriginValueConverter(), excludeLocal, cacheQueryValue);
+        return getOriginDataByOrderly(getParam, cacheLevel, fieldConvertContext.getOriginValueConverter(), excludeLocal, context);
     }
 
-    public void asyncPutCache(String converter, Map<String, Serializable> cacheData, CacheLevel cacheLevel) {
+    public void asyncPutCache(String converter, Map<String, Serializable> cacheData) {
         if (CollectionUtils.isEmpty(cacheData)) {
             return;
         }
-//        if (CacheLevel.localAndRemote.equals(cacheLevel)) {
-//            originValueObtainSupport.asyncPutAllLocal(converter, cacheData);
-//            originValueObtainSupport.asyncPutAllRemote(converter, cacheData);
-//        } else if (CacheLevel.local.equals(cacheLevel)) {
-//            originValueObtainSupport.asyncPutAllLocal(converter, cacheData);
-//        } else if (CacheLevel.remote.equals(cacheLevel)) {
-//            originValueObtainSupport.asyncPutAllRemote(converter, cacheData);
-//        }
+        //try起来，不影响正常业务
+        try {
+            BatchPutParam batchPutParam = new BatchPutParam();
+            batchPutParam.setAsync(true);
+            batchPutParam.setExpireTime(-1);
+            batchPutParam.setBatchCacheValue(cacheData);
+            batchPutParam.setWrapperCacheName(this.getWrapperCacheName(converter));
+            batchPutParam.setOriginCacheName(this.getCacheName(converter));
+            CacheOperate cacheOperate = getCacheOperate(converter);
+            cacheOperate.batchPut(batchPutParam);
+        } catch (Exception e) {
+            log.warn("batchPut缓存失败", e);
+        }
+
     }
 
     private void asyncPutCache(String converter, String fieldStrValue, CacheLevel cacheLevel, Object value) {

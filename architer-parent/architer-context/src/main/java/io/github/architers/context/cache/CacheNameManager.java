@@ -26,16 +26,14 @@ public class CacheNameManager {
         StringBuilder cacheNameBuilder = new StringBuilder(10);
         if (StringUtils.hasText(cacheProperties.getNamespace())) {
             cacheNameBuilder.append(cacheProperties.getNamespace());
+            cacheNameBuilder.append(":");
         }
         if (cacheNameWrapper != null) {
-            cacheNameBuilder.append(":");
             cacheNameBuilder.append(cacheNameWrapper.getCacheName(null, cacheName));
         } else {
-            cacheNameBuilder.append(":");
             cacheNameBuilder.append(cacheName);
         }
         cacheNameMap.putIfAbsent(cacheName, cacheNameBuilder.toString());
         return cacheNameMap.get(cacheName);
-
     }
 }

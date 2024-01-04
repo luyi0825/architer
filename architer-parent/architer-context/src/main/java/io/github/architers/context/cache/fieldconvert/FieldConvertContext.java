@@ -8,6 +8,12 @@ import org.springframework.util.StringUtils;
 import java.lang.reflect.Field;
 import java.util.Objects;
 
+/**
+ * 字段转换上下文
+ *
+ * @author luyi
+ * @since 1.0.1
+ */
 @Data
 public class FieldConvertContext {
 

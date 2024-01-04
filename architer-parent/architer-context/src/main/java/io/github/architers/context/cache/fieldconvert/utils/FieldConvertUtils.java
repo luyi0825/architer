@@ -34,20 +34,27 @@ public class FieldConvertUtils implements ApplicationContextAware {
      * 两级缓存转换简单的数据（本地缓存->远程缓存->DB）
      */
     public static void convert(Object data) {
-        getDataConvertDispatcher().convertData(data, null, true);
+        ConvertFieldParam convertFieldParam = ConvertFieldParam.builder()
+                .build();
+        getDataConvertDispatcher().convertData(data, convertFieldParam);
     }
+
+    public static void convert(Object data, ConvertFieldParam convertFieldParam) {
+        getDataConvertDispatcher().convertData(data, convertFieldParam);
+    }
+
 
     /**
      * 通过临时缓存转换数据（临时缓存-远程缓存->数据库）
      * <li>临时缓存是通过本地缓存->远程缓存->数据库依次构建</li>
      */
     public static void convert(Object data, TempCache tempCache) {
-        getDataConvertDispatcher().convertData(data, tempCache, true);
+        ConvertFieldParam convertFieldParam = ConvertFieldParam.builder()
+                .tempCache(null)
+                .build();
+        getDataConvertDispatcher().convertData(data, convertFieldParam);
     }
 
-    public static void convert(Object data, TempCache tempCache, boolean cacheQueryValue) {
-        getDataConvertDispatcher().convertData(data, tempCache, cacheQueryValue);
-    }
 
     /**
      * 获取最大容量的过期临时缓存（防止本地缓存的数据太多，造成OOM）
@@ -59,7 +66,7 @@ public class FieldConvertUtils implements ApplicationContextAware {
         Cache<String, Object> cache = Caffeine.newBuilder().maximumSize(maximumSize).initialCapacity(initialCapacity).build();
         return new TempCache() {
             @Override
-            public boolean isCanExpire() {
+            public boolean isCanEvict() {
                 return true;
             }
 

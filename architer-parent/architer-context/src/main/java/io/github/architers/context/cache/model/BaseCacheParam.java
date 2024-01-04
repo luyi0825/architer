@@ -13,11 +13,6 @@ import lombok.Data;
 public abstract class BaseCacheParam implements CacheOperationParam {
 
     /**
-     * 是否异步的
-     */
-    protected boolean async = false;
-
-    /**
      * 原始的缓存名称
      */
     protected String originCacheName;

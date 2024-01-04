@@ -93,12 +93,6 @@ public class BatchValueUtils {
      * 得到缓存key的值
      */
     public static String getCacheKey(Object cacheEntity, String split) {
-        if (cacheEntity == null) {
-            return null;
-        }
-        if (cacheEntity instanceof String || cacheEntity instanceof Number) {
-            return cacheEntity.toString();
-        }
         CacheField cacheField = getObjectCacheField(cacheEntity.getClass());
         StringBuilder keyBuilder = new StringBuilder();
         int length = cacheField.getKeys().length;

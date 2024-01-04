@@ -47,8 +47,6 @@ public class CacheableOperationHandler extends BaseCacheOperationHandler {
         Object key = super.parseCacheKey(expressionMetadata, cacheable.key());
 
         GetParam getParam = new GetParam();
-        //同步：没有值才查询数据库
-        getParam.setAsync(false);
         getParam.setOriginCacheName(cacheable.cacheName());
         getParam.setWrapperCacheName(getWrapperCacheName(cacheable.cacheName(), expressionMetadata));
         getParam.setKey(JsonUtils.toJsonString(key));
@@ -61,7 +59,6 @@ public class CacheableOperationHandler extends BaseCacheOperationHandler {
             //本地缓存多次put没关系，当时防止多次查询数据库
             synchronized (cacheable.cacheName().intern()) {
                 //先判断缓存有没有，缓存有值就返回
-                getParam.setAsync(false);
                 getParam.setOriginCacheName(cacheable.cacheName());
                 getParam.setWrapperCacheName(getWrapperCacheName(cacheable.cacheName(), expressionMetadata));
                 getParam.setKey(JsonUtils.toJsonString(key));
@@ -82,10 +79,7 @@ public class CacheableOperationHandler extends BaseCacheOperationHandler {
                 putParam.setTimeUnit(cacheable.timeUnit());
                 putParam.setExpireTime(expireTime);
                 cacheOperate.put(putParam);
-
-
             }
-
         } else {
             //设置返回值，防止方法出现其他注解调用methodReturnValueFunction.proceed()，造成重复调用
             methodReturnValueFunction.setValue(cacheValue);

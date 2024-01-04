@@ -31,6 +31,11 @@ public class CacheFieldConvertProperties implements Serializable {
      */
     private boolean logTotalCost = true;
 
+    /**
+     * 转换的最大深度
+     */
+    private int maxDepth = 5;
+
 
     /**
      * 耗时多少打印warn日志（单位毫秒）

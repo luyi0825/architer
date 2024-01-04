@@ -1,12 +1,12 @@
 package io.github.architers.context.cache.fieldconvert;
 
 
-/**
+import java.io.Serializable; /**
  * 根据原始数据转换成需要的值
  *
  * @param <T>
  */
-public interface IFieldValueConvert<T>  {
+public interface IFieldValueConvert<T extends Serializable>  {
 
 
     Object getConvertValue(T originData);

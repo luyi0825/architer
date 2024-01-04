@@ -28,7 +28,7 @@ public class HashMapTempCache implements TempCache {
     }
 
     @Override
-    public boolean isCanExpire() {
+    public boolean isCanEvict() {
         return false;
     }
 

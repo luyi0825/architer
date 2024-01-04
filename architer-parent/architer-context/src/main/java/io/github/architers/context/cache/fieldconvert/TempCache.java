@@ -10,9 +10,9 @@ import java.util.Map;
 public interface TempCache {
 
     /**
-     * 临时缓存是否能过期
+     * 临时缓存是否能够驱逐（淘汰策略能驱逐缓存数据）
      */
-    boolean isCanExpire();
+    boolean isCanEvict();
 
     /**
      * 从临时缓存中获取值
