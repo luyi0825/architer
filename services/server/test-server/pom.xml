@@ -70,14 +70,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>mybatis-plus</artifactId>
-            <version>${architer.revision}</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>spring-boot-starter-web-mvc</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-spring-boot-starter -->

@@ -85,12 +85,6 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>spring-boot-starter-web-mvc</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.mqttv5.client -->
         <dependency>
             <groupId>org.eclipse.paho</groupId>
