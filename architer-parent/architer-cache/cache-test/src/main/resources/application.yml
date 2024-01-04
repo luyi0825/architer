@@ -1,36 +1,28 @@
-#customize:
-#  redis:
-#    redisson:
-#      config:
-#        ##单机
-#        singleServerConfig:
-#          address: redis://192.168.2.222:6379
-  #        code: org.redisson.codec.JsonJacksonCodec
-        ##主从
-#        masterSlaveServersConfig:
-#          masterAddress: redis://192.168.2.222:6379
-#          slaveAddresses: redis://192.168.2.222:6380
 
-#architers:
-#  cache:
-#    default-cache-operate-class: io.github.architers.cache.redisson.support.ValueCacheOperate
 architers:
   cache:
     custom-configs:
-       local:
-         local-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
-         #不开启延迟双删
-         change-delay-delete-again: false
-       remote:     #远程操作缓存
-         remote-operate-class: io.github.architers.cache.redisson.support.RedissonMapCacheOperate
-         #不开启延迟双删
-         change-delay-delete-again: false
-  #default-cache-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
-       fieldConverterRemote:
-         remote-operate-class: io.github.architers.cache.redisson.support.RedissonMapCacheOperate
+      local:
+        local-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
+        #不开启延迟双删
+        change-delay-delete-again: false
+      remote: #远程操作缓存
+        remote-operate-class: io.github.architers.cache.redisson.support.RedissonMapCacheOperate
+        #不开启延迟双删
+        change-delay-delete-again: false
+      #default-cache-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
+      fieldConverter:
+        local-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
+        remote-operate-class: io.github.architers.cache.redisson.support.RedissonMapCacheOperate
     field-convert:
       cache-names:
-        fieldConverter: fieldConverterRemote
+        fieldConverter: fieldConverter
+    caffeine:
+      caches:
+        fieldConverter:
+          maximum-size: 50
+          #打印日志
+          print-evict-log: true
 rocketmq:
   name-server: rocketmq:9876
   producer:

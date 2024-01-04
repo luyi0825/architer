@@ -2,11 +2,13 @@ package io.github.architers.cache.caffeine;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author luyi
  */
 @Data
-public class CaffeineConfig {
+public class CaffeineConfig implements Serializable {
 
     /**
      *
@@ -16,20 +18,23 @@ public class CaffeineConfig {
     /**
      * 最大数量
      */
-    private long maximumSize = -1L;
+    private long maximumSize = 5000;
 
     /**
      * 最大权重
      */
     private long maximumWeight = -1;
 
-    /**
-     * 更新后是否刷新缓存时间(默认为false)
-     */
-    private boolean updateRefreshExpired = false;
 
     /**
      * 获取类型
      */
-    private ExpireType expireType;
+    private ExpireType expireType = ExpireType.none;
+
+    /**
+     * 是否打印缓存驱逐日志
+     */
+    private boolean printEvictLog = false;
+
+
 }

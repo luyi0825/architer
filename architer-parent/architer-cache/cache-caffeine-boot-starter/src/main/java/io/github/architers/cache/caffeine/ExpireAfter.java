@@ -29,7 +29,6 @@ public class ExpireAfter implements Expiry<String, Object> {
             System.out.println("过期时间:" + TimeUnit.NANOSECONDS.convert(expireTime, TimeUnit.MILLISECONDS));
             return TimeUnit.NANOSECONDS.convert(expireTime, TimeUnit.MILLISECONDS);
         }
-
         //没有就永不过期
         return MAXIMUM_EXPIRY;
     }
@@ -38,11 +37,11 @@ public class ExpireAfter implements Expiry<String, Object> {
     public long expireAfterUpdate(String key, Object value, long currentTime, @NonNegative long currentDuration) {
         Long expireTime = ExpireTimeLocal.get();
         //有就用指定的时间
-        if (expireTime != null){
-            if(expireTime>0){
+        if (expireTime != null) {
+            if (expireTime > 0) {
                 return TimeUnit.MILLISECONDS.toNanos(expireTime);
             }
-            if(CacheConstants.NEVER_EXPIRE==expireTime){
+            if (CacheConstants.NEVER_EXPIRE == expireTime) {
                 return MAXIMUM_EXPIRY;
             }
         }

@@ -8,6 +8,7 @@ import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.springframework.util.CollectionUtils;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -108,4 +109,9 @@ public class RedissonMapCacheOperate implements RemoteCacheOperate {
         }
     }
 
+    @Override
+    public Map<String, Serializable> batchGet(BatchGetParam batchGetParam) {
+        RMapCache<String, Serializable> rMapCache = redissonClient.getMapCache(batchGetParam.getWrapperCacheName());
+       return rMapCache.getAll(batchGetParam.getKeys());
+    }
 }

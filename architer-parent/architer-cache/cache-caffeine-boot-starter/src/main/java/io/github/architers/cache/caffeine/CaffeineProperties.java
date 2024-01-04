@@ -9,7 +9,7 @@ import java.util.Map;
  * @author luyi
  * Caffeine属性配置
  */
-@ConfigurationProperties("architer.cahce.caffeine")
+@ConfigurationProperties(prefix = "architers.cache.caffeine")
 @Data
 public class CaffeineProperties {
 

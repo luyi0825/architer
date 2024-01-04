@@ -1,7 +1,6 @@
 package io.github.architers.cache.service.impl;
 
-import io.github.architers.cache.entity.FieldConvertCacheDTO;
-import io.github.architers.cache.entity.FieldConvertNoCache;
+import io.github.architers.cache.entity.*;
 import io.github.architers.cache.service.FieldConvertService;
 import io.github.architers.context.cache.fieldconvert.IFieldConvert;
 import io.github.architers.context.cache.fieldconvert.utils.FieldConvertUtils;
@@ -19,18 +18,49 @@ import java.util.stream.Collectors;
 public class FieldConvertServiceImpl implements FieldConvertService, IFieldConvert<FieldConvertCacheDTO> {
     @Override
     public List<FieldConvertNoCache> convertNoCacheList(List<String> codes) {
-        List<FieldConvertNoCache> list = findByCodes(codes);
-        FieldConvertUtils.convert(list);
-        return list;
-    }
-
-    public List<FieldConvertNoCache> findByCodes(List<String> codes) {
         List<FieldConvertNoCache> list = new ArrayList<>(codes.size());
         for (String code : codes) {
             FieldConvertNoCache fieldConvertNoCache = new FieldConvertNoCache();
             fieldConvertNoCache.setCode(code);
             list.add(fieldConvertNoCache);
         }
+        FieldConvertUtils.convert(list);
+        return list;
+    }
+
+    @Override
+    public List<FieldConvertRemoteCache> convertRemoteCache(List<String> codes) {
+        List<FieldConvertRemoteCache> list = new ArrayList<>(codes.size());
+        for (String code : codes) {
+            FieldConvertRemoteCache fieldConvertNoCache = new FieldConvertRemoteCache();
+            fieldConvertNoCache.setCode(code);
+            list.add(fieldConvertNoCache);
+        }
+        FieldConvertUtils.convert(list);
+        return list;
+    }
+
+    @Override
+    public List<FieldConvertBothCache> convertBothCache(List<String> codes) {
+        List<FieldConvertBothCache> list = new ArrayList<>(codes.size());
+        for (String code : codes) {
+            FieldConvertBothCache fieldConvertBothCache = new FieldConvertBothCache();
+            fieldConvertBothCache.setCode(code);
+            list.add(fieldConvertBothCache);
+        }
+        FieldConvertUtils.convert(list);
+        return list;
+    }
+
+    @Override
+    public Object convertLocalCache(List<String> codes) {
+        List<FieldConvertLocalCache> list = new ArrayList<>(codes.size());
+        for (String code : codes) {
+            FieldConvertLocalCache fieldConvertLocalCache = new FieldConvertLocalCache();
+            fieldConvertLocalCache.setCode(code);
+            list.add(fieldConvertLocalCache);
+        }
+        FieldConvertUtils.convert(list);
         return list;
     }
 
