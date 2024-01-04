@@ -22,11 +22,7 @@
             <artifactId>architer-context</artifactId>
             <version>${architer.revision}</version>
         </dependency>
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>${architer.revision}</version>
-        </dependency>
+
 
 <!--        <dependency>-->
 <!--            <groupId>io.github.architers</groupId>-->

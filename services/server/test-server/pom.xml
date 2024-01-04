@@ -112,16 +112,6 @@
             <version>2.11.0</version>
         </dependency>
         <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>${architer.revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>architer-cloud-config-nacos-starter</artifactId>
-            <version>${architer.revision}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>

@@ -20,7 +20,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>architer-context</artifactId>
-            <version>${architer.revision}</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-spring-boot-starter -->
@@ -44,7 +44,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>three-party-component-object-storage</artifactId>
-            <version>${architer.revision}</version>
+            <version>${revision}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>okhttp</artifactId>
@@ -81,14 +81,14 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>mybatis-plus</artifactId>
-            <version>${architer.revision}</version>
+            <version>${revision}</version>
         </dependency>
 
 
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>spring-boot-starter-web-mvc</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.mqttv5.client -->
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>cache-redisson-boot-starter</artifactId>
-            <version>${architer.revision}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -148,16 +148,6 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>${architer.revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>architer-cloud-config-nacos-starter</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
