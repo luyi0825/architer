@@ -20,8 +20,9 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 public class SqlTaskUtils implements ApplicationContextAware {
 
     private static final ThreadLocal<SqlTaskContext> SQL_TASK_CONTEXT_THREAD_LOCAL = new ThreadLocal<>();
+    private static SqlTaskExecutor sqlTaskExecutor;
 
-    public static SqlTaskContext initLocal() {
+    public static SqlTaskContext getContext() {
         SqlTaskContext sqlTaskContext = SQL_TASK_CONTEXT_THREAD_LOCAL.get();
         if (sqlTaskContext == null) {
             sqlTaskContext = new SqlTaskContext();
@@ -31,22 +32,8 @@ public class SqlTaskUtils implements ApplicationContextAware {
         return sqlTaskContext;
     }
 
-    /**
-     * initLocal后才有值
-     */
-    public static SqlTaskContext getLocal() {
-        return SQL_TASK_CONTEXT_THREAD_LOCAL.get();
-    }
-
-    public static void removeLocal() {
+    public static void removeContext() {
         SQL_TASK_CONTEXT_THREAD_LOCAL.remove();
-    }
-
-    private static SqlTaskExecutor sqlTaskExecutor;
-
-
-    public static void executorDelivery(DeliverySqlTask... sqlTaskList) {
-        sqlTaskExecutor.executorDelivery(sqlTaskList);
     }
 
 
@@ -55,9 +42,12 @@ public class SqlTaskUtils implements ApplicationContextAware {
     }
 
     public void executorTaskContext(SqlTaskContext sqlTaskContext) {
-        sqlTaskExecutor.executor(sqlTaskContext.getSqlTaskList().toArray(new SqlTask[0]));
-        if (sqlTaskContext.getEndTransactionHook() != null) {
-            sqlTaskExecutor.getThreadPoolExecutor().execute(sqlTaskContext.getEndTransactionHook().get());
+        sqlTaskExecutor.executor(sqlTaskContext.getTransactionTasks().toArray(new SqlTask[0]));
+        //事务结束后执行的sql钩子任务
+        if (sqlTaskContext.getEndTransactionHooks() != null) {
+            for (SqlTask transactionTask : sqlTaskContext.getEndTransactionHooks()) {
+                transactionTask.execute();
+            }
         }
     }
 

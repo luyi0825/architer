@@ -1,7 +1,7 @@
 package io.github.architers.starter.web.response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.architers.context.web.ResponseResult;
+import io.github.architers.context.webmvc.ResponseResult;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;

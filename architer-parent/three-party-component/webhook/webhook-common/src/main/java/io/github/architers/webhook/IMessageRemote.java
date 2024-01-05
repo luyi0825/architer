@@ -1,6 +1,6 @@
 package io.github.architers.webhook;
 
-import io.github.architers.context.web.ResponseResult;
+import io.github.architers.context.webmvc.ResponseResult;
 
 import java.io.Serializable;
 

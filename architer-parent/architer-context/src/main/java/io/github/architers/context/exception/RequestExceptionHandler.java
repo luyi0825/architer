@@ -1,6 +1,6 @@
 package io.github.architers.context.exception;
 
-import io.github.architers.context.web.ResponseResult;
+import io.github.architers.context.webmvc.ResponseResult;
 
 /**
  * 请求异处理器

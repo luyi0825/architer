@@ -1,10 +1,5 @@
-package io.github.architers.context.web.authority;
+package io.github.architers.context.webmvc.authority;
 
-
-import org.springframework.http.HttpRequest;
-import org.springframework.util.CollectionUtils;
-
-import java.util.Set;
 
 public class Handler {
     private AuthorityLoader authorityLoader;

@@ -1,6 +1,6 @@
 package io.github.architers.webhook.wechat.remote;
 
-import io.github.architers.context.web.ResponseResult;
+import io.github.architers.context.webmvc.ResponseResult;
 import io.github.architers.webhook.constants.RobotType;
 import io.github.architers.webhook.IMessageRemote;
 import io.github.architers.webhook.wechat.response.WechatResponse;

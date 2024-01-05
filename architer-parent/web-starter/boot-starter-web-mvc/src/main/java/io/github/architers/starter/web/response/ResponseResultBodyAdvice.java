@@ -1,8 +1,8 @@
 package io.github.architers.starter.web.response;
 
 
-import io.github.architers.context.web.IgnoreResponseResult;
-import io.github.architers.context.web.ResponseResult;
+import io.github.architers.context.webmvc.IgnoreResponseResult;
+import io.github.architers.context.webmvc.ResponseResult;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

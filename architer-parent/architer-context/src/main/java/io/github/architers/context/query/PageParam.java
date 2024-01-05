@@ -26,7 +26,7 @@ public class PageParam {
     private Boolean count = true;
 
     /**
-     * 分页信息
+     * 排序字段
      */
     private List<OrderBy> orderBys;
 }

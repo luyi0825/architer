@@ -1,7 +1,7 @@
 package io.github.architers.context.exception;
 
 
-import io.github.architers.context.web.ResponseResult;
+import io.github.architers.context.webmvc.ResponseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;

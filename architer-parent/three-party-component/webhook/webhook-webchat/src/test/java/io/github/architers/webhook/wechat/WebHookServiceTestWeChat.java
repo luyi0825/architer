@@ -1,6 +1,6 @@
 package io.github.architers.webhook.wechat;
 
-import io.github.architers.context.web.ResponseResult;
+import io.github.architers.context.webmvc.ResponseResult;
 import io.github.architers.webhook.service.IWebHookService;
 
 import io.github.architers.webhook.wechat.model.*;

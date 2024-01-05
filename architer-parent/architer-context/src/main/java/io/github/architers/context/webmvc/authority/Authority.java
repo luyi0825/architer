@@ -1,4 +1,4 @@
-package io.github.architers.context.web.authority;
+package io.github.architers.context.webmvc.authority;
 
 import java.lang.annotation.*;
 

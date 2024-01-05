@@ -1,7 +1,7 @@
 package io.github.architers.webhook.service;
 
 
-import io.github.architers.context.web.ResponseResult;
+import io.github.architers.context.webmvc.ResponseResult;
 import io.github.architers.webhook.WebHookMessage;
 
 /**

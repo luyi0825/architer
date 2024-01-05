@@ -1,4 +1,4 @@
-package io.github.architers.context.web;
+package io.github.architers.context.webmvc;
 
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;

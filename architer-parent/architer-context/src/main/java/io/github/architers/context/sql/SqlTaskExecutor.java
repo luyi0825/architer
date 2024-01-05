@@ -1,7 +1,7 @@
 package io.github.architers.context.sql;
 
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -16,54 +16,27 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class SqlTaskExecutor {
 
-    private ThreadPoolTaskExecutor threadPoolExecutor;
-
-
-    public SqlTaskExecutor() {
-
-    }
-
-
-
-    public SqlTaskExecutor(ThreadPoolTaskExecutor threadPoolExecutor) {
-        this.threadPoolExecutor = threadPoolExecutor;
-    }
-
-
-
     /**
-     * 责任链执行sql任务
-     *
-     * @param sqlTaskList sql执行任务，不能为空
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public void executorDelivery(DeliverySqlTask... sqlTaskList) {
-        Object lastResult = null, last2Result = null;
-        for (DeliverySqlTask sqlTask : sqlTaskList) {
-            Object result = sqlTask.execute(lastResult, last2Result);
-            last2Result = lastResult;
-            lastResult = result;
-        }
-    }
-
-    /**
-     * 执行单个任务
+     * 执行sql任务（事务传播行为为：Propagation.REQUIRED）
      *
      * @param sqlTasks sql执行任务，不能为空
      */
     @Transactional(rollbackFor = Exception.class)
-    public void executor(SqlTask... sqlTasks) {
+    public void executorRequired(SqlTask... sqlTasks) {
         for (SqlTask sqlTask : sqlTasks) {
             sqlTask.execute();
         }
     }
 
-    public void setThreadPoolExecutor(ThreadPoolTaskExecutor threadPoolExecutor) {
-        this.threadPoolExecutor = threadPoolExecutor;
+    /**
+     * 执行sql任务（事务传播行为为：Propagation.REQUIRES_NEW）
+     *
+     * @param sqlTasks sql执行任务，不能为空
+     */
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    public void executorRequiredNew(SqlTask... sqlTasks) {
+        for (SqlTask sqlTask : sqlTasks) {
+            sqlTask.execute();
+        }
     }
-
-    public ThreadPoolTaskExecutor getThreadPoolExecutor() {
-        return threadPoolExecutor;
-    }
-
 }

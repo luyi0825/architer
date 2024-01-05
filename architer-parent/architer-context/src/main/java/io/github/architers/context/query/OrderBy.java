@@ -2,12 +2,15 @@ package io.github.architers.context.query;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
- * @author luyi
  * 排序
+ *
+ * @author luyi
  */
 @Data
-public class OrderBy {
+public class OrderBy implements Serializable {
 
     /**
      * 字段名称

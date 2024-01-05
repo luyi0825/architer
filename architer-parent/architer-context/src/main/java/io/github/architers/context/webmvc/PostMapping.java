@@ -1,4 +1,4 @@
-package io.github.architers.context.web;
+package io.github.architers.context.webmvc;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

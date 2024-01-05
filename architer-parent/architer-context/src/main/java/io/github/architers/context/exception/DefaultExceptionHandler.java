@@ -1,6 +1,6 @@
 package io.github.architers.context.exception;
 
-import io.github.architers.context.web.ResponseResult;
+import io.github.architers.context.webmvc.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.internal.engine.path.PathImpl;
