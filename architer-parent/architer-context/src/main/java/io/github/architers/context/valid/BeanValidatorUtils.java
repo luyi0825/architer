@@ -7,6 +7,9 @@ import io.github.architers.context.exception.BusException;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,14 +28,15 @@ public final class BeanValidatorUtils {
      * @param object 待校验对象
      * @param groups 待校验的组
      */
-    public static void validateEntity(Object object, Class<?>... groups) {
+    public static Map<String/*错误的字段*/, String/*错误信息*/> validate(Object object, Class<?>... groups) {
         Set<ConstraintViolation<Object>> constraintViolations = VALIDATOR.validate(object, groups);
         if (!constraintViolations.isEmpty()) {
-            StringBuilder msg = new StringBuilder();
+            Map<String, String> errorMap = new HashMap<>(constraintViolations.size(), 1);
             for (ConstraintViolation<Object> constraint : constraintViolations) {
-                msg.append(constraint.getMessage()).append("<br>");
+                errorMap.put(constraint.getPropertyPath().toString(), constraint.getMessage());
             }
-            throw new BusException(msg.toString());
+            return errorMap;
         }
+        return Collections.emptyMap();
     }
 }

@@ -1,4 +1,6 @@
-package io.github.architers.context.valid;
+package io.github.architers.context.valid.annotion;
+
+import io.github.architers.context.valid.validator.EnumValueValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -12,7 +14,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EnumValue {
 
-    String message() default "{javax.validation.constraints.ListValue.message}";
+    String message() default "值不在指定范围内";
 
     Class<?>[] groups() default {};
 
@@ -20,5 +22,13 @@ public @interface EnumValue {
 
     Class<?> value();
 
-    String field();
+    /**
+     * 检验的字段
+     */
+    String checkField() default "";
+
+    /**
+     * 是否强制校验：true会判断类型相同，false都转成字符串比较
+     */
+    boolean force() default false;
 }
