@@ -1,23 +1,28 @@
-package io.github.architers.context.lock;
+package io.github.architers.context.lock.annotation;
 
+import io.github.architers.context.lock.eums.LockType;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 读写锁
+ *
  * @author luyi
- * 锁注解
+ * @since 1.0.3
  */
-@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface Locked {
+public @interface WriteLock {
     /**
      * 锁的类型
      * <li>防止用户在系统中时候多种锁</li>
      */
-    LockEnum lock() default LockEnum.DEFAULT;
+    LockType lock() default LockType.DEFAULT;
 
     /**
      * 条件满足的时候，进行缓存操作
@@ -32,12 +37,12 @@ public @interface Locked {
     /**
      * 锁的名称（不支持EL表达式）
      */
-    String lockName() default "";
+    String lockName();
 
     /**
      * 锁的key,支持EL表达式
      */
-    String key();
+    String key() default "";
 
     /**
      * 时间单位:默认秒
@@ -53,12 +58,6 @@ public @interface Locked {
      * 释放锁的时间
      */
     long leaseTime() default 30L;
-
-    /**
-     * 默认重入锁
-     */
-    LockType lockType() default LockType.REENTRANT_FAIR;
-
 
     /**
      * 获取不到锁处理的逻辑,两种写法：<br>

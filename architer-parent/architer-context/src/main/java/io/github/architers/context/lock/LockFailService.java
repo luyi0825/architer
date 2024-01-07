@@ -1,5 +1,7 @@
 package io.github.architers.context.lock;
 
+import io.github.architers.context.lock.annotation.ExclusiveLock;
+
 /**
  * @author luyi
  * 获取锁失败的流程
@@ -7,8 +9,8 @@ package io.github.architers.context.lock;
 public interface LockFailService {
     /**
      * 抛出失败的一样
-     * @param locked
+     * @param lock
      */
-    void throwFailException(Locked locked);
+    void throwFailException(ExclusiveLock lock);
 
 }

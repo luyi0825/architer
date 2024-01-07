@@ -1,7 +1,6 @@
 package io.github.architers.lock.redisson;
 
 import io.github.architers.context.cache.CacheConstants;
-import io.github.architers.context.lock.LockService;
 import org.redisson.api.RedissonClient;
 
 import java.util.concurrent.TimeUnit;

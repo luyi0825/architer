@@ -26,15 +26,15 @@
         <zookeeper.version>3.7.0</zookeeper.version>
         <redisson.version>3.20.0</redisson.version>
         <jackson.version>2.12.2</jackson.version>
-        <spring.version>5.3.27</spring.version>
-        <spring-boot.version>2.7.12</spring-boot.version>
+        <spring.version>5.3.31</spring.version>
+        <spring-boot.version>2.7.18</spring-boot.version>
         <!--spring-cloud-alibaba的版本-->
         <alibaba-cloud.version>2021.0.5.0</alibaba-cloud.version>
         <!--spring-cloud的版本-->
         <spring-cloud.version>2021.0.6</spring-cloud.version>
         <!-- log4j2的版本-->
         <okHttp.version>4.9.1</okHttp.version>
-        <hibernate-validator.version>6.1.2.Final</hibernate-validator.version>
+        <hibernate-validator.version>6.2.5.Final</hibernate-validator.version>
         <zookeeper.version>3.8.0</zookeeper.version>
         <hutool.version>5.6.5</hutool.version>
         <mysql.version>8.0.25</mysql.version>
@@ -66,6 +66,7 @@
         </license>
     </licenses>
     <modules>
+        <module>architer-common</module>
         <module>architer-context</module>
         <module>architer-cache</module>
         <module>architer-lock</module>

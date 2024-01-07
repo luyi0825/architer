@@ -7,6 +7,11 @@
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>architer-valid-test</artifactId>
+    <name>architer-valid-test</name>
+    <packaging>jar</packaging>
+    <description>valid测试</description>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -34,11 +39,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>valid-test</artifactId>
-    <name>valid-test</name>
-    <packaging>jar</packaging>
-    <description>valid测试</description>
+
 
 
 </project>

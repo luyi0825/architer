@@ -13,7 +13,9 @@
     <packaging>pom</packaging>
     <description>测试父模块</description>
     <modules>
-        <module>valid-test</module>
+        <module>architer-valid-test</module>
+        <module>architer-lock-test</module>
+        <module>architer-cache-test</module>
     </modules>
 
 
