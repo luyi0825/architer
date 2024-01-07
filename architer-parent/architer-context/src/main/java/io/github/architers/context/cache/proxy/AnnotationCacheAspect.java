@@ -1,7 +1,7 @@
 package io.github.architers.context.cache.proxy;
 
-import io.github.architers.context.expression.ExpressionMetadata;
-import io.github.architers.context.expression.ExpressionParser;
+import io.github.architers.common.expression.method.ExpressionMetadata;
+import io.github.architers.common.expression.method.ExpressionParser;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

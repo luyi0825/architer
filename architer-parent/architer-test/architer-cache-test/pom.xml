@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.github.architers</groupId>
-        <artifactId>architer-cache</artifactId>
+        <artifactId>architer-test</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>cache-caffeine-boot-starter</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,11 +50,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>spring-boot-starter-web-mvc</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-aspects -->
         <dependency>
@@ -70,7 +65,7 @@
         <dependency>
             <groupId>io.github.architers</groupId>
             <artifactId>cache-caffeine-boot-starter</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
             <scope>compile</scope>
         </dependency>
 

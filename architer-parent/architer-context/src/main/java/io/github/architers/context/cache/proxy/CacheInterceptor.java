@@ -1,8 +1,8 @@
 package io.github.architers.context.cache.proxy;
 
 
-import io.github.architers.context.expression.ExpressionMetadata;
-import io.github.architers.context.expression.ExpressionParser;
+import io.github.architers.common.expression.method.ExpressionMetadata;
+import io.github.architers.common.expression.method.ExpressionParser;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.context.expression.MethodBasedEvaluationContext;

@@ -1,12 +1,12 @@
 package io.github.architers.context.cache.proxy;
 
+import io.github.architers.common.expression.method.ExpressionMetadata;
 import io.github.architers.context.cache.annotation.CacheBatchEvict;
 import io.github.architers.context.cache.annotation.CacheEvict;
 import io.github.architers.context.cache.annotation.CacheEvictAll;
 import io.github.architers.context.cache.annotation.Cacheable;
 import io.github.architers.context.cache.model.InvalidCacheValue;
 import io.github.architers.context.cache.operate.BaseCacheOperationHandler;
-import io.github.architers.context.expression.ExpressionMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 

@@ -1,7 +1,7 @@
 package io.github.architers.cache.cachenamewarpper;
 
+import io.github.architers.common.expression.method.ExpressionMetadata;
 import io.github.architers.context.cache.operate.CacheNameWrapper;
-import io.github.architers.context.expression.ExpressionMetadata;
 import org.springframework.stereotype.Component;
 
 @Component

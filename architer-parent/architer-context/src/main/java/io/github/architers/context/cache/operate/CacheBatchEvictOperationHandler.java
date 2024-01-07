@@ -1,16 +1,15 @@
 package io.github.architers.context.cache.operate;
 
+import io.github.architers.common.expression.method.ExpressionMetadata;
 import io.github.architers.context.cache.CacheConstants;
 import io.github.architers.context.cache.annotation.CacheBatchEvict;
 import io.github.architers.context.cache.operate.hook.CacheOperateInvocationHook;
 import io.github.architers.context.cache.utils.BatchValueUtils;
 import io.github.architers.context.cache.model.BatchEvictParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
-import io.github.architers.context.expression.ExpressionMetadata;
 import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
-import java.util.Collection;
 import java.util.Set;
 
 /**

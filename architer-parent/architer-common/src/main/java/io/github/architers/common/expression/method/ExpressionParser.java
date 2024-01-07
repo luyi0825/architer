@@ -1,4 +1,4 @@
-package io.github.architers.context.expression;
+package io.github.architers.common.expression.method;
 
 import org.springframework.context.expression.AnnotatedElementKey;
 import org.springframework.context.expression.MethodBasedEvaluationContext;

@@ -15,7 +15,6 @@
     <modules>
         <module>cache-redisson-boot-starter</module>
         <module>cache-caffeine-boot-starter</module>
-        <module>cache-test</module>
     </modules>
 
 

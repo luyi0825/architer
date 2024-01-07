@@ -1,6 +1,7 @@
 package io.github.architers.context.cache.operate;
 
-import io.github.architers.context.expression.ExpressionMetadata;
+
+import io.github.architers.common.expression.method.ExpressionMetadata;
 
 /**
  * 缓存名称包装，可以在缓存名称前边进行装饰
