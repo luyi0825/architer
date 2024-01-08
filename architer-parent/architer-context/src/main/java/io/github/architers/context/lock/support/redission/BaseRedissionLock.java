@@ -10,7 +10,7 @@ import java.util.concurrent.locks.Condition;
 
 public class BaseRedissionLock implements ArchiterReadWriteLock {
 
-    private RLock rLock;
+    private final RLock rLock;
 
     public BaseRedissionLock(RLock rLock) {
         this.rLock = rLock;

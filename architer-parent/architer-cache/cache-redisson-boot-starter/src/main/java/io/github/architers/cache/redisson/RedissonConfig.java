@@ -12,8 +12,9 @@ import java.io.Serializable;
 import java.util.concurrent.ExecutorService;
 
 /**
- * @author luyi
  * redisson配置类
+ *
+ * @author luyi
  */
 public class RedissonConfig extends Config implements Serializable {
 
@@ -26,6 +27,7 @@ public class RedissonConfig extends Config implements Serializable {
     private ClusterServersConfig clusterServersConfig;
 
     private ReplicatedServersConfig replicatedServersConfig;
+
     public RedissonConfig() {
         super();
     }

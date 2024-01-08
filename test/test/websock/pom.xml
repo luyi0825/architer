@@ -14,7 +14,7 @@
     <description>websocket测试</description>
     <packaging>jar</packaging>
     <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
+        <revision>1.0.3</revision>
         <core.version>1.0.0</core.version>
     </properties>
     <dependencies>

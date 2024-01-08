@@ -18,10 +18,6 @@ public class RedissonLockFacotory implements LockFactory {
         return new BaseRedissionLock(redissonClient.getMap(lockName).getLock(lockKey));
     }
 
-    @Override
-    public ArchiterLock getReadWriteLock(String lockName, String lockKey) {
-        return new BaseRedissionLock(redissonClient.getMap(lockName).getReadWriteLock(lockKey).readLock());
-    }
 
     @Override
     public ArchiterLock getReadLock(String lockName, String lockKey) {
