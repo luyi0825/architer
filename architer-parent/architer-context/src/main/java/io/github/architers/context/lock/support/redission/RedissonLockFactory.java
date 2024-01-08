@@ -5,11 +5,17 @@ import io.github.architers.context.lock.LockFactory;
 import io.github.architers.context.lock.eums.LockType;
 import org.redisson.api.RedissonClient;
 
-public class RedissonLockFacotory implements LockFactory {
+/**
+ * redisson锁的工厂类
+ *
+ * @author luyi
+ * @since 1.0.3
+ */
+public class RedissonLockFactory implements LockFactory {
 
     private final RedissonClient redissonClient;
 
-    public RedissonLockFacotory(RedissonClient redissonClient) {
+    public RedissonLockFactory(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
     }
 
