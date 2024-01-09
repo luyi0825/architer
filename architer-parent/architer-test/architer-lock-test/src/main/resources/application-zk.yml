@@ -1,0 +1,5 @@
+
+architers:
+  lock:
+    default-lock-type: zk
+
