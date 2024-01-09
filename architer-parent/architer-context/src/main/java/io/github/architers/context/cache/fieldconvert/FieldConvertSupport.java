@@ -21,6 +21,7 @@ import javax.annotation.Resource;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * TODO 一个数据为空一直查询数据库没解决
@@ -164,7 +165,7 @@ public class FieldConvertSupport implements ApplicationContextAware {
                         batchGetParam.setOriginCacheName(getCacheName(converter));
                         Map<String, Serializable> remoteValueMap = cacheOperate.getRemoteCacheOperate().batchGet(batchGetParam);
                         //取差集
-                        notMatchKeys = org.apache.commons.collections4.CollectionUtils.disjunction(notInTempCacheKeys, remoteValueMap.keySet());
+                        notMatchKeys = disjunction(notInTempCacheKeys, remoteValueMap.keySet());
                         valueMap = remoteValueMap;
                     }
                 }
@@ -178,7 +179,7 @@ public class FieldConvertSupport implements ApplicationContextAware {
                 //取差集
                 if (notInTempCacheKeys.size() != valueMap.size()) {
                     //取差集
-                    notMatchKeys = org.apache.commons.collections4.CollectionUtils.disjunction(notInTempCacheKeys, valueMap.keySet());
+                    notMatchKeys = disjunction(notInTempCacheKeys, valueMap.keySet());
                     //本地缓存获取部分值
                     batchGetParam = new BatchGetParam();
                     batchGetParam.setKeys(new HashSet<>(notMatchKeys));
@@ -194,7 +195,7 @@ public class FieldConvertSupport implements ApplicationContextAware {
                     }
                     if (remoteValueMap.size() != notMatchKeys.size()) {
                         //remote中也没
-                        notMatchKeys = org.apache.commons.collections4.CollectionUtils.disjunction(notInTempCacheKeys, valueMap.keySet());
+                        notMatchKeys = disjunction(notInTempCacheKeys, valueMap.keySet());
                     }
                 }
             } else if (CacheLevel.local.equals(cacheLevel)) {
@@ -207,7 +208,7 @@ public class FieldConvertSupport implements ApplicationContextAware {
                 //取差集
                 if (notInTempCacheKeys.size() != valueMap.size()) {
                     //取差集
-                    notMatchKeys = org.apache.commons.collections4.CollectionUtils.disjunction(notInTempCacheKeys, valueMap.keySet());
+                    notMatchKeys = disjunction(notInTempCacheKeys, valueMap.keySet());
                 }
             }
             if (valueMap != null) {
@@ -254,7 +255,7 @@ public class FieldConvertSupport implements ApplicationContextAware {
                         batchGetParam.setOriginCacheName(getCacheName(converter));
                         Map<String, Serializable> remoteValueMap = cacheOperate.getRemoteCacheOperate().batchGet(batchGetParam);
                         //取差集
-                        notMatchKeys = org.apache.commons.collections4.CollectionUtils.disjunction(notInTempCacheKeys, remoteValueMap.keySet());
+                        notMatchKeys = disjunction(notInTempCacheKeys, remoteValueMap.keySet());
                         valueMap = remoteValueMap;
                     }
                 }
@@ -526,28 +527,8 @@ public class FieldConvertSupport implements ApplicationContextAware {
 
     }
 
-    private void asyncPutCache(String converter, String fieldStrValue, CacheLevel cacheLevel, Object value) {
-        if (value == null) {
-            return;
-        }
-        // TODO
-//        if (CacheLevel.localAndRemote.equals(cacheLevel)) {
-//            originValueObtainSupport.asyncPutLocalAndRemote(converter, fieldStrValue, value);
-//        } else if (CacheLevel.local.equals(cacheLevel)) {
-//            originValueObtainSupport.asyncPutLocal(converter, fieldStrValue, value);
-//        } else if (CacheLevel.remote.equals(cacheLevel)) {
-//            originValueObtainSupport.asyncPutRemote(converter, fieldStrValue, value);
-//        }
-    }
 
     public CacheLevel getTempCacheLevelKey(CacheLevel cacheLevel) {
-//        if (CacheLevel.none.equals(cacheLevel)) {
-//            return CacheLevel.none;
-//        } else if (CacheLevel.local.equals(cacheLevel)) {
-//            return CacheLevel.local;
-//        } else {
-//            return CacheLevel.remote;
-//        }
         return cacheLevel;
     }
 
@@ -579,6 +560,17 @@ public class FieldConvertSupport implements ApplicationContextAware {
             throw new IllegalArgumentException("converter没有配置缓存名称:" + converter);
         }
         return cacheName;
+    }
+
+    /**
+     * 取差集
+     * <li>对originSet取差集</li>
+     */
+    private Set<String> disjunction(Set<String> originSet, Set<String> compareToSet) {
+        if (CollectionUtils.isEmpty(originSet)) {
+            return Collections.emptySet();
+        }
+        return originSet.stream().filter(e -> !compareToSet.contains(e)).collect(Collectors.toSet());
     }
 
 
