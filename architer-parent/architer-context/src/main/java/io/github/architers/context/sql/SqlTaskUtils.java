@@ -37,12 +37,12 @@ public class SqlTaskUtils implements ApplicationContextAware {
     }
 
 
-    public static void executor(SqlTask... sqlTasks) {
-        sqlTaskExecutor.executor(sqlTasks);
+    public static void executorRequired(SqlTask... sqlTasks) {
+        sqlTaskExecutor.executorRequired(sqlTasks);
     }
 
-    public void executorTaskContext(SqlTaskContext sqlTaskContext) {
-        sqlTaskExecutor.executor(sqlTaskContext.getTransactionTasks().toArray(new SqlTask[0]));
+    public void executorRequiredTaskContext(SqlTaskContext sqlTaskContext) {
+        sqlTaskExecutor.executorRequired(sqlTaskContext.getTransactionTasks().toArray(new SqlTask[0]));
         //事务结束后执行的sql钩子任务
         if (sqlTaskContext.getEndTransactionHooks() != null) {
             for (SqlTask transactionTask : sqlTaskContext.getEndTransactionHooks()) {
