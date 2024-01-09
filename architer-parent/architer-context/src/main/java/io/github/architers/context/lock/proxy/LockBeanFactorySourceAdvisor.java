@@ -11,7 +11,7 @@ import org.springframework.lang.Nullable;
  *
  * @author luyi
  */
-public class BeanFactoryLockSourceAdvisor extends AbstractBeanFactoryPointcutAdvisor {
+public class LockBeanFactorySourceAdvisor extends AbstractBeanFactoryPointcutAdvisor {
 
     private LockOperationSource lockOperationSource;
 
@@ -22,11 +22,11 @@ public class BeanFactoryLockSourceAdvisor extends AbstractBeanFactoryPointcutAdv
         }
     };
 
-    public BeanFactoryLockSourceAdvisor() {
+    public LockBeanFactorySourceAdvisor() {
 
     }
 
-    public BeanFactoryLockSourceAdvisor(LockOperationSource lockOperationSource, LockSourcePointcut pointcut) {
+    public LockBeanFactorySourceAdvisor(LockOperationSource lockOperationSource, LockSourcePointcut pointcut) {
         this.lockOperationSource = lockOperationSource;
         this.pointcut = pointcut;
     }
@@ -45,7 +45,7 @@ public class BeanFactoryLockSourceAdvisor extends AbstractBeanFactoryPointcutAdv
         this.pointcut.setClassFilter(classFilter);
     }
 
-    public void setCacheOperationSource(@Nullable LockOperationSource lockOperationSource) {
+    public void setLockOperationSource(LockOperationSource lockOperationSource) {
         this.lockOperationSource = lockOperationSource;
     }
 

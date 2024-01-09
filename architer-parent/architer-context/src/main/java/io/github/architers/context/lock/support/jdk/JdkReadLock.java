@@ -22,10 +22,6 @@ public class JdkReadLock extends BaseJdkLock {
     }
 
 
-    @Override
-    public LockMode getLockMode() {
-        return LockMode.readwrite;
-    }
 
     @Override
     public boolean tryLock(long timeout, long leaseTime, TimeUnit unit) throws InterruptedException {

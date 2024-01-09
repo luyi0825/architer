@@ -1,22 +1,10 @@
 package io.github.architers.context.lock;
 
-import io.github.architers.context.lock.eums.LockMode;
-import io.github.architers.context.lock.eums.LockType;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
 public interface ArchiterLock extends Lock {
-
-    /**
-     * 获取锁的类型
-     */
-    String getLockType();
-
-    /**
-     * 获取锁的模式
-     */
-    LockMode getLockMode();
 
     /**
      * 获取锁

@@ -21,7 +21,7 @@ public enum LockType {
     /**
      * redis
      */
-    REDISSION("redission", "redission分布式锁"),
+    REDISSON("redisson", "redisson分布式锁"),
     /**
      * zookeeper
      */

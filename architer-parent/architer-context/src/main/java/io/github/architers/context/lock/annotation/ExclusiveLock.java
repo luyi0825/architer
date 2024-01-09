@@ -20,7 +20,7 @@ public @interface ExclusiveLock {
      * 锁的类型
      * <li>防止用户在系统中时候多种锁</li>
      */
-    LockType lock() default LockType.DEFAULT;
+    LockType lockType() default LockType.DEFAULT;
 
     /**
      * 锁的名称（不支持EL表达式）

@@ -10,14 +10,14 @@ import java.util.Collection;
  * @author luyi
  * 注解缓存操作元
  */
-public class AnnotationLockOperationSource implements LockOperationSource {
+public class LockAnnotationOperationSource implements LockOperationSource {
 
     /**
      * 缓存解析器
      */
     private final LockAnnotationsParser lockAnnotationsParser;
 
-    public AnnotationLockOperationSource(LockAnnotationsParser lockAnnotationsParser) {
+    public LockAnnotationOperationSource(LockAnnotationsParser lockAnnotationsParser) {
         this.lockAnnotationsParser = lockAnnotationsParser;
     }
 
@@ -27,7 +27,7 @@ public class AnnotationLockOperationSource implements LockOperationSource {
     }
 
     @Override
-    public Collection<?extends Annotation> getCacheOperations(Method method, Class<?> targetClass) {
+    public Collection<? extends Annotation> getCacheOperations(Method method, Class<?> targetClass) {
         return lockAnnotationsParser.parse(method);
     }
 }

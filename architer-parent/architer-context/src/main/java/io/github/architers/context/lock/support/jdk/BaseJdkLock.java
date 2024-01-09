@@ -13,11 +13,6 @@ public abstract class BaseJdkLock implements ArchiterLock {
     abstract Lock getLock();
 
     @Override
-    public String getLockType() {
-        return LockType.JDK.getType();
-    }
-
-    @Override
     public boolean tryLock(long timeout, long leaseTime, TimeUnit unit) throws InterruptedException {
         //TODO
         return getLock().tryLock(timeout, unit);

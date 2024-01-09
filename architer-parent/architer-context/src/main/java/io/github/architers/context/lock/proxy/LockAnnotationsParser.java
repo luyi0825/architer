@@ -2,7 +2,8 @@ package io.github.architers.context.lock.proxy;
 
 
 import io.github.architers.context.lock.annotation.ExclusiveLock;
-import io.github.architers.context.lock.annotation.ReadWriteLock;
+import io.github.architers.context.lock.annotation.ReadLock;
+import io.github.architers.context.lock.annotation.WriteLock;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -22,7 +23,8 @@ public class LockAnnotationsParser {
 
     static {
         LOCK_OPERATION_ANNOTATIONS.add(ExclusiveLock.class);
-        LOCK_OPERATION_ANNOTATIONS.add(ReadWriteLock.class);
+        LOCK_OPERATION_ANNOTATIONS.add(ReadLock.class);
+        LOCK_OPERATION_ANNOTATIONS.add(WriteLock.class);
     }
 
     /**

@@ -19,6 +19,11 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>cache-redisson-boot-starter</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>

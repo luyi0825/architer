@@ -1,7 +1,6 @@
 package io.github.architers.context.lock.support;
 
 import io.github.architers.context.lock.ArchiterLock;
-import io.github.architers.context.lock.eums.LockMode;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
@@ -14,15 +13,6 @@ public final class NoLock implements ArchiterLock {
         return noLock;
     }
 
-    @Override
-    public String getLockType() {
-        return null;
-    }
-
-    @Override
-    public LockMode getLockMode() {
-        return null;
-    }
 
     @Override
     public boolean tryLock(long timeout, long leaseTime, TimeUnit unit) throws InterruptedException {

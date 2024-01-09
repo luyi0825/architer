@@ -16,7 +16,9 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,12 +27,16 @@ import java.util.List;
 @Slf4j
 public class LockProxySupport implements ApplicationContextAware {
 
+    @Resource
     private LockAnnotationsParser lockAnnotationsParser;
 
+    @Resource
     private List<LockFactory> lockFactoryList;
 
+    @Resource
     private LockProperties lockProperties;
 
+    @Resource
     private ExpressionParser expressionParser;
 
     private ApplicationContext applicationContext;
@@ -53,7 +59,7 @@ public class LockProxySupport implements ApplicationContextAware {
                     continue;
                 }
                 boolean tryLocked = architerLock.tryLock(lockParam.getTryTime(), lockParam.getLeaseTime(), lockParam.getTimeUnit());
-                if (tryLocked) {
+                if (!tryLocked) {
                     return handlerFail(lockParam.getFailHandle(), expressionMetadata);
                 }
                 log.info("获取到锁:{}", JsonUtils.toJsonString(lockParam));
@@ -74,10 +80,51 @@ public class LockProxySupport implements ApplicationContextAware {
     }
 
     private BaseLockParam getLockParam(Annotation annotation, ExpressionMetadata expressionMetadata) {
-        // String key = (String) expressionParser.parserExpression(expressionMetadata, writeLock.key());
-        return SingleLockParam.builder().build();
+        if (annotation instanceof ExclusiveLock) {
+            ExclusiveLock exclusiveLock = (ExclusiveLock) annotation;
+            String key = (String) expressionParser.parserExpression(expressionMetadata, exclusiveLock.key());
+            SingleLockParam singleLockParam = SingleLockParam.builder().key(key).build();
+            singleLockParam.setLockType(exclusiveLock.lockType());
+            singleLockParam.setLockName(exclusiveLock.lockName());
+            singleLockParam.setCondition(exclusiveLock.condition());
+            singleLockParam.setTimeUnit(exclusiveLock.timeUnit());
+            singleLockParam.setLeaseTime(exclusiveLock.leaseTime());
+            singleLockParam.setTryTime(exclusiveLock.tryTime());
+            return singleLockParam;
+        } else if (annotation instanceof ReadLock) {
+            ReadLock readLock = (ReadLock) annotation;
+            String key = (String) expressionParser.parserExpression(expressionMetadata, readLock.key());
+            SingleLockParam singleLockParam = SingleLockParam.builder().key(key).build();
+            singleLockParam.setLockType(readLock.lockType());
+            singleLockParam.setLockName(readLock.lockName());
+            singleLockParam.setCondition(readLock.condition());
+            singleLockParam.setTimeUnit(readLock.timeUnit());
+            singleLockParam.setLeaseTime(readLock.leaseTime());
+            singleLockParam.setTryTime(readLock.tryTime());
+            return singleLockParam;
+        } else if (annotation instanceof WriteLock) {
+            WriteLock writeLock = (WriteLock) annotation;
+            String key = (String) expressionParser.parserExpression(expressionMetadata, writeLock.key());
+            SingleLockParam singleLockParam = SingleLockParam.builder().key(key).build();
+            singleLockParam.setLockType(writeLock.lockType());
+            singleLockParam.setLockName(writeLock.lockName());
+            singleLockParam.setCondition(writeLock.condition());
+            singleLockParam.setTimeUnit(writeLock.timeUnit());
+            singleLockParam.setLeaseTime(writeLock.leaseTime());
+            singleLockParam.setTryTime(writeLock.tryTime());
+            return singleLockParam;
+        }
+        throw new IllegalArgumentException("not support:" + annotation);
     }
 
+    /**
+     * 获取到锁
+     *
+     * @param singleLockParam    单个锁的参数
+     * @param expressionMetadata 方法的元信息
+     * @param annotation         对应的注解
+     * @return 对应的锁
+     */
     private ArchiterLock getArchiterLock(SingleLockParam singleLockParam, ExpressionMetadata expressionMetadata, Annotation annotation) {
         if (StringUtils.hasText(singleLockParam.getCondition())) {
             boolean canLock = (boolean) expressionParser.parserExpression(expressionMetadata, singleLockParam.getCondition());
@@ -140,6 +187,6 @@ public class LockProxySupport implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-
+        this.applicationContext = applicationContext;
     }
 }

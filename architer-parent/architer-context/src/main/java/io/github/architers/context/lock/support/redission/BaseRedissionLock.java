@@ -16,15 +16,6 @@ public class BaseRedissionLock implements ArchiterReadWriteLock {
         this.rLock = rLock;
     }
 
-    @Override
-    public String getLockType() {
-        return null;
-    }
-
-    @Override
-    public LockMode getLockMode() {
-        return null;
-    }
 
     @Override
     public boolean tryLock(long timeout, long leaseTime, TimeUnit unit) throws InterruptedException {

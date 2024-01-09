@@ -26,10 +26,6 @@ public class JdkWriteLock extends BaseJdkLock {
         return lock.writeLock();
     }
 
-    @Override
-    public LockMode getLockMode() {
-        return null;
-    }
 
     @Override
     public boolean tryLock(long timeout, long leaseTime, TimeUnit unit) throws InterruptedException {

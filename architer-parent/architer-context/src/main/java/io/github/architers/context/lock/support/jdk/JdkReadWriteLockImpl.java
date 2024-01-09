@@ -2,7 +2,6 @@ package io.github.architers.context.lock.support.jdk;//package io.github.archite
 
 
 import io.github.architers.context.lock.ArchiterLock;
-import io.github.architers.context.lock.eums.LockMode;
 
 import javax.validation.constraints.NotNull;
 import java.util.concurrent.TimeUnit;
@@ -31,10 +30,6 @@ public class JdkReadWriteLockImpl extends BaseJdkLock implements ReadWriteLock, 
         return null;
     }
 
-    @Override
-    public LockMode getLockMode() {
-        return LockMode.readwrite;
-    }
 
     @Override
     public boolean tryLock(long timeout, long leaseTime, TimeUnit unit) throws InterruptedException {

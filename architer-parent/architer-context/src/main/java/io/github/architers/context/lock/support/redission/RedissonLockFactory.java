@@ -38,6 +38,6 @@ public class RedissonLockFactory implements LockFactory {
 
     @Override
     public String getLockType() {
-        return LockType.REDISSION.getType();
+        return LockType.REDISSON.getType();
     }
 }

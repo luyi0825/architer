@@ -11,13 +11,19 @@ import org.springframework.context.expression.MethodBasedEvaluationContext;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
+/**
+ * 锁aspectj支持
+ *
+ * @author luyi
+ * @since 1.0.3
+ */
 @Aspect
-public class AnnotationLockAspect {
+public class LockAnnotationAspect {
 
 
     private final LockProxySupport lockProxySupport;
 
-    public AnnotationLockAspect(LockProxySupport lockProxySupport) {
+    public LockAnnotationAspect(LockProxySupport lockProxySupport) {
         this.lockProxySupport = lockProxySupport;
     }
 

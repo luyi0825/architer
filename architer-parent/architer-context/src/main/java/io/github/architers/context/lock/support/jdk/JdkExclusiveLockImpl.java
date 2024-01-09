@@ -24,8 +24,4 @@ public class JdkExclusiveLockImpl extends BaseJdkLock {
         return reentrantLock;
     }
 
-    @Override
-    public LockMode getLockMode() {
-        return LockMode.exclusive;
-    }
 }

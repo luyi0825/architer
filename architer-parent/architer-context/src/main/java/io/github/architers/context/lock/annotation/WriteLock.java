@@ -22,7 +22,7 @@ public @interface WriteLock {
      * 锁的类型
      * <li>防止用户在系统中时候多种锁</li>
      */
-    LockType lock() default LockType.DEFAULT;
+    LockType lockType() default LockType.DEFAULT;
 
     /**
      * 条件满足的时候，进行缓存操作
