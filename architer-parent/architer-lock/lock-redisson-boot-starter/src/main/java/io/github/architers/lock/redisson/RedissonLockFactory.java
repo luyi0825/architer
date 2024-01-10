@@ -1,4 +1,4 @@
-package io.github.architers.context.lock.support.redission;
+package io.github.architers.lock.redisson;
 
 import io.github.architers.context.lock.ArchiterLock;
 import io.github.architers.context.lock.LockFactory;
@@ -21,18 +21,18 @@ public class RedissonLockFactory implements LockFactory {
 
     @Override
     public ArchiterLock getExclusiveLock(String lockName, String lockKey) {
-        return new BaseRedissionLock(redissonClient.getMap(lockName).getLock(lockKey));
+        return new BaseRedissonLock(redissonClient.getMap(lockName).getLock(lockKey));
     }
 
 
     @Override
     public ArchiterLock getReadLock(String lockName, String lockKey) {
-        return new BaseRedissionLock(redissonClient.getMap(lockName).getReadWriteLock(lockKey).readLock());
+        return new BaseRedissonLock(redissonClient.getMap(lockName).getReadWriteLock(lockKey).readLock());
     }
 
     @Override
     public ArchiterLock getWriteLock(String lockName, String lockKey) {
-        return new BaseRedissionLock(redissonClient.getMap(lockName).getReadWriteLock(lockKey).writeLock());
+        return new BaseRedissonLock(redissonClient.getMap(lockName).getReadWriteLock(lockKey).writeLock());
     }
 
 

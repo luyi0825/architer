@@ -1,3 +1,5 @@
 architers:
   lock:
     default-lock-type: redisson
+    redisson:
+      enabled: true

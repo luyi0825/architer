@@ -1,37 +1,55 @@
-package io.github.architers.lock.redisson;
+package io.github.architers.propertconfig.redisson;
 
 import io.netty.channel.EventLoopGroup;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.redisson.client.NettyHook;
 import org.redisson.client.codec.Codec;
 import org.redisson.config.*;
 import org.redisson.connection.AddressResolverGroupFactory;
-import org.redisson.connection.ConnectionManager;
+import org.redisson.connection.ConnectionListener;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.concurrent.ExecutorService;
 
 /**
- * @author luyi
  * redisson配置类
+ *
+ * @author luyi
  */
-public class RedissonLockConfig extends Config implements Serializable {
-
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class RedissonConfig extends Config implements Serializable {
+    /**
+     * 主从配置
+     */
     private MasterSlaveServersConfig masterSlaveServersConfig;
 
+    /**
+     * 哨兵配置
+     */
     private SentinelServersConfig sentinelServersConfig;
-
-
+    /**
+     * 单节点配置
+     */
     private SingleServerConfig singleServerConfig;
 
+    /**
+     * 集群配置
+     */
     private ClusterServersConfig clusterServersConfig;
 
+    /**
+     * 分片配置
+     */
     private ReplicatedServersConfig replicatedServersConfig;
-    public RedissonLockConfig() {
+
+    public RedissonConfig() {
         super();
     }
 
-    public RedissonLockConfig(Config oldConf) {
+    public RedissonConfig(Config oldConf) {
         super(oldConf);
     }
 
@@ -123,11 +141,6 @@ public class RedissonLockConfig extends Config implements Serializable {
     @Override
     public ReplicatedServersConfig useReplicatedServers() {
         return super.useReplicatedServers();
-    }
-
-    @Override
-    public void useCustomServers(ConnectionManager connectionManager) {
-        super.useCustomServers(connectionManager);
     }
 
     @Override
@@ -235,8 +248,6 @@ public class RedissonLockConfig extends Config implements Serializable {
         return super.getAddressResolverGroupFactory();
     }
 
-
-
     @Override
     public String toYAML() throws IOException {
         return super.toYAML();
@@ -252,17 +263,65 @@ public class RedissonLockConfig extends Config implements Serializable {
         return super.isUseScriptCache();
     }
 
+    @Override
+    public int getMinCleanUpDelay() {
+        return super.getMinCleanUpDelay();
+    }
 
+    @Override
+    public Config setMinCleanUpDelay(int minCleanUpDelay) {
+        return super.setMinCleanUpDelay(minCleanUpDelay);
+    }
 
+    @Override
+    public int getMaxCleanUpDelay() {
+        return super.getMaxCleanUpDelay();
+    }
 
     @Override
     public Config setMaxCleanUpDelay(int maxCleanUpDelay) {
         return super.setMaxCleanUpDelay(maxCleanUpDelay);
     }
 
+    @Override
+    public int getCleanUpKeysAmount() {
+        return super.getCleanUpKeysAmount();
+    }
 
+    @Override
+    public Config setCleanUpKeysAmount(int cleanUpKeysAmount) {
+        return super.setCleanUpKeysAmount(cleanUpKeysAmount);
+    }
 
+    @Override
+    public boolean isUseThreadClassLoader() {
+        return super.isUseThreadClassLoader();
+    }
 
+    @Override
+    public Config setUseThreadClassLoader(boolean useThreadClassLoader) {
+        return super.setUseThreadClassLoader(useThreadClassLoader);
+    }
+
+    @Override
+    public long getReliableTopicWatchdogTimeout() {
+        return super.getReliableTopicWatchdogTimeout();
+    }
+
+    @Override
+    public Config setReliableTopicWatchdogTimeout(long timeout) {
+        return super.setReliableTopicWatchdogTimeout(timeout);
+    }
+
+    @Override
+    public ConnectionListener getConnectionListener() {
+        return super.getConnectionListener();
+    }
+
+    @Override
+    public Config setConnectionListener(ConnectionListener connectionListener) {
+        return super.setConnectionListener(connectionListener);
+    }
 
 
 }

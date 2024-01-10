@@ -3,6 +3,7 @@ package io.github.architers.context.lock.support.zookpeer;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Import;
  * @since 1.0.3
  */
 @Configuration(proxyBeanMethods = false)
+@ConditionalOnProperty(prefix = ZookeeperProperties.prefix, name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(ZookeeperProperties.class)
 public class ZkLockAutoConfiguration {
 
@@ -42,7 +44,7 @@ public class ZkLockAutoConfiguration {
                 //设置命名空间 在操作节点的时候，会以这个为父节点
                 .namespace(zookeeperProperties.getNamespace())
                 .build();
-       // client.start();
+        // client.start();
         return client;
     }
 }

@@ -25,7 +25,7 @@
         <jsoup.verion>1.14.2</jsoup.verion>
         <zookeeper.version>3.9.1</zookeeper.version>
         <apache-curator.version>5.5.0</apache-curator.version>
-        <redisson.version>3.20.0</redisson.version>
+        <redisson.version>3.25.2</redisson.version>
         <jackson.version>2.16.0</jackson.version>
         <spring.version>5.3.31</spring.version>
         <spring-boot.version>2.7.18</spring-boot.version>
@@ -75,6 +75,8 @@
         <module>web-starter</module>
         <module>others</module>
         <module>three-party-component</module>
+        <!--属性配置-->
+        <module>architer-property-config</module>
     </modules>
 
     <dependencies>

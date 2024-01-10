@@ -18,15 +18,28 @@ class LockServiceTest {
     void getLock() throws InterruptedException {
 
         String key1 = "key1";
+        CountDownLatch countDownLatch = new CountDownLatch(2);
 
         long lockTime = 2000;
         new Thread(() -> {
-            lockService.getLock(key1, lockTime);
-        }).start();
+            try {
+                lockService.getLock(key1, lockTime);
+            } finally {
+                countDownLatch.countDown();
+            }
+        }
+        ).start();
 
-        new Thread(() -> lockService.getLock(key1, lockTime)).start();
-
-        Thread.sleep(lockTime * 2 + 500);
+        new Thread(() -> {
+            try {
+                lockService.getLock(key1, lockTime);
+            } finally {
+                countDownLatch.countDown();
+            }
+        }
+        ).start();
+        countDownLatch.await();
+        System.out.println("end:getLock");
     }
 
     /**

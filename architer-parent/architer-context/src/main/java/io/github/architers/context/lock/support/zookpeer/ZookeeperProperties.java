@@ -14,8 +14,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @since 1.0.3
  */
 @Data
-@ConfigurationProperties(prefix = "architers.lock.zk")
+@ConfigurationProperties(prefix = ZookeeperProperties.prefix)
 public class ZookeeperProperties {
+
+    public static final String prefix = "architers.lock.zk";
+
+    /**
+     * 是否开启zk分布式
+     */
+    private boolean enabled = false;
 
     /**
      * 服务地址：多个用英文逗号隔开

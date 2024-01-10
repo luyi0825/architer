@@ -4,6 +4,7 @@ package io.github.architers.cache.redisson;
 
 import io.github.architers.cache.redisson.support.RedissonMapCacheOperate;
 import io.github.architers.cache.redisson.support.RedissonValueCacheOperate;
+import io.github.architers.propertconfig.redisson.RedissonBeanName;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
@@ -29,42 +30,19 @@ import java.io.InputStream;
 @EnableConfigurationProperties(RedissonProperties.class)
 public class RedissonCacheAutoConfiguration {
 
-    public final static String CACHE_CLIENT_BEAN_NAME = "redissonCacheClient";
     @Resource
     private RedissonProperties redissonProperties;
 
     @Resource
     private ApplicationContext ctx;
 
-    @Bean(destroyMethod = "shutdown", value = "redissonCacheClient")
-    @ConditionalOnMissingBean(name = {"redissonCacheClient"})
-    public RedissonClient redissonCacheClient() throws IOException {
-        Config config;
+    @Bean(destroyMethod = "shutdown", name = RedissonBeanName.CACHE_BEAN_NAME)
+    @ConditionalOnMissingBean(name = {RedissonBeanName.CACHE_BEAN_NAME})
+    public RedissonClient redissonCacheClient() {
         if (redissonProperties == null) {
             throw new IllegalArgumentException("redisson缓存配置缺失");
         }
-        String file = redissonProperties.getFile();
-        if (StringUtils.hasText(file)) {
-            InputStream is = this.getConfigStream();
-            config = Config.fromYAML(is);
-        } else if (redissonProperties.getConfig() != null) {
-            config = redissonProperties.getConfig();
-        } else {
-            //默认连接本地
-            config = new Config();
-            config.useSingleServer()
-                    .setAddress("redis://127.0.0.1:6379");
-        }
-        if (config.getCodec() == null) {
-            config.setCodec(new JsonJacksonCodec());
-        }
-        return Redisson.create(config);
-    }
-
-
-    private InputStream getConfigStream() throws IOException {
-        org.springframework.core.io.Resource resource = this.ctx.getResource(this.redissonProperties.getFile());
-        return resource.getInputStream();
+        return redissonProperties.createClient();
     }
 
 
@@ -87,13 +65,13 @@ public class RedissonCacheAutoConfiguration {
 //    }
 
     @Bean
-    public RedissonValueCacheOperate valueCacheOperate(@Qualifier(CACHE_CLIENT_BEAN_NAME) RedissonClient redissonClient) {
-        return new RedissonValueCacheOperate(redissonClient);
+    public RedissonValueCacheOperate valueCacheOperate() {
+        return new RedissonValueCacheOperate(redissonCacheClient());
     }
 
     @Bean
-    public RedissonMapCacheOperate mapCacheOperate(@Qualifier(CACHE_CLIENT_BEAN_NAME) RedissonClient redissonClient) {
-        return new RedissonMapCacheOperate(redissonClient);
+    public RedissonMapCacheOperate mapCacheOperate() {
+        return new RedissonMapCacheOperate(redissonCacheClient());
     }
 
 //    @Bean("cacheStringRedisTemplate")

@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * hash缓存操作
  *
  * @author luyi
+ * @since 1.0.1
  */
 public class RedissonMapCacheOperate implements RemoteCacheOperate {
 
@@ -112,6 +113,6 @@ public class RedissonMapCacheOperate implements RemoteCacheOperate {
     @Override
     public Map<String, Serializable> batchGet(BatchGetParam batchGetParam) {
         RMapCache<String, Serializable> rMapCache = redissonClient.getMapCache(batchGetParam.getWrapperCacheName());
-       return rMapCache.getAll(batchGetParam.getKeys());
+        return rMapCache.getAll(batchGetParam.getKeys());
     }
 }

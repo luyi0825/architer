@@ -1,18 +1,17 @@
-package io.github.architers.context.lock.support.redission;
+package io.github.architers.lock.redisson;
 
 import io.github.architers.context.lock.ArchiterLock;
 import io.github.architers.context.lock.ArchiterReadWriteLock;
-import io.github.architers.context.lock.eums.LockMode;
 import org.redisson.api.RLock;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 
-public class BaseRedissionLock implements ArchiterReadWriteLock {
+public class BaseRedissonLock implements ArchiterReadWriteLock {
 
     private final RLock rLock;
 
-    public BaseRedissionLock(RLock rLock) {
+    public BaseRedissonLock(RLock rLock) {
         this.rLock = rLock;
     }
 

@@ -1,32 +1,31 @@
 package io.github.architers.lock.redisson;
 
+
+import io.github.architers.propertconfig.redisson.RedissonBaseProperties;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import static io.github.architers.lock.redisson.RedissonLockProperties.PREFIX;
+
 /**
- * redisson分布式锁属性配置
+ * redisson分布式锁属性配置类
  *
- * @author luyi
+ * @author lyi
+ * @since 1.0.3
  */
-@ConfigurationProperties(prefix = RedissonLockProperties.PREFIX)
+@EqualsAndHashCode(callSuper = true)
+@ConfigurationProperties(prefix = PREFIX)
 @Data
-public class RedissonLockProperties {
+public class RedissonLockProperties extends RedissonBaseProperties {
 
-     final static String PREFIX = "architers.lock.redisson";
-
-    /**
-     * 是否隔离:隔离了就是重新建立redisson连接，默认是
-     * <li>解决缓存和锁不是使用的同一套redis环境</li>
-     */
-    private boolean isolation = true;
+    public static final String PREFIX = "architers.lock.redisson";
 
     /**
-     * 配置的文件(项目下resources下的路径)
+     * 是否隔离（如果为true,redisson的锁对应的redissonClient连接就和其他不是同一个）
+     * <li>默认false</li>
      */
-    private String file;
-    /**
-     * 根据属性配置，可以直接配置在yml和properties文件中
-     */
-    private RedissonLockConfig config;
+    private Boolean isolation = Boolean.FALSE;
+
 
 }
