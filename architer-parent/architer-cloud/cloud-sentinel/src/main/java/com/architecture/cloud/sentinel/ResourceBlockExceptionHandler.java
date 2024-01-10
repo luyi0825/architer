@@ -1,7 +1,7 @@
 package com.architecture.cloud.sentinel;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import io.github.architers.context.utils.JsonUtils;
+import io.github.architers.common.json.JsonUtils;
 
 import java.util.HashMap;
 import java.util.Map;

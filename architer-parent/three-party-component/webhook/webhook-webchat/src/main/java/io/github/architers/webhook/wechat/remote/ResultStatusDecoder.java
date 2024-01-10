@@ -4,7 +4,7 @@ import feign.FeignException;
 import feign.Response;
 import feign.Util;
 import feign.codec.Decoder;
-import io.github.architers.context.utils.JsonUtils;
+import io.github.architers.common.json.JsonUtils;
 import io.github.architers.context.webmvc.ResponseResult;
 import io.github.architers.webhook.exeception.WebHookLimitException;
 import io.github.architers.webhook.wechat.response.WechatResponse;

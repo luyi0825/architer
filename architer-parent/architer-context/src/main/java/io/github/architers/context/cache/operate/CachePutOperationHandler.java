@@ -6,7 +6,7 @@ import io.github.architers.context.cache.utils.CacheUtils;
 import io.github.architers.context.cache.annotation.CachePut;
 import io.github.architers.context.cache.model.PutParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
-import io.github.architers.context.utils.JsonUtils;
+import io.github.architers.common.json.JsonUtils;
 
 import java.lang.annotation.Annotation;
 

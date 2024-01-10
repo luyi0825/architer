@@ -8,7 +8,7 @@ import io.github.architers.context.lock.annotation.ReadLock;
 import io.github.architers.context.lock.annotation.WriteLock;
 import io.github.architers.context.lock.eums.LockType;
 import io.github.architers.context.lock.support.NoLock;
-import io.github.architers.context.utils.JsonUtils;
+import io.github.architers.common.json.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -18,7 +18,6 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;

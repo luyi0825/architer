@@ -5,12 +5,11 @@ import io.github.architers.context.cache.model.*;
 import io.github.architers.context.cache.operate.CacheOperate;
 import io.github.architers.context.cache.operate.LocalCacheOperate;
 import io.github.architers.context.cache.utils.BatchValueUtils;
-import io.github.architers.context.utils.JsonUtils;
+import io.github.architers.common.json.JsonUtils;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 删除缓存工具类
@@ -27,7 +26,7 @@ public class DeleteCacheUtils {
         }
         CacheChangeParam changeParam;
         if (PutParam.class.getSimpleName().equals(cacheParamName)) {
-            PutParam putParam = JsonUtils.readValue(message.getBody(), PutParam.class);
+            PutParam putParam = JsonUtils.parseObject(message.getBody(), PutParam.class);
             EvictParam evictParam = new EvictParam();
             evictParam.setOriginCacheName(putParam.getOriginCacheName());
             evictParam.setWrapperCacheName(putParam.getWrapperCacheName());
@@ -35,15 +34,15 @@ public class DeleteCacheUtils {
             changeParam = evictParam;
             cacheOperate.delete(evictParam);
         } else if (EvictParam.class.getSimpleName().equals(cacheParamName)) {
-            EvictParam evictParam = JsonUtils.readValue(message.getBody(), EvictParam.class);
+            EvictParam evictParam = JsonUtils.parseObject(message.getBody(), EvictParam.class);
             cacheOperate.delete(evictParam);
             changeParam = evictParam;
         } else if (BatchEvictParam.class.getSimpleName().equals(cacheParamName)) {
-            BatchEvictParam batchEvictParam = JsonUtils.readValue(message.getBody(), BatchEvictParam.class);
+            BatchEvictParam batchEvictParam = JsonUtils.parseObject(message.getBody(), BatchEvictParam.class);
             cacheOperate.batchDelete(batchEvictParam);
             changeParam = batchEvictParam;
         } else if (BatchPutParam.class.getSimpleName().equals(cacheParamName)) {
-            BatchPutParam batchPutParam = JsonUtils.readValue(message.getBody(), BatchPutParam.class);
+            BatchPutParam batchPutParam = JsonUtils.parseObject(message.getBody(), BatchPutParam.class);
             BatchEvictParam batchEvictParam = new BatchEvictParam();
             batchEvictParam.setOriginCacheName(batchPutParam.getOriginCacheName());
             batchEvictParam.setWrapperCacheName(batchEvictParam.getWrapperCacheName());
@@ -53,7 +52,7 @@ public class DeleteCacheUtils {
             cacheOperate.batchDelete(batchEvictParam);
             changeParam = batchEvictParam;
         } else if (EvictAllParam.class.getSimpleName().equals(cacheParamName)) {
-            EvictAllParam evictAllParam = JsonUtils.readValue(message.getBody(), EvictAllParam.class);
+            EvictAllParam evictAllParam = JsonUtils.parseObject(message.getBody(), EvictAllParam.class);
             cacheOperate.deleteAll(evictAllParam);
             changeParam = evictAllParam;
         } else {

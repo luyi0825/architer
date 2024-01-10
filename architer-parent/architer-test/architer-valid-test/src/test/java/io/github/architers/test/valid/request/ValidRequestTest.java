@@ -1,11 +1,8 @@
 package io.github.architers.test.valid.request;
 
-import io.github.architers.context.utils.JsonUtils;
+import io.github.architers.common.json.JsonUtils;
 import io.github.architers.context.valid.BeanValidatorUtils;
-import io.github.architers.test.valid.eums.YesOrNo;
 import org.junit.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidRequestTest {
 

@@ -26,6 +26,7 @@
         <zookeeper.version>3.9.1</zookeeper.version>
         <apache-curator.version>5.5.0</apache-curator.version>
         <redisson.version>3.25.2</redisson.version>
+        <fastjson2.version>2.0.45</fastjson2.version>
         <jackson.version>2.16.0</jackson.version>
         <spring.version>5.3.31</spring.version>
         <spring-boot.version>2.7.18</spring-boot.version>

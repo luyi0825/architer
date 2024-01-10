@@ -4,7 +4,7 @@ package io.github.architers.cache.yali;
 import io.github.architers.cache.TestModel;
 import io.github.architers.cache.entity.UserInfo;
 import io.github.architers.context.cache.CacheConstants;
-import io.github.architers.context.utils.JsonUtils;
+import io.github.architers.common.json.JsonUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

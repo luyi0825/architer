@@ -2,7 +2,7 @@ package io.github.architers.webhook.service.impl;
 
 
 import io.github.architers.context.exception.BusLogException;
-import io.github.architers.context.utils.JsonUtils;
+import io.github.architers.common.json.JsonUtils;
 import io.github.architers.context.webmvc.ResponseResult;
 import io.github.architers.webhook.WebHookMessage;
 import io.github.architers.webhook.WebhookProperties;

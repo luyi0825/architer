@@ -8,7 +8,7 @@ import io.github.architers.context.cache.annotation.Cacheable;
 import io.github.architers.context.cache.model.GetParam;
 import io.github.architers.context.cache.model.PutParam;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
-import io.github.architers.context.utils.JsonUtils;
+import io.github.architers.common.json.JsonUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
