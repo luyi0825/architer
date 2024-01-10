@@ -6,7 +6,7 @@
     <groupId>io.github.architers</groupId>
     <artifactId>architer-parent</artifactId>
     <version>${revision}</version>
-    <name>architer-parent</name>
+    <name>architers-parent</name>
     <packaging>pom</packaging>
     <description>架构设计</description>
     <properties>
@@ -68,16 +68,12 @@
         </license>
     </licenses>
     <modules>
-        <module>architer-common</module>
-        <module>architer-context</module>
-        <module>architer-cache</module>
-        <module>architer-lock</module>
-        <module>architer-cloud</module>
-        <module>web-starter</module>
-        <module>others</module>
-        <module>three-party-component</module>
-        <!--属性配置-->
-        <module>architer-property-config</module>
+        <module>architer</module>
+        <module>expand</module>
+<!--        <module>web-starter</module>-->
+<!--        <module>others</module>-->
+<!--        <module>three-party-component</module>-->
+
     </modules>
 
     <dependencies>
