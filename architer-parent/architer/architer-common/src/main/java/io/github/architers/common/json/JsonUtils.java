@@ -20,11 +20,17 @@ import java.util.ServiceLoader;
  */
 @Slf4j
 public final class JsonUtils {
+    private static ArchiterJson architerJson;
+
     /**
      * 防止被new
      */
     private JsonUtils() {
 
+
+    }
+
+    static {
         ServiceLoader<ArchiterJson> architerJsonServiceLoader = ServiceLoader.load(ArchiterJson.class);
         int count = (int) architerJsonServiceLoader.stream().count();
         if (count > 1) {
@@ -51,11 +57,8 @@ public final class JsonUtils {
         if (architerJson == null) {
             throw new RuntimeException("请配置json序列化方式");
         }
-        log.info("使用的json序列化方式:" + architerJson);
+        log.info("使用的json序列化方式:" + architerJson.getClass().getName());
     }
-
-    private static ArchiterJson architerJson;
-
 
     /**
      * Object转成Json字符串
