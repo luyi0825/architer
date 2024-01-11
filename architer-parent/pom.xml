@@ -70,6 +70,7 @@
     <modules>
         <module>architer</module>
         <module>expand</module>
+        <module>architer-test</module>
 <!--        <module>web-starter</module>-->
 <!--        <module>others</module>-->
 <!--        <module>three-party-component</module>-->
@@ -150,12 +151,6 @@
                 <version>${hibernate-validator.version}</version>
             </dependency>
 
-            <!--            <dependency>-->
-            <!--                <groupId>org.jsoup</groupId>-->
-            <!--                <artifactId>jsoup</artifactId>-->
-            <!--                <version>${jsoup.verion}</version>-->
-            <!--            </dependency>-->
-
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
@@ -192,31 +187,11 @@
                 <artifactId>zookeeper</artifactId>
                 <version>${zookeeper.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>cn.hutool</groupId>-->
-<!--                <artifactId>hutool-all</artifactId>-->
-<!--                <version>${hutool.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>com.baomidou</groupId>-->
-<!--                <artifactId>mybatis-plus-extension</artifactId>-->
-<!--                <version>${mybaits-plus.version}</version>-->
-<!--            </dependency>-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>org.elasticsearch.client</groupId>-->
-<!--                <artifactId>elasticsearch-rest-high-level-client</artifactId>-->
-<!--                <version>${elasticsearch.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>org.elasticsearch</groupId>-->
-<!--                <artifactId>elasticsearch</artifactId>-->
-<!--                <version>${elasticsearch.version}</version>-->
-<!--            </dependency>-->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>

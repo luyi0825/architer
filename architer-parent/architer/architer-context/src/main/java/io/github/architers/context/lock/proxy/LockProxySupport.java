@@ -2,6 +2,7 @@ package io.github.architers.context.lock.proxy;
 
 import io.github.architers.common.expression.method.ExpressionMetadata;
 import io.github.architers.common.expression.method.ExpressionParser;
+import io.github.architers.context.exception.BusException;
 import io.github.architers.context.lock.*;
 import io.github.architers.context.lock.annotation.ExclusiveLock;
 import io.github.architers.context.lock.annotation.ReadLock;
@@ -169,18 +170,22 @@ public class LockProxySupport implements ApplicationContextAware {
     private Object handlerFail(String failHandle, ExpressionMetadata expressionMetadata) throws Throwable {
         //方法名称
         String methodName;
-        //回调的对象实例
-        Object callBackTarget;
-        if (failHandle.contains("#")) {
-            callBackTarget = applicationContext.getBean(failHandle.split("#")[0]);
-            methodName = failHandle.split("#")[1];
-        } else {
-            callBackTarget = expressionMetadata.getTarget();
-            methodName = failHandle;
+        if (StringUtils.hasText(failHandle)) {
+            //回调的对象实例
+            Object callBackTarget;
+            if (failHandle.contains("#")) {
+                callBackTarget = applicationContext.getBean(failHandle.split("#")[0]);
+                methodName = failHandle.split("#")[1];
+            } else {
+                callBackTarget = expressionMetadata.getTarget();
+                methodName = failHandle;
+            }
+            Method callMethod = callBackTarget.getClass().getDeclaredMethod(methodName, expressionMetadata.getTargetMethod().getParameterTypes());
+            //反射回调
+            return callMethod.invoke(callBackTarget, expressionMetadata.getArgs());
         }
-        Method callMethod = callBackTarget.getClass().getDeclaredMethod(methodName, expressionMetadata.getTargetMethod().getParameterTypes());
-        //反射回调
-        return callMethod.invoke(callBackTarget, expressionMetadata.getArgs());
+        throw new BusException("请稍后再试");
+
     }
 
 

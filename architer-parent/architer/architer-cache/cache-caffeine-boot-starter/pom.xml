@@ -33,5 +33,11 @@
             <artifactId>architer-context</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.architers</groupId>
+            <artifactId>architer-common</artifactId>
+            <version>${revision}</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

@@ -5,11 +5,12 @@
         <artifactId>architer</artifactId>
         <groupId>io.github.architers</groupId>
         <version>${revision}</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>architer-property-config</artifactId>
     <name>architer-property-config</name>
+    <version>${revision}</version>
     <packaging>jar</packaging>
     <description>属性配置</description>
     <dependencies>
