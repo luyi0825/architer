@@ -1,4 +1,4 @@
-package io.github.architers.context.model;
+package io.github.architers.model.tree;
 
 import lombok.Data;
 

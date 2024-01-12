@@ -1,11 +1,7 @@
-package io.github.architers.context.utils;
+package io.github.architers.model.tree;
 
-import io.github.architers.context.model.TreeNode;
-import lombok.Data;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -16,17 +12,18 @@ import java.util.function.Function;
  * 树节点工具类
  *
  * @author luyi
+ * @since 1.0.3
  */
 public class NodeTreeUtils {
 
 
-    public static <T> List<TreeNode> convertToTree(List<T> objects, String parentField, Function<T, TreeNode> consumer) {
-        if (CollectionUtils.isEmpty(objects)) {
+    public static <T> List<TreeNode> convertToTree(List<T> list, String parentField, Function<T, TreeNode> consumer) {
+        if (list == null || list.isEmpty()) {
             return Collections.emptyList();
         }
-        List<TreeNode> treeNodes = parent(objects, parentField, consumer);
+        List<TreeNode> treeNodes = parent(list, parentField, consumer);
         for (TreeNode treeNode : treeNodes) {
-            fillChildNodes(treeNode, parentField, objects, consumer);
+            fillChildNodes(treeNode, parentField, list, consumer);
         }
         return treeNodes;
 
@@ -45,7 +42,7 @@ public class NodeTreeUtils {
         }
         parentNode.setChildrenNodes(treeNodes);
         //递归查询编码
-        if (treeNodes.size() > 0) {
+        if (!treeNodes.isEmpty()) {
             for (TreeNode treeNode : treeNodes) {
                 fillChildNodes(treeNode, parentField, objects, consumer);
             }

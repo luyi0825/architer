@@ -20,10 +20,7 @@ public class PageParam {
      */
     private Integer pageSize = 15;
 
-    /**
-     * 是否合计
-     */
-    private Boolean count = true;
+
 
     /**
      * 排序字段

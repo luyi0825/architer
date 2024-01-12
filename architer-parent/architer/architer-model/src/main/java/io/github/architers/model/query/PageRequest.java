@@ -1,4 +1,4 @@
-package io.github.architers.context.query;
+package io.github.architers.model.query;
 
 import lombok.Data;
 
