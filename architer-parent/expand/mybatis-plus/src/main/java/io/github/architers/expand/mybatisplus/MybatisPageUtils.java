@@ -1,11 +1,10 @@
-package io.github.architers.component.mybatisplus;
+package io.github.architers.expand.mybatisplus;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.github.architers.context.query.PageParam;
-import io.github.architers.context.query.PageResult;
-import org.apache.commons.io.IOUtils;
+import io.github.architers.model.response.PageResponse;
 
 import java.util.List;
 import java.util.function.Function;
@@ -15,22 +14,23 @@ import java.util.function.Supplier;
  * 分页工具类
  *
  * @author luyi
+ * @since 1.0.3
  */
-public class MybatisPageUtils {
+public final class MybatisPageUtils {
     private final static int TWO_PAGE_NUM = 2;
     private final static int ONE_PAGE_NUM = 1;
 
     /**
      * 将PageHelper分页后的list转为分页信息
      */
-    public static <T> PageResult<T> restPage(List<T> list) {
+    public static <T> PageResponse<T> restPage(List<T> list) {
         PageInfo<T> pageInfo = new PageInfo<T>(list);
-        PageResult<T> pageResult = new PageResult<>();
-//        pageResult.setCurrentPage(pageInfo.getPageNum());
-//        pageResult.setPageSize(pageInfo.getPageSize());
-//        pageResult.setTotalPage(pageInfo.getPages());
-        pageResult.setItems(pageInfo.getList());
-        pageResult.setTotal(pageInfo.getTotal());
+        PageResponse<T> pageResult = new PageResponse<>();
+        pageResult.setPageNum(pageInfo.getPageNum());
+        pageResult.setPageSize(pageInfo.getPageSize());
+        pageResult.setTotalPage(pageInfo.getPages());
+        pageResult.setList(pageInfo.getList());
+        pageResult.setTotalCount(pageInfo.getTotal());
         return pageResult;
     }
 
@@ -40,15 +40,11 @@ public class MybatisPageUtils {
      * @param supplier 数据查询
      */
 
-    public static <T> PageResult<T> pageQuery(PageParam pageParam, Supplier<List<T>> supplier) {
-        Page<T> page = null;
-        try {
-            page = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize());
-            //第一次查询
+    public static <T> PageResponse<T> pageQuery(PageParam pageParam, Supplier<List<T>> supplier) {
+
+        try (Page<T> page = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize())) {
             List<T> list = supplier.get();
             return MybatisPageUtils.restPage(list);
-        } finally {
-            IOUtils.closeQuietly(page);
         }
     }
 
@@ -75,7 +71,9 @@ public class MybatisPageUtils {
                 }
             }
         } finally {
-            IOUtils.closeQuietly(page);
+            if (page != null) {
+                page.close();
+            }
         }
     }
 

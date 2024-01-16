@@ -11,8 +11,8 @@
     <groupId>io.github.architers</groupId>
     <packaging>pom</packaging>
     <properties>
-        <architer.revision>1.0.2</architer.revision>
-        <revision>1.0.2</revision>
+        <architer.revision>1.0.3</architer.revision>
+        <revision>1.0.3</revision>
         <maven-flatten-version>1.1.0</maven-flatten-version>
         <spring-boot.version>2.7.12</spring-boot.version>
         <jackson.version>2.12.2</jackson.version>

@@ -10,11 +10,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>expand</artifactId>
-    <name>architer-expand</name>
+    <name>expand</name>
     <packaging>pom</packaging>
     <description>拓展</description>
     <modules>
         <module>easyexcel</module>
+        <module>mybatis-plus</module>
     </modules>
 
 

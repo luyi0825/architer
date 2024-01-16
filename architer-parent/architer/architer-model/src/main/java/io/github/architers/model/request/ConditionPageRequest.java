@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ConditionPageRequest<T> extends PaginationRequest<T> {
+public class ConditionPageRequest<T> extends PageRequest<T> {
 
     /**
      * 根据这个code,对conditions进行转换(拓转字段)

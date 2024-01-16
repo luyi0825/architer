@@ -4,7 +4,7 @@ import io.github.architers.model.query.page.IPagination;
 import lombok.Data;
 
 @Data
-public class PaginationRequest<T> implements IPagination<T> {
+public class PageRequest<T> implements IPagination<T> {
 
     /**
      * 是否合计

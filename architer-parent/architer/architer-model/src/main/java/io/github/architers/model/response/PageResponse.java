@@ -20,7 +20,7 @@ import java.util.List;
  * @since 1.0.3
  */
 @Data
-public class PaginationResponse<T> implements Serializable {
+public class PageResponse<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
      * 总记录数
@@ -45,6 +45,9 @@ public class PaginationResponse<T> implements Serializable {
      */
     private List<T> list;
 
+    public PageResponse() {
+    }
+
     /**
      * 分页
      *
@@ -53,7 +56,7 @@ public class PaginationResponse<T> implements Serializable {
      * @param pageSize   每页记录数
      * @param pageNum    当前页数
      */
-    public PaginationResponse(long totalCount, int pageNum, int pageSize, int totalPage, List<T> list) {
+    public PageResponse(long totalCount, int pageNum, int pageSize, int totalPage, List<T> list) {
         this.totalCount = totalCount;
         this.pageNum = pageNum;
         this.pageSize = pageSize;

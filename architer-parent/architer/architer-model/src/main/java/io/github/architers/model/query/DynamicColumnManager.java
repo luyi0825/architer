@@ -4,6 +4,12 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
+/**
+ * 动态列管理
+ *
+ * @author luyi
+ * @since 1.0.3
+ */
 public class DynamicColumnManager {
 
 
@@ -25,6 +31,11 @@ public class DynamicColumnManager {
         return returnColumns;
     }
 
+    /**
+     * 获取字段列
+     *
+     * @return key 字段名|value列名
+     */
     public static Map<String, String> getFieldColumns(String code) {
         return fieldColumnMap.get(code);
     }
