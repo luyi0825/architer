@@ -1,6 +1,10 @@
 package io.github.architers.common.json;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
+
+import java.io.Serializable;
+import java.lang.reflect.Type;
 
 /**
  * 阿里FastJson2
@@ -24,13 +28,19 @@ public final class FastJson2 implements ArchiterJson {
 
     @Override
     public <T> T parseObject(byte[] bytes, Class<T> clazz) {
-        return JSON.parseObject(bytes,clazz);
+        return JSON.parseObject(bytes, clazz);
     }
 
     @Override
     public <T> T parseObject(String jsonStr, Class<T> clazz) {
-        return JSON.parseObject(jsonStr,clazz);
+        return JSON.parseObject(jsonStr, clazz);
     }
+
+    @Override
+    public <T> T parseObjectByType(String jsonStr, ArchiterTypeReference<T> typeReference) {
+        return JSON.parseObject(jsonStr, typeReference.getType());
+    }
+
 
     public static ArchiterJson getInstance() {
         return fastJson2;

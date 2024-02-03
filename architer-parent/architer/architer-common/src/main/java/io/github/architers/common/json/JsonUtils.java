@@ -105,4 +105,10 @@ public final class JsonUtils {
         return architerJson.parseObject(jsonStr, clazz);
     }
 
+    public static <T> T parseObject(String jsonStr, ArchiterTypeReference<T> typeReference){
+        return architerJson.parseObjectByType(jsonStr, typeReference);
+    }
+
+
+
 }

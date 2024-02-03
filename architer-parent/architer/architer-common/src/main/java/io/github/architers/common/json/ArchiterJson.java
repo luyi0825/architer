@@ -1,5 +1,7 @@
 package io.github.architers.common.json;
 
+import java.lang.reflect.Type;
+
 public interface ArchiterJson {
     /**
      * 转换为json字符串
@@ -21,7 +23,5 @@ public interface ArchiterJson {
     <T> T parseObject(String jsonStr, Class<T> clazz);
 
 
-
-
-
+    <T> T parseObjectByType(String jsonStr, ArchiterTypeReference<T> typeReference);
 }

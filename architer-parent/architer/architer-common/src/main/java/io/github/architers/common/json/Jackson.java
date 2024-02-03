@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 
 
 /**
@@ -69,6 +70,16 @@ public final class Jackson implements ArchiterJson {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public <T> T parseObjectByType(String jsonStr, ArchiterTypeReference<T> typeReference) {
+        try {
+            return (T) OBJECT_MAPPER.readValue(jsonStr,typeReference.getRawType());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public static ArchiterJson getInstance() {
         return JACKSON;
