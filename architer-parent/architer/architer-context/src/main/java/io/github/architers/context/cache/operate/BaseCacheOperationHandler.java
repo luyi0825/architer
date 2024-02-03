@@ -3,17 +3,13 @@ package io.github.architers.context.cache.operate;
 
 import io.github.architers.common.expression.method.ExpressionMetadata;
 import io.github.architers.common.expression.method.ExpressionParser;
-import io.github.architers.context.cache.model.BaseCacheParam;
-import io.github.architers.context.cache.operate.hook.CacheOperateInvocationHook;
 import io.github.architers.context.cache.proxy.MethodReturnValueFunction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.lang.annotation.Annotation;
 import java.text.MessageFormat;
-import java.util.List;
 
 
 /**
@@ -21,20 +17,17 @@ import java.util.List;
  * 缓存operation处理基类
  * <li>对于实现类order排序,按照操作的频率排好序，增加程序效率：比如缓存读多，就把cacheable对应的处理器放最前边</li>
  */
-public abstract class BaseCacheOperationHandler {
+public abstract class BaseCacheOperationHandler implements CacheOperationHandler {
 
 
     @Resource
     protected CacheOperateManager cacheOperateManager;
-
 
     @Autowired(required = false)
     protected ExpressionParser expressionParser;
     @Autowired(required = false)
    private CacheNameWrapper cacheNameWrapper;
 
-    @Autowired(required = false)
-    protected List<CacheOperateInvocationHook> cacheOperateInvocationHooks;
 
 
     public Object value(String valueExpression, ExpressionMetadata expressionMetadata) {
@@ -68,30 +61,7 @@ public abstract class BaseCacheOperationHandler {
                         MethodReturnValueFunction methodReturnValueFunction,
                         ExpressionMetadata expressionMetadata) throws Throwable {
         this.executeCacheOperate(operationAnnotation, expressionMetadata, methodReturnValueFunction);
-
     }
-
-    protected boolean beforeInvocation(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
-        if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
-            //调用方法之前的钩子函数
-            for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
-                if (!cacheOperateInvocationHook.before(cacheParam, cacheOperate)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    protected void afterInvocation(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
-        if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
-            //调用方法之前的钩子函数
-            for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
-                cacheOperateInvocationHook.after(cacheParam, cacheOperate);
-            }
-        }
-    }
-
 
     /**
      * 是否能够执行缓存操作

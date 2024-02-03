@@ -5,6 +5,7 @@ import io.github.architers.context.cache.consistency.LocalCacheDelayDelete;
 import io.github.architers.context.cache.model.*;
 import io.github.architers.context.cache.operate.CacheOperateManager;
 import io.github.architers.context.cache.operate.LocalAndRemoteCacheOperate;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.MessageModel;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -18,7 +19,8 @@ import javax.annotation.Resource;
  *
  * @author luyi
  */
-@RocketMQMessageListener(topic = "${architers.cache.value-change-route-key:}_broadcast", consumerGroup = "broadcast_consumer", selectorExpression = "${spring.application.name:}", messageModel = MessageModel.BROADCASTING)
+@RocketMQMessageListener(topic = "test", consumerGroup = "broadcast_consumer", selectorExpression = "${spring.application.name:}", messageModel = MessageModel.BROADCASTING)
+@Slf4j
 public class TwoLevelLocalCacheDeleteConsumer implements RocketMQListener<MessageExt> {
 
     @Resource
@@ -31,11 +33,10 @@ public class TwoLevelLocalCacheDeleteConsumer implements RocketMQListener<Messag
         if (!StringUtils.hasText(originCacheName)) {
             return;
         }
-        LocalAndRemoteCacheOperate cacheOperate = (LocalAndRemoteCacheOperate) cacheOperateManager.getCacheOperate(originCacheName);
-        CacheChangeParam cacheChangeParam = DeleteCacheUtils.delete(message, cacheOperate.getLocalCacheOperate());
-        if (cacheChangeParam != null) {
-            LocalCacheDelay localCacheDelay = new LocalCacheDelay(5000, cacheChangeParam, cacheOperate.getLocalCacheOperate());
-            LocalCacheDelayDelete.addDeleteTask(localCacheDelay);
+        LocalAndRemoteCacheOperate cacheOperate = cacheOperateManager.getCacheOperate(originCacheName);
+        if (cacheOperate.getLocalCacheOperate() != null) {
+            log.info("删除local缓存:{}", originCacheName);
+            CacheChangeParam cacheChangeParam = DeleteCacheUtils.delete(message, cacheOperate.getLocalCacheOperate());
         }
 
 

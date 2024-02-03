@@ -3,7 +3,7 @@ package io.github.architers.context.cache.consistency.rocketmq;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties("architers.cache.consistency.rocket-mq")
+@ConfigurationProperties("architers.cache.consistency.rocketmq")
 @Data
 public class CacheRocketMqProperties {
 
@@ -14,7 +14,7 @@ public class CacheRocketMqProperties {
     /**
      * 消息发送的topic
      */
-    private String topic;
+    private String topic = "test";
 
     /**
      * 生产组

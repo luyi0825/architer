@@ -17,7 +17,7 @@ import java.util.Set;
  *
  * @author luyi
  */
-public class CacheBatchEvictOperationHandler extends BaseCacheOperationHandler {
+public class CacheBatchEvictOperationHandler extends CacheChangeOperationHandler {
 
 
     @Override
@@ -29,7 +29,7 @@ public class CacheBatchEvictOperationHandler extends BaseCacheOperationHandler {
     @Override
     protected void executeCacheOperate(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         CacheBatchEvict cacheBatchEvict = (CacheBatchEvict) operationAnnotation;
-        //判断是否能够执行
+        //判断是否能够执行删除
         if (super.canDoCacheOperate(cacheBatchEvict.condition(), cacheBatchEvict.unless(), expressionMetadata)) {
             return;
         }
@@ -49,16 +49,8 @@ public class CacheBatchEvictOperationHandler extends BaseCacheOperationHandler {
 
         CacheOperate cacheOperate = super.cacheOperateManager.getCacheOperate(cacheBatchEvict.cacheName());
 
-        if (!CollectionUtils.isEmpty(cacheOperateInvocationHooks)) {
-            for (CacheOperateInvocationHook cacheOperateInvocationHook : cacheOperateInvocationHooks) {
-                cacheOperateInvocationHook.before(batchEvictParam, cacheOperate);
-            }
-        }
+        super.beforeInvocation(batchEvictParam, cacheOperate);
         cacheOperate.batchDelete(batchEvictParam);
-        if (cacheBatchEvict.beforeInvocation()) {
-            super.beforeInvocation(batchEvictParam, cacheOperate);
-        } else {
-            super.afterInvocation(batchEvictParam, cacheOperate);
-        }
+        super.afterInvocation(batchEvictParam, cacheOperate);
     }
 }

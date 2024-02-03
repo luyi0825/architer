@@ -58,12 +58,13 @@ public class CacheOperateManager implements ApplicationContextAware {
         }
         return cacheOperate;
     }
+
     /*
      * 1.没有配置，就采用默认的
      * 2.配置了，就用配置的
      */
     private void buildCacheOperateInfo(Map<Class<?>, CacheOperate> classCacheOperateMap, CacheProperties cacheProperties) {
-        defaultCacheOperate = getCacheOperate(cacheProperties, classCacheOperateMap);
+        defaultCacheOperate = getCacheOperate(cacheProperties.getCommonConfig(), classCacheOperateMap);
         cacheProperties.getCustomConfigs().forEach((cacheName, config) -> {
             LocalAndRemoteCacheOperate cacheOperate = getCacheOperate(config, classCacheOperateMap);
             if (cacheOperate == null) {
@@ -74,6 +75,9 @@ public class CacheOperateManager implements ApplicationContextAware {
     }
 
     private LocalAndRemoteCacheOperate getCacheOperate(CacheConfig cacheConfig, Map<Class<?>, CacheOperate> classCacheOperateMap) {
+        if (cacheConfig == null) {
+            return null;
+        }
         LocalCacheOperate localCacheOperate = null;
         RemoteCacheOperate remoteCacheOperate = null;
         if (cacheConfig.getLocalOperateClass() != null) {

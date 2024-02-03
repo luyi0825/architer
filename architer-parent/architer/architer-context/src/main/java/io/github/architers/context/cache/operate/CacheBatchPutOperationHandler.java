@@ -13,7 +13,7 @@ import java.lang.annotation.Annotation;
  *
  * @author luyi
  */
-public class CacheBatchPutOperationHandler extends BaseCacheOperationHandler {
+public class CacheBatchPutOperationHandler extends CacheChangeOperationHandler {
 
 
     @Override
@@ -39,8 +39,10 @@ public class CacheBatchPutOperationHandler extends BaseCacheOperationHandler {
         batchPutParam.setExpireTime(cacheBatchPut.randomTime());
         Object batchCacheValue = super.expressionParser.parserExpression(expressionMetadata, cacheBatchPut.cacheValue());
         batchPutParam.setBatchCacheValue(batchCacheValue);
-        //批量删除
+
         CacheOperate cacheOperate = super.cacheOperateManager.getCacheOperate(cacheBatchPut.cacheName());
+        beforeInvocation(batchPutParam, cacheOperate);
+        //批量删除
         cacheOperate.batchPut(batchPutParam);
 
         afterInvocation(batchPutParam, cacheOperate);

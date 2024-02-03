@@ -19,7 +19,7 @@ import java.lang.annotation.Annotation;
  * @author luyi
  * @version 1.0.0
  */
-public class CachePutOperationHandler extends BaseCacheOperationHandler {
+public class CachePutOperationHandler extends CacheChangeOperationHandler {
 
     private static final int SECOND_ORDER = 2;
 
@@ -36,6 +36,7 @@ public class CachePutOperationHandler extends BaseCacheOperationHandler {
             //调用方法
             return;
         }
+
         //默认为方法的返回值，当设置了缓存值就用指定的缓存值
         //得到过期时间
         long expireTime = CacheUtils.getExpireTime(cachePut.expireTime(), cachePut.randomTime());
@@ -49,15 +50,14 @@ public class CachePutOperationHandler extends BaseCacheOperationHandler {
         putParam.setExpireTime(expireTime);
         putParam.setTimeUnit(cachePut.timeUnit());
         CacheOperate cacheOperate = cacheOperateManager.getCacheOperate(cachePut.cacheName());
+        super.beforeInvocation(putParam, cacheOperate);
 
-        //调用方法
-        methodReturnValueFunction.proceed();
         Object cacheValue = expressionParser.parserExpression(expressionMetadata, cachePut.cacheValue());
         putParam.setCacheValue(cacheValue);
 
         cacheOperate.put(putParam);
 
-        super.afterInvocation(putParam,cacheOperate);
+        super.afterInvocation(putParam, cacheOperate);
 
     }
 

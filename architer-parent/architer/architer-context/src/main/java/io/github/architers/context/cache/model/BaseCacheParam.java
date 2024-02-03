@@ -13,6 +13,11 @@ import lombok.Data;
 public abstract class BaseCacheParam implements CacheOperationParam {
 
     /**
+     *命名空间
+     */
+    private String namespace;
+
+    /**
      * 原始的缓存名称
      */
     protected String originCacheName;

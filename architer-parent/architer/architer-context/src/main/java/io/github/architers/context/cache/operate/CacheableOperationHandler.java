@@ -50,6 +50,8 @@ public class CacheableOperationHandler extends BaseCacheOperationHandler {
         getParam.setOriginCacheName(cacheable.cacheName());
         getParam.setWrapperCacheName(getWrapperCacheName(cacheable.cacheName(), expressionMetadata));
         getParam.setKey(JsonUtils.toJsonString(key));
+
+
         Object value = cacheOperate.get(getParam);
         if (!isNullValue(value)) {
             cacheValue = value;

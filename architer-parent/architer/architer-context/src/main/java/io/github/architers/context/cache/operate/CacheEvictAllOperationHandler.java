@@ -13,7 +13,7 @@ import java.lang.annotation.Annotation;
  * @author luyi
  * @since 1.0.0
  */
-public class CacheEvictAllOperationHandler extends BaseCacheOperationHandler {
+public class CacheEvictAllOperationHandler extends CacheChangeOperationHandler {
     @Override
     public boolean match(Annotation operationAnnotation) {
         return operationAnnotation instanceof CacheEvictAll;
@@ -22,6 +22,12 @@ public class CacheEvictAllOperationHandler extends BaseCacheOperationHandler {
     @Override
     protected void executeCacheOperate(Annotation operationAnnotation, ExpressionMetadata expressionMetadata, MethodReturnValueFunction methodReturnValueFunction) throws Throwable {
         CacheEvictAll cacheEvictAll = (CacheEvictAll) operationAnnotation;
+
+        //判断是否能够执行
+        if (super.canDoCacheOperate(cacheEvictAll.condition(), cacheEvictAll.unless(), expressionMetadata)) {
+            //返回
+            return;
+        }
         String wrapperCacheName = this.getWrapperCacheName(cacheEvictAll.cacheName(), expressionMetadata);
         CacheOperate cacheOperate = super.cacheOperateManager.getCacheOperate(cacheEvictAll.cacheName());
         EvictAllParam evictAllParam = new EvictAllParam();
@@ -29,12 +35,9 @@ public class CacheEvictAllOperationHandler extends BaseCacheOperationHandler {
         evictAllParam.setOriginCacheName(cacheEvictAll.cacheName());
         evictAllParam.setWrapperCacheName(wrapperCacheName);
 
-        if (cacheEvictAll.beforeInvocation()) {
-            super.beforeInvocation(evictAllParam, cacheOperate);
-            cacheOperate.deleteAll(evictAllParam);
-        } else {
-            cacheOperate.deleteAll(evictAllParam);
-            super.afterInvocation(evictAllParam, cacheOperate);
-        }
+        super.beforeInvocation(evictAllParam, cacheOperate);
+        cacheOperate.deleteAll(evictAllParam);
+        super.afterInvocation(evictAllParam, cacheOperate);
+
     }
 }

@@ -1,6 +1,5 @@
 package io.github.architers.context.cache;
 
-import io.github.architers.context.cache.enums.CacheLevel;
 import io.github.architers.context.cache.operate.*;
 import lombok.Data;
 
@@ -33,7 +32,7 @@ public class CacheConfig implements Serializable {
     /**
      * 过期的时间单位
      */
-    private TimeUnit expireUnit = TimeUnit.MINUTES;
+    private TimeUnit expireUnit = TimeUnit.SECONDS;
 
     /**
      * 随机时间
@@ -44,6 +43,11 @@ public class CacheConfig implements Serializable {
      * 缓存值改变，延迟再删一次(解决缓存一致性）-->修改|删除都会再删一次
      */
     private Boolean changeDelayDeleteAgain;
+
+    /**
+     * 延迟时间(默认30秒）
+     */
+    private Long delayDeleteTime = 30L;
 
 
 }

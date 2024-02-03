@@ -19,6 +19,7 @@ import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * rocketmq延迟删除通知
@@ -43,77 +44,57 @@ public class RocketmqCacheOperateInvocationHook implements CacheOperateInvocatio
         this.producer = producer;
     }
 
-
-    private void sendDeleteLocalBroadcastMessage(BaseCacheParam cacheParam, long delayTimeMs) {
-        SendResult sendResult;
-        try {
-            Message message = new Message();
-            //一级远程缓存
-            if (delayTimeMs > 0) {
-                message.setDelayTimeMs(delayTimeMs);
-            }
-            //一级远程缓存
-            message.setTopic(cacheRocketMqProperties.getTopic());
-            message.setTags(applicationName);
-            message.putUserProperty("origin_cache_name", cacheParam.getOriginCacheName());
-            //缓存参数名称
-            message.putUserProperty("cache_param_name", cacheParam.getClass().getSimpleName());
-            message.setBody(JsonUtils.toJsonBytes(cacheParam));
-            sendResult = producer.send(message);
-        } catch (MQClientException | RemotingException | MQBrokerException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        if (!SendStatus.SEND_OK.equals(sendResult.getSendStatus())) {
-            throw new RuntimeException("操作失败，请重试");
-        }
-    }
-
     @Override
     public boolean before(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
         if (!(cacheParam instanceof CacheChangeParam)) {
             return true;
         }
-        if (cacheOperate instanceof LocalAndRemoteCacheOperate) {
-            //两级缓存，发送广播消息删除所有的本地缓存
-            this.sendDeleteLocalBroadcastMessage(cacheParam, 0);
-            return true;
-        }
-        if (cacheOperate instanceof RemoteCacheOperate) {
-            CacheConfig cacheConfig = cacheProperties.getCustomConfigs().get(cacheParam.getOriginCacheName());
-            Boolean changeDelayDelete = cacheProperties.getChangeDelayDeleteAgain();
-
-            if (Boolean.TRUE.equals(changeDelayDelete)) {
-                //发送延迟删消息
-                SendResult sendResult;
-                try {
-                    Message message = new Message();
-                    //一级远程缓存
-                    message.setDelayTimeMs(3000);
-                    message.setTopic(cacheRocketMqProperties.getTopic());
-                    message.setTags(applicationName);
-                    message.putUserProperty("origin_cache_name", cacheParam.getOriginCacheName());
-                    //缓存参数名称
-                    message.putUserProperty("cache_param_name", cacheParam.getClass().getSimpleName());
-                    message.setBody(JsonUtils.toJsonBytes(cacheParam));
-                    sendResult = producer.send(message);
-                } catch (MQClientException | RemotingException | MQBrokerException | InterruptedException e) {
-                    return false;
-                }
-                return SendStatus.SEND_OK.equals(sendResult.getSendStatus());
+        CacheConfig cacheConfig = this.getCacheConfig(cacheParam.getOriginCacheName());
+        if (Boolean.TRUE.equals(cacheConfig.getChangeDelayDeleteAgain())) {
+            //发送延迟删消息
+            SendResult sendResult;
+            try {
+                Message message = new Message();
+                //一级远程缓存
+                long delayTimeMs = TimeUnit.MILLISECONDS.convert(cacheConfig.getDelayDeleteTime(), cacheConfig.getExpireUnit());
+                message.setDelayTimeMs(delayTimeMs);
+                message.setTopic(cacheRocketMqProperties.getTopic());
+                message.setTags(applicationName);
+                message.putUserProperty("origin_cache_name", cacheParam.getOriginCacheName());
+                //缓存参数名称
+                message.putUserProperty("cache_param_name", cacheParam.getClass().getSimpleName());
+                message.setBody(JsonUtils.toJsonBytes(cacheParam));
+                sendResult = producer.send(message);
+            } catch (MQClientException | RemotingException | MQBrokerException | InterruptedException e) {
+                return false;
             }
+            return SendStatus.SEND_OK.equals(sendResult.getSendStatus());
         }
         return true;
+    }
+
+    private CacheConfig getCacheConfig(String originCacheName) {
+        CacheConfig cacheConfig = cacheProperties.getCustomConfigs().get(originCacheName);
+        if (cacheConfig != null) {
+            return cacheConfig;
+        }
+        //定制的不存在就使用公共的配置
+        cacheConfig = cacheProperties.getCommonConfig();
+        if (cacheConfig == null) {
+            throw new IllegalArgumentException("缓存配置不存在:" + originCacheName);
+        }
+        return cacheConfig;
     }
 
 
     @Override
     public void after(BaseCacheParam cacheParam, CacheOperate cacheOperate) {
-        if (cacheOperate instanceof LocalCacheOperate) {
-            if (!(cacheParam instanceof CacheChangeParam)) {
-                return ;
-            }
-            LocalCacheDelay localCacheDelay = new LocalCacheDelay(5000, (CacheChangeParam) cacheParam, (LocalCacheOperate) cacheOperate);
-            LocalCacheDelayDelete.addDeleteTask(localCacheDelay);
-        }
+//        if (cacheOperate instanceof LocalCacheOperate) {
+//            if (!(cacheParam instanceof CacheChangeParam)) {
+//                return ;
+//            }
+//            LocalCacheDelay localCacheDelay = new LocalCacheDelay(5000, (CacheChangeParam) cacheParam, (LocalCacheOperate) cacheOperate);
+//            LocalCacheDelayDelete.addDeleteTask(localCacheDelay);
+//        }
     }
 }

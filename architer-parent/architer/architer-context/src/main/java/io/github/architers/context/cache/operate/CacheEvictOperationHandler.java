@@ -19,7 +19,7 @@ import java.lang.annotation.Annotation;
  *
  * @author luyi
  */
-public class CacheEvictOperationHandler extends BaseCacheOperationHandler {
+public class CacheEvictOperationHandler extends CacheChangeOperationHandler {
 
 
     @Override
@@ -42,15 +42,11 @@ public class CacheEvictOperationHandler extends BaseCacheOperationHandler {
         evictParam.setKey(JsonUtils.toJsonString(key));
         evictParam.setAsync(cacheEvict.async());
 
-        if (cacheEvict.beforeInvocation()) {
-            super.beforeInvocation(evictParam, cacheOperate);
-            cacheOperate.delete(evictParam);
-            methodReturnValueFunction.proceed();
-        } else {
-            methodReturnValueFunction.proceed();
-            cacheOperate.delete(evictParam);
-            super.afterInvocation(evictParam, cacheOperate);
-        }
+
+        super.beforeInvocation(evictParam, cacheOperate);
+        cacheOperate.delete(evictParam);
+        super.afterInvocation(evictParam, cacheOperate);
+
     }
 
 }

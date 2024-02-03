@@ -12,7 +12,7 @@ public interface CacheOperationParam extends Serializable {
     /**
      * 获取命名空间
      */
-    default String getNameSpace() {
+    default String getNamespace() {
         return null;
     }
 

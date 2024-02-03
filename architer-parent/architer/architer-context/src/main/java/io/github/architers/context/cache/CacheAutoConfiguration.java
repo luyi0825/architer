@@ -1,6 +1,7 @@
 package io.github.architers.context.cache;
 
 import io.github.architers.common.expression.method.ExpressionParser;
+import io.github.architers.context.cache.consistency.rocketmq.CacheRocketAutoConfiguration;
 import io.github.architers.context.cache.fieldconvert.CacheFieldConvertProperties;
 import io.github.architers.context.cache.fieldconvert.FieldConvertSupport;
 import io.github.architers.context.cache.fieldconvert.utils.FieldConvertUtils;
@@ -22,7 +23,8 @@ import org.springframework.context.annotation.Role;
  */
 @Configuration(proxyBeanMethods = true)
 @EnableConfigurationProperties({CacheProperties.class, CacheFieldConvertProperties.class})
-@Import(CacheOperateConfiguration.class)
+@Import({CacheOperateConfiguration.class, CacheRocketAutoConfiguration.class})
+
 public class CacheAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
