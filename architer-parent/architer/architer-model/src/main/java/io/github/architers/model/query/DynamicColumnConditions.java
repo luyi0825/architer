@@ -11,13 +11,20 @@ import java.util.List;
  * @since 1.0.3
  */
 @Data
-public class ColumnConditions {
+public class DynamicColumnConditions {
 
+    /**
+     * 查询的列信息
+     */
     private List<Column> columns;
 
+    /**
+     * 动态where
+     */
     private List<Where> wheres;
-
-
+    /**
+     * 动态排序
+     */
     private List<OrderBy> orders;
 
 
@@ -27,17 +34,12 @@ public class ColumnConditions {
         /**
          * 字段名
          */
-        private String fieldName;
-
-        /**
-         * 列名
-         */
         private String columnName;
 
         /**
          * 字段别名
          */
-        private String alias;
+        private String columnAlias;
     }
 
 
@@ -55,7 +57,14 @@ public class ColumnConditions {
         /**
          * 操作值
          */
-        private String value;
+        private Object value;
+
+        private Object convertValue;
+
+        /**
+         * 对应对应的sql
+         */
+        private String sql;
     }
 
     /**

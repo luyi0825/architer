@@ -1,6 +1,6 @@
 package io.github.architers.model.request;
 
-import io.github.architers.model.query.FieldConditions;
+import io.github.architers.model.query.DynamicFieldConditions;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,5 +23,5 @@ public class ConditionPageRequest<T> extends PageRequest<T> {
     /**
      * 查询的字段条件
      */
-    private FieldConditions fieldConditions;
+    private DynamicFieldConditions dynamicFieldConditions;
 }

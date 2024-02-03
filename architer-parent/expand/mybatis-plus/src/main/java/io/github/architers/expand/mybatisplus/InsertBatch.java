@@ -1,4 +1,4 @@
-package io.github.architers.component.mybatisplus;
+package io.github.architers.expand.mybatisplus;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;

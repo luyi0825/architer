@@ -12,7 +12,7 @@ import java.util.Set;
  * @since 1.0.3
  */
 @Data
-public class FieldConditions {
+public class DynamicFieldConditions {
 
     private Set<String> fieldNames;
 
@@ -20,7 +20,6 @@ public class FieldConditions {
     private List<Where> wheres;
 
     private List<OrderBy> orders;
-
 
 
     @Data
@@ -38,6 +37,15 @@ public class FieldConditions {
          * 操作值
          */
         private String value;
+
+        public Where() {
+        }
+
+        public Where(String fieldName, WhereOperator operator, String value) {
+            this.fieldName = fieldName;
+            this.operator = operator;
+            this.value = value;
+        }
     }
 
     /**
@@ -66,6 +74,9 @@ public class FieldConditions {
             this.fieldName = fieldName;
         }
     }
+
+
+
 
 
 }

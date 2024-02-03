@@ -1,4 +1,4 @@
-package io.github.architers.component.mybatisplus;
+package io.github.architers.expand.mybatisplus;
 
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;

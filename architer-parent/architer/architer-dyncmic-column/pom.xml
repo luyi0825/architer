@@ -8,8 +8,8 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>architer-model</artifactId>
-    <name>architer-model</name>
+    <artifactId>architer-dynamic-column</artifactId>
+    <name>architer-dynamic-column</name>
     <version>${revision}</version>
     <packaging>jar</packaging>
     <description>模型</description>
@@ -21,14 +21,24 @@
         </dependency>
         <dependency>
             <groupId>io.github.architers</groupId>
-            <artifactId>architer-common</artifactId>
+            <artifactId>architer-model</artifactId>
             <version>1.0.3</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.alibaba.fastjson2</groupId>
-            <artifactId>fastjson2</artifactId>
-            <version>2.0.37</version>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.15</version>
+            <optional>true</optional>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
+
     </dependencies>
 </project>

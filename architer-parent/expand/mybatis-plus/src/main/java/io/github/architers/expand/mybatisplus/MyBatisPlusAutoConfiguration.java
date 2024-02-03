@@ -1,6 +1,5 @@
-package io.github.architers.component.mybatisplus;
+package io.github.architers.expand.mybatisplus;
 
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

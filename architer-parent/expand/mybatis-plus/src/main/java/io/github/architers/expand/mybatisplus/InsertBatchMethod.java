@@ -1,4 +1,4 @@
-package io.github.architers.component.mybatisplus;
+package io.github.architers.expand.mybatisplus;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.enums.SqlMethod;

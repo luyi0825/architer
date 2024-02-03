@@ -15,61 +15,72 @@ public enum WhereOperator {
     /**
      * like '%xxx'
      */
-    LIKE_LEFT("likeLeft'"),
+    likeLeft,
     /**
      * like '%xxx%'
      */
-    LIKE("like"),
+    like,
     /**
      * like 'xx%'
      */
-    LIKE_RIGHT("likeRight'"),
+    likeRight,
     /**
      * 等于=
      */
-    EQ("eq"),
+    equal,
 
     /**
      * 不等于
      */
-    NE("ne"),
+    notEqual,
 
     /**
      * 大于
      */
-    GT(""),
+    gt,
 
     /**
      * 大于等于>=
      */
-    GE("ge"),
+    ge,
 
     /**
      * 小于<
      */
-    LT("lt"),
+    lt,
 
     /**
      * 小于等于<=
      */
-    LE("le"),
+    le("le"),
 
     /**
      * xx between a and b,也就是 a<=x<=b
      */
-    BETWEEN("between"),
+    between("between"),
 
     /**
-     *
+     * 不在什么范围内
      */
-    NOT_BETWEEN("notBetween");
+    notBetween,
 
+    in,
+
+    notIn;
+
+    WhereOperator() {
+    }
 
     private String code;
+
+    private String operator;
 
     WhereOperator(String code) {
         this.code = code;
     }
 
-
+    WhereOperator(String code, String operator) {
+        this.code = code;
+        this.operator = operator;
+    }
 }

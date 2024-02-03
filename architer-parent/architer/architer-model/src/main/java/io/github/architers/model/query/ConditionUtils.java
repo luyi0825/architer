@@ -2,9 +2,11 @@ package io.github.architers.model.query;
 
 import org.springframework.util.CollectionUtils;
 
+import javax.management.RuntimeErrorException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 查询条件工具类
@@ -14,40 +16,118 @@ import java.util.Map;
  */
 public final class ConditionUtils {
 
-    public static ColumnConditions convertToColumnConditions(String conditionCode, FieldConditions fieldConditions) {
+    public static DynamicColumnConditions convertToColumnConditions(String conditionCode, DynamicFieldConditions dynamicFieldConditions) {
 
         //查询的列
-        List<ColumnConditions.Column> columns = DynamicColumnManager.getByCodeAndFieldNames(conditionCode, fieldConditions.getFieldNames());
-        if (columns == null) {
+        Map<String/*字段名*/, DynamicColumnConfig> columnConfigMap = DynamicConditionManager.getMapByCode(conditionCode);
+        if (columnConfigMap == null) {
+            throw new RuntimeException("动态列的配置不存在");
+        }
+        DynamicColumnConditions dynamicColumnConditions = new DynamicColumnConditions();
+
+        {//构建查询列
+            Set<String> fieldNames = dynamicFieldConditions.getFieldNames();
+            List<DynamicColumnConditions.Column> columns = buildQueryColumns(fieldNames, columnConfigMap);
+            dynamicColumnConditions.setColumns(columns);
+        }
+
+        {
+            //where条件
+            List<DynamicColumnConditions.Where> wheres = buildWheres(dynamicFieldConditions.getWheres(), columnConfigMap);
+            dynamicColumnConditions.setWheres(wheres);
+        }
+
+        {
+            //排序
+            List<DynamicColumnConditions.OrderBy> orders = buildOrders(dynamicFieldConditions.getOrders(), columnConfigMap);
+            dynamicColumnConditions.setOrders(orders);
+
+        }
+
+        return dynamicColumnConditions;
+    }
+
+    private static List<DynamicColumnConditions.OrderBy> buildOrders(List<DynamicFieldConditions.OrderBy> orders, Map<String, DynamicColumnConfig> columnConfigMap) {
+        if (CollectionUtils.isEmpty(orders)) {
             return null;
         }
-        ColumnConditions columnConditions = new ColumnConditions();
-        columnConditions.setColumns(columns);
-
-        Map<String/*字段名*/, String/*列名*/> fieldColumnMap = DynamicColumnManager.getFieldColumns(conditionCode);
-
-        //where条件
-        if (!CollectionUtils.isEmpty(fieldConditions.getWheres())) {
-            List<ColumnConditions.Where> wheres = new ArrayList<>(fieldConditions.getWheres().size());
-            for (FieldConditions.Where where : fieldConditions.getWheres()) {
-                ColumnConditions.Where columnConditionsWhere = new ColumnConditions.Where();
-                columnConditionsWhere.setColumnName(fieldColumnMap.get(where.getFieldName()));
-                columnConditionsWhere.setOperator(where.getOperator());
-                columnConditionsWhere.setValue(where.getValue());
-                wheres.add(columnConditionsWhere);
-            }
-            columnConditions.setWheres(wheres);
+        List<DynamicColumnConditions.OrderBy> orderByList = new ArrayList<>(orders.size());
+        for (DynamicFieldConditions.OrderBy order : orders) {
+            DynamicColumnConfig dynamicColumnConfig = columnConfigMap.get(order.getFieldName());
+            DynamicColumnConditions.OrderBy orderBy = new DynamicColumnConditions.OrderBy(dynamicColumnConfig.getColumnName(), order.isDesc());
+            orderByList.add(orderBy);
         }
-        //排序
-        if (!CollectionUtils.isEmpty(fieldConditions.getOrders())) {
-            List<ColumnConditions.OrderBy> orders = new ArrayList<>(fieldConditions.getOrders().size());
-            for (FieldConditions.OrderBy order : fieldConditions.getOrders()) {
-                String columnName = fieldColumnMap.get(order.getFieldName());
-                ColumnConditions.OrderBy orderBy = new ColumnConditions.OrderBy(columnName, order.isDesc());
-                orders.add(orderBy);
-            }
-            columnConditions.setOrders(orders);
+        return orderByList;
+
+
+    }
+
+    private static List<DynamicColumnConditions.Where> buildWheres(List<DynamicFieldConditions.Where> wheres, Map<String, DynamicColumnConfig> columnConfigMap) {
+
+        if (CollectionUtils.isEmpty(wheres)) {
+            return null;
         }
-        return columnConditions;
+        List<DynamicColumnConditions.Where> whereList = new ArrayList<>(wheres.size());
+        for (DynamicFieldConditions.Where where : wheres) {
+            DynamicColumnConditions.Where columnConditionsWhere = new DynamicColumnConditions.Where();
+            DynamicColumnConfig columnConfig = columnConfigMap.get(where.getFieldName());
+            if (columnConfig == null) {
+                throw new RuntimeException(String.format("列没有配置:字段【%s】", where.getFieldName()));
+            }
+            columnConditionsWhere.setColumnName(columnConfig.getColumnName());
+            columnConditionsWhere.setOperator(where.getOperator());
+            columnConditionsWhere.setValue(where.getValue());
+            //TODO:抽离，区分sql
+            fillWhereSql(columnConditionsWhere);
+            whereList.add(columnConditionsWhere);
+        }
+        return whereList;
+
+    }
+
+    private static void fillWhereSql(DynamicColumnConditions.Where where) {
+        StringBuilder whereSql = new StringBuilder();
+        WhereOperator whereOperator = where.getOperator();
+        whereSql.append(where.getColumnName());
+        if (WhereOperator.equal.equals(whereOperator)) {
+            whereSql.append(" = ");
+            whereSql.append("#{whereCondition.value}");
+        } else if (WhereOperator.likeLeft.equals(where.getOperator())) {
+            whereSql.append(" like CONCAT('%',#{whereCondition.value})");
+            // whereSql.append(" like '#{whereCondition.value}%'");
+        } else if (WhereOperator.between.equals(where.getOperator())) {
+            String[] arr = where.getValue().toString().split(",");
+            where.setConvertValue(arr);
+            whereSql.append(" between #{whereCondition.convertValue[0]} and #{whereCondition.convertValue[1]}");
+        } else if (WhereOperator.notBetween.equals(whereOperator)) {
+            String[] arr = where.getValue().toString().split(",");
+            where.setConvertValue(arr);
+            whereSql.append(" not between #{whereCondition.convertValue[0]} and #{whereCondition.convertValue[1]}");
+        } else {
+            throw new IllegalArgumentException("not support");
+        }
+        where.setSql(whereSql.toString());
+    }
+
+    /**
+     * 填充查询列
+     *
+     * @param fieldNames      字段名
+     * @param columnConfigMap 列配置
+     */
+    private static List<DynamicColumnConditions.Column> buildQueryColumns(Set<String> fieldNames, Map<String, DynamicColumnConfig> columnConfigMap) {
+        List<DynamicColumnConditions.Column> columns = new ArrayList<>(fieldNames.size());
+        //查询列
+        for (String fieldName : fieldNames) {
+            DynamicColumnConfig dynamicColumnConfig = columnConfigMap.get(fieldName);
+            if (dynamicColumnConfig == null) {
+                throw new RuntimeException(String.format("列没有配置:字段【%s】", fieldName));
+            }
+            DynamicColumnConditions.Column column = new DynamicColumnConditions.Column();
+            column.setColumnName(dynamicColumnConfig.getColumnName());
+            column.setColumnAlias(dynamicColumnConfig.getRealColumnAlias());
+            columns.add(column);
+        }
+        return columns;
     }
 }

@@ -1,0 +1,32 @@
+{
+  "testCode": [
+    {
+      "columnName": "id",
+      "fieldName": "id"
+    },
+    {
+      "columnName": "column_1",
+      "fieldName": "column1"
+    },
+    {
+      "columnName": "column_2",
+      "fieldName": "column2"
+    },
+    {
+      "columnName": "column_3",
+      "fieldName": "column3"
+    },
+    {
+      "columnName": "column_4",
+      "fieldName": "column4"
+    },
+    {
+      "columnName": "column_5",
+      "fieldName": "column5"
+    },
+    {
+      "columnName": "column_6",
+      "fieldName": "column6"
+    }
+  ]
+}

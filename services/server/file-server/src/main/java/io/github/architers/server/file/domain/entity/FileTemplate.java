@@ -45,7 +45,6 @@ public class FileTemplate extends BaseEntity {
     @TableField( jdbcType = JdbcType.VARCHAR,  typeHandler = JacksonTypeHandler.class)
     private FileTemplateCheckRowInfo checkRowInfo;
 
-
     /**
      * 模板url
      */
