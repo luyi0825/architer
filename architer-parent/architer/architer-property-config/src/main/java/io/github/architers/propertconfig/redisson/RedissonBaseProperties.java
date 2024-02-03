@@ -1,10 +1,13 @@
 package io.github.architers.propertconfig.redisson;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.config.Config;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -16,6 +19,8 @@ import java.io.Serializable;
  *
  * @author luyi
  */
+@Setter
+@Getter
 public class RedissonBaseProperties implements Serializable {
 
     /**
@@ -30,37 +35,14 @@ public class RedissonBaseProperties implements Serializable {
     /**
      * 根据属性配置，可以直接配置在yml和properties文件中
      */
-    protected Config config;
-
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getResourceFile() {
-        return resourceFile;
-    }
-
-    public void setResourceFile(String resourceFile) {
-        this.resourceFile = resourceFile;
-    }
-
-    public Config getConfig() {
-        return config;
-    }
-
-    public void setConfig(Config config) {
-        this.config = config;
-    }
+    @NestedConfigurationProperty
+    protected RedissonConfig config;
 
 
     public RedissonClient createClient() {
         try {
             String resourceFile = this.getResourceFile();
+            Config config = null;
             if (resourceFile != null && !resourceFile.isEmpty()) {
                 try (InputStream inputStream = this.getConfigStream()) {
                     config = Config.fromYAML(inputStream);

@@ -15,8 +15,10 @@ import java.io.Serializable;
  * @since 1.0.2
  */
 @EqualsAndHashCode(callSuper = true)
-@ConfigurationProperties(prefix = "architers.cache.redisson")
+@ConfigurationProperties(prefix = RedissonProperties.prefix)
 @Data
 public class RedissonProperties extends RedissonBaseProperties implements Serializable {
+
+    public static final String prefix = "architers.cache.redisson";
 
 }

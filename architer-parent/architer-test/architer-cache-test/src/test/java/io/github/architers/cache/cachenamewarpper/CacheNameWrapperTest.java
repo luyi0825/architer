@@ -2,7 +2,6 @@ package io.github.architers.cache.cachenamewarpper;
 
 import io.github.architers.cache.entity.UserInfo;
 import io.github.architers.cache.service.remote.IRemoteUserInfoCache;
-import io.github.architers.context.expression.ExpressionMetadata;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

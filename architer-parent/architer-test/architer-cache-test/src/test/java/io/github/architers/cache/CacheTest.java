@@ -39,7 +39,7 @@ public class CacheTest implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        userInfoService = remoteUserInfoCache;
+        userInfoService = twoLevelCacheUserInfoCache;
     }
 
 

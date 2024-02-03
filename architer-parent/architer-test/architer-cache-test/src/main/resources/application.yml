@@ -1,6 +1,15 @@
 
 architers:
   cache:
+    redisson:
+      config:
+        singleServerConfig:
+          address: redis://redis:6379
+          password: 19940825Ls
+        threads: 6
+      enabled: true
+
+
     custom-configs:
       local:
         local-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
@@ -10,6 +19,12 @@ architers:
         remote-operate-class: io.github.architers.cache.redisson.support.RedissonMapCacheOperate
         #不开启延迟双删
         change-delay-delete-again: false
+      twoLevel:
+        local-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
+        remote-operate-class: io.github.architers.cache.redisson.support.RedissonMapCacheOperate
+        #开启延迟双删
+        change-delay-delete-again: true
+        delay-delete-time: 10
       #default-cache-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
       fieldConverter:
         local-operate-class: io.github.architers.cache.caffeine.support.CaffeineMapCacheOperate
@@ -23,6 +38,9 @@ architers:
           maximum-size: 50
           #打印日志
           print-evict-log: true
+    consistency:
+      rocketmq:
+        enabled: true
 rocketmq:
   name-server: rocketmq:9876
   producer:

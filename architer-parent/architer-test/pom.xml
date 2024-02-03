@@ -16,6 +16,7 @@
         <module>architer-valid-test</module>
         <module>architer-lock-test</module>
         <module>architer-cache-test</module>
+        <module>architer-dynamic-column-test</module>
     </modules>
 
 
