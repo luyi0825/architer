@@ -27,6 +27,8 @@ public class DynamicColumnConditions {
      */
     private List<OrderBy> orders;
 
+    private String test = "1";
+
 
     @Data
     public static class Column {

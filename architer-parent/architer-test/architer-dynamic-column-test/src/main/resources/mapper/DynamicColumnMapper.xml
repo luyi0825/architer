@@ -21,15 +21,13 @@
     <select id="getDynamicList" resultType="java.util.Map"
             parameterType="io.github.architers.model.query.DynamicColumnConditions">
         select
-        <foreach collection="columns" item="column" separator=",">
+        <foreach collection="dynamicCondition.columns" item="column" separator=",">
             ${column.columnName} as ${column.columnAlias}
         </foreach>
         from dynamic_column
-        <where>
-            <foreach collection="wheres" item="whereCondition">
-                and ${whereCondition.sql}
-            </foreach>
-        </where>
+        where 1=1 and column_1 like CONCAT('%',#{dynamicCondition.test},'%')
+         and %wheres%
+        order by id desc;
 
 
     </select>

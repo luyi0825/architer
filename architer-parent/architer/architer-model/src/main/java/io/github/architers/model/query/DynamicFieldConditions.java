@@ -36,12 +36,12 @@ public class DynamicFieldConditions {
         /**
          * 操作值
          */
-        private String value;
+        private Object value;
 
         public Where() {
         }
 
-        public Where(String fieldName, WhereOperator operator, String value) {
+        public Where(String fieldName, WhereOperator operator, Object value) {
             this.fieldName = fieldName;
             this.operator = operator;
             this.value = value;

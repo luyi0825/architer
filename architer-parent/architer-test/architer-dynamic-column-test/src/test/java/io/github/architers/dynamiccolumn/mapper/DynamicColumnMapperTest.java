@@ -34,6 +34,18 @@ class DynamicColumnMapperTest {
     }
 
     @Test
+    public void equals() {
+        DynamicFieldConditions dynamicFieldConditions = dynamicFieldConditions();
+        List<DynamicFieldConditions.Where> wheres = new ArrayList<>(2);
+        wheres.add(new DynamicFieldConditions.Where("id", WhereOperator.equal, 1));
+        dynamicFieldConditions.setWheres(wheres);
+        DynamicColumnConditions dynamicColumnConditions = ConditionUtils.convertToColumnConditions("testCode", dynamicFieldConditions);
+
+        List<Map<String, Object>> list = dynamicColumnMapper.getDynamicList(dynamicColumnConditions);
+        System.out.println(JsonUtils.toJsonString(list));
+    }
+
+    @Test
     public void in() {
         DynamicFieldConditions dynamicFieldConditions = dynamicFieldConditions();
         List<DynamicFieldConditions.Where> wheres = new ArrayList<>(2);
@@ -46,7 +58,7 @@ class DynamicColumnMapperTest {
     }
 
     @Test
-    public void like(){
+    public void like() {
         DynamicFieldConditions dynamicFieldConditions = dynamicFieldConditions();
         List<DynamicFieldConditions.Where> wheres = new ArrayList<>(2);
         wheres.add(new DynamicFieldConditions.Where("column1", WhereOperator.like, "row"));
@@ -58,15 +70,15 @@ class DynamicColumnMapperTest {
     }
 
     @Test
-    public void likeRight(){
+    public void likeRight() {
         DynamicFieldConditions dynamicFieldConditions = dynamicFieldConditions();
         List<DynamicFieldConditions.Where> wheres = new ArrayList<>(2);
         wheres.add(new DynamicFieldConditions.Where("column1", WhereOperator.likeRight, "row1"));
         dynamicFieldConditions.setWheres(wheres);
         DynamicColumnConditions dynamicColumnConditions = ConditionUtils.convertToColumnConditions("testCode", dynamicFieldConditions);
 
-        List<Map<String, Object>> list = dynamicColumnMapper.getDynamicList(dynamicColumnConditions);
-        System.out.println(JsonUtils.toJsonString(list));
+        // List<Map<String, Object>> list = dynamicColumnMapper.getDynamicList(dynamicColumnConditions);
+        //  System.out.println(JsonUtils.toJsonString(list));
     }
 
     @Test

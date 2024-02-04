@@ -108,7 +108,7 @@ public final class ConditionUtils {
         } else if (WhereOperator.in.equals(whereOperator)) {
             String[] arr = where.getValue().toString().split(",");
             where.setConvertValue((arr));
-            whereSql.append(" in <script><foreach collection=\"whereCondition.convertValue\" item=\"inValue\" open=\"(\" separator=\",\" close=\")\">1</foreach></script>");
+            whereSql.append(" in <script><foreach collection=\"whereCondition.convertValue\" item=\"inValue\" open=\"(\" separator=\",\" close=\")\">#{inValue}</foreach></script>");
         } else {
             throw new IllegalArgumentException("not support");
         }
