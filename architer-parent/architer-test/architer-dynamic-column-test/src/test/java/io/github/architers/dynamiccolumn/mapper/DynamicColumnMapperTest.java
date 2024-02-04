@@ -21,8 +21,7 @@ class DynamicColumnMapperTest {
     @Resource
     private DynamicColumnMapper dynamicColumnMapper;
 
-    @Test
-    void getDynamicList() {
+    private DynamicFieldConditions dynamicFieldConditions() {
         DynamicFieldConditions dynamicFieldConditions = new DynamicFieldConditions();
         Set<String> columns = new HashSet<>();
         columns.add("id");
@@ -31,12 +30,49 @@ class DynamicColumnMapperTest {
             columns.add("column" + index);
         }
         dynamicFieldConditions.setFieldNames(columns);
+        return dynamicFieldConditions;
+    }
 
-        dynamicFieldConditions.setWheres(getWheres());
+    @Test
+    public void in() {
+        DynamicFieldConditions dynamicFieldConditions = dynamicFieldConditions();
+        List<DynamicFieldConditions.Where> wheres = new ArrayList<>(2);
+        wheres.add(new DynamicFieldConditions.Where("id", WhereOperator.in, "1,2"));
+        dynamicFieldConditions.setWheres(wheres);
         DynamicColumnConditions dynamicColumnConditions = ConditionUtils.convertToColumnConditions("testCode", dynamicFieldConditions);
 
         List<Map<String, Object>> list = dynamicColumnMapper.getDynamicList(dynamicColumnConditions);
         System.out.println(JsonUtils.toJsonString(list));
+    }
+
+    @Test
+    public void like(){
+        DynamicFieldConditions dynamicFieldConditions = dynamicFieldConditions();
+        List<DynamicFieldConditions.Where> wheres = new ArrayList<>(2);
+        wheres.add(new DynamicFieldConditions.Where("column1", WhereOperator.like, "row"));
+        dynamicFieldConditions.setWheres(wheres);
+        DynamicColumnConditions dynamicColumnConditions = ConditionUtils.convertToColumnConditions("testCode", dynamicFieldConditions);
+
+        List<Map<String, Object>> list = dynamicColumnMapper.getDynamicList(dynamicColumnConditions);
+        System.out.println(JsonUtils.toJsonString(list));
+    }
+
+    @Test
+    public void likeRight(){
+        DynamicFieldConditions dynamicFieldConditions = dynamicFieldConditions();
+        List<DynamicFieldConditions.Where> wheres = new ArrayList<>(2);
+        wheres.add(new DynamicFieldConditions.Where("column1", WhereOperator.likeRight, "row1"));
+        dynamicFieldConditions.setWheres(wheres);
+        DynamicColumnConditions dynamicColumnConditions = ConditionUtils.convertToColumnConditions("testCode", dynamicFieldConditions);
+
+        List<Map<String, Object>> list = dynamicColumnMapper.getDynamicList(dynamicColumnConditions);
+        System.out.println(JsonUtils.toJsonString(list));
+    }
+
+    @Test
+    void getDynamicList() {
+
+
     }
 
     private List<DynamicFieldConditions.Where> getWheres() {

@@ -3,10 +3,7 @@ package io.github.architers.model.query;
 import org.springframework.util.CollectionUtils;
 
 import javax.management.RuntimeErrorException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 查询条件工具类
@@ -92,8 +89,13 @@ public final class ConditionUtils {
         if (WhereOperator.equal.equals(whereOperator)) {
             whereSql.append(" = ");
             whereSql.append("#{whereCondition.value}");
+        } else if (WhereOperator.like.equals(whereOperator)) {
+            whereSql.append(" like CONCAT('%',#{whereCondition.value},'%')");
         } else if (WhereOperator.likeLeft.equals(where.getOperator())) {
             whereSql.append(" like CONCAT('%',#{whereCondition.value})");
+            // whereSql.append(" like '#{whereCondition.value}%'");
+        } else if (WhereOperator.likeRight.equals(where.getOperator())) {
+            whereSql.append(" like CONCAT(#{whereCondition.value},'%')");
             // whereSql.append(" like '#{whereCondition.value}%'");
         } else if (WhereOperator.between.equals(where.getOperator())) {
             String[] arr = where.getValue().toString().split(",");
@@ -103,15 +105,18 @@ public final class ConditionUtils {
             String[] arr = where.getValue().toString().split(",");
             where.setConvertValue(arr);
             whereSql.append(" not between #{whereCondition.convertValue[0]} and #{whereCondition.convertValue[1]}");
+        } else if (WhereOperator.in.equals(whereOperator)) {
+            String[] arr = where.getValue().toString().split(",");
+            where.setConvertValue((arr));
+            whereSql.append(" in <script><foreach collection=\"whereCondition.convertValue\" item=\"inValue\" open=\"(\" separator=\",\" close=\")\">1</foreach></script>");
         } else {
             throw new IllegalArgumentException("not support");
         }
+        System.out.println(whereSql);
         where.setSql(whereSql.toString());
     }
 
     /**
-     * 填充查询列
-     *
      * @param fieldNames      字段名
      * @param columnConfigMap 列配置
      */
