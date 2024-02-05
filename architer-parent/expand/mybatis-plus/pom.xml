@@ -46,12 +46,6 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.github.architers</groupId>
-            <artifactId>architer-model</artifactId>
-            <version>1.0.3</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
 

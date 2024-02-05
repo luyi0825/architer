@@ -4,7 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.github.architers.context.query.PageParam;
-import io.github.architers.model.response.PageResponse;
+import io.github.architers.common.model.response.PageResponse;
 
 import java.util.List;
 import java.util.function.Function;

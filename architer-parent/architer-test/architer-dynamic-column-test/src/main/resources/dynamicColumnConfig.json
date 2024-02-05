@@ -2,7 +2,8 @@
   "testCode": [
     {
       "columnName": "id",
-      "fieldName": "id"
+      "fieldName": "id",
+      "columnAlias": "pid"
     },
     {
       "columnName": "column_1",

@@ -19,7 +19,6 @@
         <module>architer-context</module>
         <module>architer-lock</module>
 
-       <module>architer-model</module>
         <!--属性配置-->
         <module>architer-property-config</module>
     </modules>

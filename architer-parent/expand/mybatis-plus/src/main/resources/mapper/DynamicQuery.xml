@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="common.dynamicQuery">
+
+
+    <select id="dynamicColumns" parameterType="io.github.architers.query.dynimic.DynamicColumnConditions">
+        <foreach collection="columns" item="column" separator=",">
+            #{columnName} as #{alias}
+        </foreach>
+    </select>
+
+    <select id="dynamicWhere" parameterType="io.github.architers.query.dynimic.DynamicColumnConditions">
+        <foreach collection="wheres" item="where" separator=",">
+            #{columnName} as #{alias}
+        </foreach>
+    </select>
+
+    <select id="dynamicOrderBy" parameterType="io.github.architers.query.dynimic.DynamicColumnConditions">
+        <foreach collection="orders" item="order" separator=",">
+            #{columnName}
+            <choose>
+                <when test="desc">
+                    desc
+                </when>
+                <otherwise>
+                    asc
+                </otherwise>
+            </choose>
+
+
+        </foreach>
+    </select>
+
+
+
+
+
+</mapper>
+

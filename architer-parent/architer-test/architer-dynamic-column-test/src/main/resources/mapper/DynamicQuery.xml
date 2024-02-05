@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="io.github.architers.dynamiccolumn.mapper.DynamicColumnMapper">
+
+    <select id="getDynamicList" resultType="java.util.Map"
+            parameterType="io.github.architers.query.dynimic.DynamicColumnConditions">
+        select
+          *,%columns%
+        from dynamic_column
+        where 1=1
+          %wheres%
+        order by id desc;
+
+
+    </select>
+</mapper>
