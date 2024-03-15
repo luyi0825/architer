@@ -1,1 +1,1 @@
-一些都是为了简化，避免重复工作
+功能见:https://www.yuque.com/luyi0825/open_project/ptdikvhfm4wwwyu5
