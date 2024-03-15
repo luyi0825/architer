@@ -10,6 +10,11 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.*;
 
+/**
+ * 从resource目录下加载动态列配置
+ *
+ * @author luyi
+ */
 public class ResourceDynamicColumnConfigLoad implements DynamicColumnConfigLoad {
 
     private final String resourceFile = "classpath:dynamicColumnConfig.json";
@@ -31,7 +36,8 @@ public class ResourceDynamicColumnConfigLoad implements DynamicColumnConfigLoad 
         }
 
         Map<String, List<DynamicColumnConfig>> dynamicColumnConfigMap = JsonUtils.parseObject(str.toString(),
-                new ArchiterTypeReference<>() {});
+                new ArchiterTypeReference<>() {
+                });
         dynamicColumnConfigMap.forEach((code, configs) -> {
             if (!StringUtils.hasText(code)) {
                 throw new IllegalArgumentException("动态列code不能为空");

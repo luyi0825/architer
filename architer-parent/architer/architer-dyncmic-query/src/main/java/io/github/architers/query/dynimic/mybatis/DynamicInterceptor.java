@@ -42,6 +42,8 @@ import java.util.concurrent.ConcurrentHashMap;
 })
 public class DynamicInterceptor implements Interceptor {
 
+    private static final String WHERE_FIELD_PREFIX = "d_w_";
+
     Map<String, Boolean> dymicMap = new ConcurrentHashMap<>();
 
     @Override
@@ -160,7 +162,7 @@ public class DynamicInterceptor implements Interceptor {
         return columnSql.toString();
     }
 
-    String whereField = "d_w_";
+
 
     private String buildWhereSql(List<Where> whereList, Map<String, Object> map) {
         if (!CollectionUtils.isEmpty(whereList)) {
@@ -198,39 +200,39 @@ public class DynamicInterceptor implements Interceptor {
             if (WhereOperator.equal.equals(whereOperator)) {
                 whereSql.append(" = ");
                 whereSql.append(" ? ");
-                map.put(whereField + index, whereCondition.getValue());
+                map.put(WHERE_FIELD_PREFIX + index, whereCondition.getValue());
                 index++;
             } else if (WhereOperator.notEqual.equals(whereOperator)) {
                 whereSql.append(" != ");
                 whereSql.append(" ? ");
-                map.put(whereField + index, whereCondition.getValue());
+                map.put(WHERE_FIELD_PREFIX + index, whereCondition.getValue());
                 index++;
             } else if (WhereOperator.like.equals(whereOperator)) {
                 //  whereSql.append(" like '%?%'");
                 whereSql.append(" like ? ");
-                map.put(whereField + index, "%" + whereCondition.getValue().toString() + "%");
+                map.put(WHERE_FIELD_PREFIX + index, "%" + whereCondition.getValue().toString() + "%");
                 index++;
             } else if (WhereOperator.likeLeft.equals(whereCondition.getOperator())) {
                 whereSql.append(" like ? ");
-                map.put(whereField + index, "%" + whereCondition.getValue().toString());
+                map.put(WHERE_FIELD_PREFIX + index, "%" + whereCondition.getValue().toString());
                 index++;
             } else if (WhereOperator.likeRight.equals(whereCondition.getOperator())) {
                 whereSql.append(" like ? ");
-                map.put(whereField + index, whereCondition.getValue().toString() + "%");
+                map.put(WHERE_FIELD_PREFIX + index, whereCondition.getValue().toString() + "%");
                 index++;
             } else if (WhereOperator.between.equals(whereCondition.getOperator())) {
                 String[] arr = whereCondition.getValue().toString().split(",");
                 whereSql.append(" between ? and ? ");
-                map.put(whereField + index, arr[0]);
+                map.put(WHERE_FIELD_PREFIX + index, arr[0]);
                 index++;
-                map.put(whereField + index, arr[1]);
+                map.put(WHERE_FIELD_PREFIX + index, arr[1]);
                 index++;
             } else if (WhereOperator.notBetween.equals(whereOperator)) {
                 String[] arr = whereCondition.getValue().toString().split(",");
                 whereSql.append(" not between ? and ? ");
-                map.put(whereField + index, arr[0]);
+                map.put(WHERE_FIELD_PREFIX + index, arr[0]);
                 index++;
-                map.put(whereField + index, arr[1]);
+                map.put(WHERE_FIELD_PREFIX + index, arr[1]);
                 index++;
             } else if (WhereOperator.in.equals(whereOperator)) {
                 whereSql.append(" in ");
@@ -240,19 +242,19 @@ public class DynamicInterceptor implements Interceptor {
                 index = index + this.buildInData(whereCondition.getValue(), map, index, whereSql);
             } else if (WhereOperator.ge.equals(whereOperator)) {
                 whereSql.append(" >= ? ");
-                map.put(whereField + index, whereCondition.getValue());
+                map.put(WHERE_FIELD_PREFIX + index, whereCondition.getValue());
                 index++;
             } else if (WhereOperator.gt.equals(whereOperator)) {
                 whereSql.append(" > ? ");
-                map.put(whereField + index, whereCondition.getValue());
+                map.put(WHERE_FIELD_PREFIX + index, whereCondition.getValue());
                 index++;
             } else if (WhereOperator.lt.equals(whereOperator)) {
                 whereSql.append(" < ? ");
-                map.put(whereField + index, whereCondition.getValue());
+                map.put(WHERE_FIELD_PREFIX + index, whereCondition.getValue());
                 index++;
             } else if (WhereOperator.le.equals(whereOperator)) {
                 whereSql.append(" <= ? ");
-                map.put(whereField + index, whereCondition.getValue());
+                map.put(WHERE_FIELD_PREFIX + index, whereCondition.getValue());
                 index++;
             } else {
                 throw new IllegalArgumentException("not support");
@@ -268,7 +270,7 @@ public class DynamicInterceptor implements Interceptor {
         String[] arr = value.toString().split(",");
         whereSql.append("(");
         for (int i = 0; i < arr.length; i++) {
-            map.put(whereField + index, arr[i]);
+            map.put(WHERE_FIELD_PREFIX + index, arr[i]);
             index++;
             if (i == arr.length - 1) {
                 whereSql.append("?");
