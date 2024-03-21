@@ -1,6 +1,5 @@
-package io.github.architers.query.dynimic.mybatis;
+package io.github.architers.query.dynimic.support.mybatis;
 
-import io.github.architers.common.json.JsonUtils;
 import io.github.architers.query.dynimic.DynamicColumnConditions;
 import io.github.architers.query.dynimic.Where;
 import io.github.architers.query.dynimic.WhereCondition;
@@ -44,7 +43,7 @@ public class DynamicInterceptor implements Interceptor {
 
     private static final String WHERE_FIELD_PREFIX = "d_w_";
 
-    Map<String, Boolean> dymicMap = new ConcurrentHashMap<>();
+    private final Map<String, Boolean> DYNAMIC_STATEMENT_MAP = new ConcurrentHashMap<>();
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
@@ -58,11 +57,15 @@ public class DynamicInterceptor implements Interceptor {
         MappedStatement mappedStatement = (MappedStatement) metaObject.getValue("delegate.mappedStatement");
         // mappedStatement 对象的 id 方法返回执行的 mapper 方法的全路径名，如cn.zysheep.mapper.DynamicSqlMapper.count
 
-        String id = mappedStatement.getId();
+        String mappedStatementId = mappedStatement.getId();
+        if (Boolean.FALSE.equals(DYNAMIC_STATEMENT_MAP.get(mappedStatementId))) {
+            //说明不是动态列查询
+            return invocation.proceed();
+        }
         // 4. 通过 id 获取到 Dao 层类的全限定名称，然后反射获取 Class 对象
-        int index = id.lastIndexOf(".");
-        Class<?> classType = Class.forName(id.substring(0, index));
-        String methodName = id.substring(index + 1);
+        int index = mappedStatementId.lastIndexOf(".");
+        Class<?> classType = Class.forName(mappedStatementId.substring(0, index));
+        String methodName = mappedStatementId.substring(index + 1);
         // 5. 获取包含原始 sql 语句的 BoundSql 对象
         BoundSql boundSql = statementHandler.getBoundSql();
         String sql = boundSql.getSql();
@@ -81,11 +84,11 @@ public class DynamicInterceptor implements Interceptor {
         for (Method method : classType.getMethods()) {
             // 7. 判断方法上是否有 DynamicSql 注解，有的话，就认为需要进行 sql 替换
             if (method.getName().equals(methodName)) {
-
                 if (method.isAnnotationPresent(DynamicQuery.class)) {
-
+                    DYNAMIC_STATEMENT_MAP.putIfAbsent(mappedStatementId, true);
                 } else {
-                    dymicMap.putIfAbsent(id, false);
+                    DYNAMIC_STATEMENT_MAP.putIfAbsent(mappedStatementId, false);
+                    return invocation.proceed();
                 }
                 Map<String, Object> map = new HashMap<>();
                 //找出后边还有多少?
@@ -98,7 +101,7 @@ public class DynamicInterceptor implements Interceptor {
 
 
                 mSql = mSql.replaceAll("%wheres%", buildWhereSql(dynamicColumnConditions.getWheres(), map));
-                // mSql = mSql.replaceAll("%orders%", buildOrders(dynamicColumnConditions.getOrders()));
+               // mSql = mSql.replaceAll("%orders%", buildOrders(dynamicColumnConditions.getOrders()));
                 List<ParameterMapping> parameterMappings = new ArrayList<>(boundSql.getParameterMappings());
                 newBoundSql = new BoundSql(mappedStatement.getConfiguration(), mSql, parameterMappings, parameterObject);
                 if (!CollectionUtils.isEmpty(map)) {
@@ -114,7 +117,6 @@ public class DynamicInterceptor implements Interceptor {
                 if (!mSql.equals(boundSql.getSql())) {
                     metaObject.setValue("delegate.boundSql.sql", newBoundSql.getSql());
                     metaObject.setValue("delegate.boundSql.parameterMappings", newBoundSql.getParameterMappings());
-                    System.out.println(JsonUtils.toJsonString(newBoundSql.getParameterMappings()));
                     newBoundSql.getAdditionalParameters().putAll(map);
                     metaObject.setValue("delegate.boundSql.additionalParameters", map);
                     metaObject.setValue("delegate.boundSql.metaParameters", mappedStatement.getConfiguration().newMetaObject(newBoundSql.getAdditionalParameters()));
@@ -125,8 +127,6 @@ public class DynamicInterceptor implements Interceptor {
         }
         // 9. 执行修改后的 SQL 语句。
         return invocation.proceed();
-
-        //return invocation.proceed();
     }
 
     private String buildOrders(List<DynamicColumnConditions.OrderBy> orders) {
@@ -163,7 +163,6 @@ public class DynamicInterceptor implements Interceptor {
     }
 
 
-
     private String buildWhereSql(List<Where> whereList, Map<String, Object> map) {
         if (!CollectionUtils.isEmpty(whereList)) {
             StringBuilder whereSql = new StringBuilder();
@@ -172,7 +171,6 @@ public class DynamicInterceptor implements Interceptor {
             return whereSql.toString();
         }
         return "";
-
     }
 
     private void appendWhere(StringBuilder whereSql, List<Where> wheres, Map<String, Object> map, int index) {

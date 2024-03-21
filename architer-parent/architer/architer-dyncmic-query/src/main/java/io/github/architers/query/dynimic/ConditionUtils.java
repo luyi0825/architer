@@ -12,6 +12,13 @@ import java.util.*;
  */
 public final class ConditionUtils {
 
+    /**
+     * 转换为动态列条件
+     *
+     * @param conditionCode          条件编码
+     * @param dynamicFieldConditions 动态字段条件
+     * @return {@link DynamicColumnConditions}
+     */
     public static DynamicColumnConditions convertToColumnConditions(String conditionCode, DynamicFieldConditions dynamicFieldConditions) {
 
         //查询的列

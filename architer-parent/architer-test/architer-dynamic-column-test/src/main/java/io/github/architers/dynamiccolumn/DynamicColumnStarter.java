@@ -1,7 +1,7 @@
 package io.github.architers.dynamiccolumn;
 
 import io.github.architers.query.dynimic.ResourceDynamicColumnConfigLoad;
-import io.github.architers.query.dynimic.mybatis.DynamicInterceptor;
+import io.github.architers.query.dynimic.support.mybatis.DynamicInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

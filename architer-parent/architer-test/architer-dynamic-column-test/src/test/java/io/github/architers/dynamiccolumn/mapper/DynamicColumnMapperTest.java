@@ -144,7 +144,7 @@ class DynamicColumnMapperTest {
 
     @Test
     public void notBetween() {
-        for(int i=0;i<=10;i++){
+        for (int i = 0; i <= 10; i++) {
             DynamicFieldConditions dynamicFieldConditions = dynamicFieldConditions();
             List<Where> wheres = new ArrayList<>(2);
             wheres.add(Where.builder().addWhereCondition(new WhereCondition("id", WhereOperator.notBetween, "2,3")));
