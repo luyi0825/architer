@@ -1,6 +1,8 @@
 package io.github.architers.common.json;
 
 
+import io.github.architers.common.json.support.FastJson2;
+import io.github.architers.common.json.support.Jackson;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -34,11 +36,21 @@ public final class JsonUtils {
         ServiceLoader<ArchiterJson> architerJsonServiceLoader = ServiceLoader.load(ArchiterJson.class);
         int count = (int) architerJsonServiceLoader.stream().count();
         if (count > 1) {
-            throw new RuntimeException("存在多个ArchiterJson");
+            throw new RuntimeException("存在多个architerJson");
         } else if (count == 1) {
             //存在一个就用指定的
             architerJson = architerJsonServiceLoader.findFirst().get();
         } else {
+            //fastjson2
+            if (architerJson == null) {
+                try {
+                    //fastjson2
+                    Class.forName("com.alibaba.fastjson2.JSON");
+                    architerJson = FastJson2.getInstance();
+                } catch (Exception ignored) {
+                }
+            }
+            //fastjson
             if (architerJson == null) {
                 try {
                     //fastjson2
@@ -48,11 +60,15 @@ public final class JsonUtils {
                 }
             }
             //Jackson
-            try {
-                Class.forName("com.fasterxml.jackson.databind.ObjectMapper");
-                architerJson = Jackson.getInstance();
-            } catch (Exception ignored) {
+            if (architerJson == null) {
+                try {
+                    Class.forName("com.fasterxml.jackson.databind.ObjectMapper");
+                    architerJson = Jackson.getInstance();
+                } catch (Exception ignored) {
+                }
             }
+
+
         }
         if (architerJson == null) {
             throw new RuntimeException("请配置json序列化方式");
@@ -105,10 +121,9 @@ public final class JsonUtils {
         return architerJson.parseObject(jsonStr, clazz);
     }
 
-    public static <T> T parseObject(String jsonStr, ArchiterTypeReference<T> typeReference){
+    public static <T> T parseObject(String jsonStr, ArchiterTypeReference<T> typeReference) {
         return architerJson.parseObjectByType(jsonStr, typeReference);
     }
-
 
 
 }

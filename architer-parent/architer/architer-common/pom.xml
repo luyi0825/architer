@@ -13,6 +13,7 @@
     <name>architer-common</name>
     <packaging>jar</packaging>
     <description>公共模块</description>
+
     <dependencies>
 
         <dependency>
@@ -24,6 +25,13 @@
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
             <version>${fastjson2.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>

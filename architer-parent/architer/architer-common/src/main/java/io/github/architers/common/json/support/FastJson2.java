@@ -1,10 +1,8 @@
-package io.github.architers.common.json;
+package io.github.architers.common.json.support;
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.TypeReference;
-
-import java.io.Serializable;
-import java.lang.reflect.Type;
+import io.github.architers.common.json.ArchiterJson;
+import io.github.architers.common.json.ArchiterTypeReference;
 
 /**
  * 阿里FastJson2

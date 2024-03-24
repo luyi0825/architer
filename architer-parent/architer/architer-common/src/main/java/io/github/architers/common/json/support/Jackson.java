@@ -1,11 +1,12 @@
-package io.github.architers.common.json;
+package io.github.architers.common.json.support;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.architers.common.json.ArchiterJson;
+import io.github.architers.common.json.ArchiterTypeReference;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 
 
 /**
