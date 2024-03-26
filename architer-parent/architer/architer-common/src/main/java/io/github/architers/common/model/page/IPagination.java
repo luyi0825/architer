@@ -16,7 +16,7 @@ import java.io.Serializable;
  * @author luyi
  * @since 1.0.3
  */
-public interface IPagination<T> extends Serializable {
+public interface IPagination extends Serializable {
 
     /**
      * 分页前是否count,false则不count

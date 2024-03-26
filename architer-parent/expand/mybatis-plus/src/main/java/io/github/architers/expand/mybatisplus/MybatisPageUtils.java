@@ -3,7 +3,7 @@ package io.github.architers.expand.mybatisplus;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import io.github.architers.context.query.PageParam;
+import io.github.architers.common.model.page.IPagination;
 import io.github.architers.common.model.response.PageResponse;
 
 import java.util.List;
@@ -40,8 +40,7 @@ public final class MybatisPageUtils {
      * @param supplier 数据查询
      */
 
-    public static <T> PageResponse<T> pageQuery(PageParam pageParam, Supplier<List<T>> supplier) {
-
+    public static <T> PageResponse<T> pageQuery(IPagination pageParam, Supplier<List<T>> supplier) {
         try (Page<T> page = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize())) {
             List<T> list = supplier.get();
             return MybatisPageUtils.restPage(list);
@@ -54,7 +53,7 @@ public final class MybatisPageUtils {
      * @param dataQueryFunction 数据查询
      */
 
-    public static <T> void pageQueryAll(PageParam pageParam, Function<PageParam, Page<T>> dataQueryFunction) {
+    public static <T> void pageQueryAll(IPagination pageParam, Function<IPagination, Page<T>> dataQueryFunction) {
         Page<T> page = null;
         try {
             page = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize());
