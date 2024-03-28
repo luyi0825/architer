@@ -23,5 +23,8 @@
 
         <!--属性配置-->
         <module>architer-property-config</module>
+
+        <!--spring-boot-starter实现-->
+        <module>architer-boot-starter</module>
     </modules>
 </project>
